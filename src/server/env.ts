@@ -24,7 +24,9 @@ export function validateEnv(source: Record<string, string | undefined> = process
     const problems = result.error.issues.map((i) => `  - ${i.path.join(".")}: ${i.message}`).join("\n");
     throw new Error(`DentOS configuration is invalid. Check your .env file:\n${problems}`);
   }
-  if (result.data.NODE_ENV === "production" && !result.data.DATABASE_URL) {
+  // The embedded database is for development. ALLOW_LOCAL_DATABASE=true lets you try the production
+  // build on your own computer; never set it on a real server.
+  if (result.data.NODE_ENV === "production" && !result.data.DATABASE_URL && source.ALLOW_LOCAL_DATABASE !== "true") {
     throw new Error("DentOS configuration is invalid: DATABASE_URL is required in production.");
   }
   return result.data;

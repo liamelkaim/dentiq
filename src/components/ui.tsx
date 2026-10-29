@@ -110,12 +110,15 @@ export function ListLinkRow({
   subtitle,
   leading,
   trailing,
+  meta,
 }: {
   href: string;
   title: ReactNode;
   subtitle?: ReactNode;
   leading?: ReactNode;
   trailing?: ReactNode;
+  /** Badges shown on their own line under the subtitle, so titles keep their width on phones. */
+  meta?: ReactNode;
 }) {
   return (
     <li>
@@ -127,6 +130,7 @@ export function ListLinkRow({
         <span className="min-w-0 flex-1">
           <span className="block truncate text-[15px] font-medium text-text">{title}</span>
           {subtitle && <span className="block truncate text-[13px] text-text-subtle">{subtitle}</span>}
+          {meta && <span className="mt-1.5 flex flex-wrap gap-1.5 empty:hidden">{meta}</span>}
         </span>
         {trailing}
         <ChevronRightIcon width={16} height={16} className="shrink-0 text-text-subtle" />
@@ -158,8 +162,16 @@ export function DescriptionList({ items }: { items: { label: ReactNode; value: R
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 
+type ButtonSize = "md" | "sm";
+
 const buttonBase =
-  "inline-flex h-10 items-center justify-center gap-2 rounded-[var(--radius-control)] px-4 text-[14px] font-medium whitespace-nowrap transition-colors disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] font-medium whitespace-nowrap transition-colors disabled:cursor-not-allowed disabled:opacity-50";
+
+// Sizes are separate classes so callers never have to override height with a conflicting utility.
+const buttonSizes: Record<ButtonSize, string> = {
+  md: "h-10 px-4 text-[14px]",
+  sm: "h-9 px-3 text-[13px]",
+};
 
 const buttonVariants: Record<ButtonVariant, string> = {
   primary: "bg-accent text-on-accent hover:bg-accent-hover",
@@ -168,20 +180,26 @@ const buttonVariants: Record<ButtonVariant, string> = {
   danger: "border border-border-strong bg-surface text-danger hover:bg-danger-soft",
 };
 
-export function buttonClass(variant: ButtonVariant = "primary", className?: string) {
-  return cx(buttonBase, buttonVariants[variant], className);
+export function buttonClass(variant: ButtonVariant = "primary", className?: string, size: ButtonSize = "md") {
+  return cx(buttonBase, buttonSizes[size], buttonVariants[variant], className);
 }
 
-export function Button({ variant = "primary", className, ...props }: ComponentProps<"button"> & { variant?: ButtonVariant }) {
-  return <button className={buttonClass(variant, className)} {...props} />;
+export function Button({
+  variant = "primary",
+  size = "md",
+  className,
+  ...props
+}: ComponentProps<"button"> & { variant?: ButtonVariant; size?: ButtonSize }) {
+  return <button className={buttonClass(variant, className, size)} {...props} />;
 }
 
 export function ButtonLink({
   variant = "primary",
+  size = "md",
   className,
   ...props
-}: ComponentProps<typeof Link> & { variant?: ButtonVariant }) {
-  return <Link className={buttonClass(variant, className)} {...props} />;
+}: ComponentProps<typeof Link> & { variant?: ButtonVariant; size?: ButtonSize }) {
+  return <Link className={buttonClass(variant, className, size)} {...props} />;
 }
 
 const controlBase =

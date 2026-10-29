@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { BookIcon, ShieldIcon } from "@/components/icons";
+import { BookIcon, FlagIcon, ShieldIcon } from "@/components/icons";
 import { List, ListLinkRow, PageHeader } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { requireRole } from "@/server/auth/session";
 import { countCourses } from "@/server/catalog/service";
+import { listModerationQueue } from "@/server/resources/service";
 import { listUsers } from "@/server/users/service";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -12,10 +13,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AdminPage() {
-  await requireRole("admin");
+  const viewer = await requireRole("admin");
   const t = await getTranslations();
   const db = getDb();
-  const [courseCount, pending] = await Promise.all([countCourses(db), listUsers(db, { approvalStatus: "pending" })]);
+  const [courseCount, pending, queue] = await Promise.all([
+    countCourses(db),
+    listUsers(db, { approvalStatus: "pending" }),
+    listModerationQueue(db, viewer),
+  ]);
 
   const iconBox = "grid size-9 shrink-0 place-items-center rounded-[10px] bg-surface-muted text-text-muted";
   return (
@@ -33,6 +38,12 @@ export default async function AdminPage() {
           leading={<span className={iconBox}><ShieldIcon width={18} height={18} /></span>}
           title={t("admin.users")}
           subtitle={`${t("admin.usersHelp")} · ${t("admin.pendingCount", { count: pending.length })}`}
+        />
+        <ListLinkRow
+          href="/moderation"
+          leading={<span className={iconBox}><FlagIcon width={18} height={18} /></span>}
+          title={t("moderation.title")}
+          subtitle={t("dashboard.reviewQueue", { count: queue.pending.length + queue.reports.length })}
         />
       </List>
     </>

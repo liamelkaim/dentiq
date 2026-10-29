@@ -17,11 +17,20 @@ export function usesLocalDatabase(): boolean {
   return !process.env.DATABASE_URL;
 }
 
+/** True for a database on this computer, e.g. the PGlite server started by `pnpm dev`. */
+function isLocalUrl(url: string): boolean {
+  return /@(localhost|127\.0\.0\.1|\[::1\])(:\d+)?\//.test(url);
+}
+
 function createDatabase(): Database {
   const url = process.env.DATABASE_URL;
   if (url) {
-    return drizzlePostgres(postgres(url, { max: 10 }), { schema, casing: "snake_case" });
+    // PGlite serves one connection at a time; a single pooled connection keeps transactions
+    // from different requests from interleaving.
+    return drizzlePostgres(postgres(url, { max: isLocalUrl(url) ? 1 : 10 }), { schema, casing: "snake_case" });
   }
+  // In-process PGlite: used by tests and scripts. `pnpm dev` runs PGlite in its own process instead,
+  // because the Next.js dev server corrupted the in-process database (see docs/architecture.md).
   mkdirSync(LOCAL_DATA_DIR, { recursive: true });
   return drizzlePglite(new PGlite(LOCAL_DATA_DIR), { schema, casing: "snake_case" });
 }

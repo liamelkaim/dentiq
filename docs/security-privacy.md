@@ -24,6 +24,15 @@ This is a record of decisions, not a claim of compliance. **DentOS is not yet pr
 - Security headers: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, strict referrer policy, permissions policy.
 - Audit log for catalog changes, imports, approvals and role changes.
 
+**Uploaded documents (Phase 2)**
+- Files are stored outside the public web folder (`.data/uploads`, owner-only permissions `600`/`700`) under random keys; storage keys can't escape the folder (tested).
+- Every download re-checks permissions on the server: unauthenticated → 401; not allowed → 404 (doesn't reveal that the file exists).
+- File type decided from the file's first bytes *and* extension (PDF, DOCX, PPTX, PNG, JPG). HTML, SVG, scripts and renamed executables are rejected. 25 MB limit.
+- Responses: `Content-Disposition` (attachment unless previewing a PDF/image), `X-Content-Type-Options: nosniff`, `Cache-Control: private, no-store`, framing allowed only by DentOS itself; non-PDF files are additionally sandboxed by CSP.
+- Only approved members (and moderators) can see shared files. Student uploads are reviewed before publication. Removed documents are hidden from everyone but moderators; the file is kept for the record (no hard delete yet).
+- Uploaders must confirm they have the right to share; each document shows a personal-use notice. **This is not a copyright clearance process** — see legal questions below.
+- Not yet: antivirus scanning, per-user upload quotas, retention/deletion policy for removed files.
+
 **Data minimization**
 We store only: name, email, password hash, role, approval status, session metadata (IP address and browser, from Better Auth). No real student data is used in development; test data uses `@example.com` addresses and `TEST`/`DEMO` course codes.
 

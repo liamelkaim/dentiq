@@ -5,11 +5,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useTransition, type ComponentType, type SVGProps } from "react";
 import { authClient } from "@/lib/auth-client";
-import { BookIcon, HomeIcon, LogOutIcon, SettingsIcon, ShieldIcon } from "./icons";
+import { BookIcon, FlagIcon, FolderIcon, HomeIcon, LogOutIcon, SettingsIcon, ShieldIcon } from "./icons";
 import { LanguageSwitcher, ThemeSwitcher } from "./preferences";
 import { cx, Wordmark } from "./ui";
 
-type NavItem = { href: string; key: "dashboard" | "courses" | "settings" | "admin"; icon: ComponentType<SVGProps<SVGSVGElement>> };
+type NavItem = {
+  href: string;
+  key: "dashboard" | "courses" | "resources" | "moderation" | "settings" | "admin";
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  /** Hidden from the mobile tab bar (reachable from another page instead). */
+  desktopOnly?: boolean;
+};
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -44,10 +50,12 @@ export function SignOutButton({ className }: { className?: string }) {
 export function AppShell({
   user,
   isAdmin,
+  isModerator,
   children,
 }: {
   user: { name: string; email: string };
   isAdmin: boolean;
+  isModerator: boolean;
   children: React.ReactNode;
 }) {
   const t = useTranslations();
@@ -56,9 +64,13 @@ export function AppShell({
   const items: NavItem[] = [
     { href: "/", key: "dashboard", icon: HomeIcon },
     { href: "/courses", key: "courses", icon: BookIcon },
+    { href: "/resources", key: "resources", icon: FolderIcon },
+    // Admins reach moderation from the Admin page on phones, keeping the tab bar to five items.
+    ...(isModerator ? [{ href: "/moderation", key: "moderation", icon: FlagIcon, desktopOnly: isAdmin } as NavItem] : []),
     ...(isAdmin ? [{ href: "/admin", key: "admin", icon: ShieldIcon } as NavItem] : []),
     { href: "/settings", key: "settings", icon: SettingsIcon },
   ];
+  const mobileItems = items.filter((i) => !i.desktopOnly);
 
   return (
     <div className="min-h-dvh">
@@ -128,8 +140,8 @@ export function AppShell({
         aria-label={t("nav.main")}
         className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-bg/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
       >
-        <ul className="mx-auto flex max-w-md">
-          {items.map(({ href, key, icon: Icon }) => {
+        <ul className="mx-auto flex max-w-lg">
+          {mobileItems.map(({ href, key, icon: Icon }) => {
             const active = isActive(pathname, href);
             return (
               <li key={href} className="flex-1">

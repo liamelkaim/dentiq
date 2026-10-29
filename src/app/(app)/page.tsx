@@ -1,28 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { BookIcon, ShieldIcon } from "@/components/icons";
+import { BookIcon, FolderIcon, ShieldIcon } from "@/components/icons";
 import { Badge, ButtonLink, DescriptionList, List, ListRow, Notice, PageHeader, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { hasRole } from "@/server/auth/roles";
 import { requireUser } from "@/server/auth/session";
 import { countCourses } from "@/server/catalog/service";
+import { canAccessLibrary, isModerator, listModerationQueue } from "@/server/resources/service";
 import { listUsers } from "@/server/users/service";
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: (await getTranslations("dashboard"))("title") };
 }
 
-const roadmap = ["notes", "passes", "flashcards", "tutor", "recordings"] as const;
+const roadmap = ["passes", "flashcards", "tutor", "recordings"] as const;
 
 export default async function DashboardPage() {
   const user = await requireUser();
   const t = await getTranslations();
   const db = getDb();
   const isAdmin = hasRole(user, "admin");
-  const [courseCount, pending] = await Promise.all([
+  const [courseCount, pending, queue] = await Promise.all([
     countCourses(db),
     isAdmin ? listUsers(db, { approvalStatus: "pending" }) : Promise.resolve([]),
+    listModerationQueue(db, user),
   ]);
   const firstName = user.name.split(" ")[0] || user.name;
 
@@ -101,6 +103,31 @@ export default async function DashboardPage() {
           />
         </Section>
       </div>
+
+      <Section title={t("dashboard.resourcesTitle")}>
+        <Panel className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <span className="grid size-10 shrink-0 place-items-center rounded-[10px] bg-accent-soft text-accent">
+              <FolderIcon />
+            </span>
+            <p className="text-[14px] text-text-muted">
+              {canAccessLibrary(user) ? t("dashboard.resourcesBody") : t("dashboard.resourcesLocked")}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {canAccessLibrary(user) && (
+              <ButtonLink href="/resources" variant="secondary">
+                {t("dashboard.browseResources")}
+              </ButtonLink>
+            )}
+            {isModerator(user) && (
+              <ButtonLink href="/moderation" variant="ghost">
+                {t("dashboard.reviewQueue", { count: queue.pending.length + queue.reports.length })}
+              </ButtonLink>
+            )}
+          </div>
+        </Panel>
+      </Section>
 
       <Section title={t("dashboard.roadmapTitle")} description={t("dashboard.roadmapBody")}>
         <List>

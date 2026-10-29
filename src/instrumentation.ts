@@ -5,8 +5,10 @@ export async function register() {
   const { validateEnv } = await import("@/server/env");
   validateEnv();
 
-  // The embedded local database is migrated automatically. A hosted Postgres is migrated
-  // explicitly with `pnpm db:migrate`, so production schema changes are always deliberate.
-  const { migrateDatabase, usesLocalDatabase } = await import("@/db/client");
-  if (usesLocalDatabase()) await migrateDatabase();
+  // In development the database is migrated automatically. In production, migrations are applied
+  // explicitly with `pnpm db:migrate`, so schema changes are always deliberate.
+  if (process.env.NODE_ENV === "development") {
+    const { migrateDatabase } = await import("@/db/client");
+    await migrateDatabase();
+  }
 }

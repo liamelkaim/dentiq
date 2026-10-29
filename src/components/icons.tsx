@@ -35,6 +35,31 @@ export const BookIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const FolderIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M2.75 5.5A1.5 1.5 0 0 1 4.25 4h3.5l1.75 2h6.25a1.5 1.5 0 0 1 1.5 1.5v7.25a1.5 1.5 0 0 1-1.5 1.5H4.25a1.5 1.5 0 0 1-1.5-1.5Z" />
+  </Icon>
+);
+
+export const FlagIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M4.5 17.5V3.5M4.5 4h9.75l-2 3.5 2 3.5H4.5" />
+  </Icon>
+);
+
+export const DownloadIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M10 3.5v9M6 8.75l4 4 4-4M4 16.5h12" />
+  </Icon>
+);
+
+export const FileIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M11.5 2.75H5.75a1.5 1.5 0 0 0-1.5 1.5v11.5a1.5 1.5 0 0 0 1.5 1.5h8.5a1.5 1.5 0 0 0 1.5-1.5V7Z" />
+    <path d="M11.5 2.75V7h4.25" />
+  </Icon>
+);
+
 export const SettingsIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M3 6h9M15 6h2M3 14h2M8 14h9" />

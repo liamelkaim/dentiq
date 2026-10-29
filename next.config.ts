@@ -7,12 +7,17 @@ const nextConfig: NextConfig = {
   // PGlite ships WASM and data files that must not be bundled.
   serverExternalPackages: ["@electric-sql/pglite"],
   poweredByHeader: false,
-  // Enables forbidden() for server-side role checks.
-  experimental: { authInterrupts: true },
+  experimental: {
+    // Enables forbidden() for server-side role checks.
+    authInterrupts: true,
+    // Document uploads go through server actions (25 MB file limit + form fields).
+    serverActions: { bodySizeLimit: "26mb" },
+  },
   async headers() {
     return [
       {
-        source: "/:path*",
+        // Everything except /api/files, which sets its own headers so previews can be framed by DentOS.
+        source: "/((?!api/files/).*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

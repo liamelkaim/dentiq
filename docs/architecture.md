@@ -18,12 +18,14 @@ src/
   server/              Server-only logic, one folder per module
     auth/              Better Auth config, session helpers, role rules
     catalog/           validation.ts (zod), service.ts (business logic), actions.ts (server actions)
+    resources/         Shared documents: service.ts (rules + permissions), files.ts (upload checks), actions.ts
     users/             Account approval and roles
     audit.ts           Audit log writer
     email.ts           Mailer interface (console in development)
     env.ts             Configuration validation
+    storage.ts         Private file storage interface (local disk now, cloud later)
   db/
-    schema/            Tables: auth.ts, catalog.ts, audit.ts
+    schema/            Tables: auth.ts, catalog.ts, resources.ts, audit.ts
     client.ts          Database connection (PGlite locally, Postgres in production)
   i18n/                Language detection and switching
   messages/            fr.json, en.json — every interface string
@@ -41,9 +43,12 @@ apps/, packages/       Empty folders kept from the initial setup; unused by desi
 For a small team and one product, a single Next.js app is the simplest thing that works: one deployment, one set of dependencies, server code next to the pages that use it. The empty `apps/` and `packages/` folders from the initial setup were kept (nothing is deleted without approval) but are not used. They can be removed safely.
 *Revisit if:* a native mobile app or third-party integrations need a public API — Next.js route handlers can provide one without splitting the project.
 
-### PostgreSQL, embedded locally (PGlite)
+### PostgreSQL, with PGlite for local development
 Postgres handles relational data well and later supports full-text search and vector search (`pgvector`) for the AI tutors — one database instead of several services. Locally we use **PGlite**, real Postgres compiled to WebAssembly, so nothing needs installing.
-*Limitations of local mode:* one process at a time can open the data folder; performance is lower than a real server; some Postgres extensions aren't available. Production must use a hosted Postgres (`DATABASE_URL`).
+
+**How it runs (changed in Phase 2):** `pnpm dev` starts `pglite-server` (official ElectricSQL package) on port 54329 with the data in `.data/pglite`, then launches `next dev` with `DATABASE_URL` pointing at it. The app always talks to Postgres through the same driver (postgres.js) in development and production.
+*Why:* when PGlite ran inside the Next.js dev server, it crashed after sign-in/verification requests and left the data folder unreadable. This did not reproduce in plain Node or in the production build; the exact trigger inside the dev server was not identified. Running PGlite in its own process removed the crash in every test.
+*Limitations of local mode:* one process at a time can open the data folder; the local server accepts one connection at a time (the app uses a single pooled connection for local URLs so transactions never interleave); performance is lower than a real server. Production must use a hosted Postgres (`DATABASE_URL`). Tests and scripts still use PGlite in-process, where it works correctly.
 
 ### Better Auth for accounts
 | Option | Verdict |
@@ -76,7 +81,16 @@ Tables (see `src/db/schema/`):
 | `professors` | Instructors (unique name) |
 | `course_offerings` | Course × academic year × term (unique together) |
 | `offering_instructors` | Which professors teach which offering |
-| `audit_log` | Who did what, when (catalog edits, imports, approvals, role changes) |
+| `audit_log` | Who did what, when (catalog edits, imports, approvals, role changes, uploads, moderation) |
+| `resources` | A shared document: course, optional offering, kind, title, topic, `is_official`, status (pending/published/hidden/removed) |
+| `resource_versions` | Every uploaded file (append-only): storage key, original name, type, size, SHA-256, change note, rights confirmation |
+| `resource_reports` | Problem reports; one open report per person per document (partial unique index) |
+
+### Shared documents (Phase 2)
+- **Current vs historical** is computed, not stored: a document tied to the course's most recent offering (latest academic year, then fall < winter < summer) is *current*; one tied to an older offering is *historical*; one with no offering is *general* and shown with current material. Adding a new offering automatically moves older material to the archive without editing it.
+- **Files** are written to private storage under a random key (`resources/<uuid>`), never under the uploaded name, and never overwritten. The database keeps the original name for downloads.
+- **Downloads** go through `/api/files/<versionId>`, which re-checks the viewer's permission on every request. Previews are served inline only for PDFs and images; everything else is a download.
+- **Status flow:** student upload → `pending` → moderator publishes → `published` (or `hidden`/`removed`). Moderator uploads are published directly. A student's new version returns the document to `pending`.
 
 Constraints are enforced by the database too (unique codes, year of study 1–8, credits ≥ 0, academic year format `YYYY-YYYY`), not only by form validation.
 
@@ -90,13 +104,13 @@ Constraints are enforced by the database too (unique codes, year of study 1–8,
 
 | Feature | Where it plugs in |
 | --- | --- |
-| Notes & outlines (Phase 2) | New `resources` + `resource_versions` tables linked to `course_offerings`; files in private object storage behind a storage interface; `canContribute()` already gates uploads. |
-| Exam passes (Phase 3) | `questions` linked to offerings, with status (submitted → verified/rejected), audit history and moderation via the `moderator` role. |
+| Notes & outlines (Phase 2) | ✅ Implemented — see "Shared documents" above. |
+| Exam passes (Phase 3) | `questions` linked to offerings, with status (submitted → verified/rejected); reuse the Phase 2 moderation queue, reports pattern and audit log. |
 | Flashcards & Anki (Phase 4) | Cards generated from questions/resources; TSV export first. |
 | AI tutors (Phase 5) | Text chunks + embeddings in Postgres (`pgvector`), retrieval filtered by offering; provider behind an interface. |
 | Audio (Phase 6) | Uploads to private storage; a transcription provider interface; transcripts become searchable chunks. |
 
 ## Testing
 
-`pnpm test` runs Vitest. Each test file creates a fresh **in-memory Postgres** with all migrations applied, so tests exercise the real schema and constraints. Covered: authentication rules, permission rules, catalog validation, CSV import, search, offerings, account approval, configuration validation, and translation completeness.
-Not yet automated: browser-level tests (theme/language switching and full sign-up were verified manually in a real browser for Phase 1 — see roadmap).
+`pnpm test` runs Vitest. Each test file creates a fresh **in-memory Postgres** with all migrations applied, so tests exercise the real schema and constraints. Covered: authentication rules, permission rules, catalog validation, CSV import, search, offerings, account approval, configuration validation, translation completeness, and (Phase 2) uploads, file-type checks, duplicate detection, versions, current/historical classification, library filters, visibility/download permissions, moderation, reports, and private storage (including path-escape attempts).
+Not yet automated: browser-level tests. Phases 1 and 2 were verified manually in a real browser (sign-up, uploads, preview, moderation, reports, both languages and themes, 390 px phone width).

@@ -21,12 +21,30 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 | Audit log | ✅ | No viewer screen yet |
 | Automated tests (39) | ✅ | |
 
+## Phase 2 — Academic resources ✅ (2026-10-28)
+
+| Feature | Status | Notes |
+| --- | --- | --- |
+| Course pages with a resources section (Current / Archive / All) | ✅ | |
+| Uploads: outlines, notes, study guides (PDF, DOCX, PPTX, PNG, JPG; 25 MB) | ✅ | Type checked from file content, not just the name |
+| Private file storage behind a permission check (`/api/files/…`) | ✅ | Local disk in `.data/uploads`; cloud storage later behind the same interface |
+| Preview (PDF, images) and download, accented file names preserved | ✅ | DOCX/PPTX: download only |
+| Version history (append-only; every version downloadable) | ✅ | |
+| Duplicate detection (identical file fingerprint, SHA-256) | ✅ | Near-duplicates not detected |
+| Current vs historical separation by course offering | ✅ | Derived from the most recent offering |
+| Library with search + filters: course, professor, year, term, topic, type, period | ✅ | |
+| Permissions: approved members view/upload; student uploads reviewed; moderators publish/hide/remove; official label by moderators only | ✅ | |
+| Reporting (one open report per person per document) and moderation queue | ✅ | |
+| Rights confirmation on every upload, usage notice on every document | ✅ | Not a legal review — see security-privacy.md |
+| Audit log for uploads, versions, moderation and reports | ✅ | |
+| Automated tests (65 total, 26 new) | ✅ | |
+| Local dev database moved out of the Next.js process | ✅ | Fixes database corruption found during testing (see Known issues) |
+
 ## Next phases
 
 | Phase | Scope | Status |
 | --- | --- | --- |
-| 2 | Academic resources: outlines and notes uploads, versioning, course pages | 📋 Recommended next |
-| 3 | Exam passes: structured questions, moderation, statuses, exports | 📋 |
+| 3 | Exam passes: structured questions, moderation, statuses, exports | 📋 Recommended next |
 | 4 | Study tools: flashcards, Anki TSV export, quizzes, progress | 📋 |
 | 5 | AI course tutors (retrieval + citations) | 📋 🔐 needs an AI provider and budget approval |
 | 6 | Audio: upload, recording, transcription | 📋 🔐 consent/legal review; provider choice |
@@ -43,6 +61,12 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 - Browser end-to-end tests (Playwright)
 - Offline support (service worker)
 - Send only needed translation namespaces to the browser
+- Edit a document's title/description/topic after upload (only new versions and moderation for now)
+- Moderator view of pending items inside the library filters (currently only in the Moderation queue)
+- Cloud object storage (e.g. Cloudflare R2 — free tier) before deployment 🔐
+- Retention rules for removed documents (files are kept for the record today)
+- Previews for DOCX/PPTX (would need a conversion service)
+- Virus scanning of uploads before deployment
 
 ## Decisions needed from the project owner
 
@@ -52,8 +76,10 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 
 ## Known issues / limitations
 
+- **Fixed in Phase 2 — local database corruption.** When PGlite ran *inside* the Next.js dev server, it crashed (`RuntimeError: Aborted()`) after sign-in/email verification and the database folder could no longer be opened. It did not happen in plain Node or in the production build. Root cause inside the dev server not identified; `pnpm dev` now runs PGlite as a separate process (`pglite-server`) and the app connects to it like a normal Postgres. Verified: repeated sign-ups/sign-ins, uploads, Ctrl+C shutdown and reopening — no crash, data intact. **If you ran Phase 1 `pnpm dev` and signed in, your old `.data/pglite` may be damaged; delete `.data/pglite` to start fresh.**
 - Local database (PGlite) can be opened by one process at a time: stop `pnpm dev` before `pnpm db:migrate`.
-- `pnpm build` opens the local database folder (creates `.data/pglite` if missing). Harmless.
+- The local database server accepts one connection at a time (safe for transactions; fine for one developer).
+- A student's new version sends the whole document back to review, hiding the previous published version until a moderator approves.
 - No password reset yet — a user who forgets their password needs an admin (or a database reset) for now.
 - Rate limiting is in-memory and only active in production mode.
 - TypeScript is pinned to 6.0 because the lint tooling doesn't support TypeScript 7 yet.

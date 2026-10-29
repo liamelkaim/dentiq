@@ -19,7 +19,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
   const showAll = (await searchParams).show === "all";
   const users = await listUsers(getDb(), showAll ? {} : { approvalStatus: "pending" });
 
-  const tab = (active: boolean) => cx(buttonClass(active ? "secondary" : "ghost", "h-8 px-3 text-[13px]"));
+  const tab = (active: boolean) => cx(buttonClass(active ? "secondary" : "ghost", undefined, "sm"));
 
   return (
     <>
@@ -68,7 +68,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                       <form action={setApprovalAction}>
                         <input type="hidden" name="userId" value={u.id} />
                         <input type="hidden" name="status" value="approved" />
-                        <Button type="submit" className="h-9">
+                        <Button type="submit" size="sm">
                           {t("admin.usersPage.approve")}
                         </Button>
                       </form>
@@ -77,7 +77,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                       <form action={setApprovalAction}>
                         <input type="hidden" name="userId" value={u.id} />
                         <input type="hidden" name="status" value="rejected" />
-                        <Button type="submit" variant="danger" className="h-9">
+                        <Button type="submit" variant="danger" size="sm">
                           {t("admin.usersPage.reject")}
                         </Button>
                       </form>
@@ -94,7 +94,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                           </option>
                         ))}
                       </Select>
-                      <Button type="submit" variant="secondary" className="h-9">
+                      <Button type="submit" variant="secondary" size="sm">
                         {t("admin.usersPage.changeRole")}
                       </Button>
                     </form>

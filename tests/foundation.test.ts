@@ -79,8 +79,10 @@ describe("configuration", () => {
     expect(() => validateEnv({ ...valid, BETTER_AUTH_SECRET: "replace-me" })).toThrow();
   });
 
-  it("requires a real database in production", () => {
+  it("requires a real database in production unless the local database is explicitly allowed", () => {
     expect(() => validateEnv({ ...valid, NODE_ENV: "production" })).toThrow(/DATABASE_URL/);
+    expect(() => validateEnv({ ...valid, NODE_ENV: "production", ALLOW_LOCAL_DATABASE: "true" })).not.toThrow();
+    expect(() => validateEnv({ ...valid, NODE_ENV: "production", ALLOW_LOCAL_DATABASE: "yes" })).toThrow(/DATABASE_URL/);
     expect(() => validateEnv({ ...valid, DATABASE_URL: "mysql://x" })).toThrow(/postgres/);
   });
 });

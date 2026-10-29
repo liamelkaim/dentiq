@@ -95,7 +95,7 @@ export default async function CoursesPage({ searchParams }: { searchParams: Sear
           <div className="mb-3 flex items-center justify-between px-1 text-[13px] text-text-subtle">
             <span aria-live="polite">{t("courses.results", { count: courses.length })}</span>
             {filtered && (
-              <Link href="/courses" className={buttonClass("ghost", "h-8 px-2 text-[13px]")}>
+              <Link href="/courses" className={buttonClass("ghost", undefined, "sm")}>
                 {t("courses.clear")}
               </Link>
             )}

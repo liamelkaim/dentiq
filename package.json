@@ -7,7 +7,8 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "pglite-server --db=./.data/pglite --port=54329 --run \"next dev\" --include-database-url",
+    "dev:app": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
@@ -16,8 +17,7 @@
     "test:watch": "vitest",
     "check": "pnpm typecheck && pnpm lint && pnpm test",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx scripts/migrate.ts",
-    "user:set-role": "tsx scripts/set-role.ts"
+    "db:migrate": "tsx scripts/migrate.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "0.5.13",
@@ -34,6 +34,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
+    "@electric-sql/pglite-socket": "0.2.16",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "^26.6.5",
     "@types/papaparse": "^5.5.2",
