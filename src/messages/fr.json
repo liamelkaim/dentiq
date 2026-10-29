@@ -1,0 +1,261 @@
+{
+  "common": {
+    "appName": "DentOS",
+    "tagline": "La plateforme d'étude des étudiants en médecine dentaire",
+    "disclaimer": "Projet étudiant indépendant. Non affilié à l'Université de Montréal.",
+    "save": "Enregistrer",
+    "create": "Créer",
+    "cancel": "Annuler",
+    "back": "Retour",
+    "loading": "Chargement…",
+    "retry": "Réessayer",
+    "search": "Rechercher",
+    "optional": "facultatif",
+    "none": "Aucun",
+    "saved": "Enregistré.",
+    "planned": "Prévu",
+    "skipToContent": "Aller au contenu"
+  },
+  "nav": {
+    "main": "Navigation principale",
+    "dashboard": "Accueil",
+    "courses": "Cours",
+    "settings": "Réglages",
+    "admin": "Administration",
+    "signOut": "Se déconnecter"
+  },
+  "theme": {
+    "label": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système"
+  },
+  "language": {
+    "label": "Langue",
+    "fr": "Français",
+    "en": "English"
+  },
+  "terms": {
+    "fall": "Automne",
+    "winter": "Hiver",
+    "summer": "Été"
+  },
+  "roles": {
+    "student": "Étudiant·e",
+    "moderator": "Modérateur·rice",
+    "admin": "Administrateur·rice"
+  },
+  "approval": {
+    "pending": "En attente",
+    "approved": "Approuvé",
+    "rejected": "Refusé"
+  },
+  "auth": {
+    "signIn": {
+      "title": "Connexion",
+      "subtitle": "Accédez à vos cours et à vos ressources.",
+      "submit": "Se connecter",
+      "noAccount": "Pas encore de compte?",
+      "createAccount": "Créer un compte"
+    },
+    "signUp": {
+      "title": "Créer un compte",
+      "subtitle": "Votre compte sera activé après la confirmation de votre courriel et l'approbation d'un administrateur.",
+      "submit": "Créer mon compte",
+      "haveAccount": "Déjà inscrit·e?",
+      "signInLink": "Se connecter"
+    },
+    "fields": {
+      "name": "Nom complet",
+      "email": "Adresse courriel",
+      "password": "Mot de passe",
+      "passwordHint": "10 caractères minimum."
+    },
+    "verify": {
+      "title": "Vérifiez votre boîte de réception",
+      "body": "Nous avons envoyé un lien de confirmation à votre adresse courriel. Cliquez dessus pour activer votre compte.",
+      "devHint": "En développement local, aucun courriel n'est réellement envoyé : le lien s'affiche dans le terminal où roule le serveur.",
+      "backToSignIn": "Retour à la connexion"
+    },
+    "errors": {
+      "invalidCredentials": "Courriel ou mot de passe incorrect.",
+      "emailNotVerified": "Confirmez d'abord votre adresse courriel. Un nouveau lien vient de vous être envoyé.",
+      "emailExists": "Un compte existe déjà avec cette adresse.",
+      "domainNotAllowed": "Cette adresse courriel n'est pas acceptée pour l'instant.",
+      "weakPassword": "Le mot de passe doit contenir au moins 10 caractères.",
+      "tooManyRequests": "Trop de tentatives. Réessayez dans une minute.",
+      "generic": "Une erreur est survenue. Réessayez."
+    }
+  },
+  "dashboard": {
+    "title": "Accueil",
+    "greeting": "Bonjour, {name}",
+    "subtitle": "Voici où en est votre espace DentOS.",
+    "pendingTitle": "Compte en attente d'approbation",
+    "pendingBody": "Vous pouvez consulter le catalogue des cours. Les contributions (notes, questions d'examen) seront possibles une fois votre compte approuvé.",
+    "rejectedTitle": "Compte non approuvé",
+    "rejectedBody": "Votre demande d'accès n'a pas été approuvée. Contactez un administrateur si vous pensez qu'il s'agit d'une erreur.",
+    "catalogTitle": "Catalogue",
+    "catalogCount": "{count, plural, =0 {Aucun cours pour l'instant} one {# cours} other {# cours}}",
+    "browseCatalog": "Parcourir les cours",
+    "catalogEmptyAdmin": "Ajoutez des cours ou importez un fichier CSV.",
+    "manageCatalog": "Gérer le catalogue",
+    "accountTitle": "Mon compte",
+    "roadmapTitle": "En préparation",
+    "roadmapBody": "Ces modules seront ajoutés par étapes. Ils ne sont pas encore disponibles.",
+    "roadmap": {
+      "notes": "Notes de cours et plans de cours",
+      "passes": "Banque de questions d'examen (passes)",
+      "flashcards": "Cartes mémoire et exports Anki",
+      "tutor": "Tuteur IA propre à chaque cours",
+      "recordings": "Enregistrements et transcriptions"
+    }
+  },
+  "courses": {
+    "title": "Cours",
+    "subtitle": "Catalogue des cours du programme.",
+    "searchLabel": "Rechercher un cours",
+    "searchPlaceholder": "Code ou titre du cours",
+    "year": "Année",
+    "anyYear": "Toutes les années",
+    "yearN": "{year, selectordinal, one {#re} other {#e}} année",
+    "term": "Trimestre",
+    "anyTerm": "Tous les trimestres",
+    "filter": "Filtrer",
+    "clear": "Effacer",
+    "results": "{count, plural, =0 {Aucun résultat} one {# cours} other {# cours}}",
+    "emptyTitle": "Le catalogue est vide",
+    "emptyBody": "Aucun cours n'a encore été ajouté. Les cours sont saisis ou importés par un administrateur à partir de sources vérifiées.",
+    "noMatchesTitle": "Aucun cours trouvé",
+    "noMatchesBody": "Essayez un autre code, un autre titre ou retirez les filtres.",
+    "credits": "{credits} cr.",
+    "allCourses": "Tous les cours"
+  },
+  "course": {
+    "details": "Renseignements",
+    "credits": "Crédits",
+    "yearOfStudy": "Année d'études",
+    "typicalTerm": "Trimestre habituel",
+    "program": "Programme",
+    "notSpecified": "Non précisé",
+    "description": "Description",
+    "offerings": "Offres de cours",
+    "offeringsHelp": "Chaque offre correspond à une année et à un trimestre, avec ses propres enseignant·e·s. Le contenu d'une offre n'est jamais transféré automatiquement à une autre.",
+    "offeringsEmpty": "Aucune offre n'a encore été enregistrée pour ce cours.",
+    "instructors": "Enseignant·e·s",
+    "noInstructors": "Enseignant·e·s non précisé·e·s",
+    "source": "Source",
+    "retrievedOn": "consultée le {date}",
+    "sourceUnknown": "Source non indiquée",
+    "titleOriginal": "Titre original"
+  },
+  "settings": {
+    "title": "Réglages",
+    "appearance": "Apparence",
+    "appearanceHelp": "Le thème « Système » suit le réglage de votre appareil.",
+    "language": "Langue de l'interface",
+    "languageHelp": "Les titres officiels des cours restent dans leur langue d'origine lorsqu'aucune traduction vérifiée n'existe.",
+    "account": "Compte",
+    "name": "Nom",
+    "email": "Courriel",
+    "role": "Rôle",
+    "status": "Statut",
+    "emailVerified": "Courriel confirmé"
+  },
+  "admin": {
+    "title": "Administration",
+    "subtitle": "Gestion du catalogue et des comptes. Chaque modification est consignée dans l'historique.",
+    "catalog": "Catalogue",
+    "catalogHelp": "Programmes, cours et import CSV.",
+    "users": "Comptes",
+    "usersHelp": "Approbation des comptes et rôles.",
+    "pendingCount": "{count, plural, =0 {Aucun compte en attente} one {# compte en attente} other {# comptes en attente}}",
+    "programs": {
+      "title": "Programmes",
+      "empty": "Aucun programme pour l'instant.",
+      "new": "Nouveau programme",
+      "slug": "Identifiant (URL)",
+      "slugHint": "Lettres minuscules, chiffres et tirets.",
+      "nameFr": "Nom (français)",
+      "nameEn": "Nom (anglais)",
+      "institution": "Établissement"
+    },
+    "course": {
+      "new": "Nouveau cours",
+      "edit": "Modifier le cours",
+      "code": "Code du cours",
+      "titleFr": "Titre (français)",
+      "titleEn": "Titre (anglais)",
+      "descriptionFr": "Description (français)",
+      "descriptionEn": "Description (anglais)",
+      "credits": "Crédits",
+      "yearOfStudy": "Année d'études",
+      "typicalTerm": "Trimestre habituel",
+      "program": "Programme",
+      "created": "Cours créé."
+    },
+    "source": {
+      "title": "Provenance de l'information",
+      "help": "Indiquez d'où viennent ces renseignements (ex. Ampho Académique, site de la faculté).",
+      "name": "Nom de la source",
+      "url": "Lien de la source",
+      "retrievedOn": "Date de consultation"
+    },
+    "import": {
+      "title": "Importer des cours (CSV)",
+      "help": "Première ligne : <code>{header}</code>. Seuls code et title_fr sont obligatoires. Un cours existant (même code) est mis à jour.",
+      "file": "Fichier CSV",
+      "submit": "Importer",
+      "result": "{created, plural, =0 {Aucun cours créé} one {# cours créé} other {# cours créés}}, {updated, plural, =0 {aucun mis à jour} one {# mis à jour} other {# mis à jour}}.",
+      "errorsTitle": "Lignes ignorées",
+      "line": "Ligne {line}",
+      "noValidRows": "Aucune ligne valide : rien n'a été importé."
+    },
+    "offering": {
+      "add": "Ajouter une offre",
+      "academicYear": "Année universitaire",
+      "academicYearHint": "Format : 2026-2027",
+      "term": "Trimestre",
+      "professors": "Enseignant·e·s",
+      "professorsHint": "Séparez les noms par un point-virgule.",
+      "created": "Offre ajoutée."
+    },
+    "usersPage": {
+      "title": "Comptes",
+      "showPending": "En attente",
+      "showAll": "Tous",
+      "empty": "Aucun compte à afficher.",
+      "approve": "Approuver",
+      "reject": "Refuser",
+      "role": "Rôle",
+      "changeRole": "Changer le rôle",
+      "verified": "Courriel confirmé",
+      "notVerified": "Courriel non confirmé",
+      "you": "vous",
+      "joined": "Inscrit·e le {date}"
+    }
+  },
+  "errors": {
+    "required": "Ce champ est obligatoire.",
+    "invalid": "Valeur invalide.",
+    "invalidCode": "Code invalide (lettres, chiffres, espaces et tirets).",
+    "invalidSlug": "Identifiant invalide (minuscules, chiffres, tirets).",
+    "invalidAcademicYear": "Format attendu : 2026-2027.",
+    "duplicateCode": "Un cours avec ce code existe déjà.",
+    "duplicateSlug": "Un programme avec cet identifiant existe déjà.",
+    "duplicateOffering": "Cette offre existe déjà pour cette année et ce trimestre.",
+    "cannotChangeSelf": "Vous ne pouvez pas modifier votre propre compte ici.",
+    "notFound": "Élément introuvable.",
+    "fileMissing": "Choisissez un fichier.",
+    "fileTooLarge": "Fichier trop volumineux (1 Mo maximum).",
+    "fileType": "Seuls les fichiers .csv sont acceptés.",
+    "generic": "Une erreur est survenue. Réessayez.",
+    "notFoundTitle": "Page introuvable",
+    "notFoundBody": "Cette page n'existe pas ou a été déplacée.",
+    "forbiddenTitle": "Accès refusé",
+    "forbiddenBody": "Votre compte n'a pas les droits nécessaires pour voir cette page.",
+    "errorTitle": "Quelque chose n'a pas fonctionné",
+    "errorBody": "Le problème a été enregistré. Vous pouvez réessayer.",
+    "goHome": "Retour à l'accueil"
+  }
+}

@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+coverage/
+next-env.d.ts
+*.tsbuildinfo
+
+# Local database files and uploads
+.data/
+
+# Secrets — only .env.example is committed
+.env
+.env.*
+!.env.example
+
+.DS_Store
+npm-debug.log*
+pnpm-debug.log*

@@ -1,0 +1,261 @@
+{
+  "common": {
+    "appName": "DentOS",
+    "tagline": "The study platform for dental students",
+    "disclaimer": "Independent student project. Not affiliated with Université de Montréal.",
+    "save": "Save",
+    "create": "Create",
+    "cancel": "Cancel",
+    "back": "Back",
+    "loading": "Loading…",
+    "retry": "Try again",
+    "search": "Search",
+    "optional": "optional",
+    "none": "None",
+    "saved": "Saved.",
+    "planned": "Planned",
+    "skipToContent": "Skip to content"
+  },
+  "nav": {
+    "main": "Main navigation",
+    "dashboard": "Home",
+    "courses": "Courses",
+    "settings": "Settings",
+    "admin": "Admin",
+    "signOut": "Sign out"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "label": "Language",
+    "fr": "Français",
+    "en": "English"
+  },
+  "terms": {
+    "fall": "Fall",
+    "winter": "Winter",
+    "summer": "Summer"
+  },
+  "roles": {
+    "student": "Student",
+    "moderator": "Moderator",
+    "admin": "Administrator"
+  },
+  "approval": {
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign in",
+      "subtitle": "Access your courses and study resources.",
+      "submit": "Sign in",
+      "noAccount": "No account yet?",
+      "createAccount": "Create an account"
+    },
+    "signUp": {
+      "title": "Create an account",
+      "subtitle": "Your account is activated once you confirm your email and an administrator approves it.",
+      "submit": "Create account",
+      "haveAccount": "Already registered?",
+      "signInLink": "Sign in"
+    },
+    "fields": {
+      "name": "Full name",
+      "email": "Email address",
+      "password": "Password",
+      "passwordHint": "At least 10 characters."
+    },
+    "verify": {
+      "title": "Check your inbox",
+      "body": "We sent a confirmation link to your email address. Click it to activate your account.",
+      "devHint": "In local development no email is actually sent: the link is printed in the terminal running the server.",
+      "backToSignIn": "Back to sign in"
+    },
+    "errors": {
+      "invalidCredentials": "Incorrect email or password.",
+      "emailNotVerified": "Please confirm your email first. We just sent you a new link.",
+      "emailExists": "An account already exists with this email.",
+      "domainNotAllowed": "This email address isn't accepted at the moment.",
+      "weakPassword": "Password must be at least 10 characters.",
+      "tooManyRequests": "Too many attempts. Try again in a minute.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "dashboard": {
+    "title": "Home",
+    "greeting": "Hello, {name}",
+    "subtitle": "Here's where your DentOS space stands.",
+    "pendingTitle": "Account awaiting approval",
+    "pendingBody": "You can browse the course catalog. Contributions (notes, exam questions) open once your account is approved.",
+    "rejectedTitle": "Account not approved",
+    "rejectedBody": "Your access request wasn't approved. Contact an administrator if you think this is a mistake.",
+    "catalogTitle": "Catalog",
+    "catalogCount": "{count, plural, =0 {No courses yet} one {# course} other {# courses}}",
+    "browseCatalog": "Browse courses",
+    "catalogEmptyAdmin": "Add courses or import a CSV file.",
+    "manageCatalog": "Manage catalog",
+    "accountTitle": "My account",
+    "roadmapTitle": "Coming next",
+    "roadmapBody": "These modules will be added step by step. They aren't available yet.",
+    "roadmap": {
+      "notes": "Class notes and course outlines",
+      "passes": "Past exam question bank (passes)",
+      "flashcards": "Flashcards and Anki exports",
+      "tutor": "Course-specific AI tutor",
+      "recordings": "Recordings and transcripts"
+    }
+  },
+  "courses": {
+    "title": "Courses",
+    "subtitle": "The program's course catalog.",
+    "searchLabel": "Search courses",
+    "searchPlaceholder": "Course code or title",
+    "year": "Year",
+    "anyYear": "All years",
+    "yearN": "Year {year}",
+    "term": "Term",
+    "anyTerm": "All terms",
+    "filter": "Filter",
+    "clear": "Clear",
+    "results": "{count, plural, =0 {No results} one {# course} other {# courses}}",
+    "emptyTitle": "The catalog is empty",
+    "emptyBody": "No courses have been added yet. Courses are entered or imported by an administrator from verified sources.",
+    "noMatchesTitle": "No courses found",
+    "noMatchesBody": "Try another code or title, or remove the filters.",
+    "credits": "{credits} cr.",
+    "allCourses": "All courses"
+  },
+  "course": {
+    "details": "Details",
+    "credits": "Credits",
+    "yearOfStudy": "Year of study",
+    "typicalTerm": "Usual term",
+    "program": "Program",
+    "notSpecified": "Not specified",
+    "description": "Description",
+    "offerings": "Course offerings",
+    "offeringsHelp": "Each offering is one academic year and term, with its own instructors. An offering's content is never carried over to another automatically.",
+    "offeringsEmpty": "No offerings have been recorded for this course yet.",
+    "instructors": "Instructors",
+    "noInstructors": "Instructors not specified",
+    "source": "Source",
+    "retrievedOn": "retrieved {date}",
+    "sourceUnknown": "Source not specified",
+    "titleOriginal": "Original title"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "appearanceHelp": "“System” follows your device setting.",
+    "language": "Interface language",
+    "languageHelp": "Official course titles stay in their original language when no verified translation exists.",
+    "account": "Account",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "status": "Status",
+    "emailVerified": "Email confirmed"
+  },
+  "admin": {
+    "title": "Admin",
+    "subtitle": "Catalog and account management. Every change is recorded in the audit history.",
+    "catalog": "Catalog",
+    "catalogHelp": "Programs, courses and CSV import.",
+    "users": "Accounts",
+    "usersHelp": "Account approvals and roles.",
+    "pendingCount": "{count, plural, =0 {No pending accounts} one {# pending account} other {# pending accounts}}",
+    "programs": {
+      "title": "Programs",
+      "empty": "No programs yet.",
+      "new": "New program",
+      "slug": "Identifier (URL)",
+      "slugHint": "Lowercase letters, numbers and dashes.",
+      "nameFr": "Name (French)",
+      "nameEn": "Name (English)",
+      "institution": "Institution"
+    },
+    "course": {
+      "new": "New course",
+      "edit": "Edit course",
+      "code": "Course code",
+      "titleFr": "Title (French)",
+      "titleEn": "Title (English)",
+      "descriptionFr": "Description (French)",
+      "descriptionEn": "Description (English)",
+      "credits": "Credits",
+      "yearOfStudy": "Year of study",
+      "typicalTerm": "Usual term",
+      "program": "Program",
+      "created": "Course created."
+    },
+    "source": {
+      "title": "Where this information comes from",
+      "help": "Say where these details come from (e.g. Ampho Académique, the faculty website).",
+      "name": "Source name",
+      "url": "Source link",
+      "retrievedOn": "Date retrieved"
+    },
+    "import": {
+      "title": "Import courses (CSV)",
+      "help": "First row: <code>{header}</code>. Only code and title_fr are required. An existing course (same code) is updated.",
+      "file": "CSV file",
+      "submit": "Import",
+      "result": "{created, plural, =0 {No courses created} one {# course created} other {# courses created}}, {updated, plural, =0 {none updated} one {# updated} other {# updated}}.",
+      "errorsTitle": "Skipped rows",
+      "line": "Row {line}",
+      "noValidRows": "No valid rows: nothing was imported."
+    },
+    "offering": {
+      "add": "Add an offering",
+      "academicYear": "Academic year",
+      "academicYearHint": "Format: 2026-2027",
+      "term": "Term",
+      "professors": "Instructors",
+      "professorsHint": "Separate names with a semicolon.",
+      "created": "Offering added."
+    },
+    "usersPage": {
+      "title": "Accounts",
+      "showPending": "Pending",
+      "showAll": "All",
+      "empty": "No accounts to show.",
+      "approve": "Approve",
+      "reject": "Reject",
+      "role": "Role",
+      "changeRole": "Change role",
+      "verified": "Email confirmed",
+      "notVerified": "Email not confirmed",
+      "you": "you",
+      "joined": "Joined {date}"
+    }
+  },
+  "errors": {
+    "required": "This field is required.",
+    "invalid": "Invalid value.",
+    "invalidCode": "Invalid code (letters, numbers, spaces and dashes).",
+    "invalidSlug": "Invalid identifier (lowercase, numbers, dashes).",
+    "invalidAcademicYear": "Expected format: 2026-2027.",
+    "duplicateCode": "A course with this code already exists.",
+    "duplicateSlug": "A program with this identifier already exists.",
+    "duplicateOffering": "This offering already exists for that year and term.",
+    "cannotChangeSelf": "You can't change your own account here.",
+    "notFound": "Item not found.",
+    "fileMissing": "Choose a file.",
+    "fileTooLarge": "File too large (1 MB maximum).",
+    "fileType": "Only .csv files are accepted.",
+    "generic": "Something went wrong. Please try again.",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "This page doesn't exist or has moved.",
+    "forbiddenTitle": "Access denied",
+    "forbiddenBody": "Your account doesn't have permission to view this page.",
+    "errorTitle": "Something didn't work",
+    "errorBody": "The problem was logged. You can try again.",
+    "goHome": "Back to home"
+  }
+}

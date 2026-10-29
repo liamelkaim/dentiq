@@ -1,0 +1,9 @@
+minimumReleaseAgeExclude:
+  - '@electric-sql/pglite@0.5.13'
+
+# Install scripts pnpm may run. Everything else stays blocked.
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
+  '@parcel/watcher': false
+  '@swc/core': false
