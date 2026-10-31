@@ -79,6 +79,14 @@ describe("configuration", () => {
     expect(() => validateEnv({ ...valid, BETTER_AUTH_SECRET: "replace-me" })).toThrow();
   });
 
+  it("checks the academic year start month at startup", () => {
+    expect(() => validateEnv({ ...valid, ACADEMIC_YEAR_START_MONTH: "9" })).not.toThrow();
+    expect(() => validateEnv({ ...valid, ACADEMIC_YEAR_START_MONTH: "" })).not.toThrow();
+    for (const bad of ["0", "13", "sept", "8.5"]) {
+      expect(() => validateEnv({ ...valid, ACADEMIC_YEAR_START_MONTH: bad }), bad).toThrow(/ACADEMIC_YEAR_START_MONTH/);
+    }
+  });
+
   it("requires a real database in production unless the local database is explicitly allowed", () => {
     expect(() => validateEnv({ ...valid, NODE_ENV: "production" })).toThrow(/DATABASE_URL/);
     expect(() => validateEnv({ ...valid, NODE_ENV: "production", ALLOW_LOCAL_DATABASE: "true" })).not.toThrow();

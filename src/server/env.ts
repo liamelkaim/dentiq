@@ -13,6 +13,11 @@ const envSchema = z.object({
   BETTER_AUTH_URL: z.url("must be the app's URL, e.g. http://localhost:3000"),
   ALLOWED_EMAIL_DOMAINS: z.string().optional(),
   ADMIN_EMAILS: z.string().optional(),
+  // Month (1-12) when the academic year starts; decides which exam passes count as "current-year".
+  ACADEMIC_YEAR_START_MONTH: z
+    .string()
+    .optional()
+    .refine((v) => !v?.trim() || (Number.isInteger(Number(v)) && Number(v) >= 1 && Number(v) <= 12), "must be a whole number from 1 to 12"),
 });
 
 export type Env = z.infer<typeof envSchema>;
