@@ -12,16 +12,19 @@ export function formatBytes(bytes: number, locale: string): string {
 
 export async function ResourceStatusBadges({
   isOfficial,
+  visibility,
   status,
   period,
 }: {
   isOfficial: boolean;
+  visibility: "private" | "shared";
   status: string;
   period: string;
 }) {
   const t = await getTranslations("resources");
   return (
     <>
+      {visibility === "private" && <Badge tone="accent">{t("visibility.private")}</Badge>}
       {status !== "published" && (
         <Badge tone={status === "pending" ? "warning" : "danger"}>{t(`status.${status}`)}</Badge>
       )}
@@ -66,7 +69,7 @@ export async function ResourceList({
             }
             title={r.title}
             subtitle={details.join(" · ")}
-            meta={<ResourceStatusBadges isOfficial={r.isOfficial} status={r.status} period={r.period} />}
+            meta={<ResourceStatusBadges visibility={r.visibility} isOfficial={r.isOfficial} status={r.status} period={r.period} />}
           />
         );
       })}

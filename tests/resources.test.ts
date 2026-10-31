@@ -10,6 +10,8 @@ import {
   createResource,
   getDownload,
   getResource,
+  listCourseSummaries,
+  listFilterOptions,
   listModerationQueue,
   listResources,
   moderateResource,
@@ -264,5 +266,109 @@ describe("moderation and reports", () => {
   it("lists pending uploads in the moderation queue", async () => {
     await upload(alice, "a");
     expect((await listModerationQueue(db, moderator)).pending).toHaveLength(1);
+  });
+});
+
+describe("course summaries", () => {
+  it("uses the most recent offering's instructors and counts only published documents", async () => {
+    await upload(moderator, "published");
+    await upload(alice, "pending");
+    const [summary] = await listCourseSummaries(db, bob);
+    expect(summary).toMatchObject({
+      code: "TEST 1001",
+      currentOffering: { academicYear: "2026-2027", term: "fall" },
+      instructors: ["Prof Nouveau"],
+      documentCount: 1,
+    });
+  });
+
+  it("hides document counts from accounts without library access", async () => {
+    await upload(moderator, "published");
+    const [summary] = await listCourseSummaries(db, pendingStudent);
+    expect(summary?.documentCount).toBeNull();
+  });
+
+  it("filters by course id and returns nothing for an empty list", async () => {
+    expect(await listCourseSummaries(db, bob, { courseIds: [] })).toEqual([]);
+    expect((await listCourseSummaries(db, bob, { courseIds: [courseId] })).map((c) => c.id)).toEqual([courseId]);
+  });
+});
+
+
+describe("personal documents", () => {
+  it("defaults legacy inputs to shared and rejects unknown visibility values", () => {
+    expect(input().visibility).toBe("shared");
+    expect(() => input({ visibility: "public" })).toThrow();
+  });
+
+  it("allows only the owner to read, preview and download, including against administrators", async () => {
+    const id = await upload(alice, "private", { visibility: "private" });
+    const own = await getResource(db, alice, id);
+    expect(own).toMatchObject({ visibility: "private", canEdit: true, canModerate: false, canReport: false });
+    const versionId = own!.versions[0]!.id;
+    expect(await getDownload(db, alice, versionId)).not.toBeNull();
+    for (const viewer of [bob, moderator, admin, pendingStudent]) {
+      expect(await getResource(db, viewer, id)).toBeNull();
+      expect(await getDownload(db, viewer, versionId)).toBeNull();
+      expect(await listResources(db, viewer)).toEqual([]);
+      expect(await listResources(db, viewer, { visibility: "private", status: "published" })).toEqual([]);
+      expect(await addVersion(db, storage, viewer, id, pdf(`attack-${viewer.id}`), null)).toMatchObject({ ok: false });
+    }
+  });
+
+  it("keeps private titles, topics and counts out of other people's searches", async () => {
+    const id = await upload(alice, "search-private", { visibility: "private", title: "Private title", topic: "Private topic" });
+    expect((await listResources(db, alice, { q: "Private title", visibility: "private" })).map(r => r.id)).toEqual([id]);
+    expect(await listResources(db, alice, { visibility: "shared" })).toEqual([]);
+    for (const viewer of [bob, moderator, admin]) {
+      expect(await listResources(db, viewer, { q: "Private" })).toEqual([]);
+      expect((await listFilterOptions(db, viewer)).topics).not.toContain("Private topic");
+      expect((await listCourseSummaries(db, viewer))[0]?.documentCount).toBe(0);
+    }
+    expect((await listFilterOptions(db, alice)).topics).toContain("Private topic");
+    expect((await listCourseSummaries(db, alice))[0]?.documentCount).toBe(1);
+  });
+
+  it("never sends private documents to moderation or allows a moderator to publish them", async () => {
+    const id = await upload(alice, "private-moderation", { visibility: "private", isOfficial: true });
+    expect((await getResource(db, alice, id))?.isOfficial).toBe(false);
+    expect(await listModerationQueue(db, moderator)).toEqual({ pending: [], reports: [] });
+    for (const action of ["publish", "hide", "remove"] as const) {
+      expect(await moderateResource(db, admin, id, action)).toEqual({ ok: false, error: "notFound" });
+    }
+    expect(await setOfficial(db, admin, id, true)).toEqual({ ok: false, error: "notFound" });
+    expect(await reportResource(db, alice, { resourceId: id, reason: "other", details: null })).toMatchObject({ ok: false });
+  });
+
+  it("keeps every new version private and immediately available to its owner", async () => {
+    const id = await upload(alice, "personal-v1", { visibility: "private" });
+    expect(await addVersion(db, storage, alice, id, pdf("personal-v2"), "Revision")).toMatchObject({ ok: true });
+    const own = (await getResource(db, alice, id))!;
+    expect(own.status).toBe("published");
+    expect(own.versions).toHaveLength(2);
+    for (const version of own.versions) {
+      expect(await getDownload(db, alice, version.id)).not.toBeNull();
+      expect(await getDownload(db, admin, version.id)).toBeNull();
+    }
+    expect((await listModerationQueue(db, moderator)).pending).toEqual([]);
+  });
+
+  it("does not disclose private file existence through duplicate detection", async () => {
+    const aliceId = await upload(alice, "identical", { visibility: "private" });
+    const bobId = await upload(bob, "identical", { visibility: "private" });
+    expect(bobId).not.toBe(aliceId);
+    const sharedId = await upload(moderator, "identical");
+    expect(sharedId).not.toBe(aliceId);
+    expect(await createResource(db, storage, alice, input({ visibility: "private" }), pdf("identical")))
+      .toMatchObject({ ok: false, error: "duplicateFile", resourceId: aliceId });
+  });
+
+  it("preserves existing approval requirements for personal uploads", async () => {
+    expect(await createResource(db, storage, pendingStudent, input({ visibility: "private" }), pdf("private-pending")))
+      .toEqual({ ok: false, error: "forbidden" });
+  });
+
+  it("rejects invalid visibility at the database boundary", async () => {
+    await expect(db.insert(resources).values({ courseId, kind: "notes", title: "TEST", visibility: "public" as "private" })).rejects.toThrow();
   });
 });

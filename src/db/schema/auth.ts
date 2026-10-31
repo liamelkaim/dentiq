@@ -16,7 +16,7 @@ export const user = pgTable("user", {
   image: text(),
   createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  // DentOS fields. Never settable by the user at sign-up (see src/server/auth/auth.ts).
+  // Dentiq fields. Never settable by the user at sign-up (see src/server/auth/auth.ts).
   role: text({ enum: roles }).notNull().default("student"),
   approvalStatus: text({ enum: approvalStatuses }).notNull().default("pending"),
 });

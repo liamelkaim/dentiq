@@ -6,6 +6,7 @@ import { z } from "zod";
 import { getDb } from "@/db/client";
 import { requireUser } from "@/server/auth/session";
 import { getStorage } from "@/server/storage";
+import { getMaxFileBytes } from "./files";
 import {
   addVersion,
   createResource,
@@ -59,6 +60,8 @@ function formObject(form: FormData) {
 }
 
 function revalidateResources(resourceId?: string) {
+  revalidatePath("/");
+  revalidatePath("/study", "layout");
   revalidatePath("/resources");
   revalidatePath("/moderation");
   revalidatePath("/courses", "layout");
@@ -69,6 +72,10 @@ export async function uploadResourceAction(_prev: ResourceFormState, form: FormD
   const viewer = await requireUser();
   const parsed = resourceInputSchema.safeParse(formObject(form));
   if (!parsed.success) return { status: "error", message: "errors.invalid", fieldErrors: toFieldErrors(parsed.error) };
+  const candidate = form.get("file");
+  if (candidate instanceof File && candidate.size > getMaxFileBytes()) {
+    return { status: "error", message: "errors.uploadTooLarge", fieldErrors: { file: "errors.uploadTooLarge" } };
+  }
   const file = await readFile(form);
   if (!file) return { status: "error", message: "errors.fileMissing", fieldErrors: { file: "errors.fileMissing" } };
 
@@ -84,6 +91,10 @@ export async function addVersionAction(_prev: ResourceFormState, form: FormData)
   const viewer = await requireUser();
   const parsed = versionInputSchema.safeParse(formObject(form));
   if (!parsed.success) return { status: "error", message: "errors.invalid", fieldErrors: toFieldErrors(parsed.error) };
+  const candidate = form.get("file");
+  if (candidate instanceof File && candidate.size > getMaxFileBytes()) {
+    return { status: "error", message: "errors.uploadTooLarge", fieldErrors: { file: "errors.uploadTooLarge" } };
+  }
   const file = await readFile(form);
   if (!file) return { status: "error", message: "errors.fileMissing", fieldErrors: { file: "errors.fileMissing" } };
 

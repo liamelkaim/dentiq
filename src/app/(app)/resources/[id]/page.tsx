@@ -9,7 +9,7 @@ import { Badge, Button, buttonClass, DescriptionList, Input, List, ListRow, Noti
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { requireUser } from "@/server/auth/session";
-import { previewKind } from "@/server/resources/files";
+import { getMaxFileBytes, previewKind } from "@/server/resources/files";
 import { moderateResourceAction, resolveReportAction, setOfficialAction } from "@/server/resources/actions";
 import { getResource } from "@/server/resources/service";
 
@@ -49,12 +49,13 @@ export default async function ResourcePage({ params }: { params: Params }) {
           <span className="mt-1 inline-flex flex-wrap items-center gap-1.5">
             <Badge>{t(`resources.kinds.${resource.kind}`)}</Badge>
             {!resource.isOfficial && <Badge>{t("resources.student")}</Badge>}
-            <ResourceStatusBadges isOfficial={resource.isOfficial} status={resource.status} period={resource.period} />
+            <ResourceStatusBadges visibility={resource.visibility} isOfficial={resource.isOfficial} status={resource.status} period={resource.period} />
           </span>
         }
       />
 
       <div className="mb-6 flex flex-col gap-3">
+        {resource.visibility === "private" && <Notice tone="accent">{t("resources.visibility.privateHelp")}</Notice>}
         {resource.status === "pending" && <Notice tone="warning">{t("resources.detail.pendingNotice")}</Notice>}
         {resource.status === "hidden" && <Notice tone="danger">{t("resources.detail.hiddenNotice")}</Notice>}
         {resource.status === "removed" && <Notice tone="danger">{t("resources.detail.removedNotice")}</Notice>}
@@ -149,7 +150,7 @@ export default async function ResourcePage({ params }: { params: Params }) {
 
       {(resource.canEdit || resource.canReport) && (
         <div className="mb-8 flex flex-col gap-4">
-          {resource.canEdit && resource.status !== "removed" && <NewVersionForm resourceId={resource.id} isModerator={resource.canModerate} />}
+          {resource.canEdit && resource.status !== "removed" && <NewVersionForm maxFileBytes={getMaxFileBytes()} resourceId={resource.id} isModerator={resource.canModerate} visibility={resource.visibility} />}
           {resource.canReport && <ReportForm resourceId={resource.id} />}
         </div>
       )}

@@ -2,7 +2,7 @@
 
 ## In one paragraph
 
-DentOS is **one Next.js application** written in TypeScript. The same app renders the pages and runs the server code (database queries, permission checks), so there is no separate API to deploy. Data lives in **PostgreSQL**, accessed through **Drizzle ORM** with versioned SQL migrations. Accounts are handled by **Better Auth**, an open-source library that stores users in our own database. The interface is bilingual (French default, English) with **next-intl**, styled with **Tailwind CSS** and shared design tokens, and installable on a phone's home screen (web app manifest).
+Dentiq is **one Next.js application** written in TypeScript. The same app renders the pages and runs the server code (database queries, permission checks), so there is no separate API to deploy. Data lives in **PostgreSQL**, accessed through **Drizzle ORM** with versioned SQL migrations. Accounts are handled by **Better Auth**, an open-source library that stores users in our own database. The interface is bilingual (French default, English) with **next-intl**, styled with **Tailwind CSS** and shared design tokens, and installable on a phone's home screen (web app manifest).
 
 ## Folder structure
 
@@ -114,3 +114,16 @@ Constraints are enforced by the database too (unique codes, year of study 1–8,
 
 `pnpm test` runs Vitest. Each test file creates a fresh **in-memory Postgres** with all migrations applied, so tests exercise the real schema and constraints. Covered: authentication rules, permission rules, catalog validation, CSV import, search, offerings, account approval, configuration validation, translation completeness, and (Phase 2) uploads, file-type checks, duplicate detection, versions, current/historical classification, library filters, visibility/download permissions, moderation, reports, and private storage (including path-escape attempts).
 Not yet automated: browser-level tests. Phases 1 and 2 were verified manually in a real browser (sign-up, uploads, preview, moderation, reports, both languages and themes, 390 px phone width).
+
+
+## Personal resource extension — 2026-10-29
+
+`resources.visibility` is `shared | private`, with a database check constraint and a default of
+`shared` for migration compatibility. The upload form explicitly defaults to `private`.
+No new service or dependency was added. Existing version history and storage are reused.
+Read, edit, download, list, filter, summary and duplicate detection paths all enforce visibility.
+Private resources bypass shared-content moderation and cannot be marked official.
+
+Current catalog codes are globally unique. Supporting identical course codes across universities,
+separate university libraries and memberships needs a future additive catalog migration; neutral
+wording alone does not implement university tenancy.

@@ -3,6 +3,10 @@
 import { createHash } from "node:crypto";
 
 export const MAX_FILE_BYTES = 25 * 1024 * 1024;
+export function getMaxFileBytes(): number {
+  // Leave room for multipart/form fields below Vercel's 4.5 MB function request limit.
+  return process.env.VERCEL === "1" ? 4 * 1024 * 1024 : MAX_FILE_BYTES;
+}
 
 type FileType = { mime: string; extensions: string[]; signature: number[]; preview: "pdf" | "image" | null };
 
@@ -68,7 +72,7 @@ export type UploadCheck =
 
 export function checkUpload(fileName: string, bytes: Uint8Array): UploadCheck {
   if (bytes.byteLength === 0) return { ok: false, error: "fileMissing" };
-  if (bytes.byteLength > MAX_FILE_BYTES) return { ok: false, error: "fileTooLarge" };
+  if (bytes.byteLength > getMaxFileBytes()) return { ok: false, error: "fileTooLarge" };
   const type = detectFileType(fileName, bytes);
   if (!type) return { ok: false, error: "fileType" };
   return { ok: true, mime: type.mime, fileName: sanitizeFileName(fileName), hash: sha256(bytes) };

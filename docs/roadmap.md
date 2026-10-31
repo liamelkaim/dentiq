@@ -83,3 +83,20 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 - No password reset yet — a user who forgets their password needs an admin (or a database reset) for now.
 - Rate limiting is in-memory and only active in production mode.
 - TypeScript is pinned to 6.0 because the lint tooling doesn't support TypeScript 7 yet.
+
+
+## Dentiq alignment — 2026-10-29
+
+- ✅ Kept the existing Next.js app, data model, Dentiq identity, responsive dashboard, and focus reader.
+- ✅ Personal uploads alongside the shared library; new upload form defaults to Only me.
+- ✅ Owner-only read, preview, download and version access, including protection from admin accounts.
+- ✅ Visibility filter and badges in the library, document details, course notes and focus reader.
+- ✅ Private topics and counts do not leak into other accounts; duplicates are scoped by visibility and owner.
+- ✅ Additive migration preserves all existing records as shared.
+- ✅ Mobile study drawer state and close-on-selection; arrow-key navigation for preferences.
+- ✅ University-neutral English/French interface wording.
+- ✅ TypeScript, lint, 76 automated tests and production build passed.
+- 📋 University-scoped libraries/catalog identifiers and membership remain to be implemented.
+- 📋 Unified tutor, flashcards and practice exams remain future work, sharing an eventual learning model.
+
+This extends Phase 2; it does not claim completion of the seven-phase vision.

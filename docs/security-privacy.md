@@ -1,6 +1,6 @@
 # Security and privacy
 
-This is a record of decisions, not a claim of compliance. **DentOS is not yet production-ready** — see "Before going live" below.
+This is a record of decisions, not a claim of compliance. **Dentiq is not yet production-ready** — see "Before going live" below.
 
 ## In place (Phase 1)
 
@@ -28,7 +28,7 @@ This is a record of decisions, not a claim of compliance. **DentOS is not yet pr
 - Files are stored outside the public web folder (`.data/uploads`, owner-only permissions `600`/`700`) under random keys; storage keys can't escape the folder (tested).
 - Every download re-checks permissions on the server: unauthenticated → 401; not allowed → 404 (doesn't reveal that the file exists).
 - File type decided from the file's first bytes *and* extension (PDF, DOCX, PPTX, PNG, JPG). HTML, SVG, scripts and renamed executables are rejected. 25 MB limit.
-- Responses: `Content-Disposition` (attachment unless previewing a PDF/image), `X-Content-Type-Options: nosniff`, `Cache-Control: private, no-store`, framing allowed only by DentOS itself; non-PDF files are additionally sandboxed by CSP.
+- Responses: `Content-Disposition` (attachment unless previewing a PDF/image), `X-Content-Type-Options: nosniff`, `Cache-Control: private, no-store`, framing allowed only by Dentiq itself; non-PDF files are additionally sandboxed by CSP.
 - Only approved members (and moderators) can see shared files. Student uploads are reviewed before publication. Removed documents are hidden from everyone but moderators; the file is kept for the record (no hard delete yet).
 - Uploaders must confirm they have the right to share; each document shows a personal-use notice. **This is not a copyright clearance process** — see legal questions below.
 - Not yet: antivirus scanning, per-user upload quotas, retention/deletion policy for removed files.
@@ -62,3 +62,21 @@ Flagged for qualified review — **not** answered here:
 - **Recordings (Phase 6):** consent of professors and classmates; university recording policies.
 - **Copyright:** redistribution of course notes, outlines and slides; past exam questions and instructor rules (Phase 2–3).
 - **Use of the Université de Montréal name or logo** — currently text-only with a non-affiliation notice.
+
+
+## Personal document access — 2026-10-29
+
+The resource visibility is independent of moderation status. Existing records retain `shared`;
+new UI uploads default to `private`. Server-side read/edit checks enforce ownership before role
+privileges, so an administrator cannot retrieve another user's private document through the app.
+File version downloads use the same rule. Private items are excluded from moderation, other users'
+searches, topic suggestions and document counts. Duplicate detection is scoped to private owner
+or shared collection, avoiding disclosure that another user holds the same private file.
+
+A personal document's internally `published` status means available to its owner, not shared.
+New versions keep visibility. No visibility-changing action is exposed. Only approved, verified
+members may upload in either mode. Existing shared-resource moderation policy is unchanged.
+
+This does not encrypt documents from the machine/server operator. Personal documents remain on
+private local disk, with the existing file limits and validation. Account deletion, retention,
+malware scanning and hosted storage remain production prerequisites.

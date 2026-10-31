@@ -39,11 +39,12 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
 
   const params = await searchParams;
   const db = getDb();
-  const options = await listFilterOptions(db);
+  const options = await listFilterOptions(db, viewer);
   const uuid = (v?: string) => (v && /^[0-9a-f-]{36}$/i.test(v) ? v : undefined);
   const academicYear = options.academicYears.includes(params.year ?? "") ? params.year : undefined;
   const term = pick(params.term, terms) as Term | undefined;
   const filters: ResourceFilters = {
+    visibility: pick(params.visibility, ["shared", "private"] as const),
     q: params.q?.slice(0, 100),
     courseId: uuid(params.course),
     professorId: uuid(params.professor),
@@ -132,6 +133,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
             resourceKinds.map((k) => ({ value: k, label: t(`resources.kinds.${k}`) })),
           )}
         </div>
+        {select("visibility", t("resources.visibility.label"), t("resources.visibility.all"), filters.visibility, ["private", "shared"].map((v) => ({ value: v, label: t(`resources.visibility.${v}`) })))}
         <div className="flex gap-2">
           <Button type="submit" variant="secondary">
             {t("resources.filters.apply")}

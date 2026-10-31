@@ -1,8 +1,8 @@
 {
   "common": {
-    "appName": "DentOS",
+    "appName": "Dentiq",
     "tagline": "The study platform for dental students",
-    "disclaimer": "Independent student project. Not affiliated with Université de Montréal.",
+    "disclaimer": "Independent student project. Not affiliated with or endorsed by a university.",
     "save": "Save",
     "create": "Create",
     "cancel": "Cancel",
@@ -24,7 +24,56 @@
     "moderation": "Moderation",
     "settings": "Settings",
     "admin": "Admin",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "comingSoon": "Coming soon",
+    "soon": "Soon",
+    "passes": "Passes",
+    "flashcards": "Flashcards",
+    "tutor": "AI Tutor",
+    "recordings": "Recordings",
+    "analytics": "Progress"
+  },
+  "home": {
+    "welcome": "Welcome back, {name}.",
+    "heroSubtitle": "Knowledge today. A brighter tomorrow.",
+    "searchLabel": "Search",
+    "searchDocuments": "Search documents…",
+    "searchCourses": "Search courses…",
+    "quickCourses": "Browse courses",
+    "quickResources": "Resources",
+    "quickModeration": "Moderation",
+    "quickAdmin": "Admin",
+    "myCourses": "Courses",
+    "viewAll": "View all",
+    "coursesEmpty": "The catalog is empty for now.",
+    "documents": "{count, plural, =0 {No documents} one {# document} other {# documents}}",
+    "noOffering": "No offering recorded",
+    "recent": "Recently added",
+    "recentEmpty": "No published documents yet.",
+    "progressTitle": "Study progress",
+    "progressBody": "Progress will appear once flashcards and quizzes are available. Dentiq only shows real data."
+  },
+  "courseLayout": {
+    "tabs": "Course sections",
+    "overview": "Overview",
+    "notes": "Notes",
+    "soonLabel": "{feature} — coming soon",
+    "currentOffering": "Current offering",
+    "offerings": "{count, plural, =0 {No offerings} one {# offering} other {# offerings}}",
+    "studyMode": "Study mode",
+    "openDetails": "Document details",
+    "selectDocument": "Choose a document to show it here.",
+    "seeNotes": "See the course notes"
+  },
+  "study": {
+    "title": "Study mode",
+    "exit": "Exit study mode",
+    "exitShort": "Exit",
+    "escHint": "Esc to exit",
+    "documents": "Course documents",
+    "showList": "Show the document list",
+    "hideList": "Hide the document list",
+    "empty": "No other documents in this section."
   },
   "theme": {
     "label": "Theme",
@@ -92,7 +141,7 @@
   "dashboard": {
     "title": "Home",
     "greeting": "Hello, {name}",
-    "subtitle": "Here's where your DentOS space stands.",
+    "subtitle": "Here's where your Dentiq space stands.",
     "pendingTitle": "Account awaiting approval",
     "pendingBody": "You can browse the course catalog. Contributions (notes, exam questions) open once your account is approved.",
     "rejectedTitle": "Account not approved",
@@ -119,7 +168,7 @@
   },
   "courses": {
     "title": "Courses",
-    "subtitle": "The program's course catalog.",
+    "subtitle": "Explore courses and materials for your dental studies.",
     "searchLabel": "Search courses",
     "searchPlaceholder": "Course code or title",
     "year": "Year",
@@ -243,7 +292,7 @@
   },
   "resources": {
     "title": "Resources",
-    "subtitle": "Shared course outlines, notes and study documents.",
+    "subtitle": "Your personal documents and the shared course library.",
     "noAccessTitle": "For approved members only",
     "noAccessBody": "Shared documents are available once your email is confirmed and an administrator approves your account.",
     "upload": "Add a document",
@@ -311,7 +360,7 @@
       "hiddenNotice": "This document was hidden by a moderator.",
       "removedNotice": "This document was removed. It is kept for the record.",
       "historicalNotice": "This document comes from an earlier offering ({offering}). It may no longer match the current course.",
-      "usageNotice": "For your personal study use. Don't share this document outside DentOS.",
+      "usageNotice": "For your personal study use. Don't share this document outside Dentiq.",
       "unknownUser": "Deleted account"
     },
     "form": {
@@ -325,13 +374,15 @@
       "offeringHint": "Link the document to the year and term it was produced in.",
       "noOffering": "General (no specific offering)",
       "file": "File",
-      "fileHint": "PDF, DOCX, PPTX, PNG or JPG — 25 MB maximum.",
+      "fileHint": "PDF, DOCX, PPTX, PNG or JPG — {maxMB} MB maximum.",
       "official": "Official document (provided by the instructor or faculty)",
-      "rights": "I confirm I have the right to share this document with DentOS members. It contains no unauthorized exam and no personal information.",
+      "rights": "I confirm I have the right to share this document with Dentiq members. It contains no unauthorized exam and no personal information.",
       "reviewNotice": "Your document will be visible after a moderator reviews it.",
       "submit": "Upload",
       "uploading": "Uploading…",
-      "seeExisting": "See the existing document"
+      "seeExisting": "See the existing document",
+      "privateRights": "I confirm I have the right to store this document for personal study. It contains no unauthorized exam or personal information.",
+      "sizeError": "Choose a file smaller than {maxMB} MB."
     },
     "version": {
       "title": "New version",
@@ -365,6 +416,13 @@
       "resolve": "Mark as handled",
       "dismiss": "Dismiss",
       "note": "Note (optional)"
+    },
+    "visibility": {
+      "label": "Document access",
+      "private": "Only me",
+      "shared": "Shared library",
+      "all": "Personal and shared",
+      "privateHelp": "Only your account can open this document in Dentiq. It does not appear in the shared library or moderation queue."
     }
   },
   "moderation": {
@@ -377,7 +435,7 @@
     "by": "by {name}"
   },
   "errors": {
-    "uploadTooLarge": "File too large (25 MB maximum).",
+    "uploadTooLarge": "This file exceeds the upload limit shown in the form.",
     "uploadType": "File type not accepted. Allowed: PDF, DOCX, PPTX, PNG, JPG.",
     "duplicateFile": "This file has already been uploaded.",
     "invalidOffering": "This offering doesn't belong to this course.",
@@ -405,5 +463,66 @@
     "errorTitle": "Something didn't work",
     "errorBody": "The problem was logged. You can try again.",
     "goHome": "Back to home"
+  },
+  "legal": {
+    "back": "Back",
+    "privacyLink": "Privacy",
+    "termsLink": "Terms",
+    "updated": "Draft, last updated October 31, 2026. Not yet reviewed by a lawyer.",
+    "privacy": {
+      "title": "Privacy",
+      "intro": "This explains what Dentiq stores about you and why. It is a working draft written for the current version of the app.",
+      "collectTitle": "What we store",
+      "collect": [
+        "Your name and email address, used to create your account and send verification messages.",
+        "A password hash. Your password itself is never stored.",
+        "Your role and approval status, so moderators can control access.",
+        "Session details (IP address and browser) used to keep you signed in and protect your account.",
+        "Files and notes you upload, with their title, course, version and source information.",
+        "Your language and theme choice, kept in your browser."
+      ],
+      "useTitle": "How it is used",
+      "use": [
+        "To run your account and show you course material you are allowed to see.",
+        "To let moderators review uploads before they are shared.",
+        "We do not sell your data and we do not show advertising."
+      ],
+      "privateTitle": "Private material",
+      "private": "Material you mark as personal stays visible only to you. Shared material is visible to approved users. Access is checked on the server, not only in the interface.",
+      "rightsTitle": "Your choices",
+      "rights": "You can ask to see, correct or delete your account data. Contact details for these requests will be added before the public launch.",
+      "reviewTitle": "Status",
+      "review": "This draft has not been reviewed by a legal professional. It does not claim compliance with Quebec Law 25 or any other law."
+    },
+    "terms": {
+      "title": "Terms of use",
+      "intro": "These are the working rules for using Dentiq. They are a draft and will be reviewed before the public launch.",
+      "sections": [
+        {
+          "title": "Who can use Dentiq",
+          "body": "Dentiq is for dental students. Your account may need approval before you can see shared material."
+        },
+        {
+          "title": "Your uploads",
+          "body": "Only upload material you have the right to share. Having a file does not give you permission to redistribute it. This applies especially to past exams and course documents from professors."
+        },
+        {
+          "title": "Student content and official content",
+          "body": "Notes and resources written by students are not official course material. Always check them against your professors' sources."
+        },
+        {
+          "title": "Moderation",
+          "body": "Moderators may hold back, correct or remove content that breaks these rules or that you are not allowed to share."
+        },
+        {
+          "title": "Study use only",
+          "body": "Dentiq is a study aid. It does not provide clinical or professional advice."
+        },
+        {
+          "title": "Changes",
+          "body": "These terms may change before and after launch. We will update the date at the top of this page."
+        }
+      ]
+    }
   }
 }

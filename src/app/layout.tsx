@@ -7,10 +7,10 @@ import "./globals.css";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("common");
   return {
-    title: { default: "DentOS", template: "%s · DentOS" },
+    title: { default: "Dentiq", template: "%s · Dentiq" },
     description: t("tagline"),
-    applicationName: "DentOS",
-    appleWebApp: { capable: true, title: "DentOS", statusBarStyle: "default" },
+    applicationName: "Dentiq",
+    appleWebApp: { capable: true, title: "Dentiq", statusBarStyle: "default" },
   };
 }
 
@@ -19,8 +19,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f5f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0b0c" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f8fc" },
+    { media: "(prefers-color-scheme: dark)", color: "#07111f" },
   ],
 };
 

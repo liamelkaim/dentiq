@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# DentOS — notes for AI assistants
+# Dentiq — notes for AI assistants
 
 Read before changing anything: `README.md`, `docs/architecture.md`, `docs/security-privacy.md`, `docs/roadmap.md`.
 The owner's full product requirements are in `docs/master-prompt.md` (its section 24 "Immediate task" describes Phase 1, already done; check `docs/roadmap.md` for current status).

@@ -1,0 +1,2 @@
+ALTER TABLE "resources" ADD COLUMN "visibility" text DEFAULT 'shared' NOT NULL;--> statement-breakpoint
+ALTER TABLE "resources" ADD CONSTRAINT "resources_visibility_valid" CHECK ("resources"."visibility" in ('shared', 'private'));

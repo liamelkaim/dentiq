@@ -44,13 +44,25 @@ function Segmented({
             type="button"
             role="radio"
             aria-checked={selected}
+            tabIndex={selected || (!value && option === options[0]) ? 0 : -1}
+            onKeyDown={(event) => {
+              if (!["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp", "Home", "End"].includes(event.key)) return;
+              event.preventDefault();
+              const index = options.indexOf(option);
+              const next = event.key === "Home" ? 0 : event.key === "End" ? options.length - 1 :
+                (index + (["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1) + options.length) % options.length;
+              const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("button");
+              buttons?.[next]?.focus();
+              onChange(options[next]!.value);
+            }}
             aria-label={compact ? option.label : undefined}
             title={compact ? option.label : undefined}
             disabled={disabled}
             onClick={() => onChange(option.value)}
             className={cx(
-              "inline-flex h-8 items-center justify-center gap-1.5 rounded-[8px] text-[13px] font-medium transition-colors",
-              compact ? "w-9" : "px-3",
+              // 40 px targets on touch screens, denser on desktop.
+              "inline-flex h-10 items-center justify-center gap-1.5 rounded-[8px] text-[13px] font-medium transition-colors sm:h-8",
+              compact ? "w-10 sm:w-9" : "px-3",
               selected ? "bg-surface text-text shadow-card" : "text-text-subtle hover:text-text",
             )}
           >

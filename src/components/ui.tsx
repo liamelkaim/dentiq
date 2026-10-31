@@ -1,7 +1,8 @@
 // Design-system primitives. Server-compatible (no hooks), so pages can stay server components.
+import Image from "next/image";
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
-import { AlertIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, InfoIcon, ToothMark } from "./icons";
+import { AlertIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon, InfoIcon } from "./icons";
 
 export function cx(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -9,11 +10,40 @@ export function cx(...classes: (string | false | null | undefined)[]): string {
 
 // ---------- Identity ----------
 
-export function Wordmark({ className }: { className?: string }) {
+export const BRAND_NAME = "Dentiq";
+export const BRAND_SLOGAN = "LEARN · SHARE · EXCEL";
+
+/**
+ * The approved D/tooth monogram from the brand kit (public/brand/dentiq-icon.png), shown on its own
+ * light tile in both themes. The kit's source is a small raster (see docs/brand), so we never show it
+ * larger than the icon itself and never recolor it.
+ */
+export function BrandMark({ size = 32, className }: { size?: number; className?: string }) {
   return (
-    <span className={cx("inline-flex items-center gap-2 font-semibold tracking-tight text-text", className)}>
-      <ToothMark className="text-accent" />
-      <span className="text-[17px]">DentOS</span>
+    <Image
+      src="/brand/dentiq-icon.png"
+      alt=""
+      width={size}
+      height={size}
+      className={cx("shrink-0 rounded-[22%] ring-1 ring-border", className)}
+      priority
+    />
+  );
+}
+
+/** Logo lockup: mark + name (+ slogan). The name and slogan are live text so they stay sharp. */
+export function Wordmark({ className, slogan = false }: { className?: string; slogan?: boolean }) {
+  return (
+    <span className={cx("inline-flex items-center gap-2.5 text-text", className)}>
+      <BrandMark size={slogan ? 36 : 30} />
+      <span className="flex flex-col leading-none">
+        <span className="text-[19px] font-bold tracking-[-0.02em]">{BRAND_NAME}</span>
+        {slogan && (
+          <span className="mt-1 text-[9.5px] font-semibold tracking-[0.16em] text-accent" aria-label="Learn, share, excel">
+            {BRAND_SLOGAN}
+          </span>
+        )}
+      </span>
     </span>
   );
 }
@@ -143,13 +173,20 @@ export function ListRow({ children, className }: { children: ReactNode; classNam
   return <li className={cx("flex min-h-12 items-center gap-3 px-4 py-3", className)}>{children}</li>;
 }
 
-export function DescriptionList({ items }: { items: { label: ReactNode; value: ReactNode }[] }) {
+/** `stacked` keeps label above value at every width, for narrow side columns. */
+export function DescriptionList({
+  items,
+  stacked = false,
+}: {
+  items: { label: ReactNode; value: ReactNode }[];
+  stacked?: boolean;
+}) {
   return (
     <Panel>
       <dl className="divide-y divide-border">
         {items.map((item, i) => (
-          <div key={i} className="flex flex-col gap-0.5 px-4 py-3 sm:flex-row sm:items-baseline sm:gap-6">
-            <dt className="shrink-0 text-[13px] text-text-subtle sm:w-44">{item.label}</dt>
+          <div key={i} className={cx("flex flex-col gap-0.5 px-4 py-3", !stacked && "sm:flex-row sm:items-baseline sm:gap-6")}>
+            <dt className={cx("shrink-0 text-[13px] text-text-subtle", !stacked && "sm:w-44")}>{item.label}</dt>
             <dd className="min-w-0 text-[15px] break-words text-text">{item.value}</dd>
           </div>
         ))}
@@ -169,12 +206,13 @@ const buttonBase =
 
 // Sizes are separate classes so callers never have to override height with a conflicting utility.
 const buttonSizes: Record<ButtonSize, string> = {
-  md: "h-10 px-4 text-[14px]",
-  sm: "h-9 px-3 text-[13px]",
+  // Phones get 44 px targets; desktop keeps the denser size.
+  md: "h-11 px-4 text-[14px] sm:h-10",
+  sm: "h-10 px-3 text-[13px] sm:h-9",
 };
 
 const buttonVariants: Record<ButtonVariant, string> = {
-  primary: "bg-accent text-on-accent hover:bg-accent-hover",
+  primary: "bg-accent-solid text-on-accent hover:bg-accent-solid-hover",
   secondary: "border border-border-strong bg-surface text-text hover:bg-surface-hover",
   ghost: "text-text-muted hover:bg-surface-muted hover:text-text",
   danger: "border border-border-strong bg-surface text-danger hover:bg-danger-soft",
@@ -307,7 +345,7 @@ export function Notice({
 export function EmptyState({ title, body, action }: { title: ReactNode; body?: ReactNode; action?: ReactNode }) {
   return (
     <Panel className="flex flex-col items-center px-6 py-12 text-center">
-      <ToothMark className="mb-3 text-text-subtle" width={22} height={24} />
+      <BrandMark size={28} className="mb-3 opacity-70 grayscale" />
       <p className="text-[16px] font-semibold text-text">{title}</p>
       {body && <p className="mt-1 max-w-md text-[14px] text-text-muted">{body}</p>}
       {action && <div className="mt-5">{action}</div>}

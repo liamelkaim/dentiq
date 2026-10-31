@@ -36,6 +36,7 @@ export const resources = pgTable(
     topic: text(),
     // Set only by moderators after checking the document comes from the instructor/faculty.
     isOfficial: boolean().notNull().default(false),
+    visibility: text({ enum: ["shared", "private"] }).notNull().default("shared"),
     status: text({ enum: resourceStatuses }).notNull().default("pending"),
     createdBy: text().references(() => user.id, { onDelete: "set null" }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
@@ -44,7 +45,8 @@ export const resources = pgTable(
       .defaultNow()
       .$onUpdate(() => new Date()),
   },
-  (t) => [index().on(t.courseId, t.status), index().on(t.offeringId), index().on(t.createdBy)],
+  (t) => [index().on(t.courseId, t.status), index().on(t.offeringId), index().on(t.createdBy),
+    check("resources_visibility_valid", sql`${t.visibility} in ('shared', 'private')`)],
 );
 
 // Versions are append-only: uploading a new file never overwrites an old one.

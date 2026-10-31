@@ -1,7 +1,7 @@
 // Shared academic resources: business rules and permissions.
 // Every function receives the database (and storage) explicitly so it can be tested in isolation.
 import { randomUUID } from "node:crypto";
-import { and, asc, desc, eq, exists, ilike, inArray, isNotNull, isNull, or, sql, type SQL } from "drizzle-orm";
+import { and, asc, count, desc, eq, exists, ilike, inArray, isNotNull, isNull, or, sql, type SQL } from "drizzle-orm";
 import { z } from "zod";
 import type { Database } from "@/db/client";
 import {
@@ -34,15 +34,17 @@ export const isModerator = (v: Viewer) => hasRole(v, "moderator");
 /** Shared files are for verified, approved members (and moderators). */
 export const canAccessLibrary = (v: Viewer) => isModerator(v) || canContribute(v);
 
-type Ownable = { status: ResourceStatus; createdBy: string | null };
+type Ownable = { status: ResourceStatus; createdBy: string | null; visibility: "shared" | "private" };
 
 export function canSeeResource(v: Viewer, r: Ownable): boolean {
+  if (r.visibility === "private") return r.createdBy === v.id && canAccessLibrary(v) && r.status !== "removed";
   if (isModerator(v)) return true;
   if (r.createdBy === v.id && r.status !== "removed") return true;
   return r.status === "published" && canAccessLibrary(v);
 }
 
 export function canEditResource(v: Viewer, r: Ownable): boolean {
+  if (r.visibility === "private") return r.createdBy === v.id && canAccessLibrary(v) && r.status !== "removed";
   if (isModerator(v)) return true;
   return r.createdBy === v.id && canAccessLibrary(v) && (r.status === "published" || r.status === "pending");
 }
@@ -60,6 +62,7 @@ export const resourceInputSchema = z.object({
   courseId: z.uuid(),
   offeringId: z.preprocess(blankToNull, z.uuid().nullish()).transform((v) => v ?? null),
   kind: z.enum(resourceKinds),
+  visibility: z.enum(["shared", "private"]).default("shared"),
   title: z.string().trim().min(1, { message: "required" }).max(200),
   description: z.preprocess(blankToNull, z.string().trim().max(2000).nullish()).transform((v) => v ?? null),
   topic: optionalText(80),
@@ -105,6 +108,7 @@ export function periodOf(offeringId: string | null, latestOfferingId: string | u
 // ---------- Reading ----------
 
 export type ResourceFilters = {
+  visibility?: "shared" | "private";
   courseId?: string;
   q?: string;
   kind?: (typeof resourceKinds)[number];
@@ -125,7 +129,8 @@ function escapeLike(value: string) {
 export async function listResources(db: Database, viewer: Viewer, filters: ResourceFilters = {}) {
   if (!canAccessLibrary(viewer)) return [];
 
-  const conditions: SQL[] = [];
+  const conditions: SQL[] = [or(eq(resources.visibility, "shared"), eq(resources.createdBy, viewer.id))!];
+  if (filters.visibility) conditions.push(eq(resources.visibility, filters.visibility));
   if (isModerator(viewer) && filters.status) {
     conditions.push(eq(resources.status, filters.status));
   } else {
@@ -162,6 +167,7 @@ export async function listResources(db: Database, viewer: Viewer, filters: Resou
       kind: resources.kind,
       topic: resources.topic,
       isOfficial: resources.isOfficial,
+      visibility: resources.visibility,
       status: resources.status,
       createdBy: resources.createdBy,
       createdAt: resources.createdAt,
@@ -272,8 +278,8 @@ export async function getResource(db: Database, viewer: Viewer, id: string) {
     openReports: reports,
     period: periodOf(row.resource.offeringId, latest.get(row.resource.courseId)),
     canEdit: canEditResource(viewer, row.resource),
-    canModerate: isModerator(viewer),
-    canReport: row.resource.status === "published" && canAccessLibrary(viewer),
+    canModerate: row.resource.visibility === "shared" && isModerator(viewer),
+    canReport: row.resource.visibility === "shared" && row.resource.status === "published" && canAccessLibrary(viewer),
   };
 }
 
@@ -281,7 +287,7 @@ export async function getResource(db: Database, viewer: Viewer, id: string) {
 export async function getDownload(db: Database, viewer: Viewer, versionId: string) {
   if (!z.uuid().safeParse(versionId).success) return null;
   const [row] = await db
-    .select({ version: resourceVersions, status: resources.status, createdBy: resources.createdBy })
+    .select({ version: resourceVersions, status: resources.status, createdBy: resources.createdBy, visibility: resources.visibility })
     .from(resourceVersions)
     .innerJoin(resources, eq(resourceVersions.resourceId, resources.id))
     .where(eq(resourceVersions.id, versionId));
@@ -290,7 +296,77 @@ export async function getDownload(db: Database, viewer: Viewer, versionId: strin
   return { storageKey, fileName, mimeType, sizeBytes };
 }
 
-export async function listFilterOptions(db: Database) {
+/**
+ * Course cards for the dashboard and course header: real catalog data only. Document counts are
+ * published documents, and are only returned to viewers who may see the library (null otherwise).
+ */
+export async function listCourseSummaries(
+  db: Database,
+  viewer: Viewer,
+  options: { courseIds?: string[]; limit?: number } = {},
+) {
+  const conditions: SQL[] = [isNull(courses.archivedAt)];
+  if (options.courseIds) {
+    if (options.courseIds.length === 0) return [];
+    conditions.push(inArray(courses.id, options.courseIds));
+  }
+  const rows = await db
+    .select({
+      id: courses.id,
+      code: courses.code,
+      titleFr: courses.titleFr,
+      titleEn: courses.titleEn,
+      yearOfStudy: courses.yearOfStudy,
+      typicalTerm: courses.typicalTerm,
+    })
+    .from(courses)
+    .where(and(...conditions))
+    .orderBy(asc(courses.yearOfStudy), asc(courses.code))
+    .limit(options.limit ?? 500);
+  if (rows.length === 0) return [];
+
+  const ids = rows.map((r) => r.id);
+  const latest = await latestOfferingByCourse(db, ids);
+  const offeringIds = [...latest.values()];
+  const [offerings, instructors, counts] = await Promise.all([
+    offeringIds.length
+      ? db
+          .select({ id: courseOfferings.id, academicYear: courseOfferings.academicYear, term: courseOfferings.term })
+          .from(courseOfferings)
+          .where(inArray(courseOfferings.id, offeringIds))
+      : Promise.resolve([]),
+    offeringIds.length
+      ? db
+          .select({ offeringId: offeringInstructors.offeringId, fullName: professors.fullName })
+          .from(offeringInstructors)
+          .innerJoin(professors, eq(offeringInstructors.professorId, professors.id))
+          .where(inArray(offeringInstructors.offeringId, offeringIds))
+          .orderBy(asc(professors.fullName))
+      : Promise.resolve([]),
+    canAccessLibrary(viewer)
+      ? db
+          .select({ courseId: resources.courseId, n: count() })
+          .from(resources)
+          .where(and(inArray(resources.courseId, ids), eq(resources.status, "published"), or(eq(resources.visibility, "shared"), eq(resources.createdBy, viewer.id))))
+          .groupBy(resources.courseId)
+      : Promise.resolve(null),
+  ]);
+
+  return rows.map((course) => {
+    const offeringId = latest.get(course.id);
+    const offering = offerings.find((o) => o.id === offeringId) ?? null;
+    return {
+      ...course,
+      currentOffering: offering && { academicYear: offering.academicYear, term: offering.term },
+      instructors: instructors.filter((i) => i.offeringId === offeringId).map((i) => i.fullName),
+      documentCount: counts ? (counts.find((c) => c.courseId === course.id)?.n ?? 0) : null,
+    };
+  });
+}
+
+export type CourseSummary = Awaited<ReturnType<typeof listCourseSummaries>>[number];
+
+export async function listFilterOptions(db: Database, viewer: Viewer) {
   const [courseRows, professorRows, yearRows, topicRows] = await Promise.all([
     db
       .select({ id: courses.id, code: courses.code, titleFr: courses.titleFr, titleEn: courses.titleEn })
@@ -302,7 +378,7 @@ export async function listFilterOptions(db: Database) {
     db
       .selectDistinct({ topic: resources.topic })
       .from(resources)
-      .where(and(eq(resources.status, "published"), isNotNull(resources.topic)))
+      .where(and(eq(resources.status, "published"), or(eq(resources.visibility, "shared"), eq(resources.createdBy, viewer.id)), isNotNull(resources.topic)))
       .orderBy(asc(resources.topic)),
   ]);
   return {
@@ -328,7 +404,7 @@ export async function listModerationQueue(db: Database, viewer: Viewer) {
       .from(resources)
       .innerJoin(courses, eq(resources.courseId, courses.id))
       .leftJoin(user, eq(resources.createdBy, user.id))
-      .where(eq(resources.status, "pending"))
+      .where(and(eq(resources.status, "pending"), eq(resources.visibility, "shared")))
       .orderBy(asc(resources.createdAt)),
     db
       .select({
@@ -343,7 +419,7 @@ export async function listModerationQueue(db: Database, viewer: Viewer) {
       .from(resourceReports)
       .innerJoin(resources, eq(resourceReports.resourceId, resources.id))
       .leftJoin(user, eq(resourceReports.reporterId, user.id))
-      .where(eq(resourceReports.status, "open"))
+      .where(and(eq(resourceReports.status, "open"), eq(resources.visibility, "shared")))
       .orderBy(asc(resourceReports.createdAt)),
   ]);
   return { pending, reports };
@@ -351,12 +427,12 @@ export async function listModerationQueue(db: Database, viewer: Viewer) {
 
 // ---------- Writing ----------
 
-async function findDuplicate(db: Database, hash: string) {
+async function findDuplicate(db: Database, hash: string, viewer: Viewer, visibility: "shared" | "private") {
   const [row] = await db
-    .select({ resourceId: resourceVersions.resourceId, status: resources.status, createdBy: resources.createdBy })
+    .select({ resourceId: resourceVersions.resourceId, status: resources.status, createdBy: resources.createdBy, visibility: resources.visibility })
     .from(resourceVersions)
     .innerJoin(resources, eq(resourceVersions.resourceId, resources.id))
-    .where(eq(resourceVersions.sha256, hash))
+    .where(and(eq(resourceVersions.sha256, hash), eq(resources.visibility, visibility), visibility === "private" ? eq(resources.createdBy, viewer.id) : undefined))
     .limit(1);
   return row ?? null;
 }
@@ -390,7 +466,7 @@ export async function createResource(
 
   const upload = checkUpload(file.name, file.bytes);
   if (!upload.ok) return upload;
-  const duplicate = await findDuplicate(db, upload.hash);
+  const duplicate = await findDuplicate(db, upload.hash, viewer, input.visibility);
   if (duplicate) return duplicateError(viewer, duplicate);
 
   const moderator = isModerator(viewer);
@@ -407,9 +483,10 @@ export async function createResource(
           title: input.title,
           description: input.description,
           topic: input.topic,
-          isOfficial: moderator && input.isOfficial,
+          visibility: input.visibility,
+          isOfficial: input.visibility === "shared" && moderator && input.isOfficial,
           // Student uploads wait for review (copyright and quality); moderators publish directly.
-          status: moderator ? "published" : "pending",
+          status: input.visibility === "private" || moderator ? "published" : "pending",
           createdBy: viewer.id,
         })
         .returning({ id: resources.id, status: resources.status });
@@ -453,7 +530,7 @@ export async function addVersion(
 
   const upload = checkUpload(file.name, file.bytes);
   if (!upload.ok) return upload;
-  const duplicate = await findDuplicate(db, upload.hash);
+  const duplicate = await findDuplicate(db, upload.hash, viewer, resource.visibility);
   if (duplicate) return duplicateError(viewer, duplicate);
 
   const moderator = isModerator(viewer);
@@ -479,7 +556,7 @@ export async function addVersion(
         uploadedBy: viewer.id,
       });
       // A student's new file goes back through review before others see it.
-      const status: ResourceStatus = moderator ? resource.status : "pending";
+      const status: ResourceStatus = resource.visibility === "private" || moderator ? resource.status : "pending";
       await tx.update(resources).set({ status }).where(eq(resources.id, resourceId));
       await writeAudit(tx, {
         actorId: viewer.id,
@@ -507,7 +584,7 @@ export async function moderateResource(
 ): Promise<Result<null>> {
   if (!isModerator(viewer)) return { ok: false, error: "forbidden" };
   const status = moderationActions[action];
-  const [before] = await db.select({ status: resources.status }).from(resources).where(eq(resources.id, resourceId));
+  const [before] = await db.select({ status: resources.status }).from(resources).where(and(eq(resources.id, resourceId), eq(resources.visibility, "shared")));
   if (!before) return { ok: false, error: "notFound" };
   await db.update(resources).set({ status }).where(eq(resources.id, resourceId));
   await writeAudit(db, {
@@ -522,7 +599,7 @@ export async function moderateResource(
 
 export async function setOfficial(db: Database, viewer: Viewer, resourceId: string, isOfficial: boolean): Promise<Result<null>> {
   if (!isModerator(viewer)) return { ok: false, error: "forbidden" };
-  const [row] = await db.update(resources).set({ isOfficial }).where(eq(resources.id, resourceId)).returning({ id: resources.id });
+  const [row] = await db.update(resources).set({ isOfficial }).where(and(eq(resources.id, resourceId), eq(resources.visibility, "shared"))).returning({ id: resources.id });
   if (!row) return { ok: false, error: "notFound" };
   await writeAudit(db, {
     actorId: viewer.id,
@@ -540,7 +617,7 @@ export async function reportResource(
 ): Promise<Result<null>> {
   const [resource] = await db.select().from(resources).where(eq(resources.id, input.resourceId));
   if (!resource || !canSeeResource(viewer, resource)) return { ok: false, error: "notFound" };
-  if (resource.status !== "published" || !canAccessLibrary(viewer)) return { ok: false, error: "forbidden" };
+  if (resource.visibility !== "shared" || resource.status !== "published" || !canAccessLibrary(viewer)) return { ok: false, error: "forbidden" };
   try {
     await db.insert(resourceReports).values({ ...input, reporterId: viewer.id });
   } catch (error) {

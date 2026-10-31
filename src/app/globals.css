@@ -3,56 +3,79 @@
 /* Dark mode follows the `.dark` class set by next-themes on <html>. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ---------- Design tokens ----------
-   Premium monochrome with a restrained clinical-blue accent.
-   Components use these tokens only — no raw colors elsewhere. */
+/* ---------- Dentiq design tokens ----------
+   Palette from the approved brand kit (docs/brand/brand-guidelines.md): dark navy surfaces,
+   white type, restrained clinical blue. Components use these tokens only — no raw colors elsewhere.
+   Accessibility adjustments: buttons use a deeper blue (--accent-solid) so white labels reach
+   4.5:1; on navy, links/icons use a lighter blue (--accent). */
 :root {
-  --bg: #f5f5f7;
+  --bg: #f5f8fc;
   --surface: #ffffff;
-  --surface-muted: #efeff1;
-  --surface-hover: #f2f2f4;
-  --border: rgb(0 0 0 / 0.08);
-  --border-strong: rgb(0 0 0 / 0.16);
-  --text: #111113;
-  --text-muted: #48484d;
-  --text-subtle: #6b6b70;
-  --accent: #0b5cad;
-  --accent-hover: #094d92;
-  --accent-soft: rgb(11 92 173 / 0.08);
+  --surface-muted: #eaf1f8;
+  --surface-hover: #f0f5fb;
+  --sidebar: #ffffff;
+  --border: #d9e3ec;
+  --border-strong: #c3d0dd;
+  --text: #13243a;
+  --text-muted: #4f6480;
+  --text-subtle: #627690;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-solid: #2563eb;
+  --accent-solid-hover: #1d4ed8;
+  --accent-soft: rgb(37 99 235 / 0.08);
   --on-accent: #ffffff;
-  --success: #1f7a45;
-  --success-soft: rgb(31 122 69 / 0.09);
-  --warning: #8a5a00;
-  --warning-soft: rgb(176 116 0 / 0.1);
-  --danger: #b42318;
-  --danger-soft: rgb(180 35 24 / 0.08);
-  --focus: rgb(11 92 173 / 0.45);
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.04), 0 1px 1px rgb(0 0 0 / 0.02);
+  --success: #047857;
+  --success-soft: rgb(4 120 87 / 0.09);
+  --warning: #a35200;
+  --warning-soft: rgb(180 83 9 / 0.1);
+  --danger: #be123c;
+  --danger-soft: rgb(190 18 60 / 0.08);
+  --focus: #1d4ed8;
+  --shadow-sm: 0 1px 2px rgb(27 53 83 / 0.05), 0 8px 24px rgb(27 53 83 / 0.05);
+  /* Dashboard banner and course covers */
+  --hero-a: #e7effa;
+  --hero-b: #f7faff;
+  --ridge-far: rgb(37 99 235 / 0.08);
+  --ridge-near: rgb(19 36 58 / 0.07);
+  --cover-a: #dbe7f7;
+  --cover-b: #b9cff0;
+  --cover-ink: rgb(19 36 58 / 0.55);
   color-scheme: light;
 }
 
 .dark {
-  --bg: #0b0b0c;
-  --surface: #161618;
-  --surface-muted: #1f1f22;
-  --surface-hover: #1c1c1f;
-  --border: rgb(255 255 255 / 0.08);
-  --border-strong: rgb(255 255 255 / 0.16);
-  --text: #f4f4f6;
-  --text-muted: #c1c1c6;
-  --text-subtle: #96969c;
-  --accent: #5aa2f0;
-  --accent-hover: #7ab5f4;
-  --accent-soft: rgb(90 162 240 / 0.12);
-  --on-accent: #06182c;
-  --success: #5ac487;
-  --success-soft: rgb(90 196 135 / 0.12);
-  --warning: #e3b45a;
-  --warning-soft: rgb(227 180 90 / 0.12);
-  --danger: #f47c72;
-  --danger-soft: rgb(244 124 114 / 0.12);
-  --focus: rgb(90 162 240 / 0.55);
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --bg: #07111f;
+  --surface: #0d1b2b;
+  --surface-muted: #142539;
+  --surface-hover: #12233a;
+  --sidebar: #081522;
+  --border: #23374c;
+  --border-strong: #33495f;
+  --text: #f8fafc;
+  --text-muted: #a6b7cc;
+  --text-subtle: #8395ad;
+  --accent: #60a5fa;
+  --accent-hover: #93c5fd;
+  --accent-solid: #2563eb;
+  --accent-solid-hover: #3b82f6;
+  --accent-soft: rgb(59 130 246 / 0.16);
+  --on-accent: #ffffff;
+  --success: #34d399;
+  --success-soft: rgb(52 211 153 / 0.12);
+  --warning: #fbbf24;
+  --warning-soft: rgb(251 191 36 / 0.12);
+  --danger: #fb7185;
+  --danger-soft: rgb(251 113 133 / 0.12);
+  --focus: #93c5fd;
+  --shadow-sm: 0 12px 35px rgb(0 0 0 / 0.2);
+  --hero-a: #0b1d33;
+  --hero-b: #07111f;
+  --ridge-far: rgb(96 165 250 / 0.1);
+  --ridge-near: rgb(148 180 230 / 0.07);
+  --cover-a: #10233b;
+  --cover-b: #1d4ed8;
+  --cover-ink: rgb(248 250 252 / 0.7);
   color-scheme: dark;
 }
 
@@ -61,6 +84,7 @@
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
   --color-surface-hover: var(--surface-hover);
+  --color-sidebar: var(--sidebar);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-text: var(--text);
@@ -68,6 +92,8 @@
   --color-text-subtle: var(--text-subtle);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-solid-hover: var(--accent-solid-hover);
   --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
   --color-success: var(--success);
@@ -77,7 +103,7 @@
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
   --shadow-card: var(--shadow-sm);
-  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto,
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   --radius-card: 14px;
   --radius-control: 10px;
@@ -111,6 +137,7 @@
     *::after {
       animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 }

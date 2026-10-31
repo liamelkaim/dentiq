@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { UploadResourceForm } from "@/components/resource-forms";
 import { Notice, PageHeader } from "@/components/ui";
+import { getMaxFileBytes } from "@/server/resources/files";
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { requireUser } from "@/server/auth/session";
@@ -46,7 +47,7 @@ export default async function UploadPage({ params }: { params: Promise<{ code: s
   return (
     <>
       <PageHeader back={back} title={t("resources.form.title")} subtitle={`${course.code} · ${localized(locale, course.titleFr, course.titleEn)}`} />
-      <UploadResourceForm courseId={course.id} offerings={offerings} defaultOfferingId={latest} isModerator={isModerator(viewer)} />
+      <UploadResourceForm maxFileBytes={getMaxFileBytes()} courseId={course.id} offerings={offerings} defaultOfferingId={latest} isModerator={isModerator(viewer)} />
     </>
   );
 }

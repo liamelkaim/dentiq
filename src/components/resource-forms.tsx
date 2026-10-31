@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useActionState, useEffect, useId, useRef } from "react";
+import { useActionState, useEffect, useId, useRef, useState } from "react";
 import {
   addVersionAction,
   reportResourceAction,
@@ -42,7 +42,7 @@ function StateNotice({ state }: { state: ResourceFormState }) {
   );
 }
 
-function RightsCheckbox({ id, error }: { id: string; error?: string }) {
+function RightsCheckbox({ id, error, privateDocument = false }: { id: string; error?: string; privateDocument?: boolean }) {
   const t = useTranslations("resources.form");
   const msg = useMessage();
   return (
@@ -57,7 +57,7 @@ function RightsCheckbox({ id, error }: { id: string; error?: string }) {
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${id}-error` : undefined}
         />
-        <span>{t("rights")}</span>
+        <span>{t(privateDocument ? "privateRights" : "rights")}</span>
       </label>
       {error && (
         <p id={`${id}-error`} className="mt-1 text-[13px] text-danger">
@@ -68,15 +68,19 @@ function RightsCheckbox({ id, error }: { id: string; error?: string }) {
   );
 }
 
-function FileField({ id, label, error }: { id: string; label: string; error?: string }) {
+function FileField({ id, label, error, maxFileBytes }: { id: string; label: string; error?: string; maxFileBytes: number }) {
   const t = useTranslations("resources.form");
   const msg = useMessage();
   return (
-    <Field label={label} htmlFor={id} hint={t("fileHint")} error={msg(error)}>
+    <Field label={label} htmlFor={id} hint={t("fileHint", { maxMB: maxFileBytes / 1024 / 1024 })} error={msg(error)}>
       <Input
         id={id}
         name="file"
         type="file"
+        onChange={(event) => {
+          const file = event.currentTarget.files?.[0];
+          event.currentTarget.setCustomValidity(file && file.size > maxFileBytes ? t("sizeError", { maxMB: maxFileBytes / 1024 / 1024 }) : "");
+        }}
         accept={ACCEPT}
         required
         aria-describedby={`${id}-hint`}
@@ -93,10 +97,12 @@ export function UploadResourceForm({
   offerings,
   defaultOfferingId,
   isModerator,
+  maxFileBytes,
 }: {
   courseId: string;
   offerings: OfferingOption[];
   defaultOfferingId: string | null;
+  maxFileBytes: number;
   isModerator: boolean;
 }) {
   const t = useTranslations("resources");
@@ -104,13 +110,20 @@ export function UploadResourceForm({
   const msg = useMessage();
   const p = useId();
   const [state, action, pending] = useActionState(uploadResourceAction, initial);
+  const [visibility, setVisibility] = useState("private");
   const err = (name: string) => msg(state.fieldErrors?.[name]);
 
   return (
     <Panel className="p-4 sm:p-6">
       <form action={action} className="flex flex-col gap-5">
         <StateNotice state={state} />
-        {!isModerator && <Notice tone="accent">{t("form.reviewNotice")}</Notice>}
+        {visibility === "private" ? <Notice tone="accent">{t("visibility.privateHelp")}</Notice> : !isModerator && <Notice tone="accent">{t("form.reviewNotice")}</Notice>}
+        <Field label={t("visibility.label")} htmlFor={`${p}-visibility`} error={err("visibility")}>
+          <Select id={`${p}-visibility`} name="visibility" value={visibility} onChange={(e) => setVisibility(e.target.value)}>
+            <option value="private">{t("visibility.private")}</option>
+            <option value="shared">{t("visibility.shared")}</option>
+          </Select>
+        </Field>
         <input type="hidden" name="courseId" value={courseId} />
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -149,17 +162,17 @@ export function UploadResourceForm({
             <Textarea id={`${p}-description`} name="description" maxLength={2000} />
           </Field>
           <div className="sm:col-span-2">
-            <FileField id={`${p}-file`} label={t("form.file")} error={state.fieldErrors?.file} />
+            <FileField maxFileBytes={maxFileBytes} id={`${p}-file`} label={t("form.file")} error={state.fieldErrors?.file} />
           </div>
         </div>
 
-        {isModerator && (
+        {isModerator && visibility === "shared" && (
           <label className="flex items-center gap-3 text-[14px]">
             <input name="isOfficial" type="checkbox" className="size-4 accent-[var(--accent)]" />
             {t("form.official")}
           </label>
         )}
-        <RightsCheckbox id={`${p}-rights`} error={state.fieldErrors?.rightsConfirmed} />
+        <RightsCheckbox id={`${p}-rights`} error={state.fieldErrors?.rightsConfirmed} privateDocument={visibility === "private"} />
 
         <div>
           <Button type="submit" disabled={pending}>
@@ -179,7 +192,7 @@ function useResetOnSuccess(state: ResourceFormState) {
   return ref;
 }
 
-export function NewVersionForm({ resourceId, isModerator }: { resourceId: string; isModerator: boolean }) {
+export function NewVersionForm({ resourceId, isModerator, maxFileBytes, visibility = "shared" }: { resourceId: string; isModerator: boolean; maxFileBytes: number; visibility?: "shared" | "private" }) {
   const t = useTranslations("resources");
   const common = useTranslations("common");
   const p = useId();
@@ -190,13 +203,13 @@ export function NewVersionForm({ resourceId, isModerator }: { resourceId: string
       <form ref={ref} action={action} className="flex flex-col gap-4">
         <h3 className="text-[15px] font-semibold">{t("version.title")}</h3>
         <StateNotice state={state} />
-        {!isModerator && <p className="text-[13px] text-text-subtle">{t("version.reviewNotice")}</p>}
+        {!isModerator && visibility === "shared" && <p className="text-[13px] text-text-subtle">{t("version.reviewNotice")}</p>}
         <input type="hidden" name="resourceId" value={resourceId} />
-        <FileField id={`${p}-file`} label={t("form.file")} error={state.fieldErrors?.file} />
+        <FileField maxFileBytes={maxFileBytes} id={`${p}-file`} label={t("form.file")} error={state.fieldErrors?.file} />
         <Field label={t("version.changeNote")} htmlFor={`${p}-note`} optional={common("optional")}>
           <Input id={`${p}-note`} name="changeNote" maxLength={300} />
         </Field>
-        <RightsCheckbox id={`${p}-rights`} error={state.fieldErrors?.rightsConfirmed} />
+        <RightsCheckbox id={`${p}-rights`} error={state.fieldErrors?.rightsConfirmed} privateDocument={visibility === "private"} />
         <div>
           <Button type="submit" variant="secondary" disabled={pending}>
             {pending ? t("form.uploading") : t("version.submit")}

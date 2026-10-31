@@ -1,9 +1,9 @@
-# DentOS
+# Dentiq
 
-A study platform for dentistry students, starting with Université de Montréal.
-Independent student project — not affiliated with or endorsed by the university.
+A study platform for dentistry students at any university.
+Independent student project — not affiliated with or endorsed by a university.
 
-**Current status: Phase 2 (academic resources) complete.** See [docs/roadmap.md](docs/roadmap.md) for what works and what is planned.
+**Current status: Phase 2 foundation, with personal documents and focus study mode.** See [docs/roadmap.md](docs/roadmap.md) for what works and what is planned.
 
 ## Run it locally
 
@@ -28,7 +28,7 @@ If port 3000 is busy: `PORT=3100 pnpm dev` **and** set `BETTER_AUTH_URL=http://l
    ```
 2. Put your own email in `ADMIN_EMAILS=` in `.env` so your account becomes an administrator.
 3. `pnpm dev`, open the app, and **create an account** with that email.
-4. **Confirm your email:** no email service is connected yet, so the confirmation link is printed in the terminal where `pnpm dev` runs (look for `[DentOS email]`). Open that link.
+4. **Confirm your email:** no email service is connected yet, so the confirmation link is printed in the terminal where `pnpm dev` runs (look for `[Dentiq email]`). Open that link.
 5. You're signed in as an administrator. Go to **Administration → Catalogue** to add courses or import a CSV.
 
 Other people who sign up start as **pending students**: they confirm their email, then you approve them in **Administration → Comptes**. To make someone a moderator, change their role there.
@@ -39,7 +39,7 @@ Other people who sign up start as **pending students**: they confirm their email
 - Student uploads wait in **Modération** until a moderator publishes them. Moderators' and admins' uploads are published directly.
 - Each upload is linked to a course offering (year + term). Material from older offerings appears under **Archives**, never mixed with current material.
 - Uploading a new file to an existing document creates a new **version**; old versions stay downloadable.
-- Files are private: they're stored in `.data/uploads` and can only be opened by signed-in members through DentOS.
+- Files are private: they're stored in `.data/uploads` and can only be opened by signed-in members through Dentiq.
 
 ## Everyday commands
 
@@ -92,3 +92,31 @@ The app refuses to work with a clear message if a required setting is missing or
 - [docs/architecture.md](docs/architecture.md) — how the app is built and why
 - [docs/security-privacy.md](docs/security-privacy.md) — security decisions, privacy, open legal questions
 - [docs/roadmap.md](docs/roadmap.md) — implemented / planned / blocked, known issues
+
+## Personal documents (2026-10-29)
+
+Approved members can choose **Only me** (the default) or **Shared library** when uploading.
+Personal documents are immediately available to their owner and never appear in another
+account's library, search, download routes, topic filters, or moderation queue. Administrator
+accounts do not get access through the app. This is application access control, not encryption
+from the operator of the server. New versions retain their original visibility.
+
+The additive `0002_bent_sentinels.sql` migration preserves existing documents as shared.
+`pnpm dev` applies it automatically; stop other processes using the same local database first.
+There is no change-visibility button in this release. Both upload modes retain the existing
+verified-and-approved account requirement.
+
+Use **Resources → Document access** to show only personal or shared documents. Open a course's
+**Notes** tab and choose **Study mode** for the focused reader. Theme and language settings persist.
+
+The latest confirmed product decisions and remaining gaps are recorded in
+[docs/product-decisions.md](docs/product-decisions.md). The AI tutor, flashcards, practice exams,
+and separate university libraries are not implemented yet. No AI calls or paid services are enabled.
+
+If another app uses port 3000, run without editing your environment file:
+
+```bash
+PORT=3100 BETTER_AUTH_URL=http://localhost:3100 pnpm dev
+```
+
+Choose a free port and keep the two values consistent.

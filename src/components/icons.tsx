@@ -139,9 +139,58 @@ export const AlertIcon = (p: IconProps) => (
   </Icon>
 );
 
-/** Subtle dental detail used only in the wordmark: a minimal molar outline. */
-export const ToothMark = (p: IconProps) => (
-  <svg width="18" height="20" viewBox="0 0 18 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" aria-hidden="true" {...p}>
-    <path d="M5.2 1.75C3 1.75 1.5 3.4 1.5 5.7c0 1.8.6 3 1.15 4.5.55 1.6.75 4.3 1.7 6.6.4.95 1.5.85 1.7-.15l.85-4.1c.2-.85.7-1.25 1.1-1.25h.0c.4 0 .9.4 1.1 1.25l.85 4.1c.2 1 1.3 1.1 1.7.15.95-2.3 1.15-5 1.7-6.6.55-1.5 1.15-2.7 1.15-4.5 0-2.3-1.5-3.95-3.7-3.95-1.2 0-1.95.55-2.8.55s-1.6-.55-2.8-.55Z" />
-  </svg>
+// ---------- Future features (shown disabled until they exist) ----------
+
+export const PassesIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="4" y="2.75" width="12" height="14.5" rx="1.5" />
+    <path d="M7 7h6M7 10h6M7 13h3.5" />
+  </Icon>
+);
+
+export const CardsIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="2.75" y="5.5" width="11" height="11" rx="1.5" />
+    <path d="M6.5 3.5h8.25a1.5 1.5 0 0 1 1.5 1.5v8.25" />
+  </Icon>
+);
+
+export const MicIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="7.25" y="2.75" width="5.5" height="9" rx="2.75" />
+    <path d="M4.75 9.5a5.25 5.25 0 0 0 10.5 0M10 14.75v2.5" />
+  </Icon>
+);
+
+export const SparkleIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M10 3.25 11.6 8.4 16.75 10l-5.15 1.6L10 16.75 8.4 11.6 3.25 10 8.4 8.4Z" />
+  </Icon>
+);
+
+export const ChartIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3.5 16.5h13M6 13.5v-3M10 13.5v-7M14 13.5V9" />
+  </Icon>
+);
+
+// ---------- Focus Study Mode ----------
+
+export const FocusIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3.5 7V4.5a1 1 0 0 1 1-1H7M13 3.5h2.5a1 1 0 0 1 1 1V7M16.5 13v2.5a1 1 0 0 1-1 1H13M7 16.5H4.5a1 1 0 0 1-1-1V13" />
+  </Icon>
+);
+
+export const CloseIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m5 5 10 10M15 5 5 15" />
+  </Icon>
+);
+
+export const SidebarIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="2.75" y="3.5" width="14.5" height="13" rx="1.5" />
+    <path d="M7.5 3.5v13" />
+  </Icon>
 );
