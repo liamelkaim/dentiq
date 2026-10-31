@@ -44,7 +44,7 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 
 | Phase | Scope | Status |
 | --- | --- | --- |
-| 3 | Exam passes: structured questions, moderation, statuses, exports | 🔄 Tables + category rule designed and tested; no screens or services yet. See `docs/phase-3-design.md`; start of academic year (1 Aug) and category-by-exam-year confirmed; question types and who may verify still open |
+| 3 | Exam passes: structured questions, moderation, statuses, exports | 🔄 Tables, category rule and service layer built and tested (180 tests); **no screens yet**. Question types and verification rules are centralized and changeable (see `docs/phase-3-design.md`). Next: confirm the "image-based" interpretation, then server actions and screens |
 | 4 | Study tools: flashcards, Anki TSV export, quizzes, progress | 📋 |
 | 5 | AI course tutors (retrieval + citations) | 📋 🔐 needs an AI provider and budget approval |
 | 6 | Audio: upload, recording, transcription | 📋 🔐 consent/legal review; provider choice |

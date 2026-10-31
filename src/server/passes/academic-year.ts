@@ -76,7 +76,11 @@ export function passCategory(examYear: string, now: Date = new Date(), startMont
  * The same rule as a database filter, so lists can be filtered in SQL:
  * current = year equals `current`; previous = year sorts before `current` ("YYYY-YYYY" sorts like time).
  */
-export function categoryBounds(category: PassCategory, now: Date = new Date(), startMonth?: number) {
+export function categoryBounds(
+  category: PassCategory,
+  now: Date = new Date(),
+  startMonth?: number,
+): { equals: string } | { before: string } {
   const current = currentAcademicYear(now, startMonth);
-  return category === "current" ? ({ equals: current } as const) : ({ before: current } as const);
+  return category === "current" ? { equals: current } : { before: current };
 }

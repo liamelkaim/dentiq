@@ -81,7 +81,41 @@ professor, topic, type), downloads. Anki export stays a separate, later step; th
    someone submits an old exam late (a 2024-25 question added in 2026-27 is *previous-year*). Contribution
    dates are still stored, so this could be changed later.
 
-**Still open (needed before the submission form):**
-3. **Question types:** `sc`, `mc`, `kprim` only? Say if open-answer, true/false or image questions are needed.
-4. **Who may verify an answer?** Proposed: moderators and admins only, each with a note saying what the
-   verification rests on (never a leaked answer key).
+**Chosen by the owner for now (not permanent; designed to change, see below):**
+3. **Question kinds:** single choice (`sc`), multiple choice (`mc`), four true/false statements (`kprim`),
+   open answer (`open`), and image-based questions.
+   *Interpretation:* "image-based" is implemented as a capability of every question (any question can carry
+   images such as radiographs), not as a separate answer format, because an image alone doesn't say how the
+   question is answered. If something else was meant (e.g. "label this image" / hotspots), that needs its own
+   answer model; tell me and it becomes one new registry entry plus a table.
+4. **Verification:** only moderators and admins may verify an answer, and each verification needs a note
+   explaining its basis (at least 10 characters; never a leaked answer key).
+
+## Changing question types and verification rules later
+
+Everything that can change is in two places, so nothing is scattered through the feature:
+
+| What | Where | How to change |
+| --- | --- | --- |
+| What kinds of question exist and their rules (how many choices, how the answer works, image required?) | `src/server/passes/question-types.ts` (the registry) | **Add a type:** add one entry. No migration: the type is stored as plain text. |
+| Which of those kinds are accepted for NEW questions; who may verify; whether a note is required and how long; image and anti-spam limits | the `app_settings` table, read by `src/server/passes/settings.ts` | An administrator changes it with `updatePassSettings` (no code change, no redeploy; audited with before/after). An admin screen comes with the UI. |
+
+What is guaranteed when you change them:
+- **Existing questions and answers are never altered.** Switching a type off only blocks new questions of
+  that type; existing ones stay readable, searchable and editable. A question verified under an old policy
+  stays verified (who, when and on what basis are stored on the question itself).
+- **Nothing widens by accident.** A missing or corrupted setting falls back to the strict defaults; plain
+  students can never be given verification rights; an administrator can always verify.
+- **Never rename a stored type key.** To retire a type, switch it off. If a key is ever removed from the code,
+  its questions still display (marked as unknown, read-only) and are never deleted.
+- **New roles:** a role added later (e.g. a dedicated "verifier") is eligible automatically once it exists in
+  the role list (`roles` in `src/db/schema/auth.ts`); then add it to the allowed roles in the settings.
+
+## Service layer (built, tested, no screens yet)
+
+`src/server/passes/service.ts`: submit (with images, rights confirmation, duplicate detection, a per-student
+cap on waiting questions), edit (every change is a revision; changing wording, type, choices, images or exam
+year resets a verified answer to "proposed"), review (publish / reject with a reason / hide), verify and
+un-verify, duplicate grouping, reports, filtered lists (course, offering, professor, exam year, current- or
+previous-year, topic, type, answer status, text), change history, and permission-checked image access.
+Students never see who contributed a question; only moderators do.

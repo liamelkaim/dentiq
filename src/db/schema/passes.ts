@@ -26,13 +26,9 @@ import { user } from "./auth";
 import { courseOfferings, courses, professors, terms } from "./catalog";
 import { reportStatuses } from "./resources";
 
-/**
- * sc = single choice (one correct), mc = multiple choice (one or more correct),
- * kprim = four statements, each true or false. Names follow the Anki "All in One" formats named in the
- * master prompt; compatibility of exports with that template is NOT yet verified.
- */
-export const questionTypes = ["sc", "mc", "kprim"] as const;
-export type QuestionType = (typeof questionTypes)[number];
+// Question types (sc, mc, kprim, open, ...) are defined in ONE place: src/server/passes/question-types.ts.
+// The column below is plain text on purpose, so adding or retiring a type never needs a migration and
+// existing questions keep their stored type. Never rename a stored type key; disable it in the settings instead.
 
 // pending: awaiting review · published: visible to approved members · rejected: not accepted (reviewNote
 // says why) · hidden: taken down by a moderator, can be restored.
@@ -70,9 +66,13 @@ export const examQuestions = pgTable(
     examAcademicYear: text().notNull(),
     examTerm: text({ enum: terms }),
     topic: text(),
-    questionType: text({ enum: questionTypes }).notNull(),
+    questionType: text().notNull(),
     questionText: text().notNull(),
     explanation: text(),
+    // Open-answer questions have no choices: the answer is text. Proposed by the contributor, verified by a
+    // moderator (kept separate, like the per-choice answers).
+    proposedAnswerText: text(),
+    verifiedAnswerText: text(),
     provenance: text({ enum: provenances }).notNull().default("recalled"),
     // How sure the contributor is that the wording/answer is accurate; optional.
     confidence: text({ enum: confidences }),
@@ -140,6 +140,35 @@ export const examQuestionChoices = pgTable(
   (t) => [
     unique().on(t.questionId, t.position),
     check("exam_question_choices_position_range", sql`${t.position} between 1 and 10`),
+  ],
+);
+
+// Images attached to a question (e.g. a radiograph or clinical photo), for ANY question type. Files live in
+// private storage and are served only through a permission check. Removal is soft (`removedAt`) so history and
+// revision snapshots never point at a missing row.
+export const examQuestionImages = pgTable(
+  "exam_question_images",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    questionId: uuid()
+      .notNull()
+      .references(() => examQuestions.id, { onDelete: "cascade" }),
+    position: integer().notNull(),
+    storageKey: text().notNull().unique(),
+    fileName: text().notNull(),
+    mimeType: text().notNull(),
+    sizeBytes: integer().notNull(),
+    sha256: text().notNull(),
+    // Short description for screen readers; must not give away the answer.
+    altText: text(),
+    uploadedBy: text().references(() => user.id, { onDelete: "set null" }),
+    removedAt: timestamp({ withTimezone: true }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    unique().on(t.questionId, t.position),
+    check("exam_question_images_position_range", sql`${t.position} between 1 and 20`),
+    check("exam_question_images_size_positive", sql`${t.sizeBytes} > 0`),
   ],
 );
 
