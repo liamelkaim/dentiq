@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@electric-sql/pglite": "0.5.13",
+    "@vercel/blob": "^2.8.2",
     "better-auth": "1.7.14",
     "drizzle-orm": "0.45.4",
     "next": "16.4.3",

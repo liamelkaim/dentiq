@@ -10,7 +10,7 @@ import * as schema from "./schema";
 export type Database = PgDatabase<PgQueryResultHKT, typeof schema>;
 
 const MIGRATIONS_FOLDER = "./drizzle";
-const LOCAL_DATA_DIR = process.env.PGLITE_DATA_DIR || "./.data/pglite";
+// Resolve the local path when opening the database, not when importing this module.
 
 /** True when no DATABASE_URL is set and the embedded local Postgres is used. */
 export function usesLocalDatabase(): boolean {
@@ -27,10 +27,12 @@ function createDatabase(): Database {
   if (url) {
     // PGlite serves one connection at a time; a single pooled connection keeps transactions
     // from different requests from interleaving.
-    return drizzlePostgres(postgres(url, { max: isLocalUrl(url) ? 1 : 10 }), { schema, casing: "snake_case" });
+    return drizzlePostgres(postgres(url, { max: isLocalUrl(url) || process.env.VERCEL === "1" ? 1 : 10, idle_timeout: 20, connect_timeout: 10, prepare: false }), { schema, casing: "snake_case" });
   }
   // In-process PGlite: used by tests and scripts. `pnpm dev` runs PGlite in its own process instead,
   // because the Next.js dev server corrupted the in-process database (see docs/architecture.md).
+  if (process.env.VERCEL === "1") throw new Error("DATABASE_URL is required on Vercel; local database storage is unavailable");
+  const LOCAL_DATA_DIR = process.env.PGLITE_DATA_DIR || "./.data/pglite";
   mkdirSync(LOCAL_DATA_DIR, { recursive: true });
   return drizzlePglite(new PGlite(LOCAL_DATA_DIR), { schema, casing: "snake_case" });
 }

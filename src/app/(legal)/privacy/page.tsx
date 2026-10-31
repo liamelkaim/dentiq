@@ -1,0 +1,40 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: (await getTranslations("legal.privacy"))("title") };
+}
+
+export default async function PrivacyPage() {
+  const t = await getTranslations("legal");
+  const list = (key: "collect" | "use") => t.raw(`privacy.${key}`) as string[];
+  return (
+    <article className="space-y-6 text-[15px] leading-7">
+      <header>
+        <h1 className="text-[28px] font-semibold tracking-tight">{t("privacy.title")}</h1>
+        <p className="mt-1 text-[13px] text-text-subtle">{t("updated")}</p>
+      </header>
+      <p>{t("privacy.intro")}</p>
+      <section>
+        <h2 className="text-[18px] font-semibold">{t("privacy.collectTitle")}</h2>
+        <ul className="mt-2 list-disc space-y-1 pl-5">{list("collect").map((item) => <li key={item}>{item}</li>)}</ul>
+      </section>
+      <section>
+        <h2 className="text-[18px] font-semibold">{t("privacy.useTitle")}</h2>
+        <ul className="mt-2 list-disc space-y-1 pl-5">{list("use").map((item) => <li key={item}>{item}</li>)}</ul>
+      </section>
+      <section>
+        <h2 className="text-[18px] font-semibold">{t("privacy.privateTitle")}</h2>
+        <p className="mt-2">{t("privacy.private")}</p>
+      </section>
+      <section>
+        <h2 className="text-[18px] font-semibold">{t("privacy.rightsTitle")}</h2>
+        <p className="mt-2">{t("privacy.rights")}</p>
+      </section>
+      <section>
+        <h2 className="text-[18px] font-semibold">{t("privacy.reviewTitle")}</h2>
+        <p className="mt-2">{t("privacy.review")}</p>
+      </section>
+    </article>
+  );
+}

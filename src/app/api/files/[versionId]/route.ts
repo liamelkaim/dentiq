@@ -13,24 +13,26 @@ export async function GET(request: Request, { params }: { params: Promise<{ vers
   const file = await getDownload(getDb(), viewer, (await params).versionId);
   if (!file) return new Response(null, { status: 404 });
 
-  const bytes = await getStorage().get(file.storageKey);
-  if (!bytes) {
-    console.error(`[DentOS] Missing stored file for key ${file.storageKey}`);
+  const storage = getStorage();
+  const stream = storage.getStream ? await storage.getStream(file.storageKey) : null;
+  const bytes = storage.getStream ? null : await storage.get(file.storageKey);
+  if (!stream && !bytes) {
+    console.error(`[Dentiq] Missing stored file for key ${file.storageKey}`);
     return new Response(null, { status: 404 });
   }
 
   const preview = previewKind(file.mimeType);
   const inline = new URL(request.url).searchParams.get("inline") === "1" && preview !== null;
 
-  return new Response(new Blob([bytes as BlobPart], { type: file.mimeType }), {
+  return new Response(stream ?? new Blob([bytes as BlobPart], { type: file.mimeType }), {
     headers: {
       "Content-Type": file.mimeType,
-      "Content-Length": String(bytes.byteLength),
+      "Content-Length": String(file.sizeBytes),
       "Content-Disposition": contentDisposition(file.fileName, inline),
       "Cache-Control": "private, no-store",
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "no-referrer",
-      // Previews may be framed by DentOS pages only. Chrome's PDF viewer doesn't work in a
+      // Previews may be framed by Dentiq pages only. Chrome's PDF viewer doesn't work in a
       // sandboxed frame, so the sandbox applies to everything except PDFs.
       "X-Frame-Options": "SAMEORIGIN",
       "Content-Security-Policy":

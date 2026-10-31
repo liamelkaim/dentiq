@@ -4,7 +4,7 @@ import { APIError } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
 import type { Database } from "@/db/client";
 import { account, session, user, verification } from "@/db/schema";
-import { consoleMailer, type Mailer } from "@/server/email";
+import { getMailer, type Mailer } from "@/server/email";
 import { isBootstrapAdmin, isEmailDomainAllowed } from "./roles";
 
 type AuthOptions = {
@@ -13,11 +13,11 @@ type AuthOptions = {
   nextjs?: boolean;
 };
 
-export function createAuth(db: Database, { mailer = consoleMailer, nextjs = true }: AuthOptions = {}) {
+export function createAuth(db: Database, { mailer, nextjs = true }: AuthOptions = {}) {
   const plugins: BetterAuthPlugin[] = nextjs ? [nextCookies()] : [];
 
   return betterAuth({
-    appName: "DentOS",
+    appName: "Dentiq",
     secret: process.env.BETTER_AUTH_SECRET,
     baseURL: process.env.BETTER_AUTH_URL,
     database: drizzleAdapter(db, {
@@ -37,9 +37,9 @@ export function createAuth(db: Database, { mailer = consoleMailer, nextjs = true
       sendOnSignIn: true,
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
-        await mailer.send({
+        await (mailer ?? getMailer()).send({
           to: user.email,
-          subject: "DentOS — confirmez votre adresse / confirm your email",
+          subject: "Dentiq — confirmez votre adresse / confirm your email",
           text: `Confirmez votre adresse courriel / Confirm your email:\n${url}`,
         });
       },

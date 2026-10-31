@@ -22,12 +22,21 @@ export function validateEnv(source: Record<string, string | undefined> = process
   const result = envSchema.safeParse(source);
   if (!result.success) {
     const problems = result.error.issues.map((i) => `  - ${i.path.join(".")}: ${i.message}`).join("\n");
-    throw new Error(`DentOS configuration is invalid. Check your .env file:\n${problems}`);
+    throw new Error(`Dentiq configuration is invalid. Check your .env file:\n${problems}`);
   }
   // The embedded database is for development. ALLOW_LOCAL_DATABASE=true lets you try the production
   // build on your own computer; never set it on a real server.
   if (result.data.NODE_ENV === "production" && !result.data.DATABASE_URL && source.ALLOW_LOCAL_DATABASE !== "true") {
-    throw new Error("DentOS configuration is invalid: DATABASE_URL is required in production.");
+    throw new Error("Dentiq configuration is invalid: DATABASE_URL is required in production.");
+  }
+  if (source.VERCEL === "1") {
+    const required = ["DATABASE_URL", "BLOB_READ_WRITE_TOKEN", "RESEND_API_KEY", "EMAIL_FROM"];
+    const missing = required.filter((key) => !source[key]?.trim());
+    if (missing.length) throw new Error(`Dentiq Vercel setup is incomplete: ${missing.join(", ")}`);
+    if (source.ALLOW_LOCAL_DATABASE === "true") throw new Error("Local database mode is forbidden on Vercel");
+    if (!result.data.BETTER_AUTH_URL.startsWith("https://")) throw new Error("BETTER_AUTH_URL must use HTTPS on Vercel");
+    const host = new URL(result.data.DATABASE_URL!).hostname;
+    if (["localhost", "127.0.0.1", "[::1]"].includes(host)) throw new Error("Vercel requires a hosted PostgreSQL database");
   }
   return result.data;
 }

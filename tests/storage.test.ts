@@ -78,3 +78,19 @@ describe("file checks", () => {
     expect(contentDisposition("a.pdf", true)).toMatch(/^inline;/);
   });
 });
+
+describe("cloud integrations stay off locally", () => {
+  it("ignores cloud storage keys unless on Vercel or explicitly enabled", async () => {
+    const { cloudStorageEnabled } = await import("@/server/storage");
+    expect(cloudStorageEnabled({ BLOB_READ_WRITE_TOKEN: "token" })).toBe(false);
+    expect(cloudStorageEnabled({ DENTIQ_ENABLE_BLOB: "true" })).toBe(true);
+    expect(cloudStorageEnabled({ VERCEL: "1" })).toBe(true);
+  });
+
+  it("ignores the email key unless on Vercel or explicitly enabled", async () => {
+    const { cloudEmailEnabled } = await import("@/server/email");
+    expect(cloudEmailEnabled({ RESEND_API_KEY: "key", EMAIL_FROM: "a@b.c" })).toBe(false);
+    expect(cloudEmailEnabled({ DENTIQ_ENABLE_RESEND: "true" })).toBe(true);
+    expect(cloudEmailEnabled({ VERCEL: "1" })).toBe(true);
+  });
+});
