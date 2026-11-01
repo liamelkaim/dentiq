@@ -1,5 +1,31 @@
 # Roadmap and status
 
+## Status table (2026-11-01, end of overnight run)
+
+Legend: **Verified** = exercised in a real browser on a scratch database with fake accounts and covered by tests. **Implemented** = built and unit/integration tested, not browser-checked. Nothing is deployed.
+
+| Area | State | Notes |
+|---|---|---|
+| Accounts, approval, roles, FR/EN, light/dark | Verified | |
+| Courses, documents, moderation, private files | Verified | Local file storage only |
+| Exam passes (4 question types, images, verification, history) | Verified | Moderator reject/hide/report paths also checked |
+| Search (documents, notes, topics, questions) | Verified | Not accent-insensitive |
+| Practice, progress, flashcards, quizzes | Verified | Leitner schedule; unverified answers never scored |
+| CSV/TSV export | Verified | Formula-injection guarded |
+| Anki export | Implemented | "All in One" compatibility UNVERIFIED |
+| Topics, links, notes with version history | Verified | Notes are private only, no sharing |
+| Calendar | Verified | `.ics` import into calendar apps UNVERIFIED; no reminders |
+| Analytics | Verified | Real data only; fixed-at-answer-time scoring |
+| Profile, own-data export, account deletion | Verified | Law 25 legal review needed |
+| PWA offline shell, CSP, error pages | Verified (production build) | Install prompt untested |
+| Responsive 320 to 1440, dark/light, FR/EN, keyboard, reduced motion | Verified | See log for what was not covered |
+| AI tutor | Incomplete (grounding layer only) | OFF; no provider, no answers; needs provider and budget |
+| Recordings and transcription | Planned | `docs/audio-readiness.md` |
+| Shared rate limiting, nonce CSP, retention policy | Planned | Needed before hosting |
+| Hosting (Vercel/Neon/Blob/Resend) | Blocked | Needs owner decisions and credential rotation |
+| High-resolution logo | Blocked | Needs a 1024 px PNG/SVG from the owner |
+| Real course/professor data | Blocked | Needs owner/faculty input |
+
 Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · 🔐 requires approval
 
 ## Phase 1 — Foundation ✅ (2026-10-28)

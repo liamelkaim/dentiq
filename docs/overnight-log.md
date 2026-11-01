@@ -1,5 +1,21 @@
 # Overnight log
 
+## FINAL SUMMARY (2026-11-01)
+
+**Built (all committed locally, nothing pushed or deployed):** passes polish, study tools (practice, progress, flashcards, quizzes, export), course library (topics, notes with history, links, search, current vs previous), calendar and analytics, AI tutor grounding layer (OFF, no provider), profile/data export/account deletion, platform quality (PWA shell, CSP, accessibility, error pages). Then an independent security+correctness review (no critical or high findings; 20 fixes), two browser passes (functional walkthrough and a 800-load responsive/theme/language matrix, keyboard, reduced motion, zoom), a clean-database walkthrough, and the launch checklist and hosting plan.
+
+**Final checks (run once more at the end):** typecheck exit 0, lint exit 0, tests 29 files / 543 passed, production build exit 0. Tracked-file scan: only `.env.example` and `.vercelignore` match the sensitive names; no secret-shaped strings found by the reviewer.
+
+**Commits tonight:** 9ddb7a0 (Phase 3 screens), d990d7c (A), 72d3700 (B), c3b1a3f (C), 4a0fbc4 (D), 4ade38a (E), e9a830c (F), b6b2837 (G), 65dc482 (H fixes), 761b0c8 (I1 fixes), 16c789b (I2 fixes + audio plan). The setup guide, roadmap table, launch checklist, hosting plan, MORNING.md and this summary are committed in the final commit.
+
+**Failed or skipped:** logo swap skipped (no 1024 px file in the project; a kit sits in Downloads, outside the project, and its SVGs wrap the same low-res raster). Not tested: Safari, Firefox, real phones, screen readers, PWA install prompt, download dialogs, native select popups. Anki "All in One" compatibility and `.ics` import into calendar apps UNVERIFIED. The 195 px effective viewport (390 px at 200% zoom) still clips some selects. Two usage-limit interruptions paused agents; both resumed from saved work.
+
+**Decisions made for you:** see "Decisions made for the owner" below (constants and defaults, all changeable in code or settings).
+
+**You must do yourself:** rotate Neon, Blob, Resend, auth secret and Vercel credentials that sat in iCloud-synced files; check the Vercel dashboard; send a 1024 px PNG or SVG logo; get a legal (Law 25) review of privacy, terms and account deletion; decide an AI provider and budget; decide recordings policy. Full list in `docs/MORNING.md` and `docs/launch-checklist.md`.
+
+---
+
 > Final summary goes at the top when the run finishes (block M). Until then this is a running log.
 > Started 2026-11-01. Phase 3 screens were committed first as `9ddb7a0`.
 
@@ -25,7 +41,7 @@
 | G. Platform quality (PWA shell, CSP, focus, touch targets, loading/error pages, em dash cleanup) | built; typecheck, lint, 496 tests, build clean; needs a browser to verify install, offline page, CSP hydration, safe areas | b6b2837 |
 | H. Independent review (security + correctness) and fixes (20 items) | done; typecheck, lint, 533 tests, build clean | 65dc482 |
 | I1. Browser walkthrough, clean scratch DB, desktop, FR then EN spot-check (student, moderator, admin) | done; ~40 steps PASS, 3 defects found and fixed; 537 tests, build clean | 761b0c8 |
-| I2. Responsive/theme/language/keyboard/motion/zoom matrix + paths part 1 skipped | done; 543 tests, build clean | see git log |
+| I2. Responsive/theme/language/keyboard/motion/zoom matrix + paths part 1 skipped | done; 543 tests, build clean | 16c789b |
 | K. docs/audio-readiness.md (plan only) | written | see git log |
 
 ## Decisions made for the owner
