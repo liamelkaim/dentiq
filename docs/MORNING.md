@@ -2,7 +2,18 @@
 
 ## Deployment status (updated while you were away)
 
-**Live URL: none yet. Nothing is deployed.** New project `dentiq-app` is created and linked; new Neon database (migrations 0000-0010 applied), private Blob store, auth secret and admin email are set. **Blocked on one thing only you can do:** accept the Resend terms in a browser (link in `docs/go-live-blockers.md`), then I can finish the preview, the live checks and production. The old `dentiq` project was not touched. Code is pushed to the private repo `liamelkaim/dentiq`.
+**Production: not deployed yet. Preview: Ready** at https://dentiq-61rftn8az-liamelkaim.vercel.app (Vercel login protection is on; use `npx vercel curl <path> --deployment <url>` or sign in to Vercel). Resend key and `EMAIL_FROM` are set. The old `dentiq` project was not touched.
+
+**Done on the preview:** build OK (1m), `pnpm check` OK (598 tests), `/sign-in`, `/sign-up`, `/privacy`, `/terms`, `/offline` all 200, nonce CSP and security headers present.
+
+**Not done, and why:** admin sign-up/sign-in, upload, pass question and the browser CSP console check need an account. I can't create accounts or enter passwords, and the verification email goes to your inbox. `BETTER_AUTH_URL` is a hidden secret, so I could not read it; it is meant to be `https://dentiq-app.vercel.app`, which returns 404 until the first production deploy. The preview hostname differs, so sign-in will not work on the preview itself.
+
+**Next, in this order:**
+1. `npx vercel deploy --prod`, then `npx vercel inspect <url>` and confirm the alias is exactly `dentiq-app.vercel.app` (otherwise reset `BETTER_AUTH_URL` and redeploy).
+2. Sign up there with the `ADMIN_EMAILS` address, click the emailed link, sign in, upload a file, answer a pass question, open DevTools console and look for CSP errors (fallback: `Content-Security-Policy-Report-Only` in `src/proxy.ts`).
+3. If anything fails: `npx vercel rollback`.
+
+Fix made: `.vercelignore` now excludes the iCloud copies (`.data 2`, `.next 2`, `node_modules 2`, `*.nosync`); without it the upload was about 4.5 GB and hung. Uncommitted. A stuck earlier `vercel deploy --yes` process (PID 53879) may still be running; kill it.
 
 
 Nothing was pushed, deployed or connected to Vercel, Neon, Blob or Resend. Everything is committed locally on `main`.

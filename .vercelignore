@@ -7,3 +7,8 @@
 node_modules
 coverage
 *.log
+.data *
+.next *
+node_modules *
+*.nosync
+.claude
