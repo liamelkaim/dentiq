@@ -31,3 +31,16 @@ Status key: **DONE** = built and tested in code (a real host still has to confir
 | Confirm on the real host | OPEN | Cookie flags (Secure, HttpOnly, SameSite), headers via `curl -I`, `no-trusted-ip` absent from `auth_rate_limit` keys, CSP console clean, smoke test in `docs/vercel-deployment.md`. |
 | Browsers and devices not tested | OPEN | Safari, Firefox, real phones, screen readers, PWA install prompt. |
 | Upload size on Vercel | OPEN (by design) | Hosted uploads are 4 MB because Vercel rejects larger function bodies (about 4.5 MB). Larger files would need direct-to-Blob uploads (new code and a Blob store); decide if 4 MB is enough. |
+
+
+## Deployment progress (2026-11-01)
+
+| Step | State |
+|---|---|
+| Private GitHub repo `liamelkaim/dentiq`, `main` pushed (history scanned first: no secrets, only `.env.example`) | DONE |
+| Vercel project `dentiq` | BLOCKED: the Vercel CLI is not installed or signed in on this computer, and no Vercel connector is available. Needs a one-time login by the owner. |
+| Neon database (new credentials), migrations 0000 to 0010 applied | BLOCKED: no Neon access. Create the project in the Neon dashboard (free tier), then apply migrations before the first deploy. |
+| Vercel Blob (private store) | BLOCKED: created from the Vercel project's Storage tab. |
+| Resend (verified sender, new key) | BLOCKED: needs a Resend account; a vercel.app address cannot send from its own domain, so the sandbox sender only reaches the account owner's email. |
+| New `BETTER_AUTH_SECRET`, env vars, preview deploy, live checks, production deploy | NOT STARTED (depend on the four rows above) |
+| Latest migration is now `0010_file_retention` (after `0009_rate_limits`) | NOTE |
