@@ -52,7 +52,8 @@
     "recentEmpty": "Aucun document publié pour l'instant.",
     "progressTitle": "Progression d'étude",
     "progressBody": "La progression s'affichera quand les cartes mémoire et les quiz seront disponibles. Dentiq n'affiche que des données réelles.",
-    "quickPasses": "Passes"
+    "quickPasses": "Passes",
+    "searchEverything": "Rechercher des documents et des questions d'examen…"
   },
   "courseLayout": {
     "tabs": "Sections du cours",
@@ -572,7 +573,8 @@
       "pages": "Pages de résultats",
       "previous": "Précédent",
       "next": "Suivant",
-      "pageOf": "Page {page} sur {total}"
+      "pageOf": "Page {page} sur {total}",
+      "openInCourse": "Ouvrir dans {code}"
     },
     "status": {
       "pending": "En révision",
@@ -701,7 +703,8 @@
       "notVerifiable": "Une question refusée ou masquée ne peut pas être vérifiée.",
       "notAllowed": "Votre rôle ne permet pas de vérifier les réponses.",
       "done": "Réponse vérifiée.",
-      "removed": "Vérification retirée."
+      "removed": "Vérification retirée.",
+      "removeNoteHint": "Pourquoi retirer la vérification (mauvaise réponse, nouvelle source, erreur)? Au moins {min} caractères quand une raison est exigée."
     },
     "repeats": {
       "title": "Répétitions",
@@ -886,6 +889,32 @@
       "invalidVerifierRole": "Rôle invalide pour la vérification.",
       "adminMustVerify": "Les administrateurs doivent toujours pouvoir vérifier.",
       "outOfRange": "Une valeur est hors des limites permises."
+    },
+    "mine": {
+      "title": "Mes contributions",
+      "subtitle": "Les questions d'examen que vous avez soumises et où elles en sont.",
+      "link": "Mes contributions",
+      "emptyTitle": "Vous n'avez soumis aucune question",
+      "emptyBody": "Les questions que vous ajoutez apparaissent ici avec leur statut : en révision, publiée, refusée ou masquée.",
+      "hiddenNote": "Un·e modérateur·rice a masqué cette question, elle ne peut pas être ouverte."
+    },
+    "courseCard": {
+      "open": "Ouvrir l'onglet Passes",
+      "empty": "Aucune question publiée pour ce cours pour l'instant."
     }
+  },
+  "search": {
+    "title": "Recherche",
+    "noQueryTitle": "Écrivez quelque chose à chercher",
+    "noQueryBody": "Cherchez dans les documents et les questions d'examen publiées depuis la zone de l'accueil.",
+    "forQuery": "Résultats pour « {q} »",
+    "documents": "{count, plural, =0 {Aucun document} one {# document} other {# documents}}",
+    "questions": "{count, plural, =0 {Aucune question d'examen} one {# question d'examen} other {# questions d'examen}}",
+    "sourceDocuments": "Source : Ressources",
+    "sourceQuestions": "Source : {passes}",
+    "noDocuments": "Aucun document ne correspond à cette recherche.",
+    "noQuestionsTitle": "Aucune question d'examen",
+    "noQuestions": "Aucune question d'examen publiée ne correspond à cette recherche.",
+    "allQuestions": "Voir les {count} questions correspondantes dans Passes"
   }
 }

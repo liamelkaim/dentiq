@@ -730,6 +730,8 @@ export type QuestionFilters = {
   status?: QuestionStatus;
   q?: string;
   includeDuplicates?: boolean;
+  /** Only published questions, even for the viewer's own pending/rejected ones (counts, search). */
+  publishedOnly?: boolean;
   limit?: number;
   offset?: number;
   /** For tests; defaults to now. */
@@ -744,7 +746,9 @@ export async function listQuestions(db: Database, viewer: Viewer, filters: Quest
   const e = examQuestions;
   const conditions: SQL[] = [];
 
-  if (isModerator(viewer) && filters.status) {
+  if (filters.publishedOnly) {
+    conditions.push(eq(e.status, "published"));
+  } else if (isModerator(viewer) && filters.status) {
     conditions.push(eq(e.status, filters.status));
   } else {
     conditions.push(or(eq(e.status, "published"), and(eq(e.contributedBy, viewer.id), inArray(e.status, ["pending", "rejected"])))!);
@@ -813,6 +817,30 @@ export async function listQuestions(db: Database, viewer: Viewer, filters: Quest
     items: rows.map((r) => ({ ...r, category: passCategory(r.examAcademicYear, now) })),
     total: totals[0]?.n ?? 0,
   };
+}
+
+/** The viewer's own submitted questions in every status (including hidden, which only the status label shows). */
+export async function listMyQuestions(db: Database, viewer: Viewer, limit = 200) {
+  if (!canAccessLibrary(viewer)) return [];
+  const e = examQuestions;
+  const rows = await db
+    .select({
+      id: e.id,
+      courseCode: courses.code,
+      examAcademicYear: e.examAcademicYear,
+      questionType: e.questionType,
+      questionText: e.questionText,
+      status: e.status,
+      answerStatus: e.answerStatus,
+      createdAt: e.createdAt,
+    })
+    .from(e)
+    .innerJoin(courses, eq(e.courseId, courses.id))
+    .where(eq(e.contributedBy, viewer.id))
+    .orderBy(desc(e.createdAt))
+    .limit(Math.min(Math.max(limit, 1), 500));
+  // A hidden question is no longer viewable by its author (see canSeeQuestion), so it gets no link.
+  return rows.map((r) => ({ ...r, openable: canSeeQuestion(viewer, { status: r.status, contributedBy: viewer.id }) }));
 }
 
 export type QuestionListItem = Awaited<ReturnType<typeof listQuestions>>["items"][number];

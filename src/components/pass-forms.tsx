@@ -673,7 +673,7 @@ export function UnverifyForm({ questionId, requireNote, minNoteLength }: { quest
       <p className="text-[13px] text-text-subtle">{t("removeHelp")}</p>
       <StateNotice state={state} />
       <input type="hidden" name="questionId" value={questionId} />
-      <Field label={t("removeNote")} htmlFor={`${p}-note`} error={msg(state.fieldErrors?.note)} hint={t("noteHint", { min: minNoteLength })}>
+      <Field label={t("removeNote")} htmlFor={`${p}-note`} error={msg(state.fieldErrors?.note)} hint={t("removeNoteHint", { min: minNoteLength })}>
         <Input id={`${p}-note`} name="note" required={requireNote} minLength={requireNote ? minNoteLength : undefined} maxLength={500} aria-describedby={`${p}-note-hint`} />
       </Field>
       <div>

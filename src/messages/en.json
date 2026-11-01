@@ -52,7 +52,8 @@
     "recentEmpty": "No published documents yet.",
     "progressTitle": "Study progress",
     "progressBody": "Progress will appear once flashcards and quizzes are available. Dentiq only shows real data.",
-    "quickPasses": "Passes"
+    "quickPasses": "Passes",
+    "searchEverything": "Search documents and exam questions…"
   },
   "courseLayout": {
     "tabs": "Course sections",
@@ -572,7 +573,8 @@
       "pages": "Result pages",
       "previous": "Previous",
       "next": "Next",
-      "pageOf": "Page {page} of {total}"
+      "pageOf": "Page {page} of {total}",
+      "openInCourse": "Open in {code}"
     },
     "status": {
       "pending": "In review",
@@ -701,7 +703,8 @@
       "notVerifiable": "A rejected or hidden question cannot be verified.",
       "notAllowed": "Your role is not allowed to verify answers.",
       "done": "Answer verified.",
-      "removed": "Verification removed."
+      "removed": "Verification removed.",
+      "removeNoteHint": "Why is the verification being removed (wrong answer, new source, a mistake)? At least {min} characters when a reason is required."
     },
     "repeats": {
       "title": "Repeats",
@@ -886,6 +889,32 @@
       "invalidVerifierRole": "Invalid role for verification.",
       "adminMustVerify": "Administrators must always be able to verify.",
       "outOfRange": "A value is outside the allowed limits."
+    },
+    "mine": {
+      "title": "My contributions",
+      "subtitle": "The exam questions you submitted and where each one stands.",
+      "link": "My contributions",
+      "emptyTitle": "You haven't submitted any questions",
+      "emptyBody": "Questions you add appear here with their status: in review, published, rejected or hidden.",
+      "hiddenNote": "A moderator hid this question, so it can't be opened."
+    },
+    "courseCard": {
+      "open": "Open the Passes tab",
+      "empty": "No published questions for this course yet."
     }
+  },
+  "search": {
+    "title": "Search",
+    "noQueryTitle": "Type something to search",
+    "noQueryBody": "Search documents and published exam questions from the box on the home page.",
+    "forQuery": "Results for \"{q}\"",
+    "documents": "{count, plural, =0 {No documents} one {# document} other {# documents}}",
+    "questions": "{count, plural, =0 {No exam questions} one {# exam question} other {# exam questions}}",
+    "sourceDocuments": "Source: Resources",
+    "sourceQuestions": "Source: {passes}",
+    "noDocuments": "No documents match this search.",
+    "noQuestionsTitle": "No exam questions",
+    "noQuestions": "No published exam question matches this search.",
+    "allQuestions": "See all {count} matching questions in Passes"
   }
 }

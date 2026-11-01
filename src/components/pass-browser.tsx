@@ -51,6 +51,8 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
   const filtersActive = Boolean(
     params.q || params.year || params.type || params.answer || params.status || params.course || params.offering || params.professor || params.topic,
   );
+  // On the global view filtered to one course, offer the course's own Passes tab.
+  const openCourse = !course && params.course ? courseChoices.find((c) => c.id === params.course) : undefined;
   const lastPage = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
   const typeName = (key: string) => t(`types.${key}.name`);
 
@@ -72,9 +74,21 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
             </Link>
           ))}
         </nav>
-        <ButtonLink href={newHref} size="sm">
-          {t("add")}
-        </ButtonLink>
+        <div className="flex flex-wrap items-center gap-2">
+          {openCourse && (
+            <ButtonLink href={`/courses/${encodeURIComponent(openCourse.code)}/passes`} variant="secondary" size="sm">
+              {t("browser.openInCourse", { code: openCourse.code })}
+            </ButtonLink>
+          )}
+          {!course && (
+            <ButtonLink href="/passes/mine" variant="ghost" size="sm">
+              {t("mine.link")}
+            </ButtonLink>
+          )}
+          <ButtonLink href={newHref} size="sm">
+            {t("add")}
+          </ButtonLink>
+        </div>
       </div>
 
       <Panel className="p-4">

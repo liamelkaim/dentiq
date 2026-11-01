@@ -6,6 +6,9 @@ import { courseOfferings, courses, examQuestions, offeringInstructors, professor
 import { canAccessLibrary, type Viewer } from "@/server/resources/service";
 import { listQuestions } from "./service";
 
+/** How many exam questions the dashboard search shows (the Passes page has the full list). */
+export const SEARCH_QUESTION_LIMIT = 10;
+
 /** Active courses for pickers and the global Passes filter. */
 export async function listCourseChoices(db: Database) {
   return db
@@ -64,4 +67,16 @@ export async function passesSummary(db: Database, viewer: Viewer) {
     listQuestions(db, viewer, { limit: 4 }),
   ]);
   return { total: all.total, current: current.total, verified: verified.total, recent: recent.items };
+}
+
+/** Published questions the viewer may see for a course (the course overview count). */
+export async function publishedQuestionCount(db: Database, viewer: Viewer, courseId: string) {
+  return (await listQuestions(db, viewer, { courseId, publishedOnly: true, limit: 1 })).total;
+}
+
+/** Published questions matching a search text (dashboard search). Same permission rules as listQuestions. */
+export async function searchPublishedQuestions(db: Database, viewer: Viewer, q: string, limit = SEARCH_QUESTION_LIMIT) {
+  const text = q.trim();
+  if (!text) return { items: [], total: 0 };
+  return listQuestions(db, viewer, { q: text, publishedOnly: true, limit });
 }

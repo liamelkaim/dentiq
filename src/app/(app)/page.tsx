@@ -108,7 +108,7 @@ export default async function DashboardPage() {
           </h1>
           <p className="mt-1 text-[15px] text-text-muted">{t("home.heroSubtitle")}</p>
 
-          <form role="search" action={library ? "/resources" : "/courses"} className="relative mt-5 max-w-xl">
+          <form role="search" action={library ? "/search" : "/courses"} className="relative mt-5 max-w-xl">
             <label htmlFor="home-search" className="sr-only">
               {t("home.searchLabel")}
             </label>
@@ -118,10 +118,9 @@ export default async function DashboardPage() {
               name="q"
               type="search"
               maxLength={100}
-              placeholder={library ? t("home.searchDocuments") : t("home.searchCourses")}
+              placeholder={library ? t("home.searchEverything") : t("home.searchCourses")}
               className="h-12 w-full rounded-[12px] border border-border-strong bg-surface/90 pr-4 pl-10 text-[15px] shadow-card backdrop-blur placeholder:text-text-subtle focus:border-accent focus:outline-none"
             />
-            {library && <input type="hidden" name="period" value="all" />}
           </form>
 
           <nav aria-label={t("nav.main")} className="mt-6 flex flex-wrap gap-2 sm:gap-4">

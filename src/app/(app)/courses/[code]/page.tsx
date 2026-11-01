@@ -3,13 +3,14 @@ import { notFound } from "next/navigation";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { CourseForm, OfferingForm } from "@/components/admin-forms";
 import { CourseHeader, loadCourseByCode, loadCourseSummary } from "@/components/course-layout";
-import { FolderIcon } from "@/components/icons";
+import { FolderIcon, PassesIcon } from "@/components/icons";
 import { Badge, ButtonLink, DescriptionList, List, ListRow, Notice, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { hasRole } from "@/server/auth/roles";
 import { requireUser } from "@/server/auth/session";
 import { listPrograms } from "@/server/catalog/service";
+import { publishedQuestionCount } from "@/server/passes/queries";
 import { canAccessLibrary } from "@/server/resources/service";
 
 type Params = Promise<{ code: string }>;
@@ -33,6 +34,8 @@ export default async function CourseOverviewPage({ params }: { params: Params })
     isAdmin ? listPrograms(getDb()) : Promise.resolve([]),
   ]);
   const libraryAccess = canAccessLibrary(user);
+  const passCount = libraryAccess ? await publishedQuestionCount(getDb(), user, course.id) : null;
+  const passesHref = `/courses/${encodeURIComponent(course.code)}/passes`;
   const notesHref = `/courses/${encodeURIComponent(course.code)}/notes`;
 
   const description = localized(locale, course.descriptionFr ?? "", course.descriptionEn);
@@ -145,6 +148,30 @@ export default async function CourseOverviewPage({ params }: { params: Params })
               </Notice>
             )}
           </Section>
+
+          {libraryAccess && passCount !== null && (
+            <Section title={t("passes.title")}>
+              <Panel className="flex flex-col gap-4 p-5">
+                <div className="flex items-center gap-3">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-[10px] bg-accent-soft text-accent">
+                    <PassesIcon />
+                  </span>
+                  <div>
+                    <p className="text-[15px] font-medium">{t("passes.browser.count", { count: passCount })}</p>
+                    {passCount === 0 && <p className="text-[13px] text-text-muted">{t("passes.courseCard.empty")}</p>}
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <ButtonLink href={passesHref}>{t("passes.courseCard.open")}</ButtonLink>
+                  {passCount === 0 && !course.archivedAt && (
+                    <ButtonLink href={`${passesHref}/new`} variant="secondary">
+                      {t("passes.add")}
+                    </ButtonLink>
+                  )}
+                </div>
+              </Panel>
+            </Section>
+          )}
         </aside>
       </div>
 
