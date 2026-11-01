@@ -325,7 +325,8 @@
       "you": "you",
       "joined": "Joined {date}",
       "errors": {
-        "lastAdmin": "This is the only approved administrator. Approve another administrator first; this change was not made.",
+        "lastAdmin": "This is the only approved administrator, so this change was not made.",
+        "singleAdmin": "Dentiq has one administrator. Nobody can be promoted to administrator.",
         "tryAgain": "Two changes collided. Nothing was changed; try again.",
         "cannotChangeSelf": "You can't change your own account here.",
         "notFound": "This account was not found."

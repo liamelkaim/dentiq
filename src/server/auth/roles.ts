@@ -32,7 +32,11 @@ export function isEmailDomainAllowed(email: string, allowedDomains = process.env
   return domains.some((d) => domain === d || domain.endsWith(`.${d}`));
 }
 
-/** Emails listed in ADMIN_EMAILS become approved administrators when they sign up. */
+/**
+ * Dentiq has exactly one administrator: the FIRST address in ADMIN_EMAILS becomes the approved administrator when it
+ * signs up. Any further addresses in the list are ignored, and the admin tools cannot promote anyone to administrator.
+ */
 export function isBootstrapAdmin(email: string, adminEmails = process.env.ADMIN_EMAILS): boolean {
-  return splitList(adminEmails).includes(email.trim().toLowerCase());
+  const [owner] = splitList(adminEmails);
+  return owner !== undefined && owner === email.trim().toLowerCase();
 }

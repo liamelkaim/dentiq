@@ -61,11 +61,13 @@ export function createAuth(db: Database, { mailer, nextjs = true, rateLimitEnabl
       user: {
         create: {
           async before(newUser) {
-            if (!isEmailDomainAllowed(newUser.email)) {
-              throw new APIError("BAD_REQUEST", { message: "EMAIL_DOMAIN_NOT_ALLOWED" });
-            }
+            // The administrator may use any address (it is named in ADMIN_EMAILS); every student must use an allowed
+            // university address (ALLOWED_EMAIL_DOMAINS, e.g. umontreal.ca) and then verify it and be approved.
             if (isBootstrapAdmin(newUser.email)) {
               return { data: { ...newUser, role: "admin", approvalStatus: "approved" } };
+            }
+            if (!isEmailDomainAllowed(newUser.email)) {
+              throw new APIError("BAD_REQUEST", { message: "EMAIL_DOMAIN_NOT_ALLOWED" });
             }
             return { data: { ...newUser, role: "student", approvalStatus: "pending" } };
           },

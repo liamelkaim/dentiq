@@ -78,10 +78,12 @@ export async function setUserRole(
   role: Role,
 ): Promise<ServiceResult<null>> {
   if (actorId === targetId) return { ok: false, error: "cannotChangeSelf" };
+  // One administrator only: nobody can be promoted to administrator from the admin tools.
+  if (role === "admin") return { ok: false, error: "singleAdmin" };
   return changeAccount(
     db,
     targetId,
-    () => role !== "admin",
+    () => true, // role can only become student or moderator, so a target who is an administrator always stops being one
     async (tx) => {
       await tx.update(user).set({ role, updatedAt: new Date() }).where(eq(user.id, targetId));
     },

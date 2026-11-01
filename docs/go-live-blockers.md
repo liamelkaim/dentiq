@@ -85,3 +85,7 @@ The Vercel Marketplace route for Resend requires a domain you own (`--meta domai
 ### Dependency audit (2026-11-01)
 
 `pnpm audit --prod`: one high advisory, `zod` below 4.6.6 nested under `@vercel/blob` (the app's own `zod` is 4.6.7). Not fixed: `pnpm install` cannot run here because `node_modules` is an iCloud symlink, and an `overrides: zod: 4.6.7` entry without an updated lockfile would break the Vercel build. To fix: copy the project to a normal folder, add that override to `pnpm-workspace.yaml`, run `pnpm install`, commit `pnpm-lock.yaml`. Dev-only advisories (esbuild via drizzle-kit, minimatch via eslint) do not ship. Password reset and per-user upload quota remain OPEN (not started: auth-critical, they need a browser test with real email).
+
+### Student emails and the single administrator (2026-11-01)
+
+Enforced in code and tested (first ADMIN_EMAILS address only, no promotion to admin, students need an allowed domain, admin exempt). See `docs/student-verification.md`. Not switched on in production: set `ALLOWED_EMAIL_DOMAINS=umontreal.ca` and redeploy after the owner agrees; students cannot get verification email until a sender domain is verified in Resend.

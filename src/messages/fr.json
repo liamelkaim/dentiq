@@ -325,7 +325,8 @@
       "you": "vous",
       "joined": "Inscrit·e le {date}",
       "errors": {
-        "lastAdmin": "C'est le seul administrateur approuvé. Approuvez d'abord un autre administrateur ; ce changement n'a pas été fait.",
+        "lastAdmin": "C'est le seul administrateur approuvé : ce changement n'a pas été fait.",
+        "singleAdmin": "Dentiq a un seul administrateur. Personne ne peut être promu administrateur.",
         "tryAgain": "Deux changements se sont croisés. Rien n'a été modifié ; réessayez.",
         "cannotChangeSelf": "Vous ne pouvez pas modifier votre propre compte ici.",
         "notFound": "Ce compte est introuvable."

@@ -89,6 +89,22 @@ describe("sign-up", () => {
     await signUp("owner@example.com");
     expect(await findUser("owner@example.com")).toMatchObject({ role: "admin", approvalStatus: "approved" });
   });
+
+  it("makes only the FIRST ADMIN_EMAILS address an administrator", async () => {
+    vi.stubEnv("ADMIN_EMAILS", "owner@example.com, second@example.com");
+    await signUp("second@example.com");
+    expect(await findUser("second@example.com")).toMatchObject({ role: "student", approvalStatus: "pending" });
+  });
+
+  it("lets the administrator sign up from any domain while students need an allowed one", async () => {
+    vi.stubEnv("ADMIN_EMAILS", "owner@gmail.example");
+    vi.stubEnv("ALLOWED_EMAIL_DOMAINS", "umontreal.ca");
+    await signUp("owner@gmail.example");
+    expect(await findUser("owner@gmail.example")).toMatchObject({ role: "admin" });
+    await expect(signUp("student@gmail.example")).rejects.toBeTruthy();
+    await signUp("etudiant@umontreal.ca");
+    expect(await findUser("etudiant@umontreal.ca")).toMatchObject({ role: "student", approvalStatus: "pending" });
+  });
 });
 
 describe("sign-in", () => {

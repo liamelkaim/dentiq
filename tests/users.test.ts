@@ -37,6 +37,11 @@ describe("account approval and roles", () => {
     expect(await db.select().from(auditLog)).toHaveLength(1);
   });
 
+  it("never promotes anyone to administrator", async () => {
+    expect(await setUserRole(db, "admin", "student", "admin")).toEqual({ ok: false, error: "singleAdmin" });
+    expect((await getUser("student")).role).toBe("student");
+  });
+
   it("refuses to let an admin change their own role or status", async () => {
     expect(await setUserRole(db, "admin", "admin", "student")).toEqual({ ok: false, error: "cannotChangeSelf" });
     expect(await setApprovalStatus(db, "admin", "admin", "rejected")).toEqual({ ok: false, error: "cannotChangeSelf" });
@@ -72,8 +77,8 @@ describe("account approval and roles", () => {
       expect(await getUser("admin-2")).toMatchObject({ role: "admin", approvalStatus: "approved" });
     });
 
-    it("keeps re-approving, promoting and changing non-admins unrestricted", async () => {
-      expect(await setUserRole(db, "admin", "student", "admin")).toEqual({ ok: true, value: null });
+    it("keeps re-approving and changing non-admins unrestricted (promotion to administrator is refused)", async () => {
+      expect(await setUserRole(db, "admin", "student", "moderator")).toEqual({ ok: true, value: null });
       expect(await setApprovalStatus(db, "admin", "student", "approved")).toEqual({ ok: true, value: null });
       expect(await setApprovalStatus(db, "admin", "admin", "approved")).toEqual({ ok: false, error: "cannotChangeSelf" });
     });
