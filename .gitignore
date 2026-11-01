@@ -5,8 +5,11 @@ coverage/
 next-env.d.ts
 *.tsbuildinfo
 
-# Local database files and uploads
+# Local database files and uploads. These live in .data.nosync (so iCloud doesn't sync them); `.data` is
+# a link to it. A trailing-slash pattern doesn't match a link, so the name is listed without one too.
 .data/
+.data
+*.nosync
 
 # Secrets — only .env.example is committed
 .env
