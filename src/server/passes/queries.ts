@@ -75,8 +75,8 @@ export async function publishedQuestionCount(db: Database, viewer: Viewer, cours
 }
 
 /** Published questions matching a search text (dashboard search). Same permission rules as listQuestions. */
-export async function searchPublishedQuestions(db: Database, viewer: Viewer, q: string, limit = SEARCH_QUESTION_LIMIT) {
+export async function searchPublishedQuestions(db: Database, viewer: Viewer, q: string, limit = SEARCH_QUESTION_LIMIT, courseId?: string) {
   const text = q.trim();
   if (!text) return { items: [], total: 0 };
-  return listQuestions(db, viewer, { q: text, publishedOnly: true, limit });
+  return listQuestions(db, viewer, { q: text, publishedOnly: true, limit, courseId });
 }

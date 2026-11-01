@@ -3,6 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { DownloadIcon } from "@/components/icons";
+import { QuestionLinkForm, TopicPickerForm } from "@/components/library-forms";
+import { RelatedPanel } from "@/components/library-ui";
+import { excerpt } from "@/components/pass-ui";
 import { NewVersionForm, ReportForm } from "@/components/resource-forms";
 import { formatBytes, ResourceStatusBadges } from "@/components/resource-list";
 import { Badge, Button, buttonClass, DescriptionList, Input, List, ListRow, Notice, PageHeader, Panel, Section } from "@/components/ui";
@@ -11,7 +14,11 @@ import { localized, type Locale } from "@/i18n/config";
 import { requireUser } from "@/server/auth/session";
 import { getMaxFileBytes, previewKind } from "@/server/resources/files";
 import { moderateResourceAction, resolveReportAction, setOfficialAction } from "@/server/resources/actions";
-import { getResource } from "@/server/resources/service";
+import { removeQuestionLinkAction } from "@/server/library/actions";
+import { QUESTION_PICKER_LIMIT } from "@/server/library/constants";
+import { listLinkableQuestions, relatedForResource, selectedTopicIds } from "@/server/library/links";
+import { listCourseTopics, topicLabel } from "@/server/library/topics";
+import { getResource, isModerator } from "@/server/resources/service";
 
 type Params = Promise<{ id: string }>;
 
@@ -28,8 +35,16 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 export default async function ResourcePage({ params }: { params: Params }) {
-  const { resource } = await load(params);
+  const { viewer, resource } = await load(params);
   if (!resource) notFound();
+  const db = getDb();
+  const [related, courseTopics, selectedTopics, linkable] = await Promise.all([
+    relatedForResource(db, viewer, resource.id),
+    listCourseTopics(db, viewer, resource.courseId),
+    resource.canEdit ? selectedTopicIds(db, "resource", resource.id) : Promise.resolve([]),
+    resource.canEdit ? listLinkableQuestions(db, viewer, resource.courseId, QUESTION_PICKER_LIMIT) : Promise.resolve([]),
+  ]);
+  const linkedQuestionIds = new Set((related?.questions ?? []).map((q) => q.id));
 
   const t = await getTranslations();
   const format = await getFormatter();
@@ -122,6 +137,56 @@ export default async function ResourcePage({ params }: { params: Params }) {
           ]}
         />
       </Section>
+
+      {related && (
+        <Section>
+          <RelatedPanel
+            courseCode={resource.course.code}
+            topics={related.topics}
+            legacyTopic={related.legacyTopic}
+            topicEditor={
+              resource.canEdit ? (
+                <TopicPickerForm
+                  target="resource"
+                  id={resource.id}
+                  topics={courseTopics.map((x) => ({ id: x.id, label: topicLabel(x, locale) }))}
+                  selected={selectedTopics}
+                  staffHref={isModerator(viewer) ? `${courseHref}/topics` : undefined}
+                />
+              ) : undefined
+            }
+            questions={related.questions}
+            questionActions={
+              resource.canEdit
+                ? (q) => (
+                    <form action={removeQuestionLinkAction}>
+                      <input type="hidden" name="kind" value="resource" />
+                      <input type="hidden" name="id" value={resource.id} />
+                      <input type="hidden" name="questionId" value={q.id} />
+                      <Button type="submit" variant="ghost" size="sm" aria-label={t("library.links.removeNamed", { question: excerpt(q.questionText, 60) })}>
+                        {t("library.links.remove")}
+                      </Button>
+                    </form>
+                  )
+                : undefined
+            }
+            actions={
+              resource.canEdit ? (
+                <details>
+                  <summary className="flex min-h-11 cursor-pointer items-center text-[14px] font-medium text-accent sm:min-h-9">{t("library.links.linkQuestion")}</summary>
+                  <div className="pt-2">
+                    <QuestionLinkForm
+                      kind="resource"
+                      id={resource.id}
+                      questions={linkable.filter((q) => !linkedQuestionIds.has(q.id)).map((q) => ({ id: q.id, label: `${q.examAcademicYear} · ${excerpt(q.questionText, 70)}` }))}
+                    />
+                  </div>
+                </details>
+              ) : undefined
+            }
+          />
+        </Section>
+      )}
 
       <Section title={t("resources.detail.versions")}>
         <List>

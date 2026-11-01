@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getDb } from "@/db/client";
 import { requireUser } from "@/server/auth/session";
+import { checkTopicIds, setItemTopics } from "@/server/library/links";
 import { getStorage } from "@/server/storage";
 import { getMaxFileBytes } from "./files";
 import {
@@ -79,10 +80,17 @@ export async function uploadResourceAction(_prev: ResourceFormState, form: FormD
   const file = await readFile(form);
   if (!file) return { status: "error", message: "errors.fileMissing", fieldErrors: { file: "errors.fileMissing" } };
 
+  // Topics come from the course's shared list. Checked before anything is stored, so a stale form fails cleanly.
+  const topicIds = form.getAll("topicIds").filter((v): v is string => typeof v === "string" && v !== "");
+  if (topicIds.length > 0 && !(await checkTopicIds(getDb(), parsed.data.courseId, topicIds))) {
+    return { status: "error", message: "library.errors.invalidTopics" };
+  }
+
   const result = await createResource(getDb(), getStorage(), viewer, parsed.data, file);
   if (!result.ok) {
     return { status: "error", message: errorMessage(result.error), duplicateOf: result.resourceId };
   }
+  if (topicIds.length > 0) await setItemTopics(getDb(), viewer, "resource", result.value.id, topicIds);
   revalidateResources(result.value.id);
   redirect(`/resources/${result.value.id}`);
 }

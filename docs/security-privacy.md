@@ -91,3 +91,14 @@ check the session on every request, include only published questions in the chos
 progress, are sent with `Cache-Control: private, no-store`, and neutralise spreadsheet formulas by prefixing cells that start
 with `=`, `+`, `-`, `@`, tab or carriage return. Study data is deleted with the account (cascade). Not yet: a user-facing
 "download or erase all my data" screen.
+
+
+## Notes, topics and links privacy — 2026-11-01
+
+Typed notes (`course_notes`) are private to their owner: no other student, moderator or administrator can read, list, search,
+restore or link them through the app (tested). A link between a document, note or question is shown only when the viewer may see
+both sides, so another person's private note or document, and any non-published question, is never named, counted or hinted at on a
+question page, topic page, Related panel or in search. Topics are shared course metadata managed by moderators and administrators
+only. Audit entries for notes record ids and version numbers, never text. Notes are deleted with the account (cascade). Same
+caveat as private documents: this does not encrypt notes from the machine operator, and there is no user-facing "erase all my data"
+screen yet.

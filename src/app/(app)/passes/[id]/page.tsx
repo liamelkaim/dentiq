@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { z } from "zod";
+import { TopicPickerForm } from "@/components/library-forms";
+import { RelatedPanel } from "@/components/library-ui";
 import { AnswerBadge, AnswerPanel, CategoryBadge, ChoiceList, excerpt, ReviewStatusBadge } from "@/components/pass-ui";
 import { GroupButton, ReportQuestionForm, ReviewForm, UnverifyForm, VerifyForm } from "@/components/pass-forms";
 import { Badge, Button, ButtonLink, Notice, PageHeader, Panel, Section } from "@/components/ui";
@@ -10,7 +12,10 @@ import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { requireUser } from "@/server/auth/session";
 import { resolveQuestionReportAction } from "@/server/passes/actions";
+import { selectedTopicIds, relatedForQuestion } from "@/server/library/links";
+import { listCourseTopics, topicLabel } from "@/server/library/topics";
 import { findRepeats, getQuestion } from "@/server/passes/service";
+import { isModerator } from "@/server/resources/service";
 import { getPassSettings } from "@/server/passes/settings";
 
 type Params = Promise<{ id: string }>;
@@ -38,7 +43,13 @@ export default async function QuestionPage({ params, searchParams }: { params: P
   const flags = await searchParams;
   const date = (d: Date) => format.dateTime(d, { dateStyle: "medium" });
   const courseHref = `/courses/${encodeURIComponent(q.course.code)}/passes`;
-  const [settings, repeats] = await Promise.all([getPassSettings(db), q.canModerate ? findRepeats(db, viewer, id) : Promise.resolve([])]);
+  const [settings, repeats, related, courseTopics, selectedTopics] = await Promise.all([
+    getPassSettings(db),
+    q.canModerate ? findRepeats(db, viewer, id) : Promise.resolve([]),
+    relatedForQuestion(db, viewer, id),
+    listCourseTopics(db, viewer, q.course.id),
+    q.canEdit ? selectedTopicIds(db, "question", id) : Promise.resolve([]),
+  ]);
   const typeName = q.type.known ? t(`types.${q.type.key}.name`) : t("types.unknown");
   const people = [q.professorName, ...q.instructors].filter((v, i, all): v is string => Boolean(v) && all.indexOf(v) === i);
 
@@ -133,6 +144,34 @@ export default async function QuestionPage({ params, searchParams }: { params: P
           </Panel>
 
           <AnswerPanel question={q} date={date} />
+
+          {related && (
+            <RelatedPanel
+              courseCode={q.course.code}
+              topics={related.topics}
+              legacyTopic={related.legacyTopic}
+              topicEditor={
+                q.canEdit ? (
+                  <TopicPickerForm
+                    target="question"
+                    id={q.id}
+                    topics={courseTopics.map((x) => ({ id: x.id, label: topicLabel(x, locale) }))}
+                    selected={selectedTopics}
+                    staffHref={isModerator(viewer) ? `/courses/${encodeURIComponent(q.course.code)}/topics` : undefined}
+                  />
+                ) : undefined
+              }
+              documents={related.documents}
+              notes={related.notes}
+              actions={
+                q.status === "published" ? (
+                  <ButtonLink href={`/notes/new?course=${encodeURIComponent(q.course.code)}&question=${q.id}`} variant="secondary" size="sm" className="self-start">
+                    {root("library.related.writeNote")}
+                  </ButtonLink>
+                ) : undefined
+              }
+            />
+          )}
 
           {q.canReport && (
             <details className="group rounded-[var(--radius-card)] border border-border bg-surface">

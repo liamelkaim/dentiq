@@ -36,7 +36,8 @@ export default async function CourseOverviewPage({ params }: { params: Params })
   const libraryAccess = canAccessLibrary(user);
   const passCount = libraryAccess ? await publishedQuestionCount(getDb(), user, course.id) : null;
   const passesHref = `/courses/${encodeURIComponent(course.code)}/passes`;
-  const notesHref = `/courses/${encodeURIComponent(course.code)}/notes`;
+  const base = `/courses/${encodeURIComponent(course.code)}`;
+  const notesHref = `${base}/notes`;
 
   const description = localized(locale, course.descriptionFr ?? "", course.descriptionEn);
   const showingOriginal = locale === "en" && !course.titleEn;
@@ -140,6 +141,12 @@ export default async function CourseOverviewPage({ params }: { params: Params })
                       {t("resources.upload")}
                     </ButtonLink>
                   )}
+                  <ButtonLink href={`/notes?course=${encodeURIComponent(course.code)}`} variant="secondary">
+                    {t("library.notes.title")}
+                  </ButtonLink>
+                  <ButtonLink href={`${base}/topics`} variant="secondary">
+                    {t("courseLayout.topics")}
+                  </ButtonLink>
                 </div>
               </Panel>
             ) : (

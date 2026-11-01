@@ -9,6 +9,7 @@ import {
   uploadResourceAction,
   type ResourceFormState,
 } from "@/server/resources/actions";
+import { NoTopicsHint, TopicCheckboxes, type TopicOption } from "./library-forms";
 import { Button, Field, Input, Notice, Panel, Select, Textarea } from "./ui";
 
 const initial: ResourceFormState = { status: "idle" };
@@ -98,12 +99,18 @@ export function UploadResourceForm({
   defaultOfferingId,
   isModerator,
   maxFileBytes,
+  topics = [],
+  topicsAdminHref,
 }: {
   courseId: string;
   offerings: OfferingOption[];
   defaultOfferingId: string | null;
   maxFileBytes: number;
   isModerator: boolean;
+  /** The course's shared topics; the document's topics are picked from this list. */
+  topics?: TopicOption[];
+  /** Where staff add topics (shown when the list is empty). */
+  topicsAdminHref?: string;
 }) {
   const t = useTranslations("resources");
   const common = useTranslations("common");
@@ -139,9 +146,12 @@ export function UploadResourceForm({
               ))}
             </Select>
           </Field>
-          <Field label={t("form.topic")} htmlFor={`${p}-topic`} hint={t("form.topicHint")} optional={common("optional")}>
-            <Input id={`${p}-topic`} name="topic" maxLength={80} aria-describedby={`${p}-topic-hint`} />
-          </Field>
+          <fieldset className="sm:col-span-2">
+            <legend className="mb-1 text-[13px] font-medium text-text">
+              {t("form.topic")} <span className="font-normal text-text-subtle">({common("optional")})</span>
+            </legend>
+            {topics.length === 0 ? <NoTopicsHint staffHref={topicsAdminHref} /> : <TopicCheckboxes topics={topics} />}
+          </fieldset>
           <Field
             label={t("form.offering")}
             htmlFor={`${p}-offering`}

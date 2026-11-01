@@ -43,6 +43,13 @@
       "when": 1793511709695,
       "tag": "0005_study_tools",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793513021139,
+      "tag": "0006_library_topics",
+      "breakpoints": true
     }
   ]
 }

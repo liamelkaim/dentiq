@@ -9,6 +9,7 @@ import { localized, type Locale } from "@/i18n/config";
 import { requireUser } from "@/server/auth/session";
 import { getCourseByCode } from "@/server/catalog/service";
 import { normalizeCourseCode } from "@/server/catalog/validation";
+import { listCourseTopics, topicLabel } from "@/server/library/topics";
 import { canAccessLibrary, isModerator, latestOfferingByCourse } from "@/server/resources/service";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -37,6 +38,7 @@ export default async function UploadPage({ params }: { params: Promise<{ code: s
   }
 
   const latest = (await latestOfferingByCourse(db, [course.id])).get(course.id) ?? null;
+  const topics = (await listCourseTopics(db, viewer, course.id)).map((x) => ({ id: x.id, label: topicLabel(x, locale) }));
   const offerings = course.offerings.map((o) => ({
     id: o.id,
     label: [`${o.academicYear} · ${t(`terms.${o.term}`)}`, o.instructors.map((i) => i.fullName).join(", ")]
@@ -47,7 +49,10 @@ export default async function UploadPage({ params }: { params: Promise<{ code: s
   return (
     <>
       <PageHeader back={back} title={t("resources.form.title")} subtitle={`${course.code} · ${localized(locale, course.titleFr, course.titleEn)}`} />
-      <UploadResourceForm maxFileBytes={getMaxFileBytes()} courseId={course.id} offerings={offerings} defaultOfferingId={latest} isModerator={isModerator(viewer)} />
+      <UploadResourceForm maxFileBytes={getMaxFileBytes()} courseId={course.id} offerings={offerings} defaultOfferingId={latest} isModerator={isModerator(viewer)}
+        topics={topics}
+        topicsAdminHref={isModerator(viewer) ? `/courses/${encodeURIComponent(course.code)}/topics` : undefined}
+      />
     </>
   );
 }

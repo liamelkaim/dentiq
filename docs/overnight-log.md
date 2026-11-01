@@ -17,7 +17,8 @@
 |---|---|---|
 | Phase 3 screens (carried over) | committed | 9ddb7a0 |
 | A. Passes polish | built; typecheck, lint, 212 tests, build all clean; not yet browser-tested | d990d7c |
-| B. Study tools (practice, progress, flashcards, quizzes, export) | built; typecheck, lint, 269 tests, build clean; not yet browser-tested; Anki All in One compatibility UNVERIFIED | see git log |
+| B. Study tools (practice, progress, flashcards, quizzes, export) | built; typecheck, lint, 269 tests, build clean; not yet browser-tested; Anki All in One compatibility UNVERIFIED | 72d3700 |
+| C. Notes and course library (topics, links, note versions, search, current vs previous) | built; typecheck, lint, 303 tests, build clean; not yet browser-tested | see git log |
 
 ## Decisions made for the owner
 
@@ -27,6 +28,10 @@
 - B: attempts on unverified answers are stored as unscored and never counted as correct (database CHECK plus tests). Quiz scores are fixed when answered.
 - B: still-"soon" nav item renamed "Analytics" so it does not clash with the new Progress page. Flashcards "soon" replaced by a live Study entry (`/practice`).
 - B: new migration `drizzle/0005_study_tools.sql` (7 tables, additive).
+- C: notes are private to the owner only (no sharing); shared material goes through the document library. Topics are per course, FR name plus optional EN, staff-managed, archived not deleted. Limits in `src/server/library/constants.ts`.
+- C: when a course has topics the upload form uses the picker instead of free text; legacy free-text topics stay readable with a badge.
+- C: migration `drizzle/0006_library_topics.sql` (8 tables, additive).
+- C not done: no topic picker inside question submit/edit forms, no note delete/share, no "My notes" in main nav, search not accent-insensitive.
 
 ## Noted for later blocks
 

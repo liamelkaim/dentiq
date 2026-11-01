@@ -210,3 +210,10 @@ export const QuizIcon = (p: IconProps) => (
     <path d="m6.75 8.25 1.5 1.5 2.5-2.75M6.75 13.25h6.5" />
   </Icon>
 );
+
+export const TagIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3.5 3.5h5.8l7.2 7.2a1.4 1.4 0 0 1 0 2l-3.8 3.8a1.4 1.4 0 0 1-2 0L3.5 9.3z" />
+    <circle cx="7" cy="7" r="1" />
+  </Icon>
+);

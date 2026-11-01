@@ -91,6 +91,8 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
         </div>
       </div>
 
+      <p className="-mt-2 text-[13px] text-text-subtle">{t(`category.help.${params.scope}`)}</p>
+
       <Panel className="p-4">
         <form method="get" action={basePath} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {params.scope !== "all" && <input type="hidden" name="scope" value={params.scope} />}

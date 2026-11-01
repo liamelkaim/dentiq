@@ -9,7 +9,7 @@ import type { CurrentUser } from "@/server/auth/session";
 import { getCourseByCode } from "@/server/catalog/service";
 import { normalizeCourseCode } from "@/server/catalog/validation";
 import { listCourseSummaries, type CourseSummary } from "@/server/resources/service";
-import { BookIcon, CardsIcon, ChevronLeftIcon, FolderIcon, MicIcon, PassesIcon, SparkleIcon } from "./icons";
+import { BookIcon, CardsIcon, ChevronLeftIcon, FolderIcon, MicIcon, PassesIcon, SparkleIcon, TagIcon } from "./icons";
 import { cx } from "./ui";
 
 type CourseDetail = NonNullable<Awaited<ReturnType<typeof getCourseByCode>>>;
@@ -67,7 +67,7 @@ export function CourseCover({ code, className, compact = false }: { code: string
   );
 }
 
-type Tab = { key: "overview" | "notes" | "passes" | "study"; href: string; icon: ComponentType<SVGProps<SVGSVGElement>> };
+type Tab = { key: "overview" | "notes" | "passes" | "topics" | "study"; href: string; icon: ComponentType<SVGProps<SVGSVGElement>> };
 const futureTabs = [
   { key: "recordings", icon: MicIcon },
   { key: "tutor", icon: SparkleIcon },
@@ -91,6 +91,7 @@ export async function CourseHeader({
     { key: "overview", href: base, icon: BookIcon },
     { key: "notes", href: `${base}/notes`, icon: FolderIcon },
     { key: "passes", href: `${base}/passes`, icon: PassesIcon },
+    { key: "topics", href: `${base}/topics`, icon: TagIcon },
     // The Study hub (practice, flashcards, quizzes, progress, export) for this course.
     { key: "study", href: `/practice?course=${course.id}`, icon: CardsIcon },
   ];

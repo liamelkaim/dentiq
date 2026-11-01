@@ -40,9 +40,14 @@ export default async function CourseNotesPage({
   const libraryAccess = canAccessLibrary(user);
 
   const uploadButton = libraryAccess && !course.archivedAt && (
-    <ButtonLink href={`/courses/${encodeURIComponent(course.code)}/upload`} size="sm">
-      {t("resources.upload")}
-    </ButtonLink>
+    <>
+      <ButtonLink href={`/notes?course=${encodeURIComponent(course.code)}`} variant="secondary" size="sm">
+        {t("library.notes.title")}
+      </ButtonLink>
+      <ButtonLink href={`/courses/${encodeURIComponent(course.code)}/upload`} size="sm">
+        {t("resources.upload")}
+      </ButtonLink>
+    </>
   );
 
   if (!libraryAccess) {
