@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import type { ComponentType, SVGProps } from "react";
 import { CourseCover } from "@/components/course-layout";
+import { PassRow } from "@/components/pass-ui";
 import {
   BookIcon,
   CardsIcon,
@@ -21,6 +22,8 @@ import { Badge, DescriptionList, EmptyState, List, ListRow, Notice, Panel, Secti
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { hasRole } from "@/server/auth/roles";
+import { passesSummary } from "@/server/passes/queries";
+import { listQuestionQueue } from "@/server/passes/service";
 import { requireUser } from "@/server/auth/session";
 import { canAccessLibrary, isModerator, listCourseSummaries, listModerationQueue, listResources } from "@/server/resources/service";
 import { listUsers } from "@/server/users/service";
@@ -30,7 +33,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const futureFeatures = [
-  { key: "passes", icon: PassesIcon },
   { key: "flashcards", icon: CardsIcon },
   { key: "tutor", icon: SparkleIcon },
   { key: "recordings", icon: MicIcon },
@@ -75,11 +77,13 @@ export default async function DashboardPage() {
   const moderator = isModerator(user);
   const library = canAccessLibrary(user);
 
-  const [courses, recent, pending, queue] = await Promise.all([
+  const [courses, recent, pending, queue, examQueue, passes] = await Promise.all([
     listCourseSummaries(db, user, { limit: 6 }),
     library ? listResources(db, user, { period: "all" }) : Promise.resolve([]),
     isAdmin ? listUsers(db, { approvalStatus: "pending" }) : Promise.resolve([]),
     listModerationQueue(db, user),
+    listQuestionQueue(db, user),
+    passesSummary(db, user),
   ]);
   const recentPublished = recent
     .filter((r) => r.status === "published")
@@ -123,6 +127,7 @@ export default async function DashboardPage() {
           <nav aria-label={t("nav.main")} className="mt-6 flex flex-wrap gap-2 sm:gap-4">
             <QuickAction href="/courses" label={t("home.quickCourses")} icon={BookIcon} />
             {library && <QuickAction href="/resources" label={t("home.quickResources")} icon={FolderIcon} />}
+            {library && <QuickAction href="/passes" label={t("home.quickPasses")} icon={PassesIcon} />}
             {moderator && <QuickAction href="/moderation" label={t("home.quickModeration")} icon={FlagIcon} />}
             {isAdmin && <QuickAction href="/admin" label={t("home.quickAdmin")} icon={ShieldIcon} />}
           </nav>
@@ -217,6 +222,43 @@ export default async function DashboardPage() {
               )}
             </Section>
           )}
+
+          {/* Passes: real counts only, nothing invented */}
+          {passes && (
+            <Section
+              title={t("passes.title")}
+              description={t("passes.subtitle")}
+              actions={
+                <Link href="/passes" className="inline-flex min-h-10 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
+                  {t("home.viewAll")}
+                </Link>
+              }
+            >
+              <Panel className="mb-3 grid grid-cols-3 divide-x divide-border text-center">
+                {(
+                  [
+                    ["total", passes.total],
+                    ["current", passes.current],
+                    ["verified", passes.verified],
+                  ] as const
+                ).map(([key, value]) => (
+                  <div key={key} className="px-2 py-4">
+                    <p className="text-[24px] leading-none font-semibold tabular-nums">{value}</p>
+                    <p className="mt-1.5 text-[12px] text-text-subtle">{t(`passes.summary.${key}`)}</p>
+                  </div>
+                ))}
+              </Panel>
+              {passes.recent.length === 0 ? (
+                <EmptyState title={t("passes.browser.emptyTitle")} body={t("passes.browser.emptyBody")} />
+              ) : (
+                <List>
+                  {passes.recent.map((item) => (
+                    <PassRow key={item.id} item={item} courseLabel={item.courseCode} />
+                  ))}
+                </List>
+              )}
+            </Section>
+          )}
         </div>
 
         <aside className="min-w-0">
@@ -251,7 +293,7 @@ export default async function DashboardPage() {
                         label: t("nav.moderation"),
                         value: (
                           <Link href="/moderation" className="font-medium text-accent hover:text-accent-hover">
-                            {t("dashboard.reviewQueue", { count: queue.pending.length + queue.reports.length })}
+                            {t("dashboard.reviewQueue", { count: queue.pending.length + queue.reports.length + examQueue.pending.length + examQueue.reports.length })}
                           </Link>
                         ),
                       },

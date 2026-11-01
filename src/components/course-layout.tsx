@@ -67,9 +67,8 @@ export function CourseCover({ code, className, compact = false }: { code: string
   );
 }
 
-type Tab = { key: "overview" | "notes"; href: string; icon: ComponentType<SVGProps<SVGSVGElement>> };
+type Tab = { key: "overview" | "notes" | "passes"; href: string; icon: ComponentType<SVGProps<SVGSVGElement>> };
 const futureTabs = [
-  { key: "passes", icon: PassesIcon },
   { key: "flashcards", icon: CardsIcon },
   { key: "recordings", icon: MicIcon },
   { key: "tutor", icon: SparkleIcon },
@@ -92,6 +91,7 @@ export async function CourseHeader({
   const tabs: Tab[] = [
     { key: "overview", href: base, icon: BookIcon },
     { key: "notes", href: `${base}/notes`, icon: FolderIcon },
+    { key: "passes", href: `${base}/passes`, icon: PassesIcon },
   ];
   const offeringLine = course.currentOffering
     ? [

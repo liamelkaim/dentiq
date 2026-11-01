@@ -1,6 +1,6 @@
 # Phase 3 — Exam passes: table design
 
-Status: **design and database only.** No screens, forms or services exist yet. Nothing here is live.
+Status: **database, service layer and screens are built and tested locally** (not committed, not deployed). Sections below that say "not built yet" describe the original plan; see "Screens (built)" at the end for what exists now.
 
 ## What a "pass" is
 
@@ -119,3 +119,22 @@ year resets a verified answer to "proposed"), review (publish / reject with a re
 un-verify, duplicate grouping, reports, filtered lists (course, offering, professor, exam year, current- or
 previous-year, topic, type, answer status, text), change history, and permission-checked image access.
 Students never see who contributed a question; only moderators do.
+
+## Screens (built)
+
+| Screen | Address | Notes |
+| --- | --- | --- |
+| Passes (all courses) | `/passes` | Main-nav entry "Passes", subtitle "Questions d'examens passés". Period switch (Current year / Previous years / All, default All), filters (search, course, exam year, type, answer status, topic, moderators: review status), 25 per page |
+| Course Passes tab | `/courses/[code]/passes` | Questions from **all offerings by default**, plus an offering filter and a professor filter |
+| Add a question | `/passes/new` (course picker) then `/courses/[code]/passes/new` | Exam year: last 8 academic years, plus a field for older years. Offerings are filtered to the chosen year. Images (up to the configured limit) with required alternative text. Rights confirmation. The form keeps what you typed when the server reports an error |
+| Question page | `/passes/[id]` | Answer **collapsed behind "Show answer"**. Student proposal and verified answer are separate blocks, each with an icon and words. Report form. Moderator panel on large screens: review (publish / reject with reason / hide), verify, remove verification, repeat grouping, open reports |
+| Edit | `/passes/[id]/edit` | Author or moderators. Editing content resets a verified answer to "proposal" (warned on the form) and sends a student's edit back to review |
+| History | `/passes/[id]/history` | Every version with who, when, note, which fields changed, and the state at that time |
+| Settings | `/admin/passes` | Enabled question types, who may verify (admins always can), note required + minimum length, image limits, waiting-question cap. Saved through `updatePassSettings` (audited) |
+| Review queue | `/moderation` | New sections for waiting questions and open question reports; counts included in the dashboard and admin review totals |
+| Image route | `/api/question-images/[id]` | Permission-checked on every request, like `/api/files` |
+
+Files: `src/server/passes/{actions,form,browse,errors,queries}.ts`, `src/components/pass-{browser,forms,ui}.tsx`.
+Form parsing, list-filter parsing, the year list and the error-code translations are unit-tested (`tests/pass-form.test.ts`).
+
+Phones: the tab bar keeps five items. Settings moved to a gear in the phone header, and the theme switcher is on the Settings page on phones (the desktop sidebar is unchanged).

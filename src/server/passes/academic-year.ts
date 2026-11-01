@@ -84,3 +84,9 @@ export function categoryBounds(
   const current = currentAcademicYear(now, startMonth);
   return category === "current" ? { equals: current } : { before: current };
 }
+
+/** The last `count` academic years up to and including the current one, newest first ("2026-2027", "2025-2026", …). */
+export function recentAcademicYears(count = 8, now: Date = new Date(), startMonth?: number): string[] {
+  const current = parseAcademicYear(currentAcademicYear(now, startMonth))!;
+  return Array.from({ length: Math.max(count, 1) }, (_, i) => `${current - i}-${current - i + 1}`);
+}

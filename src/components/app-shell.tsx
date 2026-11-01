@@ -24,7 +24,7 @@ import { cx, Wordmark } from "./ui";
 
 type NavItem = {
   href: string;
-  key: "dashboard" | "courses" | "resources" | "moderation" | "settings" | "admin";
+  key: "dashboard" | "courses" | "resources" | "passes" | "moderation" | "settings" | "admin";
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   /** Hidden from the mobile tab bar (reachable from another page instead). */
   desktopOnly?: boolean;
@@ -61,7 +61,6 @@ export function SignOutButton({ className }: { className?: string }) {
 }
 
 const comingSoon = [
-  { key: "passes", icon: PassesIcon },
   { key: "flashcards", icon: CardsIcon },
   { key: "tutor", icon: SparkleIcon },
   { key: "recordings", icon: MicIcon },
@@ -97,10 +96,12 @@ export function AppShell({
     { href: "/", key: "dashboard", icon: HomeIcon },
     { href: "/courses", key: "courses", icon: BookIcon },
     { href: "/resources", key: "resources", icon: FolderIcon },
+    { href: "/passes", key: "passes", icon: PassesIcon },
     // Admins reach moderation from the Admin page on phones, keeping the tab bar to five items.
     ...(isModerator ? [{ href: "/moderation", key: "moderation", icon: FlagIcon, desktopOnly: isAdmin } as NavItem] : []),
     ...(isAdmin ? [{ href: "/admin", key: "admin", icon: ShieldIcon } as NavItem] : []),
-    { href: "/settings", key: "settings", icon: SettingsIcon },
+    // Settings moves to a gear in the phone header, keeping the tab bar to five items.
+    { href: "/settings", key: "settings", icon: SettingsIcon, desktopOnly: true },
   ];
   const mobileItems = items.filter((i) => !i.desktopOnly);
 
@@ -178,8 +179,19 @@ export function AppShell({
           <Wordmark />
         </Link>
         <div className="flex items-center gap-2">
+          {/* The theme switcher lives in Settings on phones; the header keeps the language toggle and a gear. */}
           <LanguageSwitcher compact />
-          <ThemeSwitcher compact />
+          <Link
+            href="/settings"
+            aria-label={t("nav.settings")}
+            aria-current={isActive(pathname, "/settings") ? "page" : undefined}
+            className={cx(
+              "grid size-10 place-items-center rounded-[10px] transition-colors hover:bg-surface-muted",
+              isActive(pathname, "/settings") ? "text-accent" : "text-text-muted",
+            )}
+          >
+            <SettingsIcon width={20} height={20} />
+          </Link>
         </div>
       </header>
 

@@ -80,3 +80,13 @@ passes page · email notifications · AI features.
 3. Remove the "Passes — soon" entries from the sidebar and dashboard (passes live in each course)?
 4. French label: "Passes" (as students say it) with the subtitle "Questions d'examens passés" — OK?
 5. Exam year choices: last 8 academic years — enough?
+
+## Decisions (owner, 2026-10-31) and what was built
+
+1. Answers collapsed behind "Show answer": **yes, built.**
+2. Admin Pass settings screen: **built now** (`/admin/passes`).
+3. Passes entry: **global entry in the main nav plus the per-course tab** (this replaces the earlier plan to remove the global entry). "Passes — soon" placeholders removed.
+4. Label: "Passes", French subtitle "Questions d'examens passés": **built.**
+5. Exam year: last 8 academic years **plus older years**: **built.**
+6. Question kinds: single choice, multiple choice, four true/false statements, open answer, any question may carry images (no hotspot questions).
+7. Only moderators and admins verify, with a required basis note (configurable, strict default).

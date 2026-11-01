@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { FileIcon, FlagIcon } from "@/components/icons";
+import { FileIcon, FlagIcon, PassesIcon } from "@/components/icons";
+import { excerpt } from "@/components/pass-ui";
 import { Badge, List, ListLinkRow, PageHeader, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { requireRole } from "@/server/auth/session";
+import { listQuestionQueue } from "@/server/passes/service";
 import { listModerationQueue } from "@/server/resources/service";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,6 +19,7 @@ export default async function ModerationPage() {
   const t = await getTranslations();
   const format = await getFormatter();
   const { pending, reports } = await listModerationQueue(getDb(), viewer);
+  const exam = await listQuestionQueue(getDb(), viewer);
   const date = (d: Date) => format.dateTime(d, { dateStyle: "medium" });
   const unknown = t("resources.detail.unknownUser");
 
@@ -62,6 +65,43 @@ export default async function ModerationPage() {
                 ]
                   .filter(Boolean)
                   .join(" · ")}
+              />
+            ))}
+          </List>
+        )}
+      </Section>
+
+      <Section title={`${t("passes.moderation.pending")} (${exam.pending.length})`}>
+        {exam.pending.length === 0 ? (
+          <Panel className="px-4 py-5 text-[14px] text-text-muted">{t("passes.moderation.pendingEmpty")}</Panel>
+        ) : (
+          <List>
+            {exam.pending.map((r) => (
+              <ListLinkRow
+                key={r.id}
+                href={`/passes/${r.id}`}
+                leading={<span className={iconBox}><PassesIcon width={18} height={18} /></span>}
+                title={excerpt(r.excerpt)}
+                subtitle={`${r.courseCode} · ${r.examAcademicYear} · ${date(r.createdAt)}`}
+                trailing={<Badge tone="warning">{t("passes.status.pending")}</Badge>}
+              />
+            ))}
+          </List>
+        )}
+      </Section>
+
+      <Section title={`${t("passes.moderation.reports")} (${exam.reports.length})`}>
+        {exam.reports.length === 0 ? (
+          <Panel className="px-4 py-5 text-[14px] text-text-muted">{t("passes.moderation.reportsEmpty")}</Panel>
+        ) : (
+          <List>
+            {exam.reports.map((r) => (
+              <ListLinkRow
+                key={r.id}
+                href={`/passes/${r.questionId}`}
+                leading={<span className={iconBox}><FlagIcon width={18} height={18} /></span>}
+                title={excerpt(r.excerpt)}
+                subtitle={[t(`passes.report.reasons.${r.reason}`), date(r.createdAt), r.details].filter(Boolean).join(" · ")}
               />
             ))}
           </List>

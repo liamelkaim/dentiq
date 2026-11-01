@@ -850,6 +850,7 @@ export async function getQuestion(db: Database, viewer: Viewer, id: string, now:
   return {
     id: q.id,
     course: course!,
+    professorId: q.professorId,
     examAcademicYear: q.examAcademicYear,
     examTerm: q.examTerm,
     category: passCategory(q.examAcademicYear, now),

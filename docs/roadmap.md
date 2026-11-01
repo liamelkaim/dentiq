@@ -44,7 +44,7 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 
 | Phase | Scope | Status |
 | --- | --- | --- |
-| 3 | Exam passes: structured questions, moderation, statuses, exports | 🔄 Tables, category rule and service layer built and tested (180 tests); **no screens yet**. Question types and verification rules are centralized and changeable (see `docs/phase-3-design.md`). Next: confirm the "image-based" interpretation, then server actions and screens |
+| 3 | Exam passes: structured questions, moderation, statuses, exports | 🔄 **Screens built (2026-10-31), uncommitted, awaiting owner review.** Global `/passes` and per-course Passes tab, submission and edit form (single choice, multiple choice, four true/false, open answer; attached images), question page with the answer collapsed and separate "Student proposal" / "Verified answer" blocks, moderator review, verification with a required basis note, repeat grouping, reports, change history, admin settings (`/admin/passes`), dashboard summary, moderation queue section. 209 tests. **Not built:** Anki/CSV export (separate step; "All in One" template compatibility unverified), label-the-image questions, autosave, comments/votes. See `docs/phase-3-design.md` |
 | 4 | Study tools: flashcards, Anki TSV export, quizzes, progress | 📋 |
 | 5 | AI course tutors (retrieval + citations) | 📋 🔐 needs an AI provider and budget approval |
 | 6 | Audio: upload, recording, transcription | 📋 🔐 consent/legal review; provider choice |
@@ -71,7 +71,6 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 ## Decisions needed from the project owner
 
 - Student verification policy: university domain only, admin approval, or both? ⛔ blocks public launch
-- Interpretation of the two pass categories (current year / previous years) — needed for Phase 3
 - Hosting provider and budget — before any deployment 🔐
 
 ## Known issues / limitations
