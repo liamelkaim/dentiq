@@ -1,4 +1,6 @@
 // Profile, data export and account deletion. Fake data only (TEST courses, example.com accounts).
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { and, eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vitest";
 import { createTestDatabase, type Database } from "@/db/client";
@@ -30,7 +32,7 @@ import { DELETE_UNSHARED_QUESTION_STATUSES } from "@/server/account/constants";
 import { confirmationMatches, deleteAccount, isLastAdmin } from "@/server/account/delete";
 import { buildAccountExport } from "@/server/account/export";
 import { normalizeDisplayName, updateDisplayName } from "@/server/account/profile";
-import { allowAttempt, resetAttempts } from "@/server/account/rate-limit";
+import { allowAttempt, resetAttempts, trackedKeyCount } from "@/server/account/rate-limit";
 import { createMemoryStorage, type FileStorage } from "@/server/storage";
 
 let db: Database;
@@ -288,6 +290,21 @@ describe("rate guard", () => {
     expect(allowAttempt("k", 2, 1000, 1500)).toBe(true); // the first attempt has left the window
     expect(allowAttempt("other", 2, 1000, 1)).toBe(true);
   });
+
+  it("forgets keys whose window has passed, and keeps the ones still counting", () => {
+    resetAttempts();
+    for (let i = 0; i < 50; i++) allowAttempt(`old-${i}`, 2, 1000, 10);
+    allowAttempt("long-window", 5, 10 * 60_000, 10);
+    expect(trackedKeyCount()).toBe(51);
+    // Two minutes later a new attempt triggers the sweep: the short windows are gone, the 10 minute one stays.
+    expect(allowAttempt("fresh", 2, 1000, 120_000)).toBe(true);
+    expect(trackedKeyCount()).toBe(2);
+    // Behaviour is unchanged for a key that was swept: it simply starts again.
+    expect([1, 2, 3].map((i) => allowAttempt("old-1", 2, 1000, 120_000 + i))).toEqual([true, true, false]);
+    // The surviving long-window key still remembers its attempt.
+    expect([1, 2, 3, 4, 5].map((i) => allowAttempt("long-window", 5, 10 * 60_000, 120_000 + i))).toEqual([true, true, true, true, false]);
+    resetAttempts();
+  });
 });
 
 describe("account deletion", () => {
@@ -423,6 +440,35 @@ describe("last administrator", () => {
     // ...and then the remaining one is the last.
     expect(await isLastAdmin(db, "admin-2")).toBe(true);
     expect(await deleteAccount(db, storage, "admin-2", "admin2@example.com")).toEqual({ ok: false, error: "lastAdmin" });
+  });
+
+  it("two administrators deleting themselves at the same moment: one is refused as the last administrator", async () => {
+    await db.insert(user).values({ id: "admin-2", name: "Admin Two", email: "admin2@example.com", role: "admin", approvalStatus: "approved" });
+    const results = await Promise.all([
+      deleteAccount(db, storage, "admin-1", "admin1@example.com"),
+      deleteAccount(db, storage, "admin-2", "admin2@example.com"),
+    ]);
+    expect(results.filter((r) => r.ok)).toHaveLength(1);
+    expect(results.filter((r) => !r.ok)).toEqual([{ ok: false, error: "lastAdmin" }]);
+    expect(await db.$count(user, eq(user.role, "admin"))).toBe(1);
+  });
+
+  it("maps a deadlock or serialization failure to a retry message instead of throwing", async () => {
+    for (const code of ["40P01", "40001"]) {
+      const failing = { transaction: async () => { throw Object.assign(new Error("conflict"), { code }); } } as unknown as Database;
+      expect(await deleteAccount(failing, storage, "admin-1", "admin1@example.com")).toEqual({ ok: false, error: "tryAgain" });
+    }
+    const other = { transaction: async () => { throw new Error("disk on fire"); } } as unknown as Database;
+    await expect(deleteAccount(other, storage, "admin-1", "admin1@example.com")).rejects.toThrow("disk on fire");
+  });
+
+  it("locks the administrators and the account together, sorted by id (one consistent order)", () => {
+    const guard = readFileSync(join(__dirname, "../src/server/users/admin-guard.ts"), "utf8");
+    expect(guard).toContain('.orderBy(user.id)');
+    expect(guard).toContain('.for("update")');
+    const del = readFileSync(join(__dirname, "../src/server/account/delete.ts"), "utf8");
+    expect(del).toContain("lockAdminsAnd(tx, userId)");
+    expect(del).not.toMatch(/where\(eq\(user\.id, userId\)\)\.for\("update"\)/);
   });
 
   it("is never true for a student", async () => {

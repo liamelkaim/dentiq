@@ -14,6 +14,5 @@ export const TUTOR_ERROR_CODES = [
   "forbidden",
   "invalid",
 ] as const;
-export type TutorErrorCode = (typeof TUTOR_ERROR_CODES)[number];
 
 export const tutorErrorKey = (code: string) => `tutor.errors.${(TUTOR_ERROR_CODES as readonly string[]).includes(code) ? code : "invalid"}`;

@@ -39,7 +39,7 @@ export default async function NotePage({ params }: { params: Params }) {
   const [related, topics, selected, linkable] = await Promise.all([
     relatedForNote(db, viewer, id),
     listCourseTopics(db, viewer, note.courseId),
-    selectedTopicIds(db, "note", id),
+    selectedTopicIds(db, viewer, "note", id),
     listLinkableQuestions(db, viewer, note.courseId, QUESTION_PICKER_LIMIT),
   ]);
   const linkedIds = new Set((related?.questions ?? []).map((q) => q.id));

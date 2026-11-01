@@ -1,8 +1,10 @@
 // Fake data only (TEST courses, example.com accounts). Topics, links, notes, versions, search and visibility.
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vitest";
 import { createTestDatabase, type Database } from "@/db/client";
-import { auditLog, courseNotes, courseOfferings, courses, courseTopics, user } from "@/db/schema";
+import { auditLog, courseNotes, courseNoteVersions, courseOfferings, courses, courseTopics, user } from "@/db/schema";
 import { QUESTION_LINKS_PER_ITEM_MAX, SEARCH_RESULT_LIMIT, TOPICS_PER_ITEM_MAX } from "@/server/library/constants";
 import { describeChange, diffLines } from "@/server/library/diff";
 import { escapeLike, snippet } from "@/server/library/like";
@@ -13,6 +15,7 @@ import {
   relatedForQuestion,
   relatedForResource,
   removeQuestionLink,
+  selectedTopicIds,
   setItemTopics,
 } from "@/server/library/links";
 import {
@@ -190,6 +193,29 @@ describe("linking topics", () => {
     expect((await relatedForNote(db, alice, n))!.topics.map((x) => x.name)).toEqual(["Anatomie"]);
     expect((await setItemTopics(db, alice, "note", n, [])).ok).toBe(true);
     expect((await relatedForNote(db, alice, n))!.topics).toEqual([]);
+  });
+
+  it("refuses a malformed topic id with invalidTopics instead of throwing (a tampered form is not a 500)", async () => {
+    const t = await topic("Anatomie");
+    const n = await note(alice);
+    expect(await setItemTopics(db, alice, "note", n, ["not-a-uuid"])).toEqual({ ok: false, error: "invalidTopics" });
+    expect(await setItemTopics(db, alice, "note", n, [t, "%"])).toEqual({ ok: false, error: "invalidTopics" });
+    expect(await addQuestionLink(db, alice, "note", n, "not-a-uuid")).toMatchObject({ ok: false });
+    expect((await setItemTopics(db, alice, "note", n, [t])).ok).toBe(true);
+  });
+
+  it("selectedTopicIds enforces the edit rule itself, so a private item's topics never leak", async () => {
+    const t = await topic("Anatomie");
+    const n = await note(alice, { topicIds: [t] });
+    const mine = await doc(alice, "mine", { visibility: "private", title: "Privé" });
+    await setItemTopics(db, alice, "resource", mine, [t]);
+    expect(await selectedTopicIds(db, alice, "note", n)).toEqual([t]);
+    expect(await selectedTopicIds(db, alice, "resource", mine)).toEqual([t]);
+    for (const other of [bob, mod, admin, waiting]) {
+      expect(await selectedTopicIds(db, other, "note", n), other.id).toEqual([]);
+      expect(await selectedTopicIds(db, other, "resource", mine), other.id).toEqual([]);
+    }
+    expect(await selectedTopicIds(db, alice, "note", "not-a-uuid")).toEqual([]);
   });
 
   it("archived topics cannot be newly linked but existing links survive", async () => {
@@ -394,6 +420,33 @@ describe("notes and version history", () => {
     expect(versions.map((v) => v.versionNumber)).toEqual([3, 2, 1]);
     expect(versions[0]).toMatchObject({ restoredFromVersion: 1, title: "Premier" });
     expect(versions.find((v) => v.versionNumber === 2)).toMatchObject({ title: "Second" }); // history is never rewritten
+  });
+
+  it("two saves from the same version: one wins, the other gets versionConflict (never a thrown error)", async () => {
+    const n = await note(alice, { title: "Base", body: "un" });
+    const edit = (body: string) => noteEditSchema.parse({ noteId: n, baseVersion: 1, title: "Base", body });
+    const results = await Promise.all([updateNote(db, alice, edit("deux")), updateNote(db, alice, edit("trois"))]);
+    expect(results.filter((r) => r.ok)).toHaveLength(1);
+    expect(results.filter((r) => !r.ok)).toEqual([{ ok: false, error: "versionConflict" }]);
+    expect((await listNoteVersions(db, alice, n))!.map((v) => v.versionNumber)).toEqual([2, 1]);
+    // Restoring while another save lands is the same: a conflict or a clean success, never an exception.
+    const both = await Promise.all([restoreNoteVersion(db, alice, n, 1), updateNote(db, alice, noteEditSchema.parse({ noteId: n, baseVersion: 2, title: "Base", body: "quatre" }))]);
+    expect(both.some((r) => r.ok)).toBe(true);
+    const numbers = (await listNoteVersions(db, alice, n))!.map((v) => v.versionNumber);
+    expect(new Set(numbers).size).toBe(numbers.length);
+  });
+
+  it("turns a duplicate version number from the database into versionConflict (save and restore)", async () => {
+    const n = await note(alice, { title: "Base", body: "un" });
+    // A version 2 exists although the note still says version 1: the situation a lost race leaves behind.
+    await db.insert(courseNoteVersions).values({ noteId: n, versionNumber: 2, title: "Fantôme", body: "x", createdBy: "alice" });
+    expect(await updateNote(db, alice, noteEditSchema.parse({ noteId: n, baseVersion: 1, title: "Base", body: "deux" }))).toEqual({ ok: false, error: "versionConflict" });
+    expect(await restoreNoteVersion(db, alice, n, 2)).toEqual({ ok: false, error: "versionConflict" });
+  });
+
+  it("locks the note row while saving or restoring", () => {
+    const source = readFileSync(join(__dirname, "../src/server/library/notes.ts"), "utf8");
+    expect(source.match(/\.for\("update"\)/g)).toHaveLength(2);
   });
 
   it("audit entries never contain the note text", async () => {

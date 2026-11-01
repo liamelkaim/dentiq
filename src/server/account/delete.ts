@@ -34,6 +34,7 @@ import {
 import { writeAudit } from "@/server/audit";
 import type { ServiceResult } from "@/server/catalog/service";
 import type { FileStorage } from "@/server/storage";
+import { hasOtherApprovedAdmin, isRetryableConflict, lockAdminsAnd } from "@/server/users/admin-guard";
 import { DELETE_UNSHARED_QUESTION_STATUSES, DELETE_UNSHARED_RESOURCE_STATUSES } from "./constants";
 
 export type DeleteSummary = {
@@ -59,16 +60,26 @@ export async function isLastAdmin(db: Pick<Database, "select">, userId: string):
 }
 
 export async function deleteAccount(db: Database, storage: FileStorage, userId: string, typedConfirmation: string): Promise<ServiceResult<DeleteSummary>> {
+  try {
+    return await deleteAccountOnce(db, storage, userId, typedConfirmation);
+  } catch (error) {
+    // A deadlock or serialization failure rolled the transaction back: nothing was deleted, so asking to retry is safe.
+    if (isRetryableConflict(error)) return { ok: false, error: "tryAgain" };
+    throw error;
+  }
+}
+
+async function deleteAccountOnce(db: Database, storage: FileStorage, userId: string, typedConfirmation: string): Promise<ServiceResult<DeleteSummary>> {
   const outcome = await db.transaction(async (tx) => {
-    // Lock the account row, and every administrator row, so two admins deleting themselves at the same moment
-    // cannot both pass the "last admin" check.
-    const [self] = await tx.select({ id: user.id, email: user.email, role: user.role }).from(user).where(eq(user.id, userId)).for("update");
+    // Lock every administrator row AND the account row in one statement, sorted by id, the same order every other
+    // admin-affecting transaction uses (users/admin-guard.ts). Two admins deleting themselves, or demoting each
+    // other, at the same moment then queue up instead of deadlocking, and cannot both pass the "last admin" check.
+    const locked = await lockAdminsAnd(tx, userId);
+    const self = locked.find((r) => r.id === userId);
     if (!self) return { ok: false as const, error: "notFound" };
     if (!confirmationMatches(typedConfirmation, self.email)) return { ok: false as const, error: "confirmationMismatch" };
-    if (self.role === "admin") {
-      await tx.select({ id: user.id }).from(user).where(eq(user.role, "admin")).for("update");
-      if (await isLastAdmin(tx, userId)) return { ok: false as const, error: "lastAdmin" };
-    }
+    // Same rule as isLastAdmin(): an administrator (approved or not) with no other approved administrator.
+    if (self.role === "admin" && !hasOtherApprovedAdmin(locked, userId)) return { ok: false as const, error: "lastAdmin" };
 
     // 1. Documents the student uploaded that nobody else has seen: personal ones, and shared ones still pending review.
     const unsharedResources = await tx

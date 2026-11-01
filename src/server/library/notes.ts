@@ -87,9 +87,33 @@ export async function createNote(db: Database, viewer: Viewer, input: NoteInput)
   });
 }
 
+/** True for Postgres "unique_violation" (also when the driver wraps it in `cause`). */
+function isUniqueViolation(error: unknown): boolean {
+  const e = error as { code?: string; cause?: { code?: string } } | null;
+  return e?.code === "23505" || e?.cause?.code === "23505";
+}
+
+/**
+ * Two saves of the same note can race. The note row is locked (FOR UPDATE) for the whole transaction so the second
+ * save re-reads the new current version and gets "versionConflict"; if the database still reports a duplicate
+ * version number (a lock that was not taken), that is the same conflict, never a 500.
+ */
+async function saveVersion<T>(run: () => Promise<LibraryResult<T>>): Promise<LibraryResult<T>> {
+  try {
+    return await run();
+  } catch (error) {
+    if (isUniqueViolation(error)) return libFail("versionConflict");
+    throw error;
+  }
+}
+
 export async function updateNote(db: Database, viewer: Viewer, input: NoteEdit): Promise<LibraryResult<{ versionNumber: number }>> {
+  return saveVersion(() => updateNoteLocked(db, viewer, input));
+}
+
+async function updateNoteLocked(db: Database, viewer: Viewer, input: NoteEdit): Promise<LibraryResult<{ versionNumber: number }>> {
   return db.transaction(async (tx) => {
-    const [note] = await tx.select().from(courseNotes).where(eq(courseNotes.id, input.noteId));
+    const [note] = await tx.select().from(courseNotes).where(eq(courseNotes.id, input.noteId)).for("update");
     if (!note || !canSeeNote(viewer, note)) return libFail("notFound");
     if (note.currentVersion !== input.baseVersion) return libFail("versionConflict");
     const text = input.body;
@@ -112,8 +136,12 @@ export async function updateNote(db: Database, viewer: Viewer, input: NoteEdit):
 /** Restore an older version AS A NEW VERSION (history only grows). The owner only. */
 export async function restoreNoteVersion(db: Database, viewer: Viewer, noteId: string, versionNumber: number): Promise<LibraryResult<{ versionNumber: number }>> {
   if (!z.uuid().safeParse(noteId).success || !Number.isInteger(versionNumber) || versionNumber < 1) return libFail("notFound");
+  return saveVersion(() => restoreNoteVersionLocked(db, viewer, noteId, versionNumber));
+}
+
+async function restoreNoteVersionLocked(db: Database, viewer: Viewer, noteId: string, versionNumber: number): Promise<LibraryResult<{ versionNumber: number }>> {
   return db.transaction(async (tx) => {
-    const [note] = await tx.select().from(courseNotes).where(eq(courseNotes.id, noteId));
+    const [note] = await tx.select().from(courseNotes).where(eq(courseNotes.id, noteId)).for("update");
     if (!note || !canSeeNote(viewer, note)) return libFail("notFound");
     const [old] = await tx
       .select()
@@ -170,8 +198,6 @@ export async function listNotes(db: Database, viewer: Viewer, filters: NoteFilte
   const latest = await latestOfferingByCourse(db, [...new Set(rows.map((r) => r.courseId))]);
   return rows.map((r) => ({ ...r, period: periodOf(r.offeringId, latest.get(r.courseId)) }));
 }
-
-export type NoteListItem = Awaited<ReturnType<typeof listNotes>>[number];
 
 /** Number of the viewer's notes matching a search text (for "showing 10 of N"). */
 export async function countNotes(db: Database, viewer: Viewer, filters: { courseId?: string; q: string }): Promise<number> {

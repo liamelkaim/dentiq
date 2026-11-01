@@ -1,6 +1,8 @@
 // Study tools: pure rules (schedule, grading, CSV escaping, shuffle) and database behaviour (privacy between
 // students, which questions are ever used, scoring only against verified answers, exports).
 // Fake data only (TEST courses, example.com accounts).
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { and, eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vitest";
 import { createTestDatabase, type Database } from "@/db/client";
@@ -788,6 +790,39 @@ describe("quizzes", () => {
     expect(open).toBeTruthy();
   });
 
+  it("a quiz shown as complete (its last answerable question was hidden meanwhile) can be self-rated", async () => {
+    const open = await verifiedOpen();
+    const other = await verified({ questionText: "Question à masquer ?" });
+    const made = await createQuiz(db, alice, { course: courseId }, 5);
+    if (!made.ok) throw new Error(made.error);
+    const quiz = (await getQuiz(db, alice, made.value.id))!;
+    const openItem = quiz.items.find((i) => i.question!.id === open)!;
+    expect(await answerQuizItem(db, alice, { quizId: made.value.id, itemId: openItem.id, response: { text: "ma réponse" } })).toEqual({ ok: true, value: { complete: false } });
+    // Still one answerable item left: not complete, not ratable.
+    expect(await rateQuizItem(db, alice, { quizId: made.value.id, itemId: openItem.id, rating: "got_it" })).toEqual({ ok: false, error: "quizNotComplete" });
+    await moderateQuestion(db, mod, other, "hide", "Retirée");
+    const shown = (await getQuiz(db, alice, made.value.id))!;
+    expect(shown.complete).toBe(true); // what the results page shows
+    const [stored] = await db.select({ completedAt: studyQuizzes.completedAt }).from(studyQuizzes).where(eq(studyQuizzes.id, made.value.id));
+    expect(stored!.completedAt).toBeNull(); // yet nothing ever wrote completedAt
+    expect(await rateQuizItem(db, alice, { quizId: made.value.id, itemId: openItem.id, rating: "got_it" })).toEqual({ ok: true, value: null });
+    expect((await getQuiz(db, alice, made.value.id))!.score).toMatchObject({ scored: 1, correct: 1, awaitingRating: 0 });
+  });
+
+  it("the quiz list flags unrated open questions so the row never shows a percentage from rated items only", async () => {
+    await verifiedOpen();
+    const made = await createQuiz(db, alice, { course: courseId }, 5);
+    if (!made.ok) throw new Error(made.error);
+    const item = (await getQuiz(db, alice, made.value.id))!.items[0]!;
+    await answerQuizItem(db, alice, { quizId: made.value.id, itemId: item.id, response: { text: "x" } });
+    const [row] = await listQuizzes(db, alice);
+    expect(row!.completedAt).not.toBeNull();
+    expect(row!.score).toMatchObject({ awaitingRating: 1, scored: 0 });
+    const page = readFileSync(join(__dirname, "../src/app/(app)/practice/quizzes/page.tsx"), "utf8");
+    expect(page.indexOf("rowAwaiting")).toBeGreaterThan(-1);
+    expect(page.indexOf("rowAwaiting")).toBeLessThan(page.indexOf('t("rowScore"'));
+  });
+
   it("an open question with only a proposed answer can never be rated into a score", async () => {
     await published({ questionType: "open", questionText: "Ouverte non vérifiée ?", choices: [], proposedAnswerText: "peut-être" });
     const made = await createQuiz(db, alice, { course: courseId }, 5);
@@ -819,9 +854,24 @@ describe("exports", () => {
     const cards = await body("cards");
     expect(cards.body).toContain("'=1+1");
     expect(cards.body).toContain("'@SUM(A1)");
+  });
+
+  it("keeps card text exactly in the Anki file (no formula guard) while CSV and TSV stay guarded", async () => {
+    await createPersonalCard(db, alice, card("-5 mm", "=1+1"));
     const anki = await body("anki", "tsv");
-    expect(anki.body).not.toMatch(/(^|\t|\n)[=@]/);
-    expect(anki.body).toContain("'=1+1");
+    const row = anki.body.split("\n").find((l) => l && !l.startsWith("#"))!.split("\t");
+    expect(row[0]).toBe("-5 mm");
+    expect(row[1]).toBe("=1+1");
+    expect(anki.body).not.toContain("'-5 mm");
+    expect(anki.body).not.toContain("'=1+1");
+    // Spreadsheet exports of the same card are guarded.
+    const csv = await body("cards", "csv");
+    expect(csv.body).toContain("'-5 mm");
+    const tsv = await body("cards", "tsv");
+    expect(tsv.body).toContain("'-5 mm");
+    // The pure writer keeps the guard unless told otherwise.
+    expect(toDelimited([["-5 mm", "a"]], "\t")).toBe("'-5 mm\ta\n");
+    expect(toDelimited([["-5 mm", "a"]], "\t", { guard: false })).toBe("-5 mm\ta\n");
   });
 
   it("includes source attribution and keeps verified answers apart from proposals", async () => {

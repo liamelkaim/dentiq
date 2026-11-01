@@ -60,7 +60,7 @@ export default async function CoursesPage({ searchParams }: { searchParams: Sear
                 defaultValue={filters.q}
                 placeholder={t("courses.searchPlaceholder")}
                 maxLength={100}
-                className="h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[15px] placeholder:text-text-subtle focus:border-accent"
+                className="h-11 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[15px] placeholder:text-text-subtle focus:border-accent sm:h-10"
               />
             </div>
             <div className="flex gap-2">

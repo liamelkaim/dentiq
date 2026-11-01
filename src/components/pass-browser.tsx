@@ -1,12 +1,13 @@
 // The list of exam questions with its filters: used by the global /passes page and by each course's Passes tab.
 // A course page shows ALL of the course's offerings by default and offers an offering filter.
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import type { CurrentUser } from "@/server/auth/session";
 import { recentAcademicYears } from "@/server/passes/academic-year";
-import { PAGE_SIZE, paramsToQuery, parseBrowseParams, SCOPES, toQuestionFilters } from "@/server/passes/browse";
+import { lastPageOf, paramsToQuery, parseBrowseParams, SCOPES, toQuestionFilters } from "@/server/passes/browse";
 import { knownQuestionTypes } from "@/server/passes/question-types";
 import { listCourseChoices, passFilterOptions } from "@/server/passes/queries";
 import { listQuestions } from "@/server/passes/service";
@@ -53,7 +54,10 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
   );
   // On the global view filtered to one course, offer the course's own Passes tab.
   const openCourse = !course && params.course ? courseChoices.find((c) => c.id === params.course) : undefined;
-  const lastPage = Math.max(1, Math.ceil(result.total / PAGE_SIZE));
+  const lastPage = lastPageOf(result.total);
+  // A link to a page past the end (a shared link, or items removed since) goes to the last page instead of showing an
+  // empty list whose "previous" link would only lead to another empty page.
+  if (params.page > lastPage) redirect(hrefWith(basePath, query, { page: lastPage > 1 ? String(lastPage) : undefined }));
   const typeName = (key: string) => t(`types.${key}.name`);
 
   return (
@@ -66,7 +70,7 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
               href={hrefWith(basePath, query, { scope: scope === "all" ? undefined : scope, page: undefined })}
               aria-current={params.scope === scope ? "page" : undefined}
               className={cx(
-                "flex h-10 flex-1 items-center justify-center rounded-[8px] px-3 text-[13px] font-medium whitespace-nowrap sm:h-8 sm:flex-none",
+                "flex h-11 flex-1 items-center justify-center rounded-[8px] px-3 text-[13px] font-medium whitespace-nowrap sm:h-8 sm:flex-none",
                 params.scope === scope ? "bg-surface text-text shadow-card" : "text-text-subtle hover:text-text",
               )}
             >

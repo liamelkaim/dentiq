@@ -36,6 +36,7 @@ import { canAccessLibrary, isModerator, type Viewer } from "@/server/resources/s
 import { detectFileType, sanitizeFileName, sha256 } from "@/server/resources/files";
 import type { FileStorage } from "@/server/storage";
 import { categoryBounds, isFutureAcademicYear, parseAcademicYear, passCategory, type PassCategory } from "./academic-year";
+import { escapeLike } from "@/server/library/like";
 import { questionFingerprint } from "./fingerprint";
 import {
   describeQuestionType,
@@ -737,8 +738,6 @@ export type QuestionFilters = {
   /** For tests; defaults to now. */
   now?: Date;
 };
-
-const escapeLike = (value: string) => value.replace(/[\\%_]/g, (c) => `\\${c}`);
 
 export async function listQuestions(db: Database, viewer: Viewer, filters: QuestionFilters = {}) {
   if (!canAccessLibrary(viewer)) return { items: [], total: 0 };

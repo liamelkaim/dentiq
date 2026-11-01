@@ -19,6 +19,7 @@ import {
   type Term,
 } from "@/db/schema";
 import { writeAudit } from "@/server/audit";
+import { escapeLike } from "@/server/library/like";
 import { canContribute, hasRole, type AccessUser } from "@/server/auth/roles";
 import type { FileStorage } from "@/server/storage";
 import { checkUpload } from "./files";
@@ -121,10 +122,6 @@ export type ResourceFilters = {
   /** Moderators only. */
   status?: ResourceStatus;
 };
-
-function escapeLike(value: string) {
-  return value.replace(/[\\%_]/g, (c) => `\\${c}`);
-}
 
 export async function listResources(db: Database, viewer: Viewer, filters: ResourceFilters = {}) {
   if (!canAccessLibrary(viewer)) return [];

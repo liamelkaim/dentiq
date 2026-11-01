@@ -2,10 +2,10 @@
 
 // Forms for the profile page. They only collect input; the server actions and services check every rule again.
 import { useTranslations } from "next-intl";
-import { useActionState } from "react";
 import { deleteAccountAction, updateNameAction, type AccountFormState } from "@/server/account/actions";
 import { PROFILE_NAME_MAX } from "@/server/account/constants";
 import { Button, ButtonLink, Field, Input, Notice, Panel } from "./ui";
+import { useKeepingForm } from "./use-keeping-form";
 
 const idle: AccountFormState = { status: "idle" };
 
@@ -16,11 +16,11 @@ function errorText(t: ReturnType<typeof useTranslations>, code: string | undefin
 
 export function NameForm({ initialName }: { initialName: string }) {
   const t = useTranslations("account");
-  const [state, action, pending] = useActionState(updateNameAction, idle);
+  const { state, pending, onSubmit } = useKeepingForm(updateNameAction, idle);
   const error = state.status === "error" ? errorText(t, state.message) : undefined;
   return (
     <Panel className="p-4 sm:p-5">
-      <form action={action} className="flex flex-col gap-3">
+      <form onSubmit={onSubmit} className="flex flex-col gap-3">
         <Field label={t("name")} htmlFor="profile-name" hint={t("nameHelp", { max: PROFILE_NAME_MAX })} error={error}>
           <Input
             id="profile-name"
@@ -50,7 +50,7 @@ export function NameForm({ initialName }: { initialName: string }) {
 
 export function DeleteAccountForm({ email, blockedLastAdmin }: { email: string; blockedLastAdmin: boolean }) {
   const t = useTranslations("account");
-  const [state, action, pending] = useActionState(deleteAccountAction, idle);
+  const { state, pending, onSubmit } = useKeepingForm(deleteAccountAction, idle);
   const error = state.status === "error" ? errorText(t, state.message) : undefined;
   // Errors about the typed email or the password sit next to their field; the rest go in the banner.
   const confirmError = state.message === "confirmationMismatch" ? error : undefined;
@@ -63,7 +63,8 @@ export function DeleteAccountForm({ email, blockedLastAdmin }: { email: string; 
           {t("delete.lastAdmin")}
         </Notice>
       )}
-      <form action={action} className="flex flex-col gap-4" autoComplete="off">
+      {/* method="post": if the page is submitted before it has loaded, the password must never end up in the address bar. */}
+      <form method="post" onSubmit={onSubmit} className="flex flex-col gap-4" autoComplete="off">
         {banner && <Notice tone="danger">{banner}</Notice>}
         <Field label={t("delete.confirmLabel")} htmlFor="delete-confirmation" hint={t("delete.confirmHint", { email })} error={confirmError}>
           <Input

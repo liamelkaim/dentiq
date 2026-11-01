@@ -75,7 +75,7 @@ export default async function AnalyticsPage() {
           ) : (
             <>
               <p className="mb-3 text-[14px]">
-                {t("activity.summary", { active: a.activity.activeDays, days: a.activity.dayCount, answers: n(a.activity.answers), reviews: n(a.activity.reviews) })}
+                {t("activity.summary", { active: a.activity.activeDays, days: a.activity.dayCount, answers: a.activity.answers, reviews: a.activity.reviews })}
               </p>
               <ActivityChart days={a.activity.days} />
             </>
@@ -99,7 +99,7 @@ export default async function AnalyticsPage() {
             {t("accuracy.volume", { attempts: a.totals.attempts, questions: a.totals.questionsAnswered })}
             {a.totals.unscored > 0 && ` · ${t("accuracy.unscored", { count: a.totals.unscored })}`}
           </p>
-          <p className="mt-1 text-[13px] text-text-subtle">{t("accuracy.answered", { answered: a.totals.questionsAnswered, pool: a.questionPool })}</p>
+          <p className="mt-1 text-[13px] text-text-subtle">{t("accuracy.answered", { answered: a.inPool.answered, pool: a.questionPool })}</p>
         </Panel>
         {a.byCourse.length === 0 ? (
           <Panel className="px-4 py-5 text-[14px] text-text-muted">{t("accuracy.empty")}</Panel>
@@ -169,15 +169,15 @@ export default async function AnalyticsPage() {
               <div>
                 <dt className="text-[13px] text-text-subtle">{t("marks.flagged")}</dt>
                 <dd className="text-[14px]">
-                  <span className="text-[22px] font-semibold tabular-nums">{n(a.marks.flagged)}</span>
-                  <span className="block text-text-muted">{t("marks.of", { count: a.marks.flagged, pool: a.questionPool })}</span>
+                  <span className="text-[22px] font-semibold tabular-nums">{n(a.inPool.flagged)}</span>
+                  <span className="block text-text-muted">{t("marks.of", { count: a.inPool.flagged, pool: a.questionPool })}</span>
                 </dd>
               </div>
               <div>
                 <dt className="text-[13px] text-text-subtle">{t("marks.reviewLater")}</dt>
                 <dd className="text-[14px]">
-                  <span className="text-[22px] font-semibold tabular-nums">{n(a.marks.reviewLater)}</span>
-                  <span className="block text-text-muted">{t("marks.of", { count: a.marks.reviewLater, pool: a.questionPool })}</span>
+                  <span className="text-[22px] font-semibold tabular-nums">{n(a.inPool.reviewLater)}</span>
+                  <span className="block text-text-muted">{t("marks.of", { count: a.inPool.reviewLater, pool: a.questionPool })}</span>
                 </dd>
               </div>
             </dl>
@@ -300,7 +300,7 @@ export default async function AnalyticsPage() {
       <Section title={t("definitions.title")}>
         <Panel className="p-4">
           <ul className="flex flex-col gap-3 text-[14px]">
-            {(["attempt", "scored", "unscored", "accuracy", "activeDay", "due"] as const).map((key) => (
+            {(["attempt", "scored", "unscored", "fixed", "accuracy", "activeDay", "due"] as const).map((key) => (
               <li key={key} className="text-text-muted">
                 {t(`definitions.${key}`)}
               </li>

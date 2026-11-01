@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { Badge, Button, buttonClass, cx, EmptyState, List, ListRow, PageHeader, Select } from "@/components/ui";
+import { Badge, Button, buttonClass, cx, EmptyState, List, ListRow, Notice, PageHeader, Select } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { roles } from "@/db/schema";
 import { requireRole } from "@/server/auth/session";
 import { setApprovalAction, setRoleAction } from "@/server/users/actions";
+import { USER_ERROR_CODES } from "@/server/users/errors";
 import { listUsers } from "@/server/users/service";
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: (await getTranslations("admin"))("users") };
 }
 
-export default async function AdminUsersPage({ searchParams }: { searchParams: Promise<{ show?: string }> }) {
+export default async function AdminUsersPage({ searchParams }: { searchParams: Promise<{ show?: string; error?: string }> }) {
   const actor = await requireRole("admin");
   const t = await getTranslations();
   const format = await getFormatter();
-  const showAll = (await searchParams).show === "all";
+  const query = await searchParams;
+  const showAll = query.show === "all";
+  const errorCode = USER_ERROR_CODES.find((code) => code === query.error);
   const users = await listUsers(getDb(), showAll ? {} : { approvalStatus: "pending" });
 
   const tab = (active: boolean) => cx(buttonClass(active ? "secondary" : "ghost", undefined, "sm"));
@@ -24,6 +27,12 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
   return (
     <>
       <PageHeader back={{ href: "/admin", label: t("admin.title") }} title={t("admin.usersPage.title")} subtitle={t("admin.usersHelp")} />
+
+      {errorCode && (
+        <Notice tone="danger" className="mb-4">
+          {t(`admin.usersPage.errors.${errorCode}`)}
+        </Notice>
+      )}
 
       <nav className="mb-4 flex gap-1" aria-label={t("admin.usersPage.title")}>
         <Link href="/admin/users" className={tab(!showAll)} aria-current={!showAll ? "page" : undefined}>

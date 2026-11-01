@@ -36,6 +36,22 @@ describe("calendar rendering", () => {
     expect(html).toContain("hidden sm:block");
   });
 
+  it("announces the selected day in words and aria-current, not by colour or ring alone", () => {
+    const grid = (selectedDay: string) =>
+      render("en", createElement(MonthGridView, { month: { year: 2026, month: 11 }, today: "2026-11-01", entries, selectedDay, view: "month" }));
+    const html = grid("2026-11-10");
+    expect(html).toContain('aria-label="Tuesday, November 10, 2026, selected: 2 entries"');
+    expect(html).toContain('aria-current="true"');
+    expect(html.match(/aria-current="true"/g)).toHaveLength(1);
+    // Today and selected together: the label says both and aria-current keeps "date".
+    const both = grid("2026-11-01");
+    expect(both).toContain("today, selected: no entries");
+    expect(both).toContain('aria-current="date"');
+    expect(both).not.toContain('aria-current="true"');
+    const fr = render("fr", createElement(MonthGridView, { month: { year: 2026, month: 11 }, today: "2026-11-01", entries, selectedDay: "2026-11-10", view: "month" }));
+    expect(fr).toContain("sélectionné");
+  });
+
   it("shows the grid on phones only when asked, and hides it for the list view", () => {
     const grid = (view: "month" | "list") => render("en", createElement(MonthGridView, { month: { year: 2026, month: 11 }, today: "2026-11-01", entries: [], selectedDay: null, view }));
     expect(grid("month")).toContain(" block");

@@ -8,7 +8,7 @@ import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import type { CurrentUser } from "@/server/auth/session";
 import { getCourseByCode } from "@/server/catalog/service";
-import { normalizeCourseCode } from "@/server/catalog/validation";
+import { courseCodeFromSegment } from "@/server/catalog/validation";
 import { listCourseSummaries, type CourseSummary } from "@/server/resources/service";
 import { isTutorReady } from "@/server/tutor/service";
 import { BookIcon, CardsIcon, ChevronLeftIcon, FolderIcon, MicIcon, PassesIcon, SparkleIcon, TagIcon } from "./icons";
@@ -16,9 +16,10 @@ import { cx } from "./ui";
 
 type CourseDetail = NonNullable<Awaited<ReturnType<typeof getCourseByCode>>>;
 
-/** Loads a course from a URL segment like "DEMO%201001". */
-export function loadCourseByCode(codeParam: string) {
-  return getCourseByCode(getDb(), normalizeCourseCode(decodeURIComponent(codeParam)));
+/** Loads a course from a URL segment like "DEMO%201001". Null (so the page answers 404) for a malformed segment. */
+export async function loadCourseByCode(codeParam: string) {
+  const code = courseCodeFromSegment(codeParam);
+  return code === null ? null : getCourseByCode(getDb(), code);
 }
 
 /** Header data for a course. Archived courses aren't in the summaries, so fall back to the record itself. */

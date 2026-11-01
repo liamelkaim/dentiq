@@ -22,7 +22,8 @@
 | D. Calendar and analytics (local only) | built; typecheck, lint, 375 tests, build clean; not yet browser-tested; .ics import into calendar apps UNVERIFIED | 4a0fbc4 |
 | E. Course-grounded AI tutor shell (retrieval, citations, provider interface; OFF, no provider) | built; typecheck, lint, 439 tests, build clean; not yet browser-tested | 4ade38a |
 | F. Profile and account (profile, own-data JSON export, account deletion, legal draft banners) | built; typecheck, lint, 468 tests, build clean; not yet browser-tested; deletion semantics need Law 25 legal review | e9a830c |
-| G. Platform quality (PWA shell, CSP, focus, touch targets, loading/error pages, em dash cleanup) | built; typecheck, lint, 496 tests, build clean; needs a browser to verify install, offline page, CSP hydration, safe areas | see git log |
+| G. Platform quality (PWA shell, CSP, focus, touch targets, loading/error pages, em dash cleanup) | built; typecheck, lint, 496 tests, build clean; needs a browser to verify install, offline page, CSP hydration, safe areas | b6b2837 |
+| H. Independent review (security + correctness) and fixes (20 items) | done; typecheck, lint, 533 tests, build clean | see git log |
 
 ## Decisions made for the owner
 
@@ -59,7 +60,23 @@
 
 ## Findings and fixes (review blocks)
 
-(none yet)
+### H. Independent review (two fresh read-only reviewers, no knowledge of the build)
+
+Security reviewer: no critical or high findings. Every server action, route handler and page checks auth or ownership server-side; all SQL templates parameterized; no raw HTML sinks; exports guarded against CSV/ICS/header injection; service worker caches no authenticated content; no secrets in tracked files. Code reviewer: typecheck, lint and 496 tests clean; schema and migrations match; FR/EN keys equal (1537 each).
+
+Fixed (all 20 items; 19 partial: our limiter now evicts expired keys, Better Auth already prunes its own map). Result: 533 tests pass: form input lost on server error (notes, calendar, cards); `.ics` semicolon escaping bug (the old test encoded the bug); touch targets still 40px in places; all-day ordering; selected day not exposed to assistive tech; plural grammar; English-only API error bodies; stale docs and unused exports; `decodeURIComponent` 500 on malformed `%`; non-UUID topic ids causing 500; last-admin deadlock and missing last-admin guard on role/approval changes; note save race; Anki export mangling cards starting with `-`; fragile `selectedTopicIds`; quiz completion race; analytics X of N inconsistency; page beyond last page; focus management after practice actions; rate-limit map eviction.
+
+NOT fixed here, needs a decision or hosting (owner list):
+- Shared rate-limit store: all limiters (login via Better Auth, account export, account deletion) are in memory per instance and do nothing useful on serverless or multi-instance hosting. Use Better Auth `rateLimit.storage: "database"` and a database-backed counter before going live; configure the trusted client-IP header.
+- Every server action accepts a 26 MB body before auth (`next.config.ts`); cap non-upload paths at the edge or move uploads to a dedicated route before launch.
+- Expensive authenticated reads (tutor search, study export, search) have no per-user cost limit; add one with the shared store.
+- CSP keeps `'unsafe-inline'` for scripts; move to nonce-based CSP once testable in a browser.
+- Retention policy for removed files (question images set `removedAt` but the file stays; kept contributions keep their files). Law 25 review.
+- Stale password-reset rows on account deletion (password reset not built yet; revisit then).
+- Possible header conflict on question images (config `X-Frame-Options: DENY` vs route `SAMEORIGIN`); only matters if images are ever framed. Check with curl in block I.
+- Note versions are unbounded per note; a heavy user could exceed the 25 MB export cap (fails with a clear 413, never truncates silently).
+- Scored attempts stay as recorded when a question is later edited or un-verified (documented choice, "fixed when answered").
+
 
 ## Skipped / failed
 

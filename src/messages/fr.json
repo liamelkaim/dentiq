@@ -299,7 +299,13 @@
       "verified": "Courriel confirmé",
       "notVerified": "Courriel non confirmé",
       "you": "vous",
-      "joined": "Inscrit·e le {date}"
+      "joined": "Inscrit·e le {date}",
+      "errors": {
+        "lastAdmin": "C'est le seul administrateur approuvé. Approuvez d'abord un autre administrateur ; ce changement n'a pas été fait.",
+        "tryAgain": "Deux changements se sont croisés. Rien n'a été modifié ; réessayez.",
+        "cannotChangeSelf": "Vous ne pouvez pas modifier votre propre compte ici.",
+        "notFound": "Ce compte est introuvable."
+      }
     },
     "tutor": "Réglages du tuteur IA",
     "tutorHelp": "Désactivé. Il faut un fournisseur et un budget."
@@ -478,6 +484,13 @@
     "errorBody": "Un problème est survenu de notre côté. Vous pouvez réessayer.",
     "reference": "Référence : {code}",
     "goHome": "Retour à l'accueil"
+  },
+  "apiErrors": {
+    "tooManyExports": "Trop d'exportations, réessayez plus tard.",
+    "exportTooLarge": "Vos données sont trop volumineuses pour être exportées dans un seul fichier.",
+    "notFound": "Introuvable.",
+    "unknownExport": "Exportation inconnue.",
+    "unknownFormat": "Format inconnu."
   },
   "legal": {
     "back": "Retour",
@@ -949,7 +962,7 @@
     "noDocuments": "Aucun document ne correspond à cette recherche.",
     "noQuestionsTitle": "Aucune question d'examen",
     "noQuestions": "Aucune question d'examen publiée ne correspond à cette recherche.",
-    "allQuestions": "Voir les {count} questions correspondantes dans Passes",
+    "allQuestions": "Voir {count, plural, one {la question correspondante} other {les # questions correspondantes}} dans Passes",
     "query": "Rechercher",
     "course": "Cours",
     "allCourses": "Tous les cours",
@@ -963,8 +976,8 @@
     "noNotes": "Aucune de vos notes ne correspond. Les notes des autres étudiants ne sont jamais cherchées.",
     "noTopicsTitle": "Aucun sujet",
     "noTopics": "Aucun sujet de cours ne correspond à cette recherche.",
-    "capped": "{shown} résultats affichés sur {total}.",
-    "allNotes": "Voir vos {count} notes correspondantes"
+    "capped": "{shown, plural, one {# résultat affiché} other {# résultats affichés}} sur {total}.",
+    "allNotes": "Voir {count, plural, one {votre note correspondante} other {vos # notes correspondantes}}"
   },
   "studyTools": {
     "title": "Étudier",
@@ -994,7 +1007,7 @@
       },
       "practiceLine": "{count, plural, one {# question publiée disponible} other {# questions publiées disponibles}}",
       "practiceNone": "Aucune question publiée pour l'instant",
-      "flashcardsLine": "{due} à réviser, {fresh} nouvelles",
+      "flashcardsLine": "{due} à réviser, {fresh, plural, one {# nouvelle} other {# nouvelles}}",
       "flashcardsNone": "Aucune carte pour l'instant",
       "quizzesLine": "{count, plural, =0 {Aucun quiz terminé} one {# quiz terminé} other {# quiz terminés}}",
       "quizzesNone": "Aucun quiz pour l'instant",
@@ -1093,7 +1106,7 @@
       "setupNote": "Seules les questions publiées que vous pouvez voir sont utilisées. Une question sans réponse vérifiée est affichée avec sa réponse proposée, clairement indiquée, et n'est jamais notée.",
       "endTitle": "Séance terminée",
       "endAnswered": "{count, plural, one {# question répondue} other {# questions répondues}}",
-      "endScored": "Notées selon les réponses vérifiées : {correct} correctes et {partial} en partie justes sur {scored}.",
+      "endScored": "Notées selon les réponses vérifiées : {correct, plural, one {# correcte} other {# correctes}} et {partial, plural, one {# en partie juste} other {# en partie justes}} sur {scored}.",
       "endNoneScored": "Aucune de ces questions n'avait de réponse vérifiée pour être notée.",
       "endUnscored": "{count, plural, one {# question n'a pas été notée} other {# questions n'ont pas été notées}}.",
       "endUnscoredNote": "Non noté signifie que la question n'a pas encore de réponse vérifiée.",
@@ -1108,6 +1121,8 @@
       "showAnswer": "Afficher la réponse",
       "check": "Vérifier la réponse",
       "ratePrompt": "Comment avez-vous fait ?",
+      "questionRegion": "Question",
+      "resultRegion": "Résultat",
       "rateUnverifiedPrompt": "Comment avez-vous fait ? Ce sera enregistré, mais non noté.",
       "rating": {
         "got_it": "Réussi",
@@ -1159,7 +1174,7 @@
           "easy": "Facile"
         },
         "seeProgress": "Voir la progression",
-        "progress": "{reviewed} révisées, {left} restantes",
+        "progress": "{reviewed, plural, one {# révisée} other {# révisées}}, {left, plural, one {# restante} other {# restantes}}",
         "personalBadge": "Votre carte",
         "questionBadge": "Issue d'une question",
         "proposedBadge": "Réponse non vérifiée",
@@ -1188,9 +1203,10 @@
       "emptyTitle": "Aucun quiz pour l'instant",
       "emptyBody": "Les quiz que vous ferez seront listés ici, en privé.",
       "courseRemoved": "Cours",
-      "rowScore": "{points} sur {scored} notées, {unscored} non notées",
-      "rowNoScore": "Pas de note ({unscored} non notées)",
-      "rowProgress": "{answered} répondues sur {size}",
+      "rowScore": "{points} sur {scored, plural, one {# question notée} other {# questions notées}}, {unscored, plural, one {# question non notée} other {# questions non notées}}",
+      "rowAwaiting": "{count, plural, one {# question ouverte attend votre évaluation} other {# questions ouvertes attendent votre évaluation}}",
+      "rowNoScore": "Pas de note ({unscored, plural, one {# question non notée} other {# questions non notées}})",
+      "rowProgress": "{answered, plural, one {# répondue} other {# répondues}} sur {size}",
       "statusDone": "Terminé",
       "statusOpen": "En cours",
       "takeSubtitle": "Répondez à toutes les questions. Les résultats s'affichent à la fin.",
@@ -1243,9 +1259,9 @@
       "byCourseTitle": "Par cours",
       "byCourseEmpty": "Aucune réponse enregistrée pour l'instant.",
       "courseLine": "{answered, plural, one {# question répondue} other {# questions répondues}}, {attempts, plural, one {# réponse} other {# réponses}}",
-      "courseScored": "{correct} correctes et {partial} en partie justes sur {scored} notées",
+      "courseScored": "{correct, plural, one {# correcte} other {# correctes}} et {partial, plural, one {# en partie juste} other {# en partie justes}} sur {scored, plural, one {# notée} other {# notées}}",
       "courseNoScore": "rien de noté pour l'instant",
-      "courseUnscored": "{count} non notées",
+      "courseUnscored": "{count, plural, one {# réponse non notée} other {# réponses non notées}}",
       "practiceCourse": "Pratiquer {code}",
       "marksTitle": "Questions marquées",
       "flagged": "Signalées",
@@ -1531,6 +1547,8 @@
       "label": "Calendrier de {month}",
       "cell": "{date} : {count, plural, =0 {aucune entrée} one {# entrée} other {# entrées}}",
       "cellToday": "{date}, aujourd'hui : {count, plural, =0 {aucune entrée} one {# entrée} other {# entrées}}",
+      "cellSelected": "{date}, sélectionné : {count, plural, =0 {aucune entrée} one {# entrée} other {# entrées}}",
+      "cellTodaySelected": "{date}, aujourd'hui, sélectionné : {count, plural, =0 {aucune entrée} one {# entrée} other {# entrées}}",
       "today": "Aujourd'hui",
       "more": "+{count} de plus",
       "count": "{count, plural, one {# entrée} other {# entrées}}"
@@ -1604,7 +1622,7 @@
     "activity": {
       "title": "Activité, {days} derniers jours",
       "description": "Une barre par jour : les réponses données en pratique ou en quiz, plus les cartes révisées. Les jours sont comptés à l'heure de {zone}.",
-      "summary": "{active} jours sur {days} avec au moins une réponse ou une révision de carte ({answers} réponses et {reviews} révisions de cartes au total).",
+      "summary": "{active, plural, one {# jour} other {# jours}} sur {days} avec au moins une réponse ou une révision de carte ({answers, plural, one {# réponse} other {# réponses}} et {reviews, plural, one {# révision de carte} other {# révisions de cartes}} au total).",
       "answers": "Réponses",
       "reviews": "Révisions de cartes",
       "legend": "Légende",
@@ -1622,7 +1640,7 @@
       "percent": "{percent} %",
       "points": "Score de {points} sur {scored} {scored, plural, one {réponse notée} other {réponses notées}}",
       "noScore": "Rien de noté pour l'instant",
-      "unscored": "{count} non notées et non comptées",
+      "unscored": "{count, plural, one {# réponse non notée, non comptée} other {# réponses non notées, non comptées}}",
       "volume": "{attempts, plural, one {# réponse enregistrée} other {# réponses enregistrées}} sur {questions, plural, one {# question} other {# questions différentes}}",
       "answered": "Questions répondues au moins une fois : {answered} sur {pool} questions publiées que vous pouvez étudier.",
       "byCourse": "Par cours",
@@ -1663,7 +1681,7 @@
       "description": "Quiz terminés, du plus récent au plus ancien. Un résultat est le nombre de points sur les éléments notés selon une réponse vérifiée ; les éléments non notés ne sont pas comptés.",
       "line": "{points} points sur {scored} ({percent} %)",
       "noScore": "Aucun résultat",
-      "unscored": "{count} non notées",
+      "unscored": "{count, plural, one {# question non notée} other {# questions non notées}}",
       "size": "{count, plural, one {# question} other {# questions}}",
       "empty": "Aucun quiz terminé pour l'instant.",
       "shown": "Affichage des {shown} derniers quiz terminés sur {total}.",
@@ -1687,6 +1705,7 @@
       "scored": "Une réponse notée est comparée à une réponse vérifiée : juste, en partie juste ou fausse.",
       "unscored": "Une réponse non notée a été donnée quand la question n'avait pas de réponse vérifiée. Elle est affichée, mais jamais comptée dans une exactitude.",
       "accuracy": "L'exactitude est le nombre de points divisé par le nombre de réponses notées : juste vaut 1 point, en partie juste vaut un demi-point.",
+      "fixed": "Le fait qu'une réponse soit notée est décidé au moment où vous répondez. Il n'est pas recalculé si la question est modifiée plus tard ou si sa vérification est retirée.",
       "activeDay": "Un jour avec activité compte au moins une réponse enregistrée ou une révision de carte.",
       "due": "Une carte est à réviser quand son heure de révision prévue est passée. Les nouvelles cartes n'ont pas encore d'horaire et sont comptées à part."
     }
@@ -1892,6 +1911,7 @@
       "wrongPassword": "Le mot de passe est incorrect.",
       "lastAdmin": "Vous êtes le seul administrateur : ce compte ne peut pas être supprimé.",
       "tooManyAttempts": "Trop de tentatives. Attendez quelques minutes et réessayez.",
+      "tryAgain": "Deux changements se sont croisés. Votre compte n'a pas été supprimé ; réessayez.",
       "tooLarge": "Vos données sont trop volumineuses pour un seul fichier d'exportation.",
       "tooManyExports": "Trop de téléchargements. Réessayez plus tard."
     }

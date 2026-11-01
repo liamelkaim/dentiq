@@ -46,4 +46,54 @@ describe("account approval and roles", () => {
   it("reports unknown accounts", async () => {
     expect(await setUserRole(db, "admin", "nobody", "moderator")).toEqual({ ok: false, error: "notFound" });
   });
+
+  describe("last approved administrator", () => {
+    const addAdmin = (id: string, approvalStatus: "approved" | "pending" = "approved") =>
+      db.insert(user).values({ id, name: id, email: `${id}@example.com`, emailVerified: true, role: "admin", approvalStatus });
+
+    it("refuses to demote or block the only approved administrator", async () => {
+      expect(await setUserRole(db, "student", "admin", "student")).toEqual({ ok: false, error: "lastAdmin" });
+      expect(await setApprovalStatus(db, "student", "admin", "rejected")).toEqual({ ok: false, error: "lastAdmin" });
+      expect(await setApprovalStatus(db, "student", "admin", "pending")).toEqual({ ok: false, error: "lastAdmin" });
+      expect(await getUser("admin")).toMatchObject({ role: "admin", approvalStatus: "approved" });
+      expect(await db.select().from(auditLog)).toEqual([]);
+    });
+
+    it("does not count a pending administrator as a second one", async () => {
+      await addAdmin("admin-pending", "pending");
+      expect(await setUserRole(db, "student", "admin", "moderator")).toEqual({ ok: false, error: "lastAdmin" });
+    });
+
+    it("allows the change when another approved administrator exists, then protects the remaining one", async () => {
+      await addAdmin("admin-2");
+      expect(await setUserRole(db, "admin-2", "admin", "moderator")).toEqual({ ok: true, value: null });
+      expect(await setApprovalStatus(db, "admin", "admin-2", "rejected")).toEqual({ ok: false, error: "lastAdmin" });
+      expect(await setUserRole(db, "admin", "admin-2", "student")).toEqual({ ok: false, error: "lastAdmin" });
+      expect(await getUser("admin-2")).toMatchObject({ role: "admin", approvalStatus: "approved" });
+    });
+
+    it("keeps re-approving, promoting and changing non-admins unrestricted", async () => {
+      expect(await setUserRole(db, "admin", "student", "admin")).toEqual({ ok: true, value: null });
+      expect(await setApprovalStatus(db, "admin", "student", "approved")).toEqual({ ok: true, value: null });
+      expect(await setApprovalStatus(db, "admin", "admin", "approved")).toEqual({ ok: false, error: "cannotChangeSelf" });
+    });
+
+    it("two administrators demoting each other at the same moment: only one succeeds", async () => {
+      await addAdmin("admin-2");
+      const results = await Promise.all([setUserRole(db, "admin", "admin-2", "student"), setUserRole(db, "admin-2", "admin", "student")]);
+      expect(results.filter((r) => r.ok)).toHaveLength(1);
+      expect(results.filter((r) => !r.ok)).toEqual([{ ok: false, error: "lastAdmin" }]);
+      const admins = (await db.select().from(user)).filter((u) => u.role === "admin" && u.approvalStatus === "approved");
+      expect(admins).toHaveLength(1);
+    });
+
+    it("turns a deadlock or serialization failure into a friendly retry error", async () => {
+      for (const code of ["40P01", "40001"]) {
+        const failing = { transaction: async () => { throw Object.assign(new Error("conflict"), { code }); } } as unknown as Database;
+        expect(await setUserRole(failing, "student", "admin", "student")).toEqual({ ok: false, error: "tryAgain" });
+      }
+      const other = { transaction: async () => { throw new Error("disk on fire"); } } as unknown as Database;
+      await expect(setUserRole(other, "student", "admin", "student")).rejects.toThrow("disk on fire");
+    });
+  });
 });

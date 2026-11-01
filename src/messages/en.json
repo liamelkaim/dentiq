@@ -299,7 +299,13 @@
       "verified": "Email confirmed",
       "notVerified": "Email not confirmed",
       "you": "you",
-      "joined": "Joined {date}"
+      "joined": "Joined {date}",
+      "errors": {
+        "lastAdmin": "This is the only approved administrator. Approve another administrator first; this change was not made.",
+        "tryAgain": "Two changes collided. Nothing was changed; try again.",
+        "cannotChangeSelf": "You can't change your own account here.",
+        "notFound": "This account was not found."
+      }
     },
     "tutor": "AI tutor settings",
     "tutorHelp": "Off. Needs a provider and a budget."
@@ -478,6 +484,13 @@
     "errorBody": "Something went wrong on our side. You can try again.",
     "reference": "Reference: {code}",
     "goHome": "Back to home"
+  },
+  "apiErrors": {
+    "tooManyExports": "Too many exports, try again later.",
+    "exportTooLarge": "Your data is too large to export in one file.",
+    "notFound": "Not found.",
+    "unknownExport": "Unknown export.",
+    "unknownFormat": "Unknown format."
   },
   "legal": {
     "back": "Back",
@@ -949,7 +962,7 @@
     "noDocuments": "No documents match this search.",
     "noQuestionsTitle": "No exam questions",
     "noQuestions": "No published exam question matches this search.",
-    "allQuestions": "See all {count} matching questions in Passes",
+    "allQuestions": "See all {count, plural, one {# matching question} other {# matching questions}} in Passes",
     "query": "Search",
     "course": "Course",
     "allCourses": "All courses",
@@ -963,8 +976,8 @@
     "noNotes": "None of your notes match. Other students' notes are never searched.",
     "noTopicsTitle": "No topics",
     "noTopics": "No course topic matches this search.",
-    "capped": "{shown} results shown out of {total}.",
-    "allNotes": "See your {count} matching notes"
+    "capped": "{shown, plural, one {# result} other {# results}} shown out of {total}.",
+    "allNotes": "See your {count, plural, one {# matching note} other {# matching notes}}"
   },
   "studyTools": {
     "title": "Study",
@@ -1107,6 +1120,8 @@
       "yourAnswer": "Your answer",
       "showAnswer": "Show answer",
       "check": "Check answer",
+      "questionRegion": "Question",
+      "resultRegion": "Result",
       "ratePrompt": "How did you do?",
       "rateUnverifiedPrompt": "How did you do? This is recorded but not scored.",
       "rating": {
@@ -1188,8 +1203,9 @@
       "emptyTitle": "No quiz yet",
       "emptyBody": "Quizzes you take will be listed here, privately.",
       "courseRemoved": "Course",
-      "rowScore": "{points} of {scored} scored, {unscored} not scored",
-      "rowNoScore": "No score ({unscored} not scored)",
+      "rowScore": "{points} of {scored, plural, one {# scored question} other {# scored questions}}, {unscored, plural, one {# question} other {# questions}} not scored",
+      "rowAwaiting": "{count, plural, one {# open question is waiting for your rating} other {# open questions are waiting for your rating}}",
+      "rowNoScore": "No score ({unscored, plural, one {# question} other {# questions}} not scored)",
       "rowProgress": "{answered} of {size} answered",
       "statusDone": "Completed",
       "statusOpen": "In progress",
@@ -1245,7 +1261,7 @@
       "courseLine": "{answered, plural, one {# question} other {# questions}} answered, {attempts, plural, one {# answer} other {# answers}}",
       "courseScored": "{correct} correct and {partial} partly right out of {scored} scored",
       "courseNoScore": "nothing scored yet",
-      "courseUnscored": "{count} not scored",
+      "courseUnscored": "{count, plural, one {# answer} other {# answers}} not scored",
       "practiceCourse": "Practice {code}",
       "marksTitle": "Marked questions",
       "flagged": "Flagged",
@@ -1531,6 +1547,8 @@
       "label": "Calendar for {month}",
       "cell": "{date}: {count, plural, =0 {no entries} one {# entry} other {# entries}}",
       "cellToday": "{date}, today: {count, plural, =0 {no entries} one {# entry} other {# entries}}",
+      "cellSelected": "{date}, selected: {count, plural, =0 {no entries} one {# entry} other {# entries}}",
+      "cellTodaySelected": "{date}, today, selected: {count, plural, =0 {no entries} one {# entry} other {# entries}}",
       "today": "Today",
       "more": "+{count} more",
       "count": "{count, plural, one {# entry} other {# entries}}"
@@ -1604,7 +1622,7 @@
     "activity": {
       "title": "Activity, last {days} days",
       "description": "One bar per day: answers you gave in practice or quizzes, plus flashcards you reviewed. Days are counted in {zone} time.",
-      "summary": "{active} of {days} days with at least one answer or card review ({answers} answers and {reviews} card reviews in all).",
+      "summary": "{active} of {days, plural, one {# day} other {# days}} with at least one answer or card review ({answers, plural, one {# answer} other {# answers}} and {reviews, plural, one {# card review} other {# card reviews}} in all).",
       "answers": "Answers",
       "reviews": "Card reviews",
       "legend": "Legend",
@@ -1622,7 +1640,7 @@
       "percent": "{percent}%",
       "points": "Score {points} out of {scored} scored {scored, plural, one {answer} other {answers}}",
       "noScore": "Nothing scored yet",
-      "unscored": "{count} unscored and not counted",
+      "unscored": "{count, plural, one {# unscored answer, not counted} other {# unscored answers, not counted}}",
       "volume": "{attempts, plural, one {# recorded answer} other {# recorded answers}} on {questions, plural, one {# question} other {# different questions}}",
       "answered": "Questions answered at least once: {answered} of {pool} published questions you can study.",
       "byCourse": "By course",
@@ -1663,7 +1681,7 @@
       "description": "Completed quizzes, newest first. A score is points out of the items scored against a verified answer; unscored items are not counted.",
       "line": "{points} of {scored} points ({percent}%)",
       "noScore": "No score",
-      "unscored": "{count} unscored",
+      "unscored": "{count, plural, one {# unscored question} other {# unscored questions}}",
       "size": "{count, plural, one {# question} other {# questions}}",
       "empty": "No completed quiz yet.",
       "shown": "Showing the latest {shown} of {total} completed quizzes.",
@@ -1687,6 +1705,7 @@
       "scored": "A scored answer is an answer checked against a verified answer: correct, partly right or incorrect.",
       "unscored": "An unscored answer was given when the question had no verified answer. It is shown but never counted in any accuracy.",
       "accuracy": "Accuracy is points divided by scored answers, where correct is 1 point and partly right is half a point.",
+      "fixed": "Whether an answer was scored is decided at the moment you answer. It is not recalculated if the question is edited later or its verification is removed.",
       "activeDay": "A day with activity has at least one recorded answer or card review.",
       "due": "A card is due when its scheduled review time has passed. New cards have no schedule yet and are counted apart."
     }
@@ -1892,6 +1911,7 @@
       "wrongPassword": "The password is not correct.",
       "lastAdmin": "You are the only administrator, so this account cannot be deleted.",
       "tooManyAttempts": "Too many attempts. Wait a few minutes and try again.",
+      "tryAgain": "Two changes collided. Your account was not deleted; try again.",
       "tooLarge": "Your data is too large to export in one file.",
       "tooManyExports": "Too many downloads. Try again later."
     }

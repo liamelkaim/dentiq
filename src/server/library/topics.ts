@@ -52,8 +52,6 @@ export async function listCourseTopics(db: Database, viewer: Viewer, courseId: s
   return rows.map((r) => ({ ...r, archived: r.archivedAt !== null }));
 }
 
-export type TopicRow = Awaited<ReturnType<typeof listCourseTopics>>[number];
-
 /** One topic (archived ones included: old links and URLs keep working). Null without library access. */
 export async function getTopic(db: Database, viewer: Viewer, topicId: string) {
   if (!canAccessLibrary(viewer) || !z.uuid().safeParse(topicId).success) return null;

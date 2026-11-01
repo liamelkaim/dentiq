@@ -41,7 +41,7 @@ export default async function ResourcePage({ params }: { params: Params }) {
   const [related, courseTopics, selectedTopics, linkable] = await Promise.all([
     relatedForResource(db, viewer, resource.id),
     listCourseTopics(db, viewer, resource.courseId),
-    resource.canEdit ? selectedTopicIds(db, "resource", resource.id) : Promise.resolve([]),
+    resource.canEdit ? selectedTopicIds(db, viewer, "resource", resource.id) : Promise.resolve([]),
     resource.canEdit ? listLinkableQuestions(db, viewer, resource.courseId, QUESTION_PICKER_LIMIT) : Promise.resolve([]),
   ]);
   const linkedQuestionIds = new Set((related?.questions ?? []).map((q) => q.id));

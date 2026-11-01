@@ -2,6 +2,7 @@
 // buildExport, which only ever reads published questions the user may study plus the user's OWN cards and progress.
 // Nothing is cached or public.
 import { getDb } from "@/db/client";
+import { textError } from "@/server/api-errors";
 import { getCurrentUser } from "@/server/auth/session";
 import { contentDisposition } from "@/server/resources/files";
 import { canAccessLibrary } from "@/server/resources/service";
@@ -17,8 +18,8 @@ export async function GET(request: Request) {
   const params = new URL(request.url).searchParams;
   const kind = params.get("kind");
   const format = params.get("format") ?? "csv";
-  if (!kind || !(exportKinds as readonly string[]).includes(kind)) return new Response("Unknown export", { status: 400 });
-  if (!(exportFormats as readonly string[]).includes(format)) return new Response("Unknown format", { status: 400 });
+  if (!kind || !(exportKinds as readonly string[]).includes(kind)) return textError("unknownExport", 400, { "Cache-Control": "private, no-store" });
+  if (!(exportFormats as readonly string[]).includes(format)) return textError("unknownFormat", 400, { "Cache-Control": "private, no-store" });
 
   const result = await buildExport(
     getDb(),

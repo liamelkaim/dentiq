@@ -48,7 +48,7 @@ export default async function QuestionPage({ params, searchParams }: { params: P
     q.canModerate ? findRepeats(db, viewer, id) : Promise.resolve([]),
     relatedForQuestion(db, viewer, id),
     listCourseTopics(db, viewer, q.course.id),
-    q.canEdit ? selectedTopicIds(db, "question", id) : Promise.resolve([]),
+    q.canEdit ? selectedTopicIds(db, viewer, "question", id) : Promise.resolve([]),
   ]);
   const typeName = q.type.known ? t(`types.${q.type.key}.name`) : t("types.unknown");
   const people = [q.professorName, ...q.instructors].filter((v, i, all): v is string => Boolean(v) && all.indexOf(v) === i);

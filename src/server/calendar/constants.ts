@@ -19,6 +19,3 @@ export const CALENDAR_TIME_ZONE = "America/Toronto";
 
 /** How many upcoming entries the dashboard panel lists. */
 export const UPCOMING_LIMIT = 5;
-
-/** The calendar week starts on Monday. */
-export const WEEK_STARTS_ON = "monday" as const;

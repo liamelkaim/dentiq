@@ -147,7 +147,8 @@ export async function buildExport(
     return { ok: true, value: wrap("questions", format, table, now) };
   }
 
-  // anki: always tab-separated, plain Front / Back / Tags. UNVERIFIED in Anki.
+  // anki: always tab-separated, plain Front / Back / Tags. UNVERIFIED in Anki. Fields are HTML-escaped and the file is
+  // read by Anki, not a spreadsheet, so the formula guard of the CSV/TSV exports is NOT applied (it would alter "-5 mm").
   const personal = includesPersonal(scope)
     ? await db
         .select({ code: courses.code, front: studyPersonalCards.front, back: studyPersonalCards.back })
@@ -168,6 +169,6 @@ export async function buildExport(
   const header = "#separator:tab\n#html:true\n#tags column:3\n";
   return {
     ok: true,
-    value: { filename: `dentiq-anki-${day(now)}.tsv`, contentType: "text/tab-separated-values; charset=utf-8", body: header + toDelimited(rows, "\t") },
+    value: { filename: `dentiq-anki-${day(now)}.tsv`, contentType: "text/tab-separated-values; charset=utf-8", body: header + toDelimited(rows, "\t", { guard: false }) },
   };
 }

@@ -1,7 +1,6 @@
 // Display pieces shared by the Passes screens. Server-compatible (no hooks beyond next-intl's useTranslations).
 // "Verified" and "Student proposal" are always shown with an icon AND words, never colour alone.
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import type { AnswerRule } from "@/server/passes/question-types";
 import type { getQuestion, QuestionListItem } from "@/server/passes/service";
@@ -224,14 +223,5 @@ function AnswerBlock({
       {empty ? <p className="text-[14px] text-text-muted">{empty}</p> : null}
       {children}
     </section>
-  );
-}
-
-/** Link-styled text used for small in-page actions. */
-export function TextLink({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <Link href={href} className="font-medium text-accent underline-offset-2 hover:underline">
-      {children}
-    </Link>
   );
 }

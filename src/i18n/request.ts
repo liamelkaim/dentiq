@@ -1,5 +1,6 @@
 import { cookies, headers } from "next/headers";
 import { getRequestConfig } from "next-intl/server";
+import { CALENDAR_TIME_ZONE } from "@/server/calendar/constants";
 import { LOCALE_COOKIE, resolveLocale } from "./config";
 
 export default getRequestConfig(async () => {
@@ -7,6 +8,6 @@ export default getRequestConfig(async () => {
   return {
     locale,
     messages: (await import(`../messages/${locale}.json`)).default,
-    timeZone: "America/Toronto",
+    timeZone: CALENDAR_TIME_ZONE,
   };
 });

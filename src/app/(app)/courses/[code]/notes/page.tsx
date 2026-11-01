@@ -82,7 +82,7 @@ export default async function CourseNotesPage({
                 scroll={false}
                 aria-current={period === p ? "page" : undefined}
                 className={cx(
-                  "flex h-10 flex-1 items-center justify-center rounded-[8px] text-[13px] font-medium sm:h-8",
+                  "flex h-11 flex-1 items-center justify-center rounded-[8px] text-[13px] font-medium sm:h-8",
                   period === p ? "bg-accent-soft text-accent" : "text-text-subtle hover:bg-surface-muted hover:text-text",
                 )}
               >

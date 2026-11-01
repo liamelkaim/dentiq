@@ -2,9 +2,10 @@
 
 // Administrator form for the tutor switch and limits. The warning is shown above the switch, every time.
 import { useTranslations } from "next-intl";
-import { useActionState, useId, useTransition, type FormEvent } from "react";
+import { useId } from "react";
 import { updateTutorSettingsAction, type TutorFormState } from "@/server/tutor/actions";
 import { Button, Field, Input, Notice, Panel } from "./ui";
+import { useKeepingForm } from "./use-keeping-form";
 
 const initial: TutorFormState = { status: "idle" };
 
@@ -21,15 +22,7 @@ export function TutorSettingsForm(props: TutorSettingsFormProps) {
   const t = useTranslations("tutor.admin");
   const all = useTranslations();
   const id = useId();
-  const [state, formAction, pending] = useActionState(updateTutorSettingsAction, initial);
-  const [, startTransition] = useTransition();
-
-  // Submit through the action without React's automatic form reset, so an error never wipes the form.
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    startTransition(() => formAction(data));
-  };
+  const { state, pending, onSubmit } = useKeepingForm(updateTutorSettingsAction, initial);
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5">

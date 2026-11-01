@@ -4,6 +4,7 @@ import { getDb } from "@/db/client";
 import { EXPORT_MAX_PER_HOUR } from "@/server/account/constants";
 import { buildAccountExport } from "@/server/account/export";
 import { allowAttempt } from "@/server/account/rate-limit";
+import { textError } from "@/server/api-errors";
 import { getCurrentUser } from "@/server/auth/session";
 import { contentDisposition } from "@/server/resources/files";
 
@@ -14,15 +15,12 @@ export async function GET() {
   if (!viewer) return new Response(null, { status: 401, headers: NO_STORE });
 
   if (!allowAttempt(`export:${viewer.id}`, EXPORT_MAX_PER_HOUR, 60 * 60 * 1000)) {
-    return new Response("Too many exports, try again later.", { status: 429, headers: { ...NO_STORE, "Retry-After": "3600" } });
+    return textError("tooManyExports", 429, { ...NO_STORE, "Retry-After": "3600" });
   }
 
   const result = await buildAccountExport(getDb(), viewer.id);
   if (!result.ok) {
-    return new Response(result.error === "tooLarge" ? "Your data is too large to export in one file." : "Not found", {
-      status: result.error === "tooLarge" ? 413 : 404,
-      headers: NO_STORE,
-    });
+    return result.error === "tooLarge" ? textError("exportTooLarge", 413, NO_STORE) : textError("notFound", 404, NO_STORE);
   }
   return new Response(result.value.json, {
     headers: {

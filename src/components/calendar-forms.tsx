@@ -3,10 +3,10 @@
 // The calendar entry form. It only collects what the student types; every rule (date range, valid date, time, limits,
 // ownership) is checked again by the server action and the service.
 import { useTranslations } from "next-intl";
-import { useActionState } from "react";
 import { CALENDAR_NOTE_MAX, CALENDAR_TITLE_MAX, CALENDAR_YEAR_MAX, CALENDAR_YEAR_MIN } from "@/server/calendar/constants";
 import { deleteEntryAction, saveEntryAction, type CalendarFormState } from "@/server/calendar/actions";
 import { Button, ButtonLink, Field, Input, Notice, Panel, Select, Textarea } from "./ui";
+import { useKeepingForm } from "./use-keeping-form";
 
 const idle: CalendarFormState = { status: "idle" };
 
@@ -35,7 +35,7 @@ export function CalendarEntryForm({
 }) {
   const t = useTranslations("calendar");
   const common = useTranslations("common");
-  const [state, action, pending] = useActionState(saveEntryAction, idle);
+  const { state, pending, onSubmit } = useKeepingForm(saveEntryAction, idle);
   const errorText = (code: string | undefined) => (code ? (t.has(`errors.${code}`) ? t(`errors.${code}`) : t("errors.invalid")) : undefined);
   const fieldError = (name: string) => errorText(state.fieldErrors?.[name]);
   // A message with no field next to it (limit reached, not found...) goes in the banner.
@@ -43,7 +43,7 @@ export function CalendarEntryForm({
 
   return (
     <Panel className="p-4 sm:p-6">
-      <form action={action} className="flex flex-col gap-4">
+      <form onSubmit={onSubmit} className="flex flex-col gap-4">
         {initial.id && <input type="hidden" name="id" value={initial.id} />}
         {banner && <Notice tone="danger">{banner}</Notice>}
         <Field label={t("form.title")} htmlFor="cal-title" error={fieldError("title")}>

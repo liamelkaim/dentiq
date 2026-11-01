@@ -157,7 +157,7 @@ export default async function DashboardPage() {
             title={t("home.myCourses")}
             actions={
               courses.length > 0 && (
-                <Link href="/courses" className="inline-flex min-h-10 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
+                <Link href="/courses" className="inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
                   {t("home.viewAll")}
                 </Link>
               )
@@ -234,7 +234,7 @@ export default async function DashboardPage() {
               title={t("passes.title")}
               description={t("passes.subtitle")}
               actions={
-                <Link href="/passes" className="inline-flex min-h-10 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
+                <Link href="/passes" className="inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
                   {t("home.viewAll")}
                 </Link>
               }
@@ -313,7 +313,7 @@ export default async function DashboardPage() {
             <Section
               title={t("calendar.upcoming.title")}
               actions={
-                <Link href="/calendar" className="inline-flex min-h-10 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
+                <Link href="/calendar" className="inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
                   {t("calendar.upcoming.open")}
                 </Link>
               }

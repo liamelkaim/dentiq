@@ -7,6 +7,18 @@ export function normalizeCourseCode(raw: string): string {
   return raw.trim().toUpperCase().replace(/\s+/g, " ");
 }
 
+/**
+ * A course code from a URL segment ("DMD%201234") as a normalized code, or null when the segment is not valid
+ * percent-encoding ("%" or "%E0%A4%A"), so a bad link is a 404 and never a thrown URIError (500).
+ */
+export function courseCodeFromSegment(segment: string): string | null {
+  try {
+    return normalizeCourseCode(decodeURIComponent(segment));
+  } catch {
+    return null;
+  }
+}
+
 const blankToNull = (value: unknown) =>
   typeof value === "string" && value.trim() === "" ? null : value;
 

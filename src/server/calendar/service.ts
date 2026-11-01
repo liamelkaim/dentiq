@@ -2,7 +2,7 @@
 // filters on `viewer.id`, so a student can only ever read, change or delete their own entries. Looking up someone
 // else's entry by id behaves exactly like "not found". Nothing is pre-filled: the table only holds what the student
 // typed. Approved members only (same rule as the study tools).
-import { and, asc, count, eq, gte, lte } from "drizzle-orm";
+import { and, asc, count, eq, gte, lte, sql } from "drizzle-orm";
 import type { Database } from "@/db/client";
 import { calendarEntryKinds, courses, studyCalendarEntries, type CalendarEntryKind } from "@/db/schema";
 import { canAccessLibrary, type Viewer } from "@/server/resources/service";
@@ -96,7 +96,8 @@ export async function listEntries(db: Database, viewer: Viewer, range?: { from?:
         range?.to ? lte(studyCalendarEntries.entryDate, range.to) : undefined,
       ),
     )
-    .orderBy(asc(studyCalendarEntries.entryDate), asc(studyCalendarEntries.entryTime), asc(studyCalendarEntries.createdAt));
+    // Postgres sorts NULLs last by default, so the all-day entries (no time) are put first explicitly.
+    .orderBy(asc(studyCalendarEntries.entryDate), sql`${studyCalendarEntries.entryTime} asc nulls first`, asc(studyCalendarEntries.createdAt));
 }
 
 /** One of the viewer's own entries, or null (also when it belongs to someone else). */

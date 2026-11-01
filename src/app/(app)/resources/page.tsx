@@ -98,7 +98,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
             defaultValue={filters.q}
             maxLength={100}
             placeholder={t("resources.filters.qPlaceholder")}
-            className="h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[15px] placeholder:text-text-subtle focus:border-accent"
+            className="h-11 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[15px] placeholder:text-text-subtle focus:border-accent sm:h-10"
           />
         </div>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">

@@ -161,7 +161,10 @@ describe(".ics export", () => {
   const now = new Date("2026-11-01T12:00:00Z");
 
   it("escapes backslash, semicolon, comma and line breaks, and strips control characters", () => {
-    expect(escapeIcsText("a,b;c\\d")).toBe("a\\,b\;c\\\\d");
+    expect(escapeIcsText("a,b;c\\d")).toBe("a\\,b\\;c\\\\d");
+    // RFC 5545 requires the semicolon to be written as backslash + semicolon (two characters).
+    expect(escapeIcsText(";")).toHaveLength(2);
+    expect(escapeIcsText(";")[0]).toBe("\\");
     expect(escapeIcsText("ligne 1\nligne 2\r\nligne 3\rfin")).toBe("ligne 1\\nligne 2\\nligne 3\\nfin");
     expect(escapeIcsText("a\u0000b\u0007c\u007fd")).toBe("abcd");
     // The backslash is escaped first, so an escape written by the student cannot turn into a different one.
@@ -375,6 +378,13 @@ describe("calendar entries: listing", () => {
     expect((await listEntries(db, alice)).map((e) => e.title)).toEqual(["B", "A", "C", "D"]);
     expect((await listEntries(db, alice, { from: "2026-12-10", to: "2026-12-12" })).map((e) => e.title)).toEqual(["B", "A", "C"]);
     expect((await listEntries(db, alice, { from: "2026-12-11" })).map((e) => e.title)).toEqual(["C", "D"]);
+  });
+
+  it("puts an all-day entry before a timed entry on the same date, whatever the creation order", async () => {
+    await mustCreate(alice, { title: "Timed early", date: "2026-12-10", time: "00:30" });
+    await mustCreate(alice, { title: "All day", date: "2026-12-10" });
+    await mustCreate(alice, { title: "Timed late", date: "2026-12-10", time: "18:00" });
+    expect((await listEntries(db, alice, { from: "2026-12-10", to: "2026-12-10" })).map((e) => e.title)).toEqual(["All day", "Timed early", "Timed late"]);
   });
 
   it("returns only upcoming entries (today included) and respects the limit", async () => {

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getDb } from "@/db/client";
 import { requireUser } from "@/server/auth/session";
+import { TOPICS_PER_ITEM_MAX } from "@/server/library/constants";
 import { checkTopicIds, setItemTopics } from "@/server/library/links";
 import { getStorage } from "@/server/storage";
 import { getMaxFileBytes } from "./files";
@@ -81,7 +82,10 @@ export async function uploadResourceAction(_prev: ResourceFormState, form: FormD
   if (!file) return { status: "error", message: "errors.fileMissing", fieldErrors: { file: "errors.fileMissing" } };
 
   // Topics come from the course's shared list. Checked before anything is stored, so a stale form fails cleanly.
-  const topicIds = form.getAll("topicIds").filter((v): v is string => typeof v === "string" && v !== "");
+  const rawTopicIds = form.getAll("topicIds").filter((v): v is string => typeof v === "string" && v !== "");
+  const topicIdsParsed = z.array(z.uuid()).max(TOPICS_PER_ITEM_MAX).safeParse(rawTopicIds);
+  if (!topicIdsParsed.success) return { status: "error", message: "library.errors.invalidTopics" };
+  const topicIds = topicIdsParsed.data;
   if (topicIds.length > 0 && !(await checkTopicIds(getDb(), parsed.data.courseId, topicIds))) {
     return { status: "error", message: "library.errors.invalidTopics" };
   }

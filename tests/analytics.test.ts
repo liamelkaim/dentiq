@@ -266,6 +266,26 @@ describe("analytics: unscored answers", () => {
     expect(a.questionPool).toBe(2);
   });
 
+  it("never shows more answered or marked questions than the pool it is shown against", async () => {
+    const stays = await verified();
+    const dropped = await verified();
+    await answer(alice, stays, 1);
+    await answer(alice, dropped, 1);
+    await setMark(db, alice, { questionId: stays, flagged: true });
+    await setMark(db, alice, { questionId: dropped, flagged: true, reviewLater: true });
+    // The type of one question is later removed from the code: it is still published and still has answers, but the
+    // study pool no longer offers it.
+    await db.update(examQuestions).set({ questionType: "removed_type" }).where(eq(examQuestions.id, dropped));
+
+    const a = await getAnalytics(db, alice, "en", now);
+    expect(a.questionPool).toBe(1);
+    expect(a.totals.questionsAnswered).toBe(2); // all different questions with a recorded answer
+    expect(a.inPool).toEqual({ answered: 1, flagged: 1, reviewLater: 0 });
+    expect(a.inPool.answered).toBeLessThanOrEqual(a.questionPool);
+    expect(a.inPool.flagged).toBeLessThanOrEqual(a.questionPool);
+    expect(a.inPool.reviewLater).toBeLessThanOrEqual(a.questionPool);
+  });
+
   it("gives no percentage when every answer was unscored", async () => {
     const proposalOnly = await published();
     await answer(alice, proposalOnly, 1);

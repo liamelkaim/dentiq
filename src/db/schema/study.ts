@@ -28,7 +28,6 @@ export const selfRatings = ["got_it", "partly", "missed"] as const;
 export type SelfRating = (typeof selfRatings)[number];
 
 export const cardRatings = ["again", "hard", "good", "easy"] as const;
-export type CardRating = (typeof cardRatings)[number];
 
 /** One answered question (practice or quiz). Append-only history. */
 export const studyAttempts = pgTable(

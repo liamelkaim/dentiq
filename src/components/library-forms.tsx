@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useActionState, useId } from "react";
+import { useId } from "react";
 import { NOTE_BODY_MAX, NOTE_CHANGE_NOTE_MAX, NOTE_TITLE_MAX, TOPIC_NAME_MAX } from "@/server/library/constants";
 import {
   addQuestionLinkAction,
@@ -13,6 +13,7 @@ import {
   type LibraryFormState,
 } from "@/server/library/actions";
 import { Button, Field, Input, Notice, Panel, Select, Textarea } from "./ui";
+import { useKeepingForm } from "./use-keeping-form";
 
 const initial: LibraryFormState = { status: "idle" };
 
@@ -70,10 +71,10 @@ export function CreateTopicForm({ courseId }: { courseId: string }) {
   const common = useTranslations("common");
   const msg = useMessage();
   const p = useId();
-  const [state, action, pending] = useActionState(createTopicAction, initial);
+  const { state, pending, onSubmit, formRef } = useKeepingForm(createTopicAction, initial, { resetOnSuccess: true });
   return (
     <Panel className="p-4 sm:p-5">
-      <form action={action} className="flex flex-col gap-4" key={state.status === "success" ? "done" : "form"}>
+      <form ref={formRef} onSubmit={onSubmit} className="flex flex-col gap-4">
         <h3 className="text-[15px] font-semibold">{t("add")}</h3>
         <StateNotice state={state} />
         <input type="hidden" name="courseId" value={courseId} />
@@ -100,9 +101,9 @@ export function RenameTopicForm({ topicId, name, nameEn }: { topicId: string; na
   const common = useTranslations("common");
   const msg = useMessage();
   const p = useId();
-  const [state, action, pending] = useActionState(renameTopicAction, initial);
+  const { state, pending, onSubmit } = useKeepingForm(renameTopicAction, initial);
   return (
-    <form action={action} className="flex flex-col gap-3 p-4">
+    <form onSubmit={onSubmit} className="flex flex-col gap-3 p-4">
       <StateNotice state={state} />
       <input type="hidden" name="topicId" value={topicId} />
       <div className="grid gap-3 sm:grid-cols-2">
@@ -138,10 +139,10 @@ export function TopicPickerForm({
   staffHref?: string;
 }) {
   const t = useTranslations("library.topics");
-  const [state, action, pending] = useActionState(setTopicsAction, initial);
+  const { state, pending, onSubmit } = useKeepingForm(setTopicsAction, initial);
   if (topics.length === 0) return <NoTopicsHint staffHref={staffHref} />;
   return (
-    <form action={action} className="flex flex-col gap-2">
+    <form onSubmit={onSubmit} className="flex flex-col gap-2">
       <StateNotice state={state} />
       <input type="hidden" name="target" value={target} />
       <input type="hidden" name="id" value={id} />
@@ -163,10 +164,10 @@ export function TopicPickerForm({
 export function QuestionLinkForm({ kind, id, questions }: { kind: "resource" | "note"; id: string; questions: { id: string; label: string }[] }) {
   const t = useTranslations("library.links");
   const p = useId();
-  const [state, action, pending] = useActionState(addQuestionLinkAction, initial);
+  const { state, pending, onSubmit, formRef } = useKeepingForm(addQuestionLinkAction, initial, { resetOnSuccess: true });
   if (questions.length === 0) return <p className="text-[14px] text-text-muted">{t("noQuestions")}</p>;
   return (
-    <form action={action} className="flex flex-col gap-2">
+    <form ref={formRef} onSubmit={onSubmit} className="flex flex-col gap-2">
       <StateNotice state={state} />
       <input type="hidden" name="kind" value={kind} />
       <input type="hidden" name="id" value={id} />
@@ -205,12 +206,12 @@ export function NoteForm(
   const common = useTranslations("common");
   const msg = useMessage();
   const p = useId();
-  const [state, action, pending] = useActionState(props.mode === "create" ? createNoteAction : updateNoteAction, initial);
+  const { state, pending, onSubmit } = useKeepingForm(props.mode === "create" ? createNoteAction : updateNoteAction, initial);
   const err = (name: string) => msg(state.fieldErrors?.[name]);
 
   return (
     <Panel className="p-4 sm:p-6">
-      <form action={action} className="flex flex-col gap-5">
+      <form onSubmit={onSubmit} className="flex flex-col gap-5">
         <StateNotice state={state} />
         {props.mode === "create" ? (
           <>

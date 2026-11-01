@@ -7,7 +7,7 @@ import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { requireUser } from "@/server/auth/session";
 import { getCourseByCode } from "@/server/catalog/service";
-import { normalizeCourseCode } from "@/server/catalog/validation";
+import { courseCodeFromSegment } from "@/server/catalog/validation";
 import { recentAcademicYears } from "@/server/passes/academic-year";
 import { courseProfessors } from "@/server/passes/queries";
 import { getPassSettings } from "@/server/passes/settings";
@@ -20,7 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewCoursePassPage({ params }: { params: Promise<{ code: string }> }) {
   const viewer = await requireUser();
   const db = getDb();
-  const course = await getCourseByCode(db, normalizeCourseCode(decodeURIComponent((await params).code)));
+  const code = courseCodeFromSegment((await params).code);
+  const course = code === null ? null : await getCourseByCode(db, code);
   if (!course || course.archivedAt) notFound();
 
   const t = await getTranslations();

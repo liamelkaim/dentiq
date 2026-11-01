@@ -401,6 +401,16 @@ export type QuizView = {
   score: QuizScore | null;
 };
 
+/**
+ * A quiz is complete when it was marked complete, or when no unanswered item can still be answered (items whose
+ * question is no longer available do not hold it open). getQuiz and rateQuizItem both use THIS rule, so a quiz the
+ * student sees as complete is always one they can rate.
+ */
+function quizIsComplete(completedAt: Date | null, items: readonly { answeredAt: Date | null; questionId: string }[], availableQuestionIds: ReadonlySet<string>): boolean {
+  if (completedAt !== null) return true;
+  return !items.some((i) => !i.answeredAt && availableQuestionIds.has(i.questionId));
+}
+
 /** One of the student's own quizzes, or null (including when it belongs to someone else). */
 export async function getQuiz(db: Database, viewer: Viewer, id: string): Promise<QuizView | null> {
   if (!canAccessLibrary(viewer) || !z.uuid().safeParse(id).success) return null;
@@ -413,8 +423,7 @@ export async function getQuiz(db: Database, viewer: Viewer, id: string): Promise
   const items = await db.select().from(studyQuizItems).where(eq(studyQuizItems.quizId, id)).orderBy(asc(studyQuizItems.position));
   const questions = new Map((await loadStudyQuestions(db, viewer, items.map((i) => i.questionId))).map((q) => [q.id, q]));
 
-  const remaining = items.filter((i) => !i.answeredAt && questions.has(i.questionId));
-  const complete = row.quiz.completedAt !== null || remaining.length === 0;
+  const complete = quizIsComplete(row.quiz.completedAt, items, new Set(questions.keys()));
   const views: QuizItemView[] = items.map((i) => {
     const q = questions.get(i.questionId) ?? null;
     return {
@@ -500,7 +509,14 @@ export async function rateQuizItem(db: Database, viewer: Viewer, input: z.output
     .innerJoin(studyQuizzes, eq(studyQuizItems.quizId, studyQuizzes.id))
     .where(and(eq(studyQuizItems.id, input.itemId), eq(studyQuizItems.quizId, input.quizId), eq(studyQuizzes.userId, viewer.id)));
   if (!row) return fail("quizNotFound");
-  if (!row.quiz.completedAt) return fail("quizNotComplete");
+  if (!row.quiz.completedAt) {
+    // Same derivation as getQuiz: the page shows the quiz as complete when nothing answerable is left, even though
+    // completedAt was never written (a question was hidden meanwhile). It must then be possible to rate.
+    const items = await db.select({ answeredAt: studyQuizItems.answeredAt, questionId: studyQuizItems.questionId }).from(studyQuizItems).where(eq(studyQuizItems.quizId, row.quiz.id));
+    const open = items.filter((i) => !i.answeredAt);
+    const available = open.length ? await loadStudyQuestions(db, viewer, open.map((i) => i.questionId)) : [];
+    if (!quizIsComplete(null, items, new Set(available.map((q) => q.id)))) return fail("quizNotComplete");
+  }
   if (!row.item.answeredAt || row.item.outcome !== null || row.item.answerBasis !== "verified") return fail("cannotRate");
 
   const outcome = outcomeForSelfRating(input.rating);

@@ -68,7 +68,9 @@ export default async function QuizzesPage({ searchParams }: { searchParams: Prom
                   title={`${quiz.courseCode ?? t("courseRemoved")} · ${format.dateTime(quiz.createdAt, { dateStyle: "medium", timeStyle: "short" })}`}
                   subtitle={
                     quiz.completedAt
-                      ? quiz.score.scored > 0
+                      ? quiz.score.awaitingRating > 0
+                        ? t("rowAwaiting", { count: quiz.score.awaitingRating })
+                        : quiz.score.scored > 0
                         ? t("rowScore", { points: format.number(quiz.score.points, { maximumFractionDigits: 1 }), scored: quiz.score.scored, unscored: quiz.score.unscored })
                         : t("rowNoScore", { unscored: quiz.score.unscored })
                       : t("rowProgress", { answered, size: quiz.size })

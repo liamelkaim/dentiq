@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getDb } from "@/db/client";
 import { requireRole, requireUser } from "@/server/auth/session";
+import { TOPICS_PER_ITEM_MAX } from "./constants";
 import { libraryErrorField, libraryErrorKey } from "./errors";
 import { addQuestionLink, removeQuestionLink, setItemTopics } from "./links";
 import { createNote, noteEditSchema, noteInputSchema, restoreNoteVersion, updateNote } from "./notes";
@@ -34,6 +35,9 @@ function zodFailure(error: z.ZodError): LibraryFormState {
 
 const strings = (form: FormData) => Object.fromEntries([...form.entries()].filter(([, v]) => typeof v === "string"));
 const list = (form: FormData, name: string) => form.getAll(name).filter((v): v is string => typeof v === "string" && v !== "");
+
+/** Topic ids from a form: real UUIDs, at most TOPICS_PER_ITEM_MAX (a tampered form is refused, never a 500). */
+const topicIdsSchema = z.array(z.uuid()).max(TOPICS_PER_ITEM_MAX);
 
 function refresh() {
   revalidatePath("/notes", "layout");
@@ -119,7 +123,9 @@ export async function setTopicsAction(_prev: LibraryFormState, form: FormData): 
   const viewer = await requireUser();
   const input = z.object({ target: z.enum(["resource", "note", "question"]), id: z.uuid() }).safeParse(strings(form));
   if (!input.success) return failure("invalid");
-  const result = await setItemTopics(getDb(), viewer, input.data.target, input.data.id, list(form, "topicIds"));
+  const topicIds = topicIdsSchema.safeParse(list(form, "topicIds"));
+  if (!topicIds.success) return failure("invalidTopics");
+  const result = await setItemTopics(getDb(), viewer, input.data.target, input.data.id, topicIds.data);
   if (!result.ok) return failure(result.error);
   refresh();
   return { status: "success", message: "library.topics.saved" };

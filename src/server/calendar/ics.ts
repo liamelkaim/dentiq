@@ -28,7 +28,7 @@ export function escapeIcsText(value: string): string {
     .replace(CONTROL, "")
     .replace(/\r\n|\r/g, "\n")
     .replace(/\\/g, "\\\\")
-    .replace(/;/g, "\;")
+    .replace(/;/g, "\\;")
     .replace(/,/g, "\\,")
     .replace(/\n/g, "\\n");
 }

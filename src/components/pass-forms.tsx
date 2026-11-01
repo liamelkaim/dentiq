@@ -5,7 +5,7 @@
 // server actions and the pass service hold every rule again.
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useActionState, useId, useState, useTransition, type FormEvent, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import {
   editQuestionAction,
   markDuplicateAction,
@@ -19,6 +19,7 @@ import {
 } from "@/server/passes/actions";
 import { QUESTION_TYPES, type AnswerRule } from "@/server/passes/question-types";
 import { Button, Field, Input, Notice, Panel, Select, Textarea, cx } from "./ui";
+import { useKeepingForm as useKeepingFormBase } from "./use-keeping-form";
 
 const initial: PassFormState = { status: "idle" };
 
@@ -31,17 +32,9 @@ function useMessage() {
   return (key: string | undefined) => (key ? (t.has(key) ? t(key) : key) : undefined);
 }
 
-/** Submits through the action without React's automatic form reset, so an error never wipes the form. */
+/** Pass forms keep what you typed on error: see `useKeepingForm`. */
 function useKeepingForm(action: (prev: PassFormState, form: FormData) => Promise<PassFormState>) {
-  const [state, formAction, pending] = useActionState(action, initial);
-  const [, startTransition] = useTransition();
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const submitter = (event.nativeEvent as SubmitEvent).submitter;
-    const data = new FormData(event.currentTarget, submitter);
-    startTransition(() => formAction(data));
-  };
-  return { state, pending, onSubmit };
+  return useKeepingFormBase(action, initial);
 }
 
 function StateNotice({ state }: { state: PassFormState }) {

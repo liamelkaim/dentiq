@@ -3,12 +3,13 @@
 // benchmark and no estimate. Each figure comes with its denominator (see docs/calendar-analytics.md).
 import { and, eq, gte, inArray, isNull, or } from "drizzle-orm";
 import type { Database } from "@/db/client";
-import { courseTopics, courses, examQuestions, questionTopics, studyAttempts, studyCardReviews } from "@/db/schema";
+import { courseTopics, courses, examQuestions, questionTopics, studyAttempts, studyCardReviews, studyQuestionMarks } from "@/db/schema";
 import { localized, type Locale } from "@/i18n/config";
 import { CALENDAR_TIME_ZONE } from "@/server/calendar/constants";
 import { isoDateIn } from "@/server/calendar/dates";
 import { listEntries, type CalendarEntry } from "@/server/calendar/service";
 import { canAccessLibrary, type Viewer } from "@/server/resources/service";
+import { studyPool } from "@/server/study/questions";
 import { cardOverview, getProgress, listQuizzes } from "@/server/study/service";
 import { ANALYTICS_ACTIVITY_DAYS, ANALYTICS_QUIZ_HISTORY, WEAKEST_TOPICS_LIMIT, WEAKEST_TOPIC_MIN_SAMPLE } from "./constants";
 import { accuracyOf, activityByDay, weakestTopics, type Accuracy, type ActivityDay, type TopicAnswer, type WeakestTopics } from "./aggregate";
@@ -36,6 +37,11 @@ export type Analytics = {
   totals: { attempts: number; questionsAnswered: number; scored: number; unscored: number; accuracy: Accuracy };
   /** Published questions the viewer may study (the denominator for "answered" and for marks). */
   questionPool: number;
+  /**
+   * The numerators that go with `questionPool`: only questions that are IN the pool are counted, so "X of N" never has
+   * X above N (an answered or marked question can fall out of the pool, for example when it is no longer visible).
+   */
+  inPool: { answered: number; flagged: number; reviewLater: number };
   byCourse: CourseAccuracy[];
   cards: { total: number; started: number; due: number; fresh: number };
   marks: { flagged: number; reviewLater: number };
@@ -55,6 +61,7 @@ export async function getAnalytics(db: Database, viewer: Viewer, locale: Locale,
     activity: { days: activityByDay({ answers: [], reviews: [] }, today, ANALYTICS_ACTIVITY_DAYS), dayCount: ANALYTICS_ACTIVITY_DAYS, activeDays: 0, answers: 0, reviews: 0 },
     totals: { attempts: 0, questionsAnswered: 0, scored: 0, unscored: 0, accuracy: emptyAccuracy },
     questionPool: 0,
+    inPool: { answered: 0, flagged: 0, reviewLater: 0 },
     byCourse: [],
     cards: { total: 0, started: 0, due: 0, fresh: 0 },
     marks: { flagged: 0, reviewLater: 0 },
@@ -68,9 +75,20 @@ export async function getAnalytics(db: Database, viewer: Viewer, locale: Locale,
   const since = new Date(now.getTime() - (ANALYTICS_ACTIVITY_DAYS + 2) * 86_400_000);
   const published = eq(examQuestions.status, "published");
 
-  const [progress, overview, quizzes, entries, attemptStamps, reviewStamps, topicRows] = await Promise.all([
+  const [progress, overview, poolIds, answeredRows, markRows, quizzes, entries, attemptStamps, reviewStamps, topicRows] = await Promise.all([
     getProgress(db, viewer),
     cardOverview(db, viewer, {}, now),
+    studyPool(db, viewer, {}, { now }),
+    db
+      .selectDistinct({ id: studyAttempts.questionId })
+      .from(studyAttempts)
+      .innerJoin(examQuestions, eq(studyAttempts.questionId, examQuestions.id))
+      .where(and(eq(studyAttempts.userId, viewer.id), published)),
+    db
+      .select({ id: studyQuestionMarks.questionId, flagged: studyQuestionMarks.flagged, reviewLater: studyQuestionMarks.reviewLater })
+      .from(studyQuestionMarks)
+      .innerJoin(examQuestions, eq(studyQuestionMarks.questionId, examQuestions.id))
+      .where(and(eq(studyQuestionMarks.userId, viewer.id), published)),
     listQuizzes(db, viewer, 200),
     listEntries(db, viewer),
     db
@@ -102,6 +120,7 @@ export async function getAnalytics(db: Database, viewer: Viewer, locale: Locale,
       .where(and(eq(studyAttempts.userId, viewer.id), published, inArray(studyAttempts.outcome, [...SCORED]))),
   ]);
 
+  const pool = new Set(poolIds);
   const activityDays = activityByDay({ answers: attemptStamps.map((r) => r.at), reviews: reviewStamps.map((r) => r.at) }, today, ANALYTICS_ACTIVITY_DAYS, CALENDAR_TIME_ZONE);
 
   const byCourse: CourseAccuracy[] = progress.byCourse.map((c) => ({
@@ -154,6 +173,11 @@ export async function getAnalytics(db: Database, viewer: Viewer, locale: Locale,
     },
     totals: { attempts: attemptsTotal, questionsAnswered: progress.totals.questionsAnswered, scored: accuracy.scored, unscored: progress.totals.unscored, accuracy },
     questionPool: overview.generated,
+    inPool: {
+      answered: answeredRows.filter((r) => pool.has(r.id)).length,
+      flagged: markRows.filter((m) => m.flagged && pool.has(m.id)).length,
+      reviewLater: markRows.filter((m) => m.reviewLater && pool.has(m.id)).length,
+    },
     byCourse,
     cards: { total: overview.generated + overview.personal, started: overview.generatedStarted + startedPersonal, due: overview.dueTotal, fresh: overview.newTotal },
     marks: progress.marks,

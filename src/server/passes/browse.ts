@@ -9,6 +9,11 @@ export const PAGE_SIZE = 25;
 export const SCOPES = ["current", "previous", "all"] as const;
 export type Scope = (typeof SCOPES)[number];
 
+/** Number of pages for a result count (at least 1, so an empty list is still "page 1 of 1"). */
+export function lastPageOf(total: number): number {
+  return Math.max(1, Math.ceil(total / PAGE_SIZE));
+}
+
 export type BrowseParams = {
   /** current-year, previous years, or everything (derived from the exam year, never stored) */
   scope: Scope;

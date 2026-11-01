@@ -11,6 +11,7 @@ import {
   type Term,
 } from "@/db/schema";
 import { writeAudit } from "@/server/audit";
+import { escapeLike } from "@/server/library/like";
 import type { CourseInput, OfferingInput, ProgramInput, SourceInput } from "./validation";
 
 export type ServiceResult<T> = { ok: true; value: T } | { ok: false; error: string };
@@ -18,10 +19,6 @@ export type ServiceResult<T> = { ok: true; value: T } | { ok: false; error: stri
 function isUniqueViolation(error: unknown): boolean {
   const e = error as { code?: string; cause?: { code?: string } };
   return e?.code === "23505" || e?.cause?.code === "23505";
-}
-
-function escapeLike(value: string): string {
-  return value.replace(/[\\%_]/g, (c) => `\\${c}`);
 }
 
 // ---------- Reading ----------

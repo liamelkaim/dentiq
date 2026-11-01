@@ -170,12 +170,15 @@ export function MonthGridView({
                 const isToday = cell.iso === today;
                 const selected = cell.iso === selectedDay;
                 const label = cal.date(cell.iso);
+                const cellLabel = isToday
+                  ? t(selected ? "cellTodaySelected" : "cellToday", { date: label, count: list.length })
+                  : t(selected ? "cellSelected" : "cell", { date: label, count: list.length });
                 return (
                   <td key={cell.iso} className="h-14 border-t border-r border-border p-0 align-top last:border-r-0 sm:h-24">
                     <Link
                       href={calendarHref({ month, day: cell.iso, view })}
-                      aria-label={isToday ? t("cellToday", { date: label, count: list.length }) : t("cell", { date: label, count: list.length })}
-                      aria-current={isToday ? "date" : undefined}
+                      aria-label={cellLabel}
+                      aria-current={isToday ? "date" : selected ? "true" : undefined}
                       className={cx(
                         "flex h-full min-h-11 w-full flex-col gap-0.5 p-1 text-left hover:bg-surface-hover focus-visible:outline-offset-[-2px]",
                         selected && "bg-accent-soft",
@@ -185,7 +188,9 @@ export function MonthGridView({
                         className={cx(
                           "inline-grid size-6 shrink-0 place-items-center rounded-full text-[13px] font-medium tabular-nums",
                           isToday ? "bg-accent-solid text-on-accent" : "text-text",
+                          // Selected is shown by an outline and an underline (not colour alone) and announced in the label.
                           selected && !isToday && "ring-2 ring-accent",
+                          selected && "underline decoration-2 underline-offset-2",
                         )}
                       >
                         {cell.day}

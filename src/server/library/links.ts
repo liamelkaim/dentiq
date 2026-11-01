@@ -37,6 +37,8 @@ export type TopicTarget = "resource" | "note" | "question";
 
 // ---------- Validating what a link may point to ----------
 
+const isUuid = (value: string) => z.uuid().safeParse(value).success;
+
 /**
  * The topic ids if every one belongs to the course and is usable, else null. A topic that is already linked
  * (`keep`) may stay even if it was archived since; new links can only use active topics.
@@ -44,6 +46,8 @@ export type TopicTarget = "resource" | "note" | "question";
 export async function checkTopicIds(db: DbExecutor, courseId: string, topicIds: string[], keep: Set<string> = new Set()): Promise<string[] | null> {
   const ids = [...new Set(topicIds)];
   if (ids.length > TOPICS_PER_ITEM_MAX) return null;
+  // A malformed id would make Postgres throw (invalid uuid) and turn a stale form into a 500.
+  if (!ids.every(isUuid)) return null;
   if (ids.length === 0) return ids;
   const rows = await db
     .select({ id: courseTopics.id, archivedAt: courseTopics.archivedAt })
@@ -57,6 +61,7 @@ export async function checkTopicIds(db: DbExecutor, courseId: string, topicIds: 
 export async function checkQuestionIds(db: DbExecutor, viewer: Viewer, courseId: string, questionIds: string[]): Promise<string[] | null> {
   const ids = [...new Set(questionIds)];
   if (ids.length > QUESTION_LINKS_PER_ITEM_MAX) return null;
+  if (!ids.every(isUuid)) return null;
   if (ids.length === 0) return ids;
   const rows = await db
     .select({ id: examQuestions.id, status: examQuestions.status, contributedBy: examQuestions.contributedBy })
@@ -324,8 +329,13 @@ export async function getTopicPage(db: Database, viewer: Viewer, topicId: string
   };
 }
 
-/** Topic ids of a document, note or question (for pre-ticking the picker). Same access rule as editing. */
-export async function selectedTopicIds(db: Database, target: TopicTarget, id: string): Promise<string[]> {
+/**
+ * Topic ids of a document, note or question (for pre-ticking the picker). The access rule is enforced HERE, the
+ * same as for editing: a viewer who may not edit the item (or cannot see it) gets an empty list, so a caller that
+ * forgets its own check cannot leak a private item's topics.
+ */
+export async function selectedTopicIds(db: Database, viewer: Viewer, target: TopicTarget, id: string): Promise<string[]> {
+  if (!(await editableTarget(db, viewer, target, id))) return [];
   const t = topicLinkTables[target];
   const rows = await db.select({ topicId: t.other }).from(t.table).where(eq(t.owner, id));
   return rows.map((r) => r.topicId as string);

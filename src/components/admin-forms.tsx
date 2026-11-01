@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useActionState, useEffect, useId, useRef } from "react";
+import { useId } from "react";
 import {
   addOfferingAction,
   createProgramAction,
@@ -10,6 +10,7 @@ import {
   type FormState,
 } from "@/server/catalog/actions";
 import { Button, Field, Input, Notice, Panel, Select, Textarea } from "./ui";
+import { useKeepingForm } from "./use-keeping-form";
 
 const initial: FormState = { status: "idle" };
 
@@ -22,14 +23,6 @@ type ProgramOption = { id: string; nameFr: string; nameEn: string | null };
 function useMessage() {
   const t = useTranslations();
   return (key: string | undefined) => (key ? (t.has(key) ? t(key) : key) : undefined);
-}
-
-function useResetOnSuccess(state: FormState) {
-  const ref = useRef<HTMLFormElement>(null);
-  useEffect(() => {
-    if (state.status === "success") ref.current?.reset();
-  }, [state]);
-  return ref;
 }
 
 function FormStatus({ state }: { state: FormState }) {
@@ -99,11 +92,10 @@ export function ProgramForm() {
   const common = useTranslations("common");
   const msg = useMessage();
   const p = useId();
-  const [state, action, pending] = useActionState(createProgramAction, initial);
-  const ref = useResetOnSuccess(state);
+  const { state, pending, onSubmit, formRef: ref } = useKeepingForm(createProgramAction, initial, { resetOnSuccess: true });
   return (
     <Panel className="p-4 sm:p-5">
-      <form ref={ref} action={action} className="flex flex-col gap-4">
+      <form ref={ref} onSubmit={onSubmit} className="flex flex-col gap-4">
         <h3 className="text-[15px] font-semibold">{t("new")}</h3>
         <FormStatus state={state} />
         <div className="grid gap-4 sm:grid-cols-2">
@@ -152,13 +144,12 @@ export function CourseForm({ programs, course }: { programs: ProgramOption[]; co
   const common = useTranslations("common");
   const msg = useMessage();
   const p = useId();
-  const [state, action, pending] = useActionState(saveCourseAction, initial);
-  const ref = useResetOnSuccess(course ? { status: "idle" } : state);
+  const { state, pending, onSubmit, formRef: ref } = useKeepingForm(saveCourseAction, initial, { resetOnSuccess: !course });
   const optional = common("optional");
 
   return (
     <Panel className="p-4 sm:p-5">
-      <form ref={ref} action={action} className="flex flex-col gap-4">
+      <form ref={ref} onSubmit={onSubmit} className="flex flex-col gap-4">
         <h3 className="text-[15px] font-semibold">{course ? t("edit") : t("new")}</h3>
         <FormStatus state={state} />
         {course && <input type="hidden" name="id" value={course.id} />}
@@ -217,13 +208,12 @@ export function ImportForm({ programs, header }: { programs: ProgramOption[]; he
   const tCourse = useTranslations("admin.course");
   const msg = useMessage();
   const p = useId();
-  const [state, action, pending] = useActionState(importCoursesAction, initial);
-  const ref = useResetOnSuccess(state);
+  const { state, pending, onSubmit, formRef: ref } = useKeepingForm(importCoursesAction, initial, { resetOnSuccess: true });
   const summary = state.importSummary;
 
   return (
     <Panel className="p-4 sm:p-5">
-      <form ref={ref} action={action} className="flex flex-col gap-4">
+      <form ref={ref} onSubmit={onSubmit} className="flex flex-col gap-4">
         <div>
           <h3 className="text-[15px] font-semibold">{t("title")}</h3>
           <p className="mt-1 text-[13px] text-text-subtle">
@@ -287,11 +277,10 @@ export function OfferingForm({ courseId, courseCode }: { courseId: string; cours
   const common = useTranslations("common");
   const msg = useMessage();
   const p = useId();
-  const [state, action, pending] = useActionState(addOfferingAction, initial);
-  const ref = useResetOnSuccess(state);
+  const { state, pending, onSubmit, formRef: ref } = useKeepingForm(addOfferingAction, initial, { resetOnSuccess: true });
   return (
     <Panel className="p-4 sm:p-5">
-      <form ref={ref} action={action} className="flex flex-col gap-4">
+      <form ref={ref} onSubmit={onSubmit} className="flex flex-col gap-4">
         <h3 className="text-[15px] font-semibold">{t("add")}</h3>
         <FormStatus state={state} />
         <input type="hidden" name="courseId" value={courseId} />

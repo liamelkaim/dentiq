@@ -5,7 +5,7 @@
 // and an answer is only revealed after the action returns it.
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useActionState, useState, useTransition, type ReactNode } from "react";
+import { useEffect, useRef, useState, useTransition, type ReactNode } from "react";
 import type { AttemptOutcome, SelfRating } from "@/db/schema";
 import {
   answerQuizItemAction,
@@ -26,6 +26,7 @@ import type { Marks } from "@/server/study/service";
 import { ClockIcon, FlagIcon } from "./icons";
 import { QuestionBody, RevealPanel, letter } from "./study-ui";
 import { Badge, Button, ButtonLink, Field, Notice, Panel, Select, Textarea, cx } from "./ui";
+import { useKeepingForm } from "./use-keeping-form";
 
 const idle: StudyFormState = { status: "idle" };
 
@@ -190,6 +191,19 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
   const [error, setError] = useState<string | undefined>();
   const [pending, startTransition] = useTransition();
 
+  // Focus: the button that was just pressed disappears with the step, so focus would fall back to the top of the
+  // page. After each step it is moved to the new result, to the next question, or to the end summary.
+  const questionRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+  const endRef = useRef<HTMLHeadingElement>(null);
+  const focusNext = useRef<"result" | "question" | null>(null);
+  useEffect(() => {
+    const want = focusNext.current;
+    focusNext.current = null;
+    if (want === "result") resultRef.current?.focus();
+    else if (want === "question") (questionRef.current ?? endRef.current)?.focus();
+  }, [done, revealed, index]);
+
   const finished = index >= questions.length;
   const question = questions[index];
 
@@ -197,7 +211,9 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
     const scored = tally.correct + tally.partial + tally.incorrect;
     return (
       <Panel className="flex flex-col gap-4 p-5 sm:p-6">
-        <h2 className="text-[20px] font-semibold">{t("endTitle")}</h2>
+        <h2 ref={endRef} tabIndex={-1} className="text-[20px] font-semibold">
+          {t("endTitle")}
+        </h2>
         <ul className="flex flex-col gap-1.5 text-[15px]">
           <li>{t("endAnswered", { count: questions.length })}</li>
           <li>{scored > 0 ? t("endScored", { correct: tally.correct, partial: tally.partial, scored }) : t("endNoneScored")}</li>
@@ -226,6 +242,7 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
         setError(errorText(result.error));
         return;
       }
+      focusNext.current = "result";
       setTally((prev) => ({ ...prev, [result.value.outcome]: prev[result.value.outcome] + 1 }));
       setMarks((prev) => ({ ...prev, [question.id]: result.value.marks }));
       setDone({ outcome: result.value.outcome, basis: result.value.answerBasis, reveal: result.value.reveal, selfRated: question.rule === "text", yourChoice: draftToResponse(question.rule, draft) });
@@ -236,12 +253,15 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
     setError(undefined);
     startTransition(async () => {
       const result = await revealAnswerAction(question.id);
-      if (result.ok) setRevealed(result.value);
-      else setError(errorText(result.error));
+      if (result.ok) {
+        focusNext.current = "result";
+        setRevealed(result.value);
+      } else setError(errorText(result.error));
     });
   };
 
   const next = () => {
+    focusNext.current = "question";
     setIndex((i) => i + 1);
     setDraft(emptyDraft);
     setRevealed(null);
@@ -259,10 +279,12 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
       </div>
 
       <Panel className="flex flex-col gap-4 p-4 sm:p-6">
-        <div className="flex flex-wrap gap-1.5">
-          <Badge tone={question.answerStatus === "verified" ? "success" : "neutral"}>{t(question.answerStatus === "verified" ? "badgeVerified" : "badgeProposed")}</Badge>
+        <div ref={questionRef} tabIndex={-1} role="group" aria-label={t("questionRegion")} className="flex flex-col gap-4 outline-offset-4">
+          <div className="flex flex-wrap gap-1.5">
+            <Badge tone={question.answerStatus === "verified" ? "success" : "neutral"}>{t(question.answerStatus === "verified" ? "badgeVerified" : "badgeProposed")}</Badge>
+          </div>
+          <QuestionBody question={question} />
         </div>
-        <QuestionBody question={question} />
         {question.answerStatus !== "verified" && <p className="text-[13px] text-text-subtle">{t("notScoredHint")}</p>}
 
         {!done && !revealed && <AnswerFields question={question} draft={draft} onChange={setDraft} disabled={pending} />}
@@ -290,7 +312,7 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
         )}
 
         {!done && revealed && (
-          <>
+          <div ref={resultRef} tabIndex={-1} role="group" aria-label={t("resultRegion")} className="flex flex-col gap-4 outline-offset-4">
             <RevealPanel reveal={revealed} rule={question.rule} />
             <div>
               <p className="mb-2 text-[14px] font-medium">{t(revealed.basis === "verified" ? "ratePrompt" : "rateUnverifiedPrompt")}</p>
@@ -302,11 +324,11 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
                 ))}
               </div>
             </div>
-          </>
+          </div>
         )}
 
         {done && (
-          <>
+          <div ref={resultRef} tabIndex={-1} role="group" aria-label={t("resultRegion")} className="flex flex-col gap-4 outline-offset-4">
             <OutcomeBanner outcome={done.outcome} basis={done.basis} selfRated={done.selfRated} />
             <RevealPanel reveal={done.reveal} rule={question.rule} yourChoice={done.yourChoice} />
             <MarkButtons questionId={question.id} marks={currentMarks} onChange={(m) => setMarks((prev) => ({ ...prev, [question.id]: m }))} />
@@ -315,7 +337,7 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
                 {index + 1 >= questions.length ? t("finish") : t("next")}
               </Button>
             </div>
-          </>
+          </div>
         )}
       </Panel>
     </div>
@@ -354,10 +376,25 @@ export function FlashcardReview({ cards }: { cards: ReviewCard[] }) {
   const reviewed = Object.values(counts).reduce((a, b) => a + b, 0);
   const card = queue[0];
 
+  // Focus follows the step: to the back of the card after "Show answer", to the next card (or the end summary) after
+  // a rating. The pressed button is gone by then, so focus would otherwise restart at the top of the page.
+  const frontRef = useRef<HTMLDivElement>(null);
+  const backRef = useRef<HTMLDivElement>(null);
+  const doneRef = useRef<HTMLHeadingElement>(null);
+  const focusNext = useRef<"back" | "front" | null>(null);
+  useEffect(() => {
+    const want = focusNext.current;
+    focusNext.current = null;
+    if (want === "back") backRef.current?.focus();
+    else if (want === "front") (frontRef.current ?? doneRef.current)?.focus();
+  }, [flipped, queue]);
+
   if (!card) {
     return (
       <Panel className="flex flex-col gap-4 p-5 sm:p-6">
-        <h2 className="text-[20px] font-semibold">{t("doneTitle")}</h2>
+        <h2 ref={doneRef} tabIndex={-1} className="text-[20px] font-semibold">
+          {t("doneTitle")}
+        </h2>
         <p className="text-[15px]">{t("doneBody", { count: reviewed })}</p>
         <ul className="grid grid-cols-2 gap-2 text-[14px] sm:grid-cols-4">
           {CARD_RATINGS.map((r) => (
@@ -386,6 +423,7 @@ export function FlashcardReview({ cards }: { cards: ReviewCard[] }) {
         return;
       }
       setCounts((c) => ({ ...c, [rating]: c[rating] + 1 }));
+      focusNext.current = "front";
       setFlipped(false);
       // A card you forgot comes back later in this session, at the end of the line.
       setQueue((q) => (rating === "again" ? [...q.slice(1), { ...card, box: result.value.box }] : q.slice(1)));
@@ -403,7 +441,7 @@ export function FlashcardReview({ cards }: { cards: ReviewCard[] }) {
           {card.basis === "proposed" && <Badge>{t("proposedBadge")}</Badge>}
           {card.basis === "verified" && <Badge tone="success">{t("verifiedBadge")}</Badge>}
         </div>
-        <div>
+        <div ref={frontRef} tabIndex={-1} className="outline-offset-4">
           <h2 className="mb-1 text-[13px] font-semibold text-text-subtle">{t("front")}</h2>
           <p className="text-[17px] leading-relaxed break-words whitespace-pre-line">{card.front}</p>
           {card.images.length > 0 && (
@@ -418,7 +456,7 @@ export function FlashcardReview({ cards }: { cards: ReviewCard[] }) {
           )}
         </div>
         {flipped ? (
-          <div className="border-t border-border pt-4">
+          <div ref={backRef} tabIndex={-1} className="border-t border-border pt-4 outline-offset-4">
             <h2 className="mb-1 text-[13px] font-semibold text-text-subtle">{t("back")}</h2>
             <p className="text-[16px] leading-relaxed break-words whitespace-pre-line">{card.back}</p>
           </div>
@@ -435,7 +473,13 @@ export function FlashcardReview({ cards }: { cards: ReviewCard[] }) {
           </div>
         ) : (
           <div>
-            <Button type="button" onClick={() => setFlipped(true)}>
+            <Button
+              type="button"
+              onClick={() => {
+                focusNext.current = "back";
+                setFlipped(true);
+              }}
+            >
               {t("showAnswer")}
             </Button>
           </div>
@@ -457,10 +501,10 @@ export function PersonalCardForm({
   const t = useTranslations("studyTools.flashcards.form");
   const common = useTranslations("common");
   const errorText = useErrorText();
-  const [state, action, pending] = useActionState(savePersonalCardAction, idle);
+  const { state, pending, onSubmit } = useKeepingForm(savePersonalCardAction, idle);
   return (
     <Panel className="p-4 sm:p-6">
-      <form action={action} className="flex flex-col gap-4">
+      <form onSubmit={onSubmit} className="flex flex-col gap-4">
         {initial && <input type="hidden" name="id" value={initial.id} />}
         {state.status === "error" && <Notice tone="danger">{errorText(state.message)}</Notice>}
         <Field label={t("front")} htmlFor="pc-front" error={state.fieldErrors?.front ? errorText(state.fieldErrors.front) : undefined}>
@@ -507,9 +551,9 @@ export function PersonalCardForm({
 export function QuizForm({ children, defaultCount, maxCount }: { children: ReactNode; defaultCount: number; maxCount: number }) {
   const t = useTranslations("studyTools.quizzes.form");
   const errorText = useErrorText();
-  const [state, action, pending] = useActionState(createQuizAction, idle);
+  const { state, pending, onSubmit } = useKeepingForm(createQuizAction, idle);
   return (
-    <form action={action} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <form onSubmit={onSubmit} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       {state.status === "error" && (
         <Notice tone="danger" className="col-span-2 lg:col-span-4">
           {errorText(state.message)}
@@ -525,7 +569,7 @@ export function QuizForm({ children, defaultCount, maxCount }: { children: React
           min={1}
           max={maxCount}
           defaultValue={defaultCount}
-          className="block h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text focus:border-accent"
+          className="block h-11 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text focus:border-accent sm:h-10"
         />
       </Field>
       <div className="col-span-2 flex items-end lg:col-span-4">

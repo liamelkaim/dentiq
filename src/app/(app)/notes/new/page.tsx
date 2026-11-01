@@ -39,7 +39,8 @@ export default async function NewNotePage({ searchParams }: { searchParams: Prom
 
   const db = getDb();
   const codeParam = first(params.course);
-  const course = codeParam ? await getCourseByCode(db, normalizeCourseCode(decodeURIComponent(codeParam))) : null;
+  // searchParams are already decoded by Next: decoding again would throw on a literal "%" (?course=%25).
+  const course = codeParam ? await getCourseByCode(db, normalizeCourseCode(codeParam)) : null;
 
   if (!course || course.archivedAt) {
     const courses = await listCourseChoices(db);

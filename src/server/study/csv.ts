@@ -12,15 +12,20 @@ export function guardCell(value: string): string {
 
 export type Delimiter = "," | "\t";
 
-function encodeCell(value: string, delimiter: Delimiter): string {
-  const safe = guardCell(value);
+function encodeCell(value: string, delimiter: Delimiter, guard: boolean): string {
+  const safe = guard ? guardCell(value) : value;
   return safe.includes(delimiter) || /["\r\n]/.test(safe) ? `"${safe.replaceAll('"', '""')}"` : safe;
 }
 
-/** Rows of text cells to CSV (comma, CRLF) or TSV (tab, LF). */
-export function toDelimited(rows: readonly (readonly string[])[], delimiter: Delimiter): string {
+/**
+ * Rows of text cells to CSV (comma, CRLF) or TSV (tab, LF). Spreadsheet files keep the formula guard (the default).
+ * The Anki import passes `guard: false`: it is read by Anki, not a spreadsheet, and the apostrophe would change a
+ * card such as "-5 mm" into "'-5 mm".
+ */
+export function toDelimited(rows: readonly (readonly string[])[], delimiter: Delimiter, options: { guard?: boolean } = {}): string {
+  const guard = options.guard !== false;
   const eol = delimiter === "," ? "\r\n" : "\n";
-  return rows.map((row) => row.map((cell) => encodeCell(cell, delimiter)).join(delimiter)).join(eol) + eol;
+  return rows.map((row) => row.map((cell) => encodeCell(cell, delimiter, guard)).join(delimiter)).join(eol) + eol;
 }
 
 /**

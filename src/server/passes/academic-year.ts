@@ -7,10 +7,11 @@
 // day of a new academic year last year's "current" passes become "previous" with no data change.
 //
 // ASSUMPTION (owner to confirm): the academic year starts on the 1st of a configurable month, August by
-// default. Set ACADEMIC_YEAR_START_MONTH (1-12) to change it. Dates are read in Montréal time.
+// default. Set ACADEMIC_YEAR_START_MONTH (1-12) to change it. Dates are read in the app time zone (CALENDAR_TIME_ZONE in src/server/calendar/constants.ts, the one zone used everywhere).
+
+import { CALENDAR_TIME_ZONE } from "@/server/calendar/constants";
 
 export const DEFAULT_ACADEMIC_YEAR_START_MONTH = 8;
-export const ACADEMIC_TIME_ZONE = "America/Toronto";
 
 export type PassCategory = "current" | "previous";
 
@@ -40,7 +41,7 @@ export function isValidAcademicYear(value: string): boolean {
 }
 
 function calendarParts(date: Date): { year: number; month: number } {
-  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: ACADEMIC_TIME_ZONE, year: "numeric", month: "numeric" }).formatToParts(date);
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: CALENDAR_TIME_ZONE, year: "numeric", month: "numeric" }).formatToParts(date);
   return {
     year: Number(parts.find((p) => p.type === "year")!.value),
     month: Number(parts.find((p) => p.type === "month")!.value),

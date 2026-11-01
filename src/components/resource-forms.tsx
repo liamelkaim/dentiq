@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useActionState, useEffect, useId, useRef, useState } from "react";
+import { useId, useState } from "react";
 import {
   addVersionAction,
   reportResourceAction,
@@ -11,6 +11,7 @@ import {
 } from "@/server/resources/actions";
 import { NoTopicsHint, TopicCheckboxes, type TopicOption } from "./library-forms";
 import { Button, Field, Input, Notice, Panel, Select, Textarea } from "./ui";
+import { useKeepingForm } from "./use-keeping-form";
 
 const initial: ResourceFormState = { status: "idle" };
 
@@ -116,13 +117,13 @@ export function UploadResourceForm({
   const common = useTranslations("common");
   const msg = useMessage();
   const p = useId();
-  const [state, action, pending] = useActionState(uploadResourceAction, initial);
+  const { state, pending, onSubmit } = useKeepingForm(uploadResourceAction, initial);
   const [visibility, setVisibility] = useState("private");
   const err = (name: string) => msg(state.fieldErrors?.[name]);
 
   return (
     <Panel className="p-4 sm:p-6">
-      <form action={action} className="flex flex-col gap-5">
+      <form onSubmit={onSubmit} className="flex flex-col gap-5">
         <StateNotice state={state} />
         {visibility === "private" ? <Notice tone="accent">{t("visibility.privateHelp")}</Notice> : !isModerator && <Notice tone="accent">{t("form.reviewNotice")}</Notice>}
         <Field label={t("visibility.label")} htmlFor={`${p}-visibility`} error={err("visibility")}>
@@ -194,23 +195,14 @@ export function UploadResourceForm({
   );
 }
 
-function useResetOnSuccess(state: ResourceFormState) {
-  const ref = useRef<HTMLFormElement>(null);
-  useEffect(() => {
-    if (state.status === "success") ref.current?.reset();
-  }, [state]);
-  return ref;
-}
-
 export function NewVersionForm({ resourceId, isModerator, maxFileBytes, visibility = "shared" }: { resourceId: string; isModerator: boolean; maxFileBytes: number; visibility?: "shared" | "private" }) {
   const t = useTranslations("resources");
   const common = useTranslations("common");
   const p = useId();
-  const [state, action, pending] = useActionState(addVersionAction, initial);
-  const ref = useResetOnSuccess(state);
+  const { state, pending, onSubmit, formRef: ref } = useKeepingForm(addVersionAction, initial, { resetOnSuccess: true });
   return (
     <Panel className="p-4 sm:p-5">
-      <form ref={ref} action={action} className="flex flex-col gap-4">
+      <form ref={ref} onSubmit={onSubmit} className="flex flex-col gap-4">
         <h3 className="text-[15px] font-semibold">{t("version.title")}</h3>
         <StateNotice state={state} />
         {!isModerator && visibility === "shared" && <p className="text-[13px] text-text-subtle">{t("version.reviewNotice")}</p>}
@@ -234,12 +226,11 @@ export function ReportForm({ resourceId }: { resourceId: string }) {
   const t = useTranslations("resources.report");
   const common = useTranslations("common");
   const p = useId();
-  const [state, action, pending] = useActionState(reportResourceAction, initial);
-  const ref = useResetOnSuccess(state);
+  const { state, pending, onSubmit, formRef: ref } = useKeepingForm(reportResourceAction, initial, { resetOnSuccess: true });
   if (state.status === "success") return <StateNotice state={state} />;
   return (
     <Panel className="p-4 sm:p-5">
-      <form ref={ref} action={action} className="flex flex-col gap-4">
+      <form ref={ref} onSubmit={onSubmit} className="flex flex-col gap-4">
         <h3 className="text-[15px] font-semibold">{t("title")}</h3>
         <StateNotice state={state} />
         <input type="hidden" name="resourceId" value={resourceId} />

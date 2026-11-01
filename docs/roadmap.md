@@ -103,3 +103,20 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 - 📋 Unified tutor, flashcards and practice exams remain future work, sharing an eventual learning model.
 
 This extends Phase 2; it does not claim completion of the seven-phase vision.
+
+## Review fixes (after blocks A to G)
+
+Findings confirmed by independent reviewers and fixed (tests in `tests/review-fixes.test.ts` and next to each feature):
+
+- ✅ Forms keep what the student typed when the server reports an error: one shared hook, `src/components/use-keeping-form.ts`, used by every form that returned server errors (notes, calendar entries, personal cards, quizzes, topics, links, admin, uploads, profile, tutor settings, passes).
+- ✅ `.ics` export escapes semicolons correctly; calendar lists all-day entries before timed ones; the month grid announces the selected day in words and `aria-current`.
+- ✅ Touch targets of 44 px on phones on the remaining controls; plural grammar in ICU for the count sentences (FR and EN); localized plain-text bodies for the download routes' errors.
+- ✅ A malformed `%` in a course URL or `?course=` is a 404, not a 500; a tampered topic id is refused, not a 500.
+- ✅ Last administrator: account deletion and role/approval changes lock all administrator rows in one order (no deadlock), refuse to remove the last approved administrator, and turn a deadlock or serialization failure into a "try again" message.
+- ✅ Two saves of the same note: one wins, the other gets a version conflict (row lock, plus the duplicate-version error mapped to the same conflict).
+- ✅ Anki export keeps card text exactly (no spreadsheet formula guard); CSV and TSV stay guarded.
+- ✅ Quiz completion is derived the same way when rating as when displaying; the quiz list shows "waiting for your rating" instead of a percentage from rated items only.
+- ✅ Analytics "X of N" never has X above N (only questions inside the study pool are counted against it).
+- ✅ Pages past the last page of Passes redirect to the last page; focus moves to the result, the next question or the back of the card in practice and flashcard review.
+- ✅ In-memory limiter for exports and deletion forgets expired keys (Better Auth's own limiter already prunes). The shared limiter store for multi-instance hosting is still a hosting decision (not built).
+- ✅ Recorded decision: scored outcomes are fixed at the moment of answering and are not re-scored (`docs/study-tools.md`, shown on the analytics page).
