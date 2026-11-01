@@ -172,3 +172,8 @@ Real data or empty states only; no stock photos, no unbuilt features. Commits in
 - ✅ Calendar: month grid plus the selected day's agenda panel.
 - ✅ Passes: mountain-band title only (shared `PageHeader`).
 - ❌ Not matched: Passes two-panel question viewer with Review Queue and exam sets (needs inline question rendering); the rich-text note toolbar and autosave (the editor is still the plain form); mockup percent badges, bookmarks, "Next up" strips and "Faculty reviewed"/"Verified" badges (no data behind them); the mountain is a stylized vector, not a photo; light theme not reviewed visually.
+
+### Passes two-panel (2026-11-01)
+
+- ✅ `/passes` (all courses) now shows a review-queue card (your own marked-for-review and flagged counts), the question list, and a preview of the selected question (text, images, choices with no answer marks; the full page reveals answers). Course Passes tabs keep the plain list. Typecheck, lint and tests pass; not yet looked at in a browser with real questions.
+- ❌ Still not built: exam-set list by year with completion, timer/flag/exam-mode bar, and the rich-text note toolbar with autosave (notes stay plain text with version history; a rich editor would change how notes are stored).

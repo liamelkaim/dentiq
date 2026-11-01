@@ -81,3 +81,7 @@ The Vercel Marketplace route for Resend requires a domain you own (`--meta domai
 ```
 
 `EMAIL_FROM` is already set to `Dentiq <onboarding@resend.dev>` (Resend's sandbox sender, which only delivers to the email address that owns the Resend account, so sign up to Resend and to Dentiq with the same address as ADMIN_EMAILS). Real students cannot receive verification emails until a domain is bought and verified in Resend.
+
+### Dependency audit (2026-11-01)
+
+`pnpm audit --prod`: one high advisory, `zod` below 4.6.6 nested under `@vercel/blob` (the app's own `zod` is 4.6.7). Not fixed: `pnpm install` cannot run here because `node_modules` is an iCloud symlink, and an `overrides: zod: 4.6.7` entry without an updated lockfile would break the Vercel build. To fix: copy the project to a normal folder, add that override to `pnpm-workspace.yaml`, run `pnpm install`, commit `pnpm-lock.yaml`. Dev-only advisories (esbuild via drizzle-kit, minimatch via eslint) do not ship. Password reset and per-user upload quota remain OPEN (not started: auth-critical, they need a browser test with real email).

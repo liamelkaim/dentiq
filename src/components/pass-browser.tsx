@@ -10,10 +10,11 @@ import { recentAcademicYears } from "@/server/passes/academic-year";
 import { lastPageOf, paramsToQuery, parseBrowseParams, SCOPES, toQuestionFilters } from "@/server/passes/browse";
 import { knownQuestionTypes } from "@/server/passes/question-types";
 import { listCourseChoices, passFilterOptions } from "@/server/passes/queries";
-import { listQuestions } from "@/server/passes/service";
+import { getQuestion, listQuestions } from "@/server/passes/service";
+import { getAnalytics } from "@/server/analytics/service";
 import { canAccessLibrary, isModerator } from "@/server/resources/service";
-import { hrefWith, PassRow } from "./pass-ui";
-import { Button, buttonClass, ButtonLink, cx, EmptyState, Field, Input, List, Notice, Panel, Select } from "./ui";
+import { AnswerBadge, CategoryBadge, ChoiceList, excerpt, hrefWith, PassRow } from "./pass-ui";
+import { Badge, Button, buttonClass, ButtonLink, cx, EmptyState, Field, Input, List, Notice, Panel, Select } from "./ui";
 
 type Props = {
   viewer: CurrentUser;
@@ -27,6 +28,7 @@ type Props = {
 
 export async function PassBrowser({ viewer, basePath, search, course, offerings = [], newHref }: Props) {
   const t = await getTranslations("passes");
+  const tTerms = await getTranslations("terms");
   const locale = (await getLocale()) as Locale;
 
   if (!canAccessLibrary(viewer)) {
@@ -59,6 +61,14 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
   // empty list whose "previous" link would only lead to another empty page.
   if (params.page > lastPage) redirect(hrefWith(basePath, query, { page: lastPage > 1 ? String(lastPage) : undefined }));
   const typeName = (key: string) => t(`types.${key}.name`);
+
+  // Global view only: the selected question is previewed on the right (choices without answer marks; the full page reveals answers).
+  const selectedParam = typeof search.sel === "string" ? search.sel : undefined;
+  const selectedItem = !course ? (result.items.find((i) => i.id === selectedParam) ?? result.items[0]) : undefined;
+  const [detail, analytics] = await Promise.all([
+    selectedItem ? getQuestion(db, viewer, selectedItem.id) : Promise.resolve(null),
+    !course ? getAnalytics(db, viewer, locale) : Promise.resolve(null),
+  ]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -226,11 +236,95 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
           />
         )
       ) : (
-        <List>
-          {result.items.map((item) => (
-            <PassRow key={item.id} item={item} courseLabel={course ? undefined : item.courseCode} />
-          ))}
-        </List>
+        course ? (
+          <List>
+            {result.items.map((item) => (
+              <PassRow key={item.id} item={item} courseLabel={undefined} />
+            ))}
+          </List>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,8fr)]">
+            <div className="flex min-w-0 flex-col gap-4">
+              {analytics && (
+                <Panel className="p-4">
+                  <h2 className="mb-3 text-[17px] font-semibold">{t("queue.title")}</h2>
+                  <dl className="divide-y divide-border text-[14px]">
+                    {(
+                      [
+                        ["reviewLater", analytics.marks.reviewLater],
+                        ["flagged", analytics.marks.flagged],
+                      ] as const
+                    ).map(([key, value]) => (
+                      <div key={key} className="flex items-center justify-between py-2">
+                        <dt className="text-text-muted">{t(`queue.${key}`)}</dt>
+                        <dd className="font-semibold tabular-nums">{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </Panel>
+              )}
+              <Panel className="overflow-hidden">
+                <ul className="max-h-[720px] divide-y divide-border overflow-y-auto">
+                  {result.items.map((item) => {
+                    const active = item.id === selectedItem?.id;
+                    return (
+                      <li key={item.id}>
+                        <Link
+                          href={hrefWith(basePath, query, { sel: item.id, page: params.page > 1 ? String(params.page) : undefined })}
+                          aria-current={active ? "true" : undefined}
+                          className={cx(
+                            "flex min-h-[72px] flex-col justify-center gap-1 border-l-[3px] px-4 py-3 transition-colors",
+                            active ? "border-accent-solid bg-accent-soft" : "border-transparent hover:bg-surface-hover",
+                          )}
+                        >
+                          <span className="line-clamp-2 text-[14px] font-medium">{excerpt(item.questionText, 110)}</span>
+                          <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-text-muted">
+                            <span className="tabular-nums">{item.courseCode}</span>
+                            <span>{item.examAcademicYear}</span>
+                            <AnswerBadge status={item.answerStatus} />
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Panel>
+            </div>
+
+            {detail && (
+              <Panel className="min-w-0 self-start p-5">
+                <article aria-label={excerpt(detail.questionText, 80)}>
+                  <p className="text-[13px] text-text-muted">
+                    {[detail.course.code, detail.examAcademicYear, detail.examTerm ? tTerms(detail.examTerm) : null].filter(Boolean).join(" · ")}
+                  </p>
+                  <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                    <Badge>{typeName(detail.type.key)}</Badge>
+                    <AnswerBadge status={detail.answerStatus} />
+                    <CategoryBadge category={detail.category} />
+                  </div>
+                  <h2 className="mt-4 text-[22px] leading-snug font-semibold whitespace-pre-line break-words">{detail.questionText}</h2>
+                  {detail.images.length > 0 && (
+                    <ul className="mt-4 grid grid-cols-2 gap-2">
+                      {detail.images.map((image) => (
+                        <li key={image.id}>
+                          <a href={`/api/question-images/${image.id}`} target="_blank" rel="noopener" className="block rounded-[10px] border border-border bg-surface-muted p-1">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={`/api/question-images/${image.id}`} alt={image.altText ?? ""} className="max-h-48 w-full rounded-[8px] object-contain" />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <ChoiceList choices={detail.choices} rule={detail.type.answer} />
+                  <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+                    <p className="text-[13px] text-text-muted">{t("preview.hint")}</p>
+                    <ButtonLink href={`/passes/${detail.id}`}>{t("preview.open")}</ButtonLink>
+                  </div>
+                </article>
+              </Panel>
+            )}
+          </div>
+        )
       )}
 
       {lastPage > 1 && (

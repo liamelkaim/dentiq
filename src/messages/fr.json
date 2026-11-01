@@ -629,6 +629,8 @@
       "apply": "Filtrer",
       "reset": "Réinitialiser"
     },
+    "queue": { "title": "File de révision", "reviewLater": "Questions à revoir", "flagged": "Questions signalées" },
+    "preview": { "hint": "Les réponses et explications sont sur la page de la question.", "open": "Ouvrir la question" },
     "browser": {
       "count": "{count, plural, =0 {Aucune question} one {# question} other {# questions}}",
       "noResults": "Aucune question ne correspond",
