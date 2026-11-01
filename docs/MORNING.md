@@ -2,7 +2,7 @@
 
 ## Deployment status (updated while you were away)
 
-**Production: not deployed yet. Preview: Ready** at https://dentiq-61rftn8az-liamelkaim.vercel.app (Vercel login protection is on; use `npx vercel curl <path> --deployment <url>` or sign in to Vercel). Resend key and `EMAIL_FROM` are set. The old `dentiq` project was not touched.
+**Production: LIVE at https://dentiq-app.vercel.app** (alias confirmed exact, so `BETTER_AUTH_URL` matches; public pages 200; owner checked sign-up, sign-in and the app by hand and said it looks good). The notes below describe the earlier preview. Preview: Ready at https://dentiq-61rftn8az-liamelkaim.vercel.app (Vercel login protection is on; use `npx vercel curl <path> --deployment <url>` or sign in to Vercel). Resend key and `EMAIL_FROM` are set. The old `dentiq` project was not touched.
 
 **Done on the preview:** build OK (1m), `pnpm check` OK (598 tests), `/sign-in`, `/sign-up`, `/privacy`, `/terms`, `/offline` all 200, nonce CSP and security headers present.
 
