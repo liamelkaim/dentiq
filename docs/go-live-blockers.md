@@ -70,3 +70,14 @@ Old `dentiq` project: untouched (still holds old credentials and the old Neon re
 When Resend is connected: set `EMAIL_FROM`, run `npx vercel deploy` (preview), check it, then `npx vercel deploy --prod`. If the console shows CSP errors, switch the header in `src/proxy.ts` to `Content-Security-Policy-Report-Only`.
 
 Cleanup for you later (never done by me): the old `dentiq` project's Neon resource and Blob store, and the old credentials, once confirmed empty/unneeded. Old credentials must still be rotated at the providers.
+
+### Resend, update (same day)
+
+The Vercel Marketplace route for Resend requires a domain you own (`--meta domain=...`) and offered only paid plans (Pro $20/mo, Scale $90/mo) at install time, so it was NOT used (free tiers only). Free route instead: create a Resend account directly (resend.com), create an API key, and add it yourself so it never appears in chat:
+
+```
+! npx vercel env add RESEND_API_KEY production --sensitive
+! npx vercel env add RESEND_API_KEY preview --sensitive
+```
+
+`EMAIL_FROM` is already set to `Dentiq <onboarding@resend.dev>` (Resend's sandbox sender, which only delivers to the email address that owns the Resend account, so sign up to Resend and to Dentiq with the same address as ADMIN_EMAILS). Real students cannot receive verification emails until a domain is bought and verified in Resend.
