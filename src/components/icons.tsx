@@ -224,3 +224,22 @@ export const TagIcon = (p: IconProps) => (
     <circle cx="7" cy="7" r="1" />
   </Icon>
 );
+
+export const NotesIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M5 2.8h7l3.5 3.5V16a1.2 1.2 0 0 1-1.2 1.2H5A1.2 1.2 0 0 1 3.8 16V4A1.2 1.2 0 0 1 5 2.8Z" />
+    <path d="M12 2.8v3.5h3.5M6.6 9.5h6.8M6.6 12.2h6.8M6.6 14.8h4" />
+  </Icon>
+);
+
+export const ChevronDownIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m5 8 5 5 5-5" />
+  </Icon>
+);
+
+export const BellIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M5 8a5 5 0 0 1 10 0c0 4.5 1.8 5.6 1.8 5.6H3.2S5 12.5 5 8ZM8.3 16.3a1.9 1.9 0 0 0 3.4 0" />
+  </Icon>
+);

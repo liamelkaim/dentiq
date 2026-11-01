@@ -2,6 +2,7 @@ import { AppShell } from "@/components/app-shell";
 import { hasRole } from "@/server/auth/roles";
 import { getDb } from "@/db/client";
 import { requireUser } from "@/server/auth/session";
+import { canAccessLibrary } from "@/server/resources/service";
 import { isTutorReady } from "@/server/tutor/service";
 
 // Every page in this group requires a signed-in user. Pages and actions still check
@@ -15,6 +16,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       user={{ name: user.name, email: user.email, role: user.role }}
       isAdmin={hasRole(user, "admin")}
       isModerator={hasRole(user, "moderator")}
+      library={canAccessLibrary(user)}
       tutorReady={tutorReady}
     >
       {children}

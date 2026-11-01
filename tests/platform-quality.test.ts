@@ -151,7 +151,8 @@ describe("navigation", () => {
       const body = source.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\]`))?.[1] ?? "";
       return [...body.matchAll(/key:\s*"(\w+)"/g)].map((m) => m[1]);
     };
-    expect(list("app-shell.tsx", "comingSoon")).toEqual(["recordings"]);
+    // The sidebar hides unbuilt features entirely (no "coming soon" list); course tabs still show a disabled one.
+    expect(list("app-shell.tsx", "comingSoon")).toEqual([]);
     expect(list("course-layout.tsx", "futureTabs")).toEqual(["recordings"]);
     expect(existsSync(path.join(SRC, "app", "(app)", "recordings"))).toBe(false);
   });

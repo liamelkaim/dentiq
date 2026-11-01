@@ -35,7 +35,8 @@
     "study": "Study",
     "calendar": "Calendar",
     "off": "Off",
-    "profile": "Profile"
+    "profile": "Profile",
+    "notes": "Notes"
   },
   "home": {
     "welcome": "Welcome back, {name}.",
@@ -47,7 +48,7 @@
     "quickResources": "Resources",
     "quickModeration": "Moderation",
     "quickAdmin": "Admin",
-    "myCourses": "Courses",
+    "myCourses": "My courses",
     "viewAll": "View all",
     "coursesEmpty": "The catalog is empty for now.",
     "documents": "{count, plural, =0 {No documents} one {# document} other {# documents}}",
@@ -57,7 +58,22 @@
     "progressTitle": "Study progress",
     "progressBody": "See your own activity, accuracy and cards due on the Analytics page. Dentiq only shows real data.",
     "quickPasses": "Passes",
-    "searchEverything": "Search documents and exam questions…"
+    "searchEverything": "Search documents and exam questions…",
+    "greetingMorning": "Good morning",
+    "greetingAfternoon": "Good afternoon",
+    "greetingEvening": "Good evening",
+    "tagline": "Learn deeper. Focus better. Achieve more.",
+    "attentionTitle": "Needs your attention",
+    "todayPlan": "Today’s plan",
+    "planEmpty": "Nothing planned for today.",
+    "planAdd": "Add an entry in your calendar",
+    "studyProgress": "Study progress",
+    "viewAnalytics": "View analytics",
+    "chartLabel": "Activity over the last 7 days: active on {days} of 7 days",
+    "chartEmpty": "Your answers and card reviews will appear here.",
+    "activeDays": "Active days",
+    "activeDaysCount": "{count}/{total} days",
+    "upcomingEmpty": "Nothing coming up in your calendar."
   },
   "courseLayout": {
     "tabs": "Course sections",
@@ -1950,5 +1966,9 @@
       "confirmRequired": "Tick the confirmation box to apply.",
       "forbidden": "Only administrators can do this."
     }
+  },
+  "shell": {
+    "searchLabel": "Search",
+    "searchPlaceholder": "Search courses, notes, topics…"
   }
 }

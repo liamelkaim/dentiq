@@ -35,7 +35,8 @@
     "study": "Étudier",
     "calendar": "Calendrier",
     "off": "Désactivé",
-    "profile": "Profil"
+    "profile": "Profil",
+    "notes": "Notes"
   },
   "home": {
     "welcome": "Bon retour, {name}.",
@@ -47,7 +48,7 @@
     "quickResources": "Ressources",
     "quickModeration": "Modération",
     "quickAdmin": "Administration",
-    "myCourses": "Cours",
+    "myCourses": "Mes cours",
     "viewAll": "Tout voir",
     "coursesEmpty": "Le catalogue est vide pour l'instant.",
     "documents": "{count, plural, =0 {Aucun document} one {# document} other {# documents}}",
@@ -57,7 +58,22 @@
     "progressTitle": "Progression d'étude",
     "progressBody": "Consultez votre activité, votre exactitude et vos cartes à réviser dans les analyses. Dentiq n'affiche que des données réelles.",
     "quickPasses": "Passes",
-    "searchEverything": "Rechercher des documents et des questions d'examen…"
+    "searchEverything": "Rechercher des documents et des questions d'examen…",
+    "greetingMorning": "Bonjour",
+    "greetingAfternoon": "Bon après-midi",
+    "greetingEvening": "Bonsoir",
+    "tagline": "Apprenez plus en profondeur. Concentrez-vous mieux. Réussissez davantage.",
+    "attentionTitle": "À traiter",
+    "todayPlan": "Plan du jour",
+    "planEmpty": "Rien de prévu aujourd’hui.",
+    "planAdd": "Ajouter une entrée au calendrier",
+    "studyProgress": "Progression des études",
+    "viewAnalytics": "Voir les statistiques",
+    "chartLabel": "Activité des 7 derniers jours : actif {days} jours sur 7",
+    "chartEmpty": "Vos réponses et révisions de cartes apparaîtront ici.",
+    "activeDays": "Jours actifs",
+    "activeDaysCount": "{count}/{total} jours",
+    "upcomingEmpty": "Rien à venir dans votre calendrier."
   },
   "courseLayout": {
     "tabs": "Sections du cours",
@@ -1950,5 +1966,9 @@
       "confirmRequired": "Cochez la case de confirmation pour appliquer.",
       "forbidden": "Seuls les administrateurs peuvent faire cela."
     }
+  },
+  "shell": {
+    "searchLabel": "Rechercher",
+    "searchPlaceholder": "Rechercher cours, notes, sujets…"
   }
 }

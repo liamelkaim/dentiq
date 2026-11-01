@@ -40,9 +40,17 @@ export async function loadCourseSummary(viewer: CurrentUser, course: CourseDetai
   };
 }
 
-/** Decorative cover: brand gradient with the course code. No photos — we only show assets we have rights to. */
+/** Picks one of the original cover motifs from the course code, so a course always keeps the same cover. */
+function coverMotif(code: string): 0 | 1 | 2 {
+  let h = 0;
+  for (const ch of code) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return (h % 3) as 0 | 1 | 2;
+}
+
+/** Decorative cover: original vector illustration (tooth, capsules or dental arch) on the brand gradient, with the course code. No photos. */
 export function CourseCover({ code, className, compact = false }: { code: string; className?: string; compact?: boolean }) {
   const [prefix, number] = code.split(" ");
+  const motif = coverMotif(code);
   return (
     <div
       aria-hidden="true"
@@ -53,8 +61,28 @@ export function CourseCover({ code, className, compact = false }: { code: string
         className="absolute inset-0 opacity-60"
         style={{ background: "radial-gradient(circle at 85% 15%, rgb(255 255 255 / 0.22), transparent 55%)" }}
       />
-      <svg className="absolute right-0 bottom-0 h-full w-2/3 opacity-40" viewBox="0 0 120 80" preserveAspectRatio="none">
-        <path d="M0 80 L30 45 L48 60 L72 28 L95 52 L120 34 L120 80 Z" fill="var(--ridge-far)" />
+      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" fill="none">
+        {motif === 0 && (
+          <g fill="var(--cover-ink)" opacity="0.32">
+            <path d="M262 22c-20-12-46-4-52 18-4 14 2 28 8 42 5 13 6 30 12 40 4 8 11 8 14-2 3-12 6-24 12-24s9 12 12 24c3 10 10 10 14 2 6-10 7-27 12-40 6-14 12-28 8-42-6-22-32-30-52-18-5 3-15 3-20 0Z" />
+            <path d="M92 70c-14-8-32-2-36 13-3 10 1 20 5 29 4 9 4 21 8 28 3 6 8 6 10-1 2-8 4-17 8-17s6 9 8 17c2 7 7 7 10 1 4-7 4-19 8-28 4-9 8-19 5-29-4-15-22-21-36-13-3 2-10 2-14 0Z" opacity="0.7" />
+          </g>
+        )}
+        {motif === 1 && (
+          <g fill="var(--cover-ink)" opacity="0.3">
+            <rect x="170" y="14" width="120" height="48" rx="24" transform="rotate(-24 230 38)" />
+            <rect x="250" y="72" width="130" height="50" rx="25" transform="rotate(18 315 97)" opacity="0.7" />
+            <rect x="60" y="82" width="110" height="44" rx="22" transform="rotate(-12 115 104)" opacity="0.55" />
+            <rect x="190" y="104" width="90" height="38" rx="19" transform="rotate(32 235 123)" opacity="0.45" />
+          </g>
+        )}
+        {motif === 2 && (
+          <g stroke="var(--cover-ink)" strokeWidth="3" opacity="0.3" strokeLinecap="round">
+            <path d="M70 120c0-62 56-92 130-92s130 30 130 92" />
+            <path d="M104 120c0-44 38-66 96-66s96 22 96 66" opacity="0.7" />
+            <path d="M136 132V96M170 132V80M200 132V76M230 132V80M264 132V96M104 132V108M296 132V108" strokeWidth="9" opacity="0.55" />
+          </g>
+        )}
       </svg>
       <span
         className={cx(

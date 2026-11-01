@@ -41,6 +41,11 @@
   --cover-a: #dbe7f7;
   --cover-b: #b9cff0;
   --cover-ink: rgb(19 36 58 / 0.55);
+  --mountain-sky: #cfe0f6;
+  --mountain-far: #9fb9de;
+  --mountain-near: #6f8fbd;
+  --mountain-snow: rgb(255 255 255 / 0.75);
+  --mountain-title: #0f1f36;
   color-scheme: light;
 }
 
@@ -76,6 +81,11 @@
   --cover-a: #10233b;
   --cover-b: #1d4ed8;
   --cover-ink: rgb(248 250 252 / 0.7);
+  --mountain-sky: #0a1a33;
+  --mountain-far: #1a3253;
+  --mountain-near: #0e2039;
+  --mountain-snow: rgb(190 210 240 / 0.55);
+  --mountain-title: #ffffff;
   color-scheme: dark;
 }
 
@@ -85,6 +95,7 @@
   --color-surface-muted: var(--surface-muted);
   --color-surface-hover: var(--surface-hover);
   --color-sidebar: var(--sidebar);
+  --color-mountain-title: var(--mountain-title);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-text: var(--text);

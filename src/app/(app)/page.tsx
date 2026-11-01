@@ -1,70 +1,77 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
-import type { ComponentType, SVGProps } from "react";
+import type { ReactNode } from "react";
 import { CourseCover } from "@/components/course-layout";
-import { PassRow } from "@/components/pass-ui";
-import {
-  BookIcon,
-  ChartIcon,
-  ChevronRightIcon,
-  FileIcon,
-  FlagIcon,
-  FolderIcon,
-  MicIcon,
-  PassesIcon,
-  SearchIcon,
-  ShieldIcon,
-  SparkleIcon,
-} from "@/components/icons";
-import { Badge, DescriptionList, EmptyState, List, ListRow, Notice, Panel, Section } from "@/components/ui";
+import { BookIcon, CalendarIcon, ChartIcon, ChevronRightIcon, ClockIcon, FileIcon } from "@/components/icons";
+import { EmptyState, Notice, Panel } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
+import { getAnalytics } from "@/server/analytics/service";
 import { hasRole } from "@/server/auth/roles";
-import { CALENDAR_TIME_ZONE, UPCOMING_LIMIT } from "@/server/calendar/constants";
-import { daysUntil, isoDateIn } from "@/server/calendar/dates";
+import { CALENDAR_TIME_ZONE } from "@/server/calendar/constants";
+import { isoDateIn } from "@/server/calendar/dates";
 import { upcomingEntries } from "@/server/calendar/service";
-import { passesSummary } from "@/server/passes/queries";
-import { listQuestionQueue } from "@/server/passes/service";
 import { requireUser } from "@/server/auth/session";
 import { canAccessLibrary, isModerator, listCourseSummaries, listModerationQueue, listResources } from "@/server/resources/service";
+import { listQuestionQueue } from "@/server/passes/service";
 import { listUsers } from "@/server/users/service";
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: (await getTranslations("dashboard"))("title") };
 }
 
-// Flashcards are live (Study); only the AI tutor (off) and recordings remain planned.
-const futureFeatures = [
-  { key: "tutor", icon: SparkleIcon },
-  { key: "recordings", icon: MicIcon },
-] as const;
+const LOOKAHEAD = 20;
+const WEEK = 7;
 
-/** Decorative mountain ridges for the welcome banner (no image file). */
-function Ridges() {
+function initials(name: string): string {
   return (
-    <svg aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-3/4 w-full" viewBox="0 0 1200 300" preserveAspectRatio="none">
-      <path d="M0 300 L0 190 L120 120 L210 170 L330 70 L450 160 L560 95 L690 175 L800 60 L930 150 L1040 100 L1200 170 L1200 300 Z" fill="var(--ridge-far)" />
-      <path d="M0 300 L0 240 L150 185 L260 230 L400 160 L520 225 L660 175 L780 235 L900 180 L1050 230 L1200 200 L1200 300 Z" fill="var(--ridge-near)" />
-    </svg>
+    name
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]!.toUpperCase())
+      .join("") || "?"
   );
 }
 
-function QuickAction({
-  href,
-  label,
-  icon: Icon,
+/** Card with the header used on every Home block: icon, title, optional link on the right. */
+function Card({
+  icon,
+  title,
+  titleId,
+  action,
+  children,
+  className,
 }: {
-  href: string;
-  label: string;
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  icon: ReactNode;
+  title: string;
+  titleId: string;
+  action?: ReactNode;
+  children: ReactNode;
+  className?: string;
 }) {
   return (
-    <Link href={href} className="group flex w-20 flex-col items-center gap-2 text-center sm:w-24">
-      <span className="grid size-12 place-items-center rounded-full border border-border bg-surface text-accent shadow-card transition-colors group-hover:bg-accent-solid group-hover:text-on-accent sm:size-14">
-        <Icon width={22} height={22} />
-      </span>
-      <span className="text-[12px] leading-tight font-medium text-text-muted group-hover:text-text">{label}</span>
+    <Panel className={className} role="region" aria-labelledby={titleId}>
+      <div className="p-5">
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <h2 id={titleId} className="flex items-center gap-3 text-[19px] font-semibold tracking-[-0.01em]">
+            <span className="text-accent">{icon}</span>
+            {title}
+          </h2>
+          {action}
+        </div>
+        {children}
+      </div>
+    </Panel>
+  );
+}
+
+function CardLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link href={href} className="inline-flex min-h-11 items-center gap-1 text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
+      {children}
+      <ChevronRightIcon width={14} height={14} />
     </Link>
   );
 }
@@ -79,294 +86,291 @@ export default async function DashboardPage() {
   const moderator = isModerator(user);
   const library = canAccessLibrary(user);
 
-  const calendarToday = isoDateIn(new Date(), CALENDAR_TIME_ZONE);
-  const [courses, recent, pending, queue, examQueue, passes, upcoming] = await Promise.all([
-    listCourseSummaries(db, user, { limit: 6 }),
+  const now = new Date();
+  const calendarToday = isoDateIn(now, CALENDAR_TIME_ZONE);
+  const [courses, recent, pending, queue, examQueue, analytics, entries] = await Promise.all([
+    listCourseSummaries(db, user, { limit: 3 }),
     library ? listResources(db, user, { period: "all" }) : Promise.resolve([]),
     isAdmin ? listUsers(db, { approvalStatus: "pending" }) : Promise.resolve([]),
     listModerationQueue(db, user),
     listQuestionQueue(db, user),
-    passesSummary(db, user),
-    // Only entries the student wrote themselves; an empty list renders nothing.
-    upcomingEntries(db, user, calendarToday, UPCOMING_LIMIT),
+    getAnalytics(db, user, locale, now),
+    // Only entries the student wrote themselves; an empty list renders an empty state.
+    upcomingEntries(db, user, calendarToday, LOOKAHEAD),
   ]);
   const recentPublished = recent
     .filter((r) => r.status === "published")
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
     .slice(0, 4);
+
   const firstName = user.name.split(" ")[0] || user.name;
-  const today = format.dateTime(new Date(), { weekday: "long", day: "numeric", month: "long" });
+  const hour = Number(new Intl.DateTimeFormat("en-CA", { hour: "numeric", hourCycle: "h23", timeZone: CALENDAR_TIME_ZONE }).format(now));
+  const greetingKey = hour < 12 ? "greetingMorning" : hour < 18 ? "greetingAfternoon" : "greetingEvening";
+  const todayLabel = format.dateTime(now, { weekday: "long", day: "numeric", month: "short" });
+
+  const todays = entries.filter((e) => e.date === calendarToday);
+  const later = entries.filter((e) => e.date !== calendarToday).slice(0, 4);
+
+  // Real activity (answers and card reviews) for the last seven days.
+  const week = analytics.activity.days.slice(-WEEK);
+  const maxDay = Math.max(1, ...week.map((d) => d.total));
+  const activeThisWeek = week.filter((d) => d.total > 0).length;
+  const weekPercent = Math.round((activeThisWeek / WEEK) * 100);
+  const RADIUS = 52;
+  const CIRC = 2 * Math.PI * RADIUS;
+
+  const reviewCount = queue.pending.length + queue.reports.length + examQueue.pending.length + examQueue.reports.length;
 
   return (
     <>
-      {/* Welcome banner */}
-      <section
-        aria-labelledby="welcome-title"
-        className="relative mb-8 overflow-hidden rounded-[18px] border border-border px-5 pt-6 pb-7 sm:px-8 sm:pt-8 sm:pb-9"
-        style={{ background: "linear-gradient(160deg, var(--hero-a), var(--hero-b))" }}
-      >
-        <Ridges />
-        <div className="relative">
-          <p className="text-[13px] font-medium text-text-subtle first-letter:uppercase">{today}</p>
-          <h1 id="welcome-title" className="mt-1 text-[26px] leading-tight font-semibold tracking-[-0.02em] sm:text-[32px]">
-            {t("home.welcome", { name: firstName })}
-          </h1>
-          <p className="mt-1 text-[15px] text-text-muted">{t("home.heroSubtitle")}</p>
-
-          <form role="search" action={library ? "/search" : "/courses"} className="relative mt-5 max-w-xl">
-            <label htmlFor="home-search" className="sr-only">
-              {t("home.searchLabel")}
-            </label>
-            <SearchIcon className="pointer-events-none absolute top-1/2 left-3.5 z-10 -translate-y-1/2 text-text-subtle" width={18} height={18} />
-            <input
-              id="home-search"
-              name="q"
-              type="search"
-              maxLength={100}
-              placeholder={library ? t("home.searchEverything") : t("home.searchCourses")}
-              className="h-12 w-full rounded-[12px] border border-border-strong bg-surface/90 pr-4 pl-10 text-[15px] shadow-card backdrop-blur placeholder:text-text-subtle focus:border-accent"
-            />
-          </form>
-
-          <nav aria-label={t("nav.main")} className="mt-6 flex flex-wrap gap-2 sm:gap-4">
-            <QuickAction href="/courses" label={t("home.quickCourses")} icon={BookIcon} />
-            {library && <QuickAction href="/resources" label={t("home.quickResources")} icon={FolderIcon} />}
-            {library && <QuickAction href="/passes" label={t("home.quickPasses")} icon={PassesIcon} />}
-            {moderator && <QuickAction href="/moderation" label={t("home.quickModeration")} icon={FlagIcon} />}
-            {isAdmin && <QuickAction href="/admin" label={t("home.quickAdmin")} icon={ShieldIcon} />}
-          </nav>
-        </div>
+      {/* Greeting, sitting on the mountain band */}
+      <section aria-labelledby="welcome-title" className="mb-7 min-h-[110px] px-1 lg:px-3">
+        <h1 id="welcome-title" className="text-[32px] leading-[1.1] font-bold tracking-[-0.03em] text-mountain-title sm:text-[40px] lg:text-[46px]">
+          {t(`home.${greetingKey}`)}, <span className="text-accent">{firstName}</span>
+        </h1>
+        <p className="mt-1 text-[18px] leading-snug text-text-muted sm:text-[22px] lg:text-[27px]">{t("home.tagline")}</p>
       </section>
 
       {user.approvalStatus === "pending" && (
-        <Notice tone="warning" title={t("dashboard.pendingTitle")} className="mb-8">
+        <Notice tone="warning" title={t("dashboard.pendingTitle")} className="mb-6">
           {t("dashboard.pendingBody")}
         </Notice>
       )}
       {user.approvalStatus === "rejected" && (
-        <Notice tone="danger" title={t("dashboard.rejectedTitle")} className="mb-8">
+        <Notice tone="danger" title={t("dashboard.rejectedTitle")} className="mb-6">
           {t("dashboard.rejectedBody")}
         </Notice>
       )}
+      {(pending.length > 0 || (moderator && reviewCount > 0)) && (
+        <Notice tone="accent" title={t("home.attentionTitle")} className="mb-6">
+          <span className="flex flex-wrap gap-x-5">
+            {pending.length > 0 && (
+              <Link href="/admin/users" className="font-medium text-accent hover:text-accent-hover">
+                {t("admin.pendingCount", { count: pending.length })}
+              </Link>
+            )}
+            {moderator && reviewCount > 0 && (
+              <Link href="/moderation" className="font-medium text-accent hover:text-accent-hover">
+                {t("dashboard.reviewQueue", { count: reviewCount })}
+              </Link>
+            )}
+          </span>
+        </Notice>
+      )}
 
-      <div className="grid grid-cols-1 gap-x-8 xl:grid-cols-[minmax(0,1fr)_300px]">
-        <div className="min-w-0">
-          {/* Courses */}
-          <Section
-            title={t("home.myCourses")}
-            actions={
-              courses.length > 0 && (
-                <Link href="/courses" className="inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
-                  {t("home.viewAll")}
-                </Link>
-              )
-            }
+      <div className="flex flex-col gap-5">
+        {/* Row 1: Today's plan and weekly activity */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1.24fr)_minmax(0,1fr)]">
+          <Card
+            icon={<CalendarIcon width={28} height={28} />}
+            title={t("home.todayPlan")}
+            titleId="plan-title"
+            action={<span className="text-[13px] text-text-muted first-letter:uppercase">{todayLabel}</span>}
           >
-            {courses.length === 0 ? (
-              <EmptyState title={t("home.coursesEmpty")} body={isAdmin ? t("dashboard.catalogEmptyAdmin") : undefined} />
+            {todays.length === 0 ? (
+              <div className="rounded-[10px] border border-border bg-surface-muted/40 px-4 py-6 text-center">
+                <p className="text-[14px] text-text-muted">{t("home.planEmpty")}</p>
+                {library && (
+                  <Link href="/calendar" className="mt-1 inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
+                    {t("home.planAdd")}
+                  </Link>
+                )}
+              </div>
             ) : (
-              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3">
-                {courses.map((course) => (
-                  <li key={course.id}>
+              <ul className="flex flex-col gap-2">
+                {todays.slice(0, 4).map((e) => (
+                  <li key={e.id}>
                     <Link
-                      href={`/courses/${encodeURIComponent(course.code)}`}
-                      className="group block overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface shadow-card transition-colors hover:border-border-strong"
+                      href={`/calendar/${e.id}`}
+                      className="flex min-h-[46px] items-center gap-4 rounded-[10px] border border-border bg-surface-muted/40 px-3.5 transition-colors hover:border-border-strong"
                     >
-                      <CourseCover code={course.code} className="h-24 rounded-none" />
-                      <div className="p-4">
-                        <p className="truncate text-[16px] font-semibold group-hover:text-accent">
-                          {localized(locale, course.titleFr, course.titleEn)}
-                        </p>
-                        <p className="truncate text-[13px] text-text-subtle">
-                          {course.currentOffering
-                            ? [course.instructors.join(", "), `${course.currentOffering.academicYear} · ${t(`terms.${course.currentOffering.term}`)}`]
-                                .filter(Boolean)
-                                .join(" · ")
-                            : t("home.noOffering")}
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-1.5">
-                          {course.documentCount !== null && <Badge tone={course.documentCount > 0 ? "accent" : "neutral"}>{t("home.documents", { count: course.documentCount })}</Badge>}
-                          {course.yearOfStudy && <Badge>{t("courses.yearN", { year: course.yearOfStudy })}</Badge>}
-                        </div>
-                      </div>
+                      <span aria-hidden="true" className="grid size-6 shrink-0 place-items-center rounded-full border-2 border-text-subtle" />
+                      <span className="min-w-0 flex-1 truncate text-[14px]">
+                        {e.title}
+                        {e.courseCode && <span className="text-text-muted"> · {e.courseCode}</span>}
+                      </span>
+                      <span className="shrink-0 text-[13px] text-text-muted">{e.time ?? t(`calendar.kinds.${e.kind}`)}</span>
                     </Link>
                   </li>
                 ))}
               </ul>
             )}
-          </Section>
+          </Card>
 
-          {/* Recently added documents (real uploads only) */}
+          <Card
+            icon={<ChartIcon width={28} height={28} />}
+            title={t("home.studyProgress")}
+            titleId="progress-title"
+            action={library && <CardLink href="/analytics">{t("home.viewAnalytics")}</CardLink>}
+          >
+            <div className="flex flex-col gap-4 rounded-[12px] border border-border bg-surface-muted/40 p-4 sm:flex-row sm:items-stretch">
+              <div className="min-w-0 flex-1">
+                <div className="flex h-[132px] items-end gap-2 border-b border-border pb-0" role="img" aria-label={t("home.chartLabel", { days: activeThisWeek })}>
+                  {week.map((d, i) => {
+                    const isToday = i === week.length - 1;
+                    return (
+                      <div key={d.date} className="flex h-full flex-1 flex-col justify-end">
+                        <div
+                          className={isToday ? "rounded-t-[4px] bg-accent-solid" : "rounded-t-[4px] bg-accent-solid/45"}
+                          style={{ height: d.total === 0 ? "3px" : `${Math.max(8, Math.round((d.total / maxDay) * 100))}%` }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="mt-2 flex gap-2" aria-hidden="true">
+                  {week.map((d, i) => (
+                    <span key={d.date} className={`flex-1 text-center text-[11px] ${i === week.length - 1 ? "font-medium text-accent" : "text-text-muted"}`}>
+                      {format.dateTime(new Date(`${d.date}T12:00:00Z`), { weekday: "short", timeZone: "UTC" })}
+                    </span>
+                  ))}
+                </div>
+                {!analytics.hasAnyData && <p className="mt-2 text-[12px] text-text-subtle">{t("home.chartEmpty")}</p>}
+              </div>
+              <div className="flex shrink-0 flex-col items-center justify-center gap-1.5 sm:w-[150px]">
+                <div className="relative size-[124px]">
+                  <svg viewBox="0 0 124 124" className="size-full -rotate-90" aria-hidden="true">
+                    <circle cx="62" cy="62" r={RADIUS} fill="none" stroke="var(--border-strong)" strokeWidth="9" />
+                    <circle
+                      cx="62"
+                      cy="62"
+                      r={RADIUS}
+                      fill="none"
+                      stroke="var(--accent-solid)"
+                      strokeWidth="9"
+                      strokeLinecap="round"
+                      strokeDasharray={CIRC}
+                      strokeDashoffset={CIRC * (1 - weekPercent / 100)}
+                    />
+                  </svg>
+                  <span className="absolute inset-0 grid place-items-center text-[26px] font-bold tabular-nums">{weekPercent}%</span>
+                </div>
+                <p className="text-center text-[13px] leading-snug">
+                  {t("home.activeDays")}
+                  <br />
+                  <span className="text-text-muted">{t("home.activeDaysCount", { count: activeThisWeek, total: WEEK })}</span>
+                </p>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* Row 2: My courses */}
+        <Card
+          icon={<BookIcon width={28} height={28} />}
+          title={t("home.myCourses")}
+          titleId="courses-title"
+          action={courses.length > 0 && <CardLink href="/courses">{t("home.viewAll")}</CardLink>}
+        >
+          {courses.length === 0 ? (
+            <EmptyState title={t("home.coursesEmpty")} body={isAdmin ? t("dashboard.catalogEmptyAdmin") : undefined} />
+          ) : (
+            <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {courses.map((course) => {
+                const instructor = course.instructors[0];
+                return (
+                  <li key={course.id}>
+                    <Link
+                      href={`/courses/${encodeURIComponent(course.code)}`}
+                      className="group block rounded-[12px] border border-border bg-surface-muted/30 p-2.5 transition-colors hover:border-border-strong"
+                    >
+                      <CourseCover code={course.code} className="h-[130px] rounded-[10px] xl:h-[136px]" />
+                      <div className="px-1.5 pt-3 pb-1">
+                        <p className="truncate text-[16px] font-semibold group-hover:text-accent">
+                          {localized(locale, course.titleFr, course.titleEn)}
+                        </p>
+                        <div className="mt-1.5 flex items-center justify-between gap-3">
+                          <span className="flex min-w-0 items-center gap-2 text-[13px] text-text-muted">
+                            {instructor ? (
+                              <>
+                                <span aria-hidden="true" className="grid size-5 shrink-0 place-items-center rounded-full bg-accent-soft text-[9px] font-semibold text-accent">
+                                  {initials(instructor)}
+                                </span>
+                                <span className="truncate">{instructor}</span>
+                              </>
+                            ) : (
+                              <span className="truncate">
+                                {course.currentOffering
+                                  ? `${course.currentOffering.academicYear} · ${t(`terms.${course.currentOffering.term}`)}`
+                                  : t("home.noOffering")}
+                              </span>
+                            )}
+                          </span>
+                          {course.documentCount !== null && (
+                            <span className="shrink-0 text-[12px] text-text-muted">{t("home.documents", { count: course.documentCount })}</span>
+                          )}
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </Card>
+
+        {/* Row 3: recently added and upcoming */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
           {library && (
-            <Section title={t("home.recent")}>
+            <Card icon={<ClockIcon width={28} height={28} />} title={t("home.recent")} titleId="recent-title" action={<CardLink href="/resources">{t("home.viewAll")}</CardLink>}>
               {recentPublished.length === 0 ? (
-                <Panel className="px-4 py-6 text-center text-[14px] text-text-muted">{t("home.recentEmpty")}</Panel>
+                <p className="rounded-[10px] border border-border bg-surface-muted/40 px-4 py-6 text-center text-[14px] text-text-muted">{t("home.recentEmpty")}</p>
               ) : (
-                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {recentPublished.map((r) => (
                     <li key={r.id}>
                       <Link
                         href={`/study/${r.id}`}
-                        className="group flex items-center gap-3 rounded-[var(--radius-card)] border border-border bg-surface p-3 shadow-card transition-colors hover:border-border-strong"
+                        className="group block overflow-hidden rounded-[10px] border border-border bg-surface-muted/30 transition-colors hover:border-border-strong"
                       >
-                        <span className="grid size-11 shrink-0 place-items-center rounded-[10px] bg-accent-soft text-accent">
-                          <FileIcon width={20} height={20} />
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[14px] font-medium group-hover:text-accent">{r.title}</span>
-                          <span className="block truncate text-[12px] text-text-subtle">
-                            {r.courseCode} · {t(`resources.kinds.${r.kind}`)} · {format.relativeTime(r.createdAt)}
+                        <CourseCover code={r.courseCode} compact className="h-[84px] rounded-none" />
+                        <span className="block px-2.5 pt-2 pb-2.5">
+                          <span className="line-clamp-2 min-h-[2.5rem] text-[13px] leading-tight font-medium group-hover:text-accent">{r.title}</span>
+                          <span className="mt-1 flex items-center gap-1 truncate text-[11px] text-text-muted">
+                            <FileIcon width={12} height={12} className="shrink-0" />
+                            <span className="truncate">{format.relativeTime(r.createdAt)}</span>
                           </span>
                         </span>
-                        <ChevronRightIcon width={16} height={16} className="shrink-0 text-text-subtle" />
                       </Link>
                     </li>
                   ))}
                 </ul>
               )}
-            </Section>
+            </Card>
           )}
 
-          {/* Passes: real counts only, nothing invented */}
-          {passes && (
-            <Section
-              title={t("passes.title")}
-              description={t("passes.subtitle")}
-              actions={
-                <Link href="/passes" className="inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
-                  {t("home.viewAll")}
-                </Link>
-              }
-            >
-              <Panel className="mb-3 grid grid-cols-3 divide-x divide-border text-center">
-                {(
-                  [
-                    ["total", passes.total],
-                    ["current", passes.current],
-                    ["verified", passes.verified],
-                  ] as const
-                ).map(([key, value]) => (
-                  <div key={key} className="px-2 py-4">
-                    <p className="text-[24px] leading-none font-semibold tabular-nums">{value}</p>
-                    <p className="mt-1.5 text-[12px] text-text-subtle">{t(`passes.summary.${key}`)}</p>
-                  </div>
-                ))}
-              </Panel>
-              {passes.recent.length === 0 ? (
-                <EmptyState title={t("passes.browser.emptyTitle")} body={t("passes.browser.emptyBody")} />
-              ) : (
-                <List>
-                  {passes.recent.map((item) => (
-                    <PassRow key={item.id} item={item} courseLabel={item.courseCode} />
-                  ))}
-                </List>
-              )}
-            </Section>
-          )}
-        </div>
-
-        <aside className="min-w-0">
-          <Section title={t("dashboard.accountTitle")}>
-            <DescriptionList
-              stacked
-              items={[
-                { label: t("settings.role"), value: t(`roles.${user.role}`) },
-                {
-                  label: t("settings.status"),
-                  value: (
-                    <Badge tone={user.approvalStatus === "approved" ? "success" : user.approvalStatus === "pending" ? "warning" : "danger"}>
-                      {t(`approval.${user.approvalStatus}`)}
-                    </Badge>
-                  ),
-                },
-                ...(isAdmin
-                  ? [
-                      {
-                        label: t("admin.users"),
-                        value: (
-                          <Link href="/admin/users" className="font-medium text-accent hover:text-accent-hover">
-                            {t("admin.pendingCount", { count: pending.length })}
-                          </Link>
-                        ),
-                      },
-                    ]
-                  : []),
-                ...(moderator
-                  ? [
-                      {
-                        label: t("nav.moderation"),
-                        value: (
-                          <Link href="/moderation" className="font-medium text-accent hover:text-accent-hover">
-                            {t("dashboard.reviewQueue", { count: queue.pending.length + queue.reports.length + examQueue.pending.length + examQueue.reports.length })}
-                          </Link>
-                        ),
-                      },
-                    ]
-                  : []),
-              ]}
-            />
-          </Section>
-
-          {/* The student's own upcoming calendar entries. Nothing is shown when there are none: no placeholder. */}
-          {upcoming.length > 0 && (
-            <Section
-              title={t("calendar.upcoming.title")}
-              actions={
-                <Link href="/calendar" className="inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
-                  {t("calendar.upcoming.open")}
-                </Link>
-              }
-            >
-              <List>
-                {upcoming.map((e) => (
+          <Card
+            icon={<CalendarIcon width={28} height={28} />}
+            title={t("calendar.upcoming.title")}
+            titleId="upcoming-title"
+            className={library ? undefined : "lg:col-span-2"}
+            action={library && <CardLink href="/calendar">{t("calendar.upcoming.open")}</CardLink>}
+          >
+            {later.length === 0 ? (
+              <p className="rounded-[10px] border border-border bg-surface-muted/40 px-4 py-6 text-center text-[14px] text-text-muted">{t("home.upcomingEmpty")}</p>
+            ) : (
+              <ul className="divide-y divide-border rounded-[10px] border border-border bg-surface-muted/30">
+                {later.map((e) => (
                   <li key={e.id}>
-                    <Link href={`/calendar/${e.id}`} className="flex min-h-14 flex-col justify-center gap-0.5 px-4 py-3 transition-colors hover:bg-surface-hover focus-visible:rounded-none focus-visible:outline-offset-[-2px]">
-                      <span className="truncate text-[14px] font-medium">{e.title}</span>
-                      <span className="text-[12px] text-text-subtle">
-                        {format.dateTime(new Date(`${e.date}T12:00:00Z`), { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })}
-                        {" · "}
-                        {t(`calendar.kinds.${e.kind}`)}
-                        {" · "}
-                        {t("calendar.agenda.daysUntil", { days: daysUntil(calendarToday, e.date) })}
+                    <Link href={`/calendar/${e.id}`} className="flex min-h-[48px] items-center gap-3 px-3 py-2 transition-colors hover:bg-surface-hover">
+                      <span className="w-[52px] shrink-0 text-[13px] text-text-muted tabular-nums">
+                        {e.time ?? format.dateTime(new Date(`${e.date}T12:00:00Z`), { day: "numeric", month: "short", timeZone: "UTC" })}
+                      </span>
+                      <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-accent-solid" />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[13px] font-medium">{e.title}</span>
+                        <span className="block truncate text-[11px] text-text-muted">
+                          {t(`calendar.kinds.${e.kind}`)}
+                          {e.courseCode && ` · ${e.courseCode}`}
+                        </span>
                       </span>
                     </Link>
                   </li>
                 ))}
-              </List>
-            </Section>
-          )}
-
-          {/* Progress and analytics: a link to the page built from the student's own data. */}
-          <Section title={t("home.progressTitle")}>
-            <Panel className="flex gap-3 p-4">
-              <span className="grid size-9 shrink-0 place-items-center rounded-[10px] bg-surface-muted text-text-subtle">
-                <ChartIcon width={18} height={18} />
-              </span>
-              <div>
-                <p className="text-[13px] text-text-muted">{t("home.progressBody")}</p>
-                {library && (
-                  <Link href="/analytics" className="mt-1.5 inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
-                    {t("nav.analytics")}
-                  </Link>
-                )}
-              </div>
-            </Panel>
-          </Section>
-
-          <Section title={t("dashboard.roadmapTitle")} description={t("dashboard.roadmapBody")}>
-            <List>
-              {futureFeatures.map(({ key, icon: Icon }) => (
-                <ListRow key={key} className="justify-between">
-                  <span className="flex items-center gap-2.5 text-[14px] text-text-muted">
-                    <Icon width={17} height={17} className="text-text-subtle" />
-                    {t(`nav.${key}`)}
-                  </span>
-                  <Badge>{t("common.planned")}</Badge>
-                </ListRow>
-              ))}
-            </List>
-          </Section>
-        </aside>
+              </ul>
+            )}
+          </Card>
+        </div>
       </div>
     </>
   );

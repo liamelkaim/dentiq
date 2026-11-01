@@ -39,11 +39,9 @@ describe("quiz taking keeps its own question list", () => {
 });
 
 describe("dashboard roadmap list", () => {
-  it("does not list flashcards as planned: they are live under Study", () => {
+  it("does not promote planned features: Home has no roadmap list, and flashcards are live under Study", () => {
     const source = read("src/app/(app)/page.tsx");
-    const list = source.slice(source.indexOf("const futureFeatures"), source.indexOf("] as const", source.indexOf("const futureFeatures")));
-    expect(list).not.toMatch(/flashcards/);
-    expect(list).toMatch(/tutor/);
-    expect(list).toMatch(/recordings/);
+    expect(source).not.toMatch(/futureFeatures/);
+    expect(source).not.toMatch(/common\.planned/);
   });
 });
