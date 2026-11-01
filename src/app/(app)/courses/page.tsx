@@ -112,13 +112,13 @@ export default async function CoursesPage({ searchParams }: { searchParams: Sear
                   defaultValue={filters.q}
                   placeholder={t("courses.searchPlaceholder")}
                   maxLength={100}
-                  className="h-10 w-44 rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[14px] placeholder:text-text-subtle focus:border-accent"
+                  className="h-11 w-44 rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[14px] placeholder:text-text-subtle focus:border-accent sm:h-10"
                 />
               </div>
               <label htmlFor="year" className="sr-only">
                 {t("courses.year")}
               </label>
-              <Select id="year" name="year" defaultValue={filters.year ?? ""} className="h-10 w-36! min-w-0 flex-none">
+              <Select id="year" name="year" defaultValue={filters.year ?? ""} className="h-11 w-36! min-w-0 flex-none sm:h-10">
                 <option value="">{t("courses.anyYear")}</option>
                 {years.map((y) => (
                   <option key={y} value={y}>
@@ -137,7 +137,7 @@ export default async function CoursesPage({ searchParams }: { searchParams: Sear
                     aria-label={t(`courses.view_${v}`)}
                     aria-current={view === v ? "true" : undefined}
                     className={cx(
-                      "grid size-10 place-items-center rounded-[10px] border transition-colors",
+                      "grid size-11 place-items-center sm:size-10 rounded-[10px] border transition-colors",
                       view === v ? "border-accent-solid bg-accent-solid text-on-accent" : "border-border-strong text-text-muted hover:bg-surface-muted",
                     )}
                   >
