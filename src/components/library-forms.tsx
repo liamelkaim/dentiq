@@ -33,7 +33,7 @@ export type TopicOption = { id: string; label: string };
 /** Tick boxes for a course's topics. Field name `topicIds`. Used inside other forms and on its own. */
 export function TopicCheckboxes({ topics, selected = [] }: { topics: TopicOption[]; selected?: string[] }) {
   return (
-    <ul className="grid gap-x-4 sm:grid-cols-2">
+    <ul className="grid grid-cols-1 gap-x-4 sm:grid-cols-2">
       {topics.map((topic) => (
         <li key={topic.id}>
           <label className="flex min-h-11 items-center gap-3 text-[14px]">
@@ -78,7 +78,7 @@ export function CreateTopicForm({ courseId }: { courseId: string }) {
         <h3 className="text-[15px] font-semibold">{t("add")}</h3>
         <StateNotice state={state} />
         <input type="hidden" name="courseId" value={courseId} />
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label={t("name")} htmlFor={`${p}-name`} error={msg(state.fieldErrors?.name)}>
             <Input id={`${p}-name`} name="name" required maxLength={TOPIC_NAME_MAX} aria-invalid={state.fieldErrors?.name ? true : undefined} />
           </Field>
@@ -106,7 +106,7 @@ export function RenameTopicForm({ topicId, name, nameEn }: { topicId: string; na
     <form onSubmit={onSubmit} className="flex flex-col gap-3 p-4">
       <StateNotice state={state} />
       <input type="hidden" name="topicId" value={topicId} />
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <Field label={t("name")} htmlFor={`${p}-name`} error={msg(state.fieldErrors?.name)}>
           <Input id={`${p}-name`} name="name" defaultValue={name} required maxLength={TOPIC_NAME_MAX} />
         </Field>

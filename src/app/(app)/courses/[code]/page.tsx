@@ -74,7 +74,7 @@ export default async function CourseOverviewPage({ params }: { params: Params })
         </p>
       )}
 
-      <div className="grid gap-x-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="grid grid-cols-1 gap-x-8 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="min-w-0">
           <Section title={t("course.details")}>
             <DescriptionList

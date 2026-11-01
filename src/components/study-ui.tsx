@@ -35,7 +35,7 @@ export function QuestionBody({ question }: { question: PublicQuestion }) {
       <p className="mb-2 text-[13px] text-text-subtle">{facts.join(" · ")}</p>
       <p className="text-[17px] leading-relaxed break-words whitespace-pre-line">{question.questionText}</p>
       {question.images.length > 0 && (
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+        <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {question.images.map((image, i) => (
             <li key={image.id}>
               <a href={`/api/question-images/${image.id}`} target="_blank" rel="noopener" className="block rounded-[10px] border border-border bg-surface-muted p-1">

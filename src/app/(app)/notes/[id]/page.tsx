@@ -76,7 +76,7 @@ export default async function NotePage({ params }: { params: Params }) {
         <Notice className="mb-4">{t("library.period.noteHistoricalNotice", { offering })}</Notice>
       )}
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
         <Panel className="min-w-0 p-4 sm:p-6">
           {note.body ? (
             <p className="text-[16px] leading-relaxed break-words whitespace-pre-wrap">{note.body}</p>

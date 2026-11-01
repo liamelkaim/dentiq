@@ -417,7 +417,7 @@ describe("accessibility basics", () => {
     expect(ui).toMatch(/md: "h-11 /);
     expect(ui).toMatch(/sm: "h-11 /);
     expect(ui).toContain('cx(controlBase, "h-11 sm:h-10", className)');
-    expect(ui).toContain('"h-11 appearance-auto pr-8 sm:h-10"');
+    expect(ui).toContain('"h-11 appearance-auto pr-8 text-ellipsis sm:h-10"');
     const shell = read("src", "components", "app-shell.tsx");
     expect(shell).not.toMatch(/size-10 place-items-center/);
     const prefs = read("src", "components", "preferences.tsx");
@@ -444,5 +444,73 @@ describe("accessibility basics", () => {
       }
       expect(messages.common.retry).toBeTruthy();
     }
+  });
+});
+
+// ---------- Browser test findings (block I part 2) ----------
+
+describe("browser test findings", () => {
+  const css = read("src", "app", "globals.css");
+
+  function tokens(selector: ":root" | ".dark"): Record<string, string> {
+    const start = css.indexOf(`${selector} {`);
+    const block = css.slice(start, css.indexOf("}", start));
+    return Object.fromEntries([...block.matchAll(/--([a-z-]+):\s*(#[0-9a-fA-F]{6})\s*;/g)].map((m) => [m[1]!, m[2]!]));
+  }
+  const luminance = (hex: string) => {
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!;
+  };
+  const contrast = (a: string, b: string) => {
+    const [x, y] = [luminance(a), luminance(b)];
+    return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+  };
+
+  it("keeps muted, subtle and accent text at 4.5:1 on every surface, in both themes", () => {
+    for (const theme of [":root", ".dark"] as const) {
+      const t = tokens(theme);
+      for (const text of ["text", "text-muted", "text-subtle", "accent"]) {
+        for (const surface of ["bg", "surface", "surface-muted"]) {
+          expect(contrast(t[text]!, t[surface]!), `${theme} ${text} on ${surface}`).toBeGreaterThanOrEqual(4.5);
+        }
+      }
+    }
+  });
+
+  it("never suppresses the focus ring of a control (inputs, selects, buttons)", () => {
+    const offenders = sourceFiles
+      .filter((f) => f.endsWith(".tsx") || f.endsWith(".ts"))
+      .filter((f) => /focus:outline-none/.test(withoutComments(readFileSync(f, "utf8"))))
+      .map(rel);
+    expect(offenders).toEqual([]);
+  });
+
+  it("gives keyboard focus back to the submit button after a form action settles", () => {
+    const hook = read("src", "components", "use-keeping-form.ts");
+    expect(hook).toContain("submitterRef");
+    expect(hook).toMatch(/button\.focus\(/);
+  });
+
+  it("lets a single-column grid shrink: responsive grids start from grid-cols-1", () => {
+    const offenders: string[] = [];
+    for (const file of sourceFiles.filter((f) => f.endsWith(".tsx"))) {
+      readFileSync(file, "utf8")
+        .split("\n")
+        .forEach((line, i) => {
+          if (/className="[^"]*\bgrid gap-/.test(line) && /(sm|md|lg|xl|2xl):grid-cols/.test(line) && !line.includes("grid-cols-1")) offenders.push(`${rel(file)}:${i + 1}`);
+        });
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it("keeps footer and switcher links at least 44 px wide on phones", () => {
+    for (const file of [["app", "(auth)", "layout.tsx"], ["app", "(legal)", "layout.tsx"], ["components", "app-shell.tsx"]]) {
+      expect(read("src", ...file), file.join("/")).toContain("min-w-11");
+    }
+    expect(read("src", "components", "preferences.tsx")).toContain("min-w-11");
+  });
+
+  it("titles the 404 and 403 pages", () => {
+    for (const file of ["not-found.tsx", "forbidden.tsx"]) expect(read("src", "app", file), file).toContain("generateMetadata");
   });
 });

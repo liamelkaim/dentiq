@@ -71,7 +71,7 @@ export default async function CourseNotesPage({
     <>
       <CourseHeader course={summary} offeringCount={course.offerings.length} active="notes" actions={uploadButton} />
 
-      <div className="grid gap-5 lg:grid-cols-[320px_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[320px_minmax(0,1fr)]">
         {/* Document list */}
         <Panel className="flex min-w-0 flex-col self-start overflow-hidden">
           <nav aria-label={t("resources.period.label")} className="flex gap-1 border-b border-border p-2">

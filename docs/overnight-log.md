@@ -24,7 +24,9 @@
 | F. Profile and account (profile, own-data JSON export, account deletion, legal draft banners) | built; typecheck, lint, 468 tests, build clean; not yet browser-tested; deletion semantics need Law 25 legal review | e9a830c |
 | G. Platform quality (PWA shell, CSP, focus, touch targets, loading/error pages, em dash cleanup) | built; typecheck, lint, 496 tests, build clean; needs a browser to verify install, offline page, CSP hydration, safe areas | b6b2837 |
 | H. Independent review (security + correctness) and fixes (20 items) | done; typecheck, lint, 533 tests, build clean | 65dc482 |
-| I1. Browser walkthrough, clean scratch DB, desktop, FR then EN spot-check (student, moderator, admin) | done; ~40 steps PASS, 3 defects found and fixed; 537 tests, build clean | see git log |
+| I1. Browser walkthrough, clean scratch DB, desktop, FR then EN spot-check (student, moderator, admin) | done; ~40 steps PASS, 3 defects found and fixed; 537 tests, build clean | 761b0c8 |
+| I2. Responsive/theme/language/keyboard/motion/zoom matrix + paths part 1 skipped | done; 543 tests, build clean | see git log |
+| K. docs/audio-readiness.md (plan only) | written | see git log |
 
 ## Decisions made for the owner
 
@@ -93,3 +95,12 @@ Defects found and fixed: (1) quiz skipped questions and went blank at the end (l
 Not fixed (cosmetic or already listed): Période select text cut off on the practice form; 404 page title is just "Dentiq"; sidebar scrolls for admins at ~780 px height; stale "Question published" message after verifying; a request over 26 MB bypassing the client check shows the generic error page (listed under review items).
 
 Not tested: service worker registration and real offline fallback (production only); pending-user contribution block; moderator reject/hide/report paths; question edit; PWA install prompt; downloads through the browser dialog; dark theme and phone/tablet widths (part 2). Anki All in One compatibility remains unverified.
+
+## Block I part 2: matrix results (production build on scratch DB, real Chrome)
+
+800 page loads (40 pages x 20 width/theme/language combos). Before fixes: overflow 30, phone targets under 44px 246, low contrast 363, clipped text 104. After fixes (520-load re-check of affected pages): overflow 0, phone targets under 44px 0, low contrast 0, tab bar covering content 0, console/network errors 0. Remaining by design: 50 loads at 768px with 36 to 40px controls (desktop density kept on tablets). Cosmetic: long French offering option ellipsized in the upload select.
+Fixed: 320px overflow (auth/legal headers, tab bar, grids from grid-cols-1, tabs, theme switcher, catalog form); light-theme contrast (--text-subtle, --accent darkened to 4.5:1); missing focus ring on text inputs (focus:outline-none masked by a weak test); focus lost after a server error; clipped selects; 44px minimum widths; 404/403 titles; stale "Question published" notice.
+Keyboard: all PASS (0 stops without visible focus, 0 traps, skip link works, keyboard-only question submission works). Reduced motion: PASS (0 running animations on 8 pages). Zoom 200%: PASS at 720px and 320px; at a 195px viewport (390px at 200%) selects clipped on 5 of 14 pages and one calendar link overflowed: NOT fixed (below WCAG minimum width).
+Paths: pending user blocked server-side on question creation (replay of the server action); moderator reject/hide/publish/verify/report-resolve, author edit and history, image upload errors: PASS. Dismiss button on a report not clicked. Other server actions for a pending user not replayed.
+Production: manifest 200; service worker registers; cache holds only the 6 allowlisted public files after visiting authenticated pages and question images; with the server stopped, pages show only the offline page.
+Not tested: Safari, Firefox, real devices, screen readers, native select popup and validation bubbles, PWA install prompt, download dialogs.

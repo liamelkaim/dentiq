@@ -63,9 +63,9 @@ export default async function FlashcardsPage({ searchParams }: { searchParams: P
       />
 
       <Panel className="mb-6 p-4">
-        <form method="get" action="/practice/flashcards" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <form method="get" action="/practice/flashcards" className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 xl:grid-cols-4">
           <ScopeFields viewer={viewer} scope={scope} mode="flashcards" idPrefix="fc" />
-          <div className="col-span-2 flex items-end lg:col-span-4">
+          <div className="flex items-end min-[480px]:col-span-2 xl:col-span-4">
             <Button type="submit" size="sm">
               {t("applyScope")}
             </Button>
@@ -77,7 +77,7 @@ export default async function FlashcardsPage({ searchParams }: { searchParams: P
         <EmptyState title={t("emptyTitle")} body={t("emptyBody")} action={<ButtonLink href="/practice/flashcards/new">{t("newCard")}</ButtonLink>} />
       ) : (
         <>
-          <dl className="mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <dl className="mb-4 grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 xl:grid-cols-4">
             {stats.map((s) => (
               <Panel key={s.label} className="px-4 py-3">
                 <dt className="text-[13px] text-text-subtle">{s.label}</dt>

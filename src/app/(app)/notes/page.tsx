@@ -52,7 +52,7 @@ export default async function NotesPage({ searchParams }: { searchParams: Promis
         {t("library.notes.privacy")}
       </Notice>
 
-      <form method="get" role="search" aria-label={t("library.notes.filterLabel")} className="mb-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,16rem)_auto] sm:items-end">
+      <form method="get" role="search" aria-label={t("library.notes.filterLabel")} className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,16rem)_auto] sm:items-end">
         <Field label={t("library.notes.search")} htmlFor="notes-q">
           <Input id="notes-q" name="q" defaultValue={q} maxLength={SEARCH_QUERY_MAX} />
         </Field>

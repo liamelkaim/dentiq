@@ -120,3 +120,15 @@ Findings confirmed by independent reviewers and fixed (tests in `tests/review-fi
 - ✅ Pages past the last page of Passes redirect to the last page; focus moves to the result, the next question or the back of the card in practice and flashcard review.
 - ✅ In-memory limiter for exports and deletion forgets expired keys (Better Auth's own limiter already prunes). The shared limiter store for multi-instance hosting is still a hosting decision (not built).
 - ✅ Recorded decision: scored outcomes are fixed at the moment of answering and are not re-scored (`docs/study-tools.md`, shown on the analytics page).
+
+## Browser test, part 2 (block I): phones, tablets, dark mode, keyboard, reduced motion, zoom, production shell
+
+Run in real Chrome against a scratch database with fake `example.com` accounts (student, moderator, administrator and a pending account), at 320, 375, 390, 430, 768, 1024 and 1440 px, light and dark, French and English, plus keyboard-only use, reduced motion, 200% zoom and a production build (`next start`). Fixes, each with a test in `tests/platform-quality.test.ts` ("browser test findings"):
+
+- ✅ Real horizontal overflow at 320 px (sign-in, sign-up, privacy, terms, dashboard, Passes tabs, profile, settings, admin catalog): headers wrap, the phone tab bar can shrink, responsive grids start from `grid-cols-1` so a long title cannot widen a single column, segmented controls wrap, the catalog course form stacks.
+- ✅ Light-theme contrast: `--text-subtle` and `--accent` darkened to reach 4.5:1 on every surface; "coming soon" items no longer use extra transparency.
+- ✅ Text inputs had no visible keyboard focus ring (`focus:outline-none` cancelled the ring); now the global focus ring shows.
+- ✅ After a server error, keyboard focus dropped to the page because the submit button was disabled while the action ran; focus now returns to the button.
+- ✅ Select boxes on the practice, quiz, flashcard, export and Passes filters cut their text on phones and at 1024 px (the "Période" field); forms are one column under 480 px, four columns from 1280 px, and the long "all periods" label is shorter.
+- ✅ 44 px targets: language buttons, footer links, short button labels; 404 and 403 pages have a title; the "Question published" notice goes away when the moderator moves on to verifying.
+- Not changed on purpose: the small controls at tablet width (768 to 1024 px) keep the denser desktop size.

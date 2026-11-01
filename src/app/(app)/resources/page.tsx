@@ -101,7 +101,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
             className="h-11 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[15px] placeholder:text-text-subtle focus:border-accent sm:h-10"
           />
         </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 min-[480px]:grid-cols-2 sm:grid-cols-3">
           {select(
             "course",
             t("resources.filters.course"),

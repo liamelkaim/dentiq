@@ -316,7 +316,7 @@ export function PracticeSession({ questions, initialMarks, poolSize }: { questio
             <RevealPanel reveal={revealed} rule={question.rule} />
             <div>
               <p className="mb-2 text-[14px] font-medium">{t(revealed.basis === "verified" ? "ratePrompt" : "rateUnverifiedPrompt")}</p>
-              <div className="grid gap-2 sm:grid-cols-3">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                 {(["got_it", "partly", "missed"] as const).map((rating) => (
                   <Button key={rating} type="button" variant="secondary" disabled={pending} onClick={() => record(rating)}>
                     {t(`rating.${rating}`)}
@@ -445,7 +445,7 @@ export function FlashcardReview({ cards }: { cards: ReviewCard[] }) {
           <h2 className="mb-1 text-[13px] font-semibold text-text-subtle">{t("front")}</h2>
           <p className="text-[17px] leading-relaxed break-words whitespace-pre-line">{card.front}</p>
           {card.images.length > 0 && (
-            <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+            <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {card.images.map((image, i) => (
                 <li key={image.id}>
                   {/* eslint-disable-next-line @next/next/no-img-element -- private image behind an auth check */}
@@ -553,9 +553,9 @@ export function QuizForm({ children, defaultCount, maxCount }: { children: React
   const errorText = useErrorText();
   const { state, pending, onSubmit } = useKeepingForm(createQuizAction, idle);
   return (
-    <form onSubmit={onSubmit} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <form onSubmit={onSubmit} className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 xl:grid-cols-4">
       {state.status === "error" && (
-        <Notice tone="danger" className="col-span-2 lg:col-span-4">
+        <Notice tone="danger" className="min-[480px]:col-span-2 xl:col-span-4">
           {errorText(state.message)}
         </Notice>
       )}
@@ -572,7 +572,7 @@ export function QuizForm({ children, defaultCount, maxCount }: { children: React
           className="block h-11 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text focus:border-accent sm:h-10"
         />
       </Field>
-      <div className="col-span-2 flex items-end lg:col-span-4">
+      <div className="flex items-end min-[480px]:col-span-2 xl:col-span-4">
         <Button type="submit" disabled={pending}>
           {t("start")}
         </Button>
@@ -648,7 +648,7 @@ export function QuizRate({ quizId, itemId }: { quizId: string; itemId: string })
     <div>
       <p className="mb-2 text-[14px] font-medium">{t("ratePrompt")}</p>
       {error && <Notice tone="danger" className="mb-2">{error}</Notice>}
-      <div className="grid gap-2 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
         {(["got_it", "partly", "missed"] as const).map((rating) => (
           <Button key={rating} type="button" variant="secondary" disabled={pending} onClick={() => rate(rating)}>
             {t(`rating.${rating}`)}

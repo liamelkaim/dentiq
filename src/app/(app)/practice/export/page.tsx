@@ -39,7 +39,7 @@ export default async function ExportPage({ searchParams }: { searchParams: Promi
       <PageHeader title={t("title")} subtitle={t("subtitle")} back={back} />
       <Panel className="p-4">
         <form method="get" action="/api/study-export" className="flex flex-col gap-5">
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 xl:grid-cols-4">
             <ScopeFields viewer={viewer} scope={{ ...scope, mark: undefined }} mode="export" idPrefix="ex" />
             <Field label={t("format")} htmlFor="ex-format">
               <Select id="ex-format" name="format" defaultValue="csv">
@@ -48,7 +48,7 @@ export default async function ExportPage({ searchParams }: { searchParams: Promi
               </Select>
             </Field>
           </div>
-          <ul className="grid gap-3 sm:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {kinds.map((kind) => (
               <li key={kind} className="flex flex-col gap-2 rounded-[10px] border border-border p-3">
                 <p className="text-[15px] font-semibold">{t(`kinds.${kind}.title`)}</p>

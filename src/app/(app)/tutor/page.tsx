@@ -63,7 +63,7 @@ export default async function TutorPage({ searchParams }: { searchParams: Promis
         {courses.length === 0 ? (
           <EmptyState title={t("search.noCoursesTitle")} body={t("search.noCourses")} />
         ) : (
-          <form method="get" role="search" aria-label={t("search.title")} className="grid gap-4 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] sm:items-start">
+          <form method="get" role="search" aria-label={t("search.title")} className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] sm:items-start">
             <Field label={t("search.course")} htmlFor="tutor-course">
               <Select id="tutor-course" name="course" defaultValue={course?.code ?? ""} required>
                 <option value="" disabled>

@@ -30,7 +30,7 @@ export async function ScopeFields({ viewer, scope, mode, idPrefix = "sc" }: { vi
 
   return (
     <>
-      <Field label={t("course")} htmlFor={`${idPrefix}-course`} className="col-span-2">
+      <Field label={t("course")} htmlFor={`${idPrefix}-course`} className="min-[480px]:col-span-2">
         <Select id={`${idPrefix}-course`} name="course" defaultValue={scope.course ?? ""} required={courseRequired}>
           <option value="">{t(courseRequired ? "chooseCourse" : "allCourses")}</option>
           {courses.map((c) => (

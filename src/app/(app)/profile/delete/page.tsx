@@ -23,7 +23,7 @@ export default async function DeleteAccountPage() {
     <>
       <PageHeader title={t("title")} subtitle={t("intro")} back={{ href: "/profile", label: t("back") }} />
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Panel className="p-4 sm:p-5">
           <h2 className="text-[15px] font-semibold">{t("deletedTitle")}</h2>
           <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[14px] text-text-muted">

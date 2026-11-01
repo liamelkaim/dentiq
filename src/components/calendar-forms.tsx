@@ -49,7 +49,7 @@ export function CalendarEntryForm({
         <Field label={t("form.title")} htmlFor="cal-title" error={fieldError("title")}>
           <Input id="cal-title" name="title" required maxLength={CALENDAR_TITLE_MAX} defaultValue={initial.title} aria-invalid={Boolean(fieldError("title"))} aria-describedby={fieldError("title") ? "cal-title-error" : undefined} />
         </Field>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label={t("form.date")} htmlFor="cal-date" hint={t("form.dateHint", { min: CALENDAR_YEAR_MIN, max: CALENDAR_YEAR_MAX })} error={fieldError("date")}>
             <Input
               id="cal-date"
@@ -67,7 +67,7 @@ export function CalendarEntryForm({
             <Input id="cal-time" name="time" type="time" defaultValue={initial.time ?? ""} aria-invalid={Boolean(fieldError("time"))} aria-describedby={fieldError("time") ? "cal-time-error" : "cal-time-hint"} />
           </Field>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label={t("form.kind")} htmlFor="cal-kind">
             <Select id="cal-kind" name="kind" defaultValue={initial.kind}>
               {kinds.map((kind) => (

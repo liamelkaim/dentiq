@@ -25,12 +25,23 @@ export function useKeepingForm<State extends { status: string }>(
   const [, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
   const resetOnSuccess = options.resetOnSuccess === true;
+  const submitterRef = useRef<HTMLElement | null>(null);
+  // The submit button is disabled while the action runs, and the browser then drops keyboard focus to the page.
+  // Give focus back to the button once the action settles so keyboard users keep their place (and hear the error).
+  useEffect(() => {
+    if (pending) return;
+    const button = submitterRef.current;
+    submitterRef.current = null;
+    const active = document.activeElement;
+    if (button?.isConnected && (!active || active === document.body)) button.focus({ preventScroll: true });
+  }, [pending]);
   useEffect(() => {
     if (resetOnSuccess && state.status === "success") formRef.current?.reset();
   }, [state, resetOnSuccess]);
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const submitter = (event.nativeEvent as SubmitEvent).submitter;
+    submitterRef.current = submitter instanceof HTMLElement ? submitter : null;
     const data = new FormData(event.currentTarget, submitter);
     startTransition(() => formAction(data));
   };

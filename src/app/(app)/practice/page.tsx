@@ -76,7 +76,7 @@ export default async function StudyHubPage({ searchParams }: { searchParams: Pro
           </Link>
         </p>
       )}
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tiles.map(({ href, key, icon: Icon, line }) => (
           <li key={key}>
             <Link href={href} className="block h-full rounded-[var(--radius-card)] focus-visible:outline-offset-2">

@@ -28,7 +28,7 @@ export async function CardsLoading({ cards = 4 }: { cards?: number }) {
   return (
     <Busy label={t("loading")}>
       <Heading />
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {Array.from({ length: cards }, (_, i) => (
           <Skeleton key={i} className="h-28" />
         ))}
@@ -65,7 +65,7 @@ export async function ChartsLoading() {
   return (
     <Busy label={t("loading")}>
       <Heading />
-      <div className="mb-6 grid gap-4 sm:grid-cols-3">
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Skeleton className="h-24" />
         <Skeleton className="h-24" />
         <Skeleton className="h-24" />

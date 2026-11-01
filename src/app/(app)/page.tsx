@@ -149,7 +149,7 @@ export default async function DashboardPage() {
         </Notice>
       )}
 
-      <div className="grid gap-x-8 xl:grid-cols-[minmax(0,1fr)_300px]">
+      <div className="grid grid-cols-1 gap-x-8 xl:grid-cols-[minmax(0,1fr)_300px]">
         <div className="min-w-0">
           {/* Courses */}
           <Section
@@ -165,7 +165,7 @@ export default async function DashboardPage() {
             {courses.length === 0 ? (
               <EmptyState title={t("home.coursesEmpty")} body={isAdmin ? t("dashboard.catalogEmptyAdmin") : undefined} />
             ) : (
-              <ul className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3">
+              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3">
                 {courses.map((course) => (
                   <li key={course.id}>
                     <Link
@@ -202,7 +202,7 @@ export default async function DashboardPage() {
               {recentPublished.length === 0 ? (
                 <Panel className="px-4 py-6 text-center text-[14px] text-text-muted">{t("home.recentEmpty")}</Panel>
               ) : (
-                <ul className="grid gap-3 sm:grid-cols-2">
+                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {recentPublished.map((r) => (
                     <li key={r.id}>
                       <Link

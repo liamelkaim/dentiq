@@ -134,7 +134,7 @@ export function UploadResourceForm({
         </Field>
         <input type="hidden" name="courseId" value={courseId} />
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label={t("form.docTitle")} htmlFor={`${p}-title`} error={err("title")} className="sm:col-span-2">
             <Input id={`${p}-title`} name="title" required maxLength={200} />
           </Field>
@@ -234,7 +234,7 @@ export function ReportForm({ resourceId }: { resourceId: string }) {
         <h3 className="text-[15px] font-semibold">{t("title")}</h3>
         <StateNotice state={state} />
         <input type="hidden" name="resourceId" value={resourceId} />
-        <div className="grid gap-4 sm:grid-cols-[200px_1fr]">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-[200px_1fr]">
           <Field label={t("reason")} htmlFor={`${p}-reason`}>
             <Select id={`${p}-reason`} name="reason" required defaultValue="incorrect">
               {reasons.map((r) => (

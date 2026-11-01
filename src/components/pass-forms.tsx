@@ -5,7 +5,7 @@
 // server actions and the pass service hold every rule again.
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import {
   editQuestionAction,
   markDuplicateAction,
@@ -183,7 +183,7 @@ export function QuestionForm(props: QuestionFormProps) {
       <Panel className="p-4 sm:p-6">
         <fieldset className="flex flex-col gap-4">
           <legend className="mb-1 text-[15px] font-semibold">{t("form.originTitle")}</legend>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Field label={t("form.examYear")} htmlFor={`${p}-year`} hint={t("form.examYearHint")} error={msg(err("examAcademicYear"))}>
               <Select
                 id={`${p}-year`}
@@ -284,7 +284,7 @@ export function QuestionForm(props: QuestionFormProps) {
           <p className="text-[13px] text-text-subtle">{t("form.imagesHint", { max: props.maxImages, mb: props.maxImageMB })}</p>
           <FieldError id={`${p}-images`} error={err("images")} />
           {activeImages.length > 0 && (
-            <ul className="grid gap-3 sm:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {activeImages.map((image) => {
                 const gone = removed.has(image.id);
                 return (
@@ -314,7 +314,7 @@ export function QuestionForm(props: QuestionFormProps) {
             </ul>
           )}
           {Array.from({ length: Math.min(slots, room) }, (_, i) => (
-            <div key={i} className="grid gap-3 rounded-[10px] border border-border p-3 sm:grid-cols-2">
+            <div key={i} className="grid grid-cols-1 gap-3 rounded-[10px] border border-border p-3 sm:grid-cols-2">
               <Field label={t("form.imageFile", { n: i + 1 })} htmlFor={`${p}-img${i}`}>
                 <Input
                   id={`${p}-img${i}`}
@@ -511,7 +511,7 @@ export function ReportQuestionForm({ questionId }: { questionId: string }) {
         <h3 className="text-[15px] font-semibold">{t("title")}</h3>
         <StateNotice state={state} />
         <input type="hidden" name="questionId" value={questionId} />
-        <div className="grid gap-4 sm:grid-cols-[220px_1fr]">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-[220px_1fr]">
           <Field label={t("reason")} htmlFor={`${p}-reason`}>
             <Select id={`${p}-reason`} name="reason" required defaultValue="wrong_answer">
               {reportReasons.map((r) => (
@@ -541,13 +541,22 @@ export function ReviewForm({ questionId, status }: { questionId: string; status:
   const t = useTranslations("passes.review");
   const common = useTranslations("common");
   const p = useId();
-  const { state, pending, onSubmit } = useKeepingForm(reviewQuestionAction);
+  const { state, pending, onSubmit, formRef } = useKeepingForm(reviewQuestionAction);
   const msg = useMessage();
+  // "Question published." must not stay on screen after the moderator moves on to another form (verifying the answer).
+  const [dismissed, setDismissed] = useState<PassFormState | null>(null);
+  useEffect(() => {
+    const onOtherSubmit = (event: Event) => {
+      if (!formRef.current?.contains(event.target as Node)) setDismissed(state);
+    };
+    document.addEventListener("submit", onOtherSubmit, true);
+    return () => document.removeEventListener("submit", onOtherSubmit, true);
+  }, [formRef, state]);
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-3">
+    <form ref={formRef} onSubmit={onSubmit} className="flex flex-col gap-3">
       <h3 className="text-[15px] font-semibold">{t("title")}</h3>
       <p className="text-[13px] text-text-subtle">{t("current", { status: msg(`passes.status.${status === "published" ? "publishedLabel" : status}`) ?? status })}</p>
-      <StateNotice state={state} />
+      {dismissed !== state && <StateNotice state={state} />}
       <input type="hidden" name="questionId" value={questionId} />
       <Field label={t("note")} htmlFor={`${p}-note`} hint={t("noteHint")} optional={common("optional")} error={msg(state.fieldErrors?.note)}>
         <Input id={`${p}-note`} name="note" maxLength={500} aria-describedby={`${p}-note-hint`} />
@@ -777,7 +786,7 @@ export function PassSettingsForm(props: PassSettingsFormProps) {
       </Panel>
 
       <Panel className="p-4 sm:p-5">
-        <fieldset className="grid gap-4 sm:grid-cols-3">
+        <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <legend className="mb-3 text-[15px] font-semibold">{t("limitsTitle")}</legend>
           <Field label={t("maxImages")} htmlFor={`${p}-img`}>
             <Input id={`${p}-img`} name="maxImages" type="number" inputMode="numeric" min={0} max={10} defaultValue={props.maxImages} required />

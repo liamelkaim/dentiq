@@ -35,7 +35,7 @@ function Segmented({
   disabled?: boolean;
 }) {
   return (
-    <div role="radiogroup" aria-label={label} className="inline-flex rounded-[10px] bg-surface-muted p-0.5">
+    <div role="radiogroup" aria-label={label} className="inline-flex max-w-full flex-wrap rounded-[10px] bg-surface-muted p-0.5">
       {options.map((option) => {
         const selected = option.value === value;
         return (
@@ -62,7 +62,7 @@ function Segmented({
             className={cx(
               // 44 px targets on touch screens, denser on desktop.
               "inline-flex h-11 items-center justify-center gap-1.5 rounded-[8px] text-[13px] font-medium transition-colors sm:h-8",
-              compact ? "w-11 sm:w-9" : "px-3",
+              compact ? "w-11 sm:w-9" : "min-w-11 px-3 sm:min-w-0",
               selected ? "bg-surface text-text shadow-card" : "text-text-subtle hover:text-text",
             )}
           >

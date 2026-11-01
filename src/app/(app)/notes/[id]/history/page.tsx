@@ -37,7 +37,7 @@ export default async function NoteHistoryPage({ params, searchParams }: { params
     <>
       <PageHeader back={{ href: `/notes/${note.id}`, label: note.title }} title={t("title")} subtitle={`${note.course.code} · ${t("subtitle")}`} />
 
-      <div className="grid gap-5 lg:grid-cols-[340px_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[340px_minmax(0,1fr)]">
         <Panel className="min-w-0 self-start overflow-hidden">
           <h2 className="border-b border-border px-4 py-3 text-[13px] font-semibold text-text-subtle">{t("versions", { count: versions.length })}</h2>
           <ol className="max-h-[60vh] divide-y divide-border overflow-y-auto">

@@ -45,7 +45,7 @@ function SourceFields({ p, state, defaults }: { p: string; state: FormState; def
   const msg = useMessage();
   const optional = useTranslations("common")("optional");
   return (
-    <fieldset className="grid gap-4 border-t border-border pt-4 sm:grid-cols-3">
+    <fieldset className="grid grid-cols-1 gap-4 border-t border-border pt-4 sm:grid-cols-3">
       <legend className="mb-1 text-[13px] font-semibold text-text sm:col-span-3">{t("title")}</legend>
       <p className="-mt-2 text-[13px] text-text-subtle sm:col-span-3">{t("help")}</p>
       <Field label={t("name")} htmlFor={`${p}-sourceName`} optional={optional} error={msg(state.fieldErrors?.sourceName)}>
@@ -98,7 +98,7 @@ export function ProgramForm() {
       <form ref={ref} onSubmit={onSubmit} className="flex flex-col gap-4">
         <h3 className="text-[15px] font-semibold">{t("new")}</h3>
         <FormStatus state={state} />
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label={t("nameFr")} htmlFor={`${p}-nameFr`} error={msg(state.fieldErrors?.nameFr)}>
             <Input {...fieldProps(state, p, "nameFr")} required maxLength={200} />
           </Field>
@@ -153,7 +153,7 @@ export function CourseForm({ programs, course }: { programs: ProgramOption[]; co
         <h3 className="text-[15px] font-semibold">{course ? t("edit") : t("new")}</h3>
         <FormStatus state={state} />
         {course && <input type="hidden" name="id" value={course.id} />}
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label={t("code")} htmlFor={`${p}-code`} error={msg(state.fieldErrors?.code)}>
             <Input {...fieldProps(state, p, "code")} required maxLength={20} defaultValue={course?.code} autoCapitalize="characters" />
           </Field>
@@ -173,7 +173,7 @@ export function CourseForm({ programs, course }: { programs: ProgramOption[]; co
           <Field label={t("titleEn")} htmlFor={`${p}-titleEn`} optional={optional}>
             <Input {...fieldProps(state, p, "titleEn")} maxLength={200} defaultValue={course?.titleEn ?? ""} />
           </Field>
-          <div className="grid grid-cols-3 gap-3 sm:col-span-2">
+          <div className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-3 sm:col-span-2">
             <Field label={t("credits")} htmlFor={`${p}-credits`} optional={optional} error={msg(state.fieldErrors?.credits)}>
               <Input {...fieldProps(state, p, "credits")} type="number" min={0} max={99} step={0.5} inputMode="decimal" defaultValue={course?.credits ?? ""} />
             </Field>
@@ -239,7 +239,7 @@ export function ImportForm({ programs, header }: { programs: ProgramOption[]; he
             </ul>
           </div>
         )}
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label={t("file")} htmlFor={`${p}-file`}>
             <Input
               id={`${p}-file`}
@@ -285,7 +285,7 @@ export function OfferingForm({ courseId, courseCode }: { courseId: string; cours
         <FormStatus state={state} />
         <input type="hidden" name="courseId" value={courseId} />
         <input type="hidden" name="courseCode" value={courseCode} />
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label={t("academicYear")} htmlFor={`${p}-academicYear`} hint={t("academicYearHint")} error={msg(state.fieldErrors?.academicYear)}>
             <Input {...fieldProps(state, p, "academicYear")} required pattern="\d{4}-\d{4}" placeholder="2026-2027" inputMode="numeric" />
           </Field>

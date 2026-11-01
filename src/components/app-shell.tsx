@@ -154,7 +154,7 @@ export function AppShell({
           <p className="mb-1 px-3 text-[11px] font-semibold tracking-wide text-text-subtle uppercase">{t("nav.comingSoon")}</p>
           <ul aria-label={t("nav.comingSoon")} className="flex flex-col gap-0.5">
             {comingSoon.map(({ key, icon: Icon }) => (
-              <li key={key} className="flex h-9 cursor-default items-center gap-3 rounded-[10px] px-3 text-[14px] text-text-subtle/80">
+              <li key={key} className="flex h-9 cursor-default items-center gap-3 rounded-[10px] px-3 text-[14px] text-text-subtle">
                 <Icon width={18} height={18} />
                 <span className="flex-1">{t(`nav.${key}`)}</span>
                 <span className="rounded-full bg-surface-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase">
@@ -206,7 +206,7 @@ export function AppShell({
               aria-label={t("nav.study")}
               aria-current={isActive(pathname, "/practice") ? "page" : undefined}
               className={cx(
-                "grid size-11 place-items-center rounded-[10px] transition-colors hover:bg-surface-muted",
+                "grid size-11 place-items-center rounded-[10px] transition-colors hover:bg-surface-muted max-[359px]:hidden",
                 isActive(pathname, "/practice") ? "text-accent" : "text-text-muted",
               )}
             >
@@ -236,8 +236,8 @@ export function AppShell({
         <div className="mx-auto w-full max-w-6xl">{children}</div>
         <p className="mx-auto mt-12 max-w-6xl text-[12px] text-text-subtle">{t("common.disclaimer")}</p>
         <p className="mx-auto mt-1 flex max-w-6xl flex-wrap gap-x-4 text-[12px] text-text-subtle">
-          <Link href="/privacy" className="inline-flex min-h-11 items-center underline-offset-2 hover:underline">{t("legal.privacyLink")}</Link>
-          <Link href="/terms" className="inline-flex min-h-11 items-center underline-offset-2 hover:underline">{t("legal.termsLink")}</Link>
+          <Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center justify-center underline-offset-2 hover:underline">{t("legal.privacyLink")}</Link>
+          <Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center justify-center underline-offset-2 hover:underline">{t("legal.termsLink")}</Link>
         </p>
       </main>
 
@@ -250,12 +250,12 @@ export function AppShell({
           {mobileItems.map(({ href, key, icon: Icon }) => {
             const active = isActive(pathname, href);
             return (
-              <li key={href} className="flex-1">
+              <li key={href} className="min-w-0 flex-1">
                 <Link
                   href={href}
                   aria-current={active ? "page" : undefined}
                   className={cx(
-                    "flex h-14 flex-col items-center justify-center gap-0.5 text-[11px] font-medium",
+                    "flex h-14 flex-col items-center justify-center gap-0.5 text-[11px] font-medium max-[359px]:text-[10px]",
                     active ? "text-accent" : "text-text-subtle",
                   )}
                 >

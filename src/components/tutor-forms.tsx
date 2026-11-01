@@ -42,7 +42,7 @@ export function TutorSettingsForm(props: TutorSettingsFormProps) {
       </Panel>
 
       <Panel className="p-4 sm:p-5">
-        <fieldset className="grid gap-4 sm:grid-cols-2">
+        <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <legend className="mb-3 text-[15px] font-semibold">{t("limitsTitle")}</legend>
           <Field label={t("dailyLimit")} htmlFor={`${id}-daily`} hint={t("dailyLimitHint", { min: props.dailyBounds[0], max: props.dailyBounds[1] })}>
             <Input id={`${id}-daily`} name="dailyQuestionLimit" type="number" inputMode="numeric" min={props.dailyBounds[0]} max={props.dailyBounds[1]} defaultValue={props.dailyQuestionLimit} required aria-describedby={`${id}-daily-hint`} />

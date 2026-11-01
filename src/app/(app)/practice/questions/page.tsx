@@ -77,7 +77,7 @@ export default async function PracticePage({ searchParams }: { searchParams: Pro
     <>
       <PageHeader title={t("title")} subtitle={t("subtitle")} back={back} />
       <Panel className="p-4">
-        <form method="get" action="/practice/questions" className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <form method="get" action="/practice/questions" className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 xl:grid-cols-4">
           <ScopeFields viewer={viewer} scope={scope} mode="practice" />
           <Field label={t("count")} htmlFor="pr-count" hint={t("countHint", { max: PRACTICE_MAX_QUESTIONS })}>
             <input
@@ -91,7 +91,7 @@ export default async function PracticePage({ searchParams }: { searchParams: Pro
               className="block h-11 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text focus:border-accent sm:h-10"
             />
           </Field>
-          <div className="col-span-2 flex items-end lg:col-span-4">
+          <div className="flex items-end min-[480px]:col-span-2 xl:col-span-4">
             <Button type="submit">{t("start")}</Button>
           </div>
         </form>

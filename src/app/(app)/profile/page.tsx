@@ -89,7 +89,7 @@ export default async function ProfilePage() {
         <Panel className="p-4 sm:p-5">
           <h3 className="text-[15px] font-semibold">{t("account.exportTitle")}</h3>
           <p className="mt-1 text-[14px] text-text-muted">{t("account.exportBody")}</p>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <p className="text-[13px] font-semibold text-text-subtle">{t("account.exportIncludesTitle")}</p>
               <ul className="mt-1 list-disc space-y-1 pl-5 text-[14px] text-text-muted">
@@ -127,10 +127,10 @@ export default async function ProfilePage() {
 
       <Section title={t("account.legalTitle")} description={t("account.legalDraft")}>
         <p className="flex flex-wrap gap-x-5 px-1 text-[14px]">
-          <Link href="/privacy" className="inline-flex min-h-11 items-center text-accent hover:text-accent-hover">
+          <Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center justify-center text-accent hover:text-accent-hover">
             {t("legal.privacyLink")}
           </Link>
-          <Link href="/terms" className="inline-flex min-h-11 items-center text-accent hover:text-accent-hover">
+          <Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center justify-center text-accent hover:text-accent-hover">
             {t("legal.termsLink")}
           </Link>
         </p>

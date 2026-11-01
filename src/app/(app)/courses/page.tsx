@@ -63,11 +63,11 @@ export default async function CoursesPage({ searchParams }: { searchParams: Sear
                 className="h-11 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[15px] placeholder:text-text-subtle focus:border-accent sm:h-10"
               />
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <label htmlFor="year" className="sr-only">
                 {t("courses.year")}
               </label>
-              <Select id="year" name="year" defaultValue={filters.year ?? ""} className="min-w-0 flex-1 sm:w-48 sm:flex-none">
+              <Select id="year" name="year" defaultValue={filters.year ?? ""} className="min-w-0 sm:w-48 sm:flex-none">
                 <option value="">{t("courses.anyYear")}</option>
                 {years.map((y) => (
                   <option key={y} value={y}>
@@ -78,7 +78,7 @@ export default async function CoursesPage({ searchParams }: { searchParams: Sear
               <label htmlFor="term" className="sr-only">
                 {t("courses.term")}
               </label>
-              <Select id="term" name="term" defaultValue={filters.term ?? ""} className="min-w-0 flex-1 sm:w-48 sm:flex-none">
+              <Select id="term" name="term" defaultValue={filters.term ?? ""} className="min-w-0 sm:w-48 sm:flex-none">
                 <option value="">{t("courses.anyTerm")}</option>
                 {terms.map((term) => (
                   <option key={term} value={term}>

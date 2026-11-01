@@ -12,9 +12,9 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
   return (
     <div className="flex min-h-dvh flex-col px-4 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
       <SkipLink label={t("skipToContent")} />
-      <header className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between">
+      <header className="mx-auto flex min-h-16 w-full max-w-5xl flex-wrap items-center justify-between gap-x-3 gap-y-1 py-1">
         <Wordmark slogan />
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2">
           <LanguageSwitcher compact />
           <ThemeSwitcher compact />
         </div>
@@ -24,8 +24,8 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
           <Panel className="p-6 sm:p-8">{children}</Panel>
           <p className="mt-6 text-center text-[12px] text-text-subtle">{t("disclaimer")}</p>
           <p className="mt-2 flex justify-center gap-4 text-[12px] text-text-subtle">
-            <Link href="/privacy" className="min-h-11 inline-flex items-center underline-offset-2 hover:underline">{l("privacyLink")}</Link>
-            <Link href="/terms" className="min-h-11 inline-flex items-center underline-offset-2 hover:underline">{l("termsLink")}</Link>
+            <Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center justify-center underline-offset-2 hover:underline">{l("privacyLink")}</Link>
+            <Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center justify-center underline-offset-2 hover:underline">{l("termsLink")}</Link>
           </p>
         </div>
       </main>

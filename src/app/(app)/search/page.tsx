@@ -48,7 +48,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const course = courses.find((c) => c.code === first(params.course));
 
   const form = (
-    <form method="get" role="search" aria-label={t("title")} className="mb-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,14rem)_auto] sm:items-end">
+    <form method="get" role="search" aria-label={t("title")} className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,14rem)_auto] sm:items-end">
       <Field label={t("query")} htmlFor="search-q">
         <Input id="search-q" name="q" type="search" defaultValue={q} maxLength={SEARCH_QUERY_MAX} />
       </Field>

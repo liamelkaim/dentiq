@@ -70,7 +70,7 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
               href={hrefWith(basePath, query, { scope: scope === "all" ? undefined : scope, page: undefined })}
               aria-current={params.scope === scope ? "page" : undefined}
               className={cx(
-                "flex h-11 flex-1 items-center justify-center rounded-[8px] px-3 text-[13px] font-medium whitespace-nowrap sm:h-8 sm:flex-none",
+                "flex min-h-11 min-w-0 flex-1 items-center justify-center rounded-[8px] px-2 py-1 text-center text-[13px] leading-tight font-medium sm:h-8 sm:flex-none sm:px-3 sm:whitespace-nowrap",
                 params.scope === scope ? "bg-surface text-text shadow-card" : "text-text-subtle hover:text-text",
               )}
             >
@@ -98,13 +98,13 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
       <p className="-mt-2 text-[13px] text-text-subtle">{t(`category.help.${params.scope}`)}</p>
 
       <Panel className="p-4">
-        <form method="get" action={basePath} className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <form method="get" action={basePath} className="grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 xl:grid-cols-4">
           {params.scope !== "all" && <input type="hidden" name="scope" value={params.scope} />}
-          <Field label={t("filters.search")} htmlFor="pf-q" className="col-span-2">
+          <Field label={t("filters.search")} htmlFor="pf-q" className="min-[480px]:col-span-2">
             <Input id="pf-q" name="q" defaultValue={params.q} maxLength={100} placeholder={t("filters.searchPlaceholder")} />
           </Field>
           {!course && (
-            <Field label={t("filters.course")} htmlFor="pf-course" className="col-span-2">
+            <Field label={t("filters.course")} htmlFor="pf-course" className="min-[480px]:col-span-2">
               <Select id="pf-course" name="course" defaultValue={params.course ?? ""}>
                 <option value="">{t("filters.allCourses")}</option>
                 {courseChoices.map((c) => (
@@ -116,7 +116,7 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
             </Field>
           )}
           {course && offerings.length > 0 && (
-            <Field label={t("filters.offering")} htmlFor="pf-offering" className="col-span-2">
+            <Field label={t("filters.offering")} htmlFor="pf-offering" className="min-[480px]:col-span-2">
               <Select id="pf-offering" name="offering" defaultValue={params.offering ?? ""}>
                 <option value="">{t("filters.allOfferings")}</option>
                 {offerings.map((o) => (
@@ -190,7 +190,7 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
               </Select>
             </Field>
           )}
-          <div className="col-span-2 flex items-end gap-2 lg:col-span-4">
+          <div className="flex items-end gap-2 min-[480px]:col-span-2 xl:col-span-4">
             <Button type="submit" size="sm">
               {t("filters.apply")}
             </Button>

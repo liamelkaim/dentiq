@@ -178,7 +178,7 @@ export async function CourseHeader({
               <span
                 aria-disabled="true"
                 title={t("courseLayout.soonLabel", { feature: t(`nav.${key}`) })}
-                className="-mb-px flex h-11 cursor-not-allowed items-center gap-2 border-b-2 border-transparent px-3 text-[14px] text-text-subtle/70"
+                className="-mb-px flex h-11 cursor-not-allowed items-center gap-2 border-b-2 border-transparent px-3 text-[14px] text-text-subtle"
               >
                 <Icon width={16} height={16} />
                 {t(`nav.${key}`)}

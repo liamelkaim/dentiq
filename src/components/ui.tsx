@@ -39,7 +39,7 @@ export function Wordmark({ className, slogan = false }: { className?: string; sl
       <span className="flex flex-col leading-none">
         <span className="text-[19px] font-bold tracking-[-0.02em]">{BRAND_NAME}</span>
         {slogan && (
-          <span className="mt-1 text-[9.5px] font-semibold tracking-[0.16em] text-accent" aria-label="Learn, share, excel">
+          <span className="mt-1 text-[9.5px] font-semibold tracking-[0.16em] whitespace-nowrap text-accent" aria-label="Learn, share, excel">
             {BRAND_SLOGAN}
           </span>
         )}
@@ -219,8 +219,8 @@ const buttonBase =
 // Sizes are separate classes so callers never have to override height with a conflicting utility.
 const buttonSizes: Record<ButtonSize, string> = {
   // Phones get 44 px targets; desktop keeps the denser size.
-  md: "h-11 px-4 text-[14px] sm:h-10",
-  sm: "h-11 px-3 text-[13px] sm:h-9",
+  md: "h-11 min-w-11 px-4 text-[14px] sm:h-10 sm:min-w-0",
+  sm: "h-11 min-w-11 px-3 text-[13px] sm:h-9 sm:min-w-0",
 };
 
 const buttonVariants: Record<ButtonVariant, string> = {
@@ -253,7 +253,7 @@ export function ButtonLink({
 }
 
 const controlBase =
-  "block w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text placeholder:text-text-subtle transition-colors focus:border-accent focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-0 aria-invalid:border-danger disabled:opacity-60";
+  "block w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text placeholder:text-text-subtle transition-colors focus:border-accent focus-visible:outline-2 focus-visible:outline-offset-0 aria-invalid:border-danger disabled:opacity-60";
 
 export function Input({ className, ...props }: ComponentProps<"input">) {
   return <input className={cx(controlBase, "h-11 sm:h-10", className)} {...props} />;
@@ -264,7 +264,7 @@ export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
 }
 
 export function Select({ className, ...props }: ComponentProps<"select">) {
-  return <select className={cx(controlBase, "h-11 appearance-auto pr-8 sm:h-10", className)} {...props} />;
+  return <select className={cx(controlBase, "h-11 appearance-auto pr-8 text-ellipsis sm:h-10", className)} {...props} />;
 }
 
 export function Field({

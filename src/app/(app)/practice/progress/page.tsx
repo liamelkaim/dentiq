@@ -108,7 +108,7 @@ export default async function ProgressPage() {
       </Section>
 
       <Section title={t("marksTitle")}>
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div>
             <h3 className="mb-2 flex items-center gap-2 px-1 text-[14px] font-semibold">
               {t("flagged")} <Badge>{p.marks.flagged}</Badge>

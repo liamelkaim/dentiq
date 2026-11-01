@@ -91,12 +91,12 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                         </Button>
                       </form>
                     )}
-                    <form action={setRoleAction} className="flex items-center gap-1.5">
+                    <form action={setRoleAction} className="flex flex-wrap items-center gap-1.5">
                       <input type="hidden" name="userId" value={u.id} />
                       <label htmlFor={`role-${u.id}`} className="sr-only">
                         {t("admin.usersPage.role")}
                       </label>
-                      <Select id={`role-${u.id}`} name="role" defaultValue={u.role} className="w-auto text-[14px]">
+                      <Select id={`role-${u.id}`} name="role" defaultValue={u.role} className="min-w-40 flex-1 text-[14px] sm:w-auto sm:flex-none">
                         {roles.map((r) => (
                           <option key={r} value={r}>
                             {t(`roles.${r}`)}

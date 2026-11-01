@@ -111,7 +111,7 @@ export default async function QuestionPage({ params, searchParams }: { params: P
         )}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="flex min-w-0 flex-col gap-4">
           <Panel className="p-4 sm:p-6">
             <div className="mb-3 flex flex-wrap gap-1.5">
@@ -125,7 +125,7 @@ export default async function QuestionPage({ params, searchParams }: { params: P
             <p className="text-[17px] leading-relaxed whitespace-pre-line break-words">{q.questionText}</p>
 
             {q.images.length > 0 && (
-              <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {q.images.map((image, i) => (
                   <li key={image.id}>
                     <a href={`/api/question-images/${image.id}`} target="_blank" rel="noopener" className="block rounded-[10px] border border-border bg-surface-muted p-1">
