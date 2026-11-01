@@ -159,3 +159,16 @@ Run in real Chrome against a scratch database with fake `example.com` accounts (
 - ✅ Select boxes on the practice, quiz, flashcard, export and Passes filters cut their text on phones and at 1024 px (the "Période" field); forms are one column under 480 px, four columns from 1280 px, and the long "all periods" label is shorter.
 - ✅ 44 px targets: language buttons, footer links, short button labels; 404 and 403 pages have a title; the "Question published" notice goes away when the moderator moves on to verifying.
 - Not changed on purpose: the small controls at tablet width (768 to 1024 px) keep the denser desktop size.
+
+## UI redesign to match `docs/design-reference/*.png` (2026-11-01, not deployed)
+
+Real data or empty states only; no stock photos, no unbuilt features. Commits in order:
+
+- ✅ Shell: 208 px sidebar (Home, Courses, Notes, Passes, AI Tutor, Flashcards, Calendar, Analytics, then Resources, Moderation, Admin, Settings), top bar with Cmd/Ctrl+K search and profile, original SVG mountain band (`src/components/mountain-header.tsx`). Recordings is hidden everywhere until its page exists.
+- ✅ Home: greeting by time of day, Today's plan and Upcoming from the student's own calendar, 7-day activity chart and active-days ring from real analytics, My courses cards, Recently added.
+- ✅ My Courses: term tabs, year filter, search, grid/list toggle, cards with vector covers.
+- ✅ Course tabs: breadcrumb, header with cover, text tabs, overview as cards (description, facts, resources with counts, offerings).
+- ✅ Notes: two panels (list and selected note) with search, course filter and New note.
+- ✅ Calendar: month grid plus the selected day's agenda panel.
+- ✅ Passes: mountain-band title only (shared `PageHeader`).
+- ❌ Not matched: Passes two-panel question viewer with Review Queue and exam sets (needs inline question rendering); the rich-text note toolbar and autosave (the editor is still the plain form); mockup percent badges, bookmarks, "Next up" strips and "Faculty reviewed"/"Verified" badges (no data behind them); the mountain is a stylized vector, not a photo; light theme not reviewed visually.

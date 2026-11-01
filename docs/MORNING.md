@@ -1,5 +1,9 @@
 # Morning handover
 
+## UI redesign (latest, local only, not pushed or deployed)
+
+Shell, Home, My Courses, course tabs, Notes, Calendar and the Passes title were restyled to match `docs/design-reference/`. Seven commits on `main` after `aaf5f36`; `pnpm check` (598 tests) and `pnpm build` pass. Details and what is NOT matched (Passes two-panel viewer, rich-text note editor, photos, light theme not reviewed) are in `docs/roadmap.md`. To see it: `pnpm dev`. Local test data only (a `DEMO 1001` course, a note and a calendar entry in the throwaway dev database). Production still runs the previous version; deploy only after you review.
+
 ## Deployment status (updated while you were away)
 
 **Production: LIVE at https://dentiq-app.vercel.app** (alias confirmed exact, so `BETTER_AUTH_URL` matches; public pages 200; owner checked sign-up, sign-in and the app by hand and said it looks good). The notes below describe the earlier preview. Preview: Ready at https://dentiq-61rftn8az-liamelkaim.vercel.app (Vercel login protection is on; use `npx vercel curl <path> --deployment <url>` or sign in to Vercel). Resend key and `EMAIL_FROM` are set. The old `dentiq` project was not touched.
