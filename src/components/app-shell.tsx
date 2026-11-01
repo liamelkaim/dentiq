@@ -25,10 +25,12 @@ import { cx, Wordmark } from "./ui";
 
 type NavItem = {
   href: string;
-  key: "dashboard" | "courses" | "resources" | "passes" | "study" | "calendar" | "analytics" | "moderation" | "settings" | "admin";
+  key: "dashboard" | "courses" | "resources" | "passes" | "study" | "calendar" | "analytics" | "tutor" | "moderation" | "settings" | "admin";
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   /** Hidden from the mobile tab bar (reachable from another page instead). */
   desktopOnly?: boolean;
+  /** Small status label next to the name (the tutor shows "Off" while it cannot answer). */
+  badge?: string;
 };
 
 function isActive(pathname: string, href: string) {
@@ -62,7 +64,6 @@ export function SignOutButton({ className }: { className?: string }) {
 }
 
 const comingSoon = [
-  { key: "tutor", icon: SparkleIcon },
   { key: "recordings", icon: MicIcon },
 ] as const;
 
@@ -81,11 +82,14 @@ export function AppShell({
   user,
   isAdmin,
   isModerator,
+  tutorReady = false,
   children,
 }: {
   user: { name: string; email: string; role: "student" | "moderator" | "admin" };
   isAdmin: boolean;
   isModerator: boolean;
+  /** True only when the tutor flag is on AND a provider is configured. Otherwise the nav item says it is off. */
+  tutorReady?: boolean;
   children: React.ReactNode;
 }) {
   const t = useTranslations();
@@ -103,6 +107,8 @@ export function AppShell({
     // tab bar to five items.
     { href: "/calendar", key: "calendar", icon: CalendarIcon, desktopOnly: true },
     { href: "/analytics", key: "analytics", icon: ChartIcon, desktopOnly: true },
+    // The tutor page is live and says honestly that the tutor is off; phones reach it from the Study hub.
+    { href: "/tutor", key: "tutor", icon: SparkleIcon, desktopOnly: true, badge: tutorReady ? undefined : t("nav.off") },
     // Admins reach moderation from the Admin page on phones, keeping the tab bar to five items.
     ...(isModerator ? [{ href: "/moderation", key: "moderation", icon: FlagIcon, desktopOnly: isAdmin } as NavItem] : []),
     ...(isAdmin ? [{ href: "/admin", key: "admin", icon: ShieldIcon } as NavItem] : []),
@@ -126,7 +132,7 @@ export function AppShell({
           <Wordmark slogan />
         </Link>
         <nav aria-label={t("nav.main")} className="flex flex-col gap-0.5">
-          {items.map(({ href, key, icon: Icon }) => {
+          {items.map(({ href, key, icon: Icon, badge }) => {
             const active = isActive(pathname, href);
             return (
               <Link
@@ -139,7 +145,10 @@ export function AppShell({
                 )}
               >
                 <Icon width={18} height={18} />
-                {t(`nav.${key}`)}
+                <span className="flex-1">{t(`nav.${key}`)}</span>
+                {badge && (
+                  <span className="rounded-full bg-surface-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-text-subtle uppercase">{badge}</span>
+                )}
               </Link>
             );
           })}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { BookIcon, FlagIcon, PassesIcon, ShieldIcon } from "@/components/icons";
+import { BookIcon, FlagIcon, PassesIcon, ShieldIcon, SparkleIcon } from "@/components/icons";
 import { List, ListLinkRow, PageHeader } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { requireRole } from "@/server/auth/session";
@@ -52,6 +52,12 @@ export default async function AdminPage() {
           leading={<span className={iconBox}><PassesIcon width={18} height={18} /></span>}
           title={t("passes.settings.title")}
           subtitle={t("passes.settings.adminHelp")}
+        />
+        <ListLinkRow
+          href="/admin/tutor"
+          leading={<span className={iconBox}><SparkleIcon width={18} height={18} /></span>}
+          title={t("admin.tutor")}
+          subtitle={t("admin.tutorHelp")}
         />
       </List>
     </>

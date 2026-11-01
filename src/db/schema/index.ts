@@ -7,3 +7,4 @@ export * from "./settings";
 export * from "./study";
 export * from "./library";
 export * from "./calendar";
+export * from "./tutor";

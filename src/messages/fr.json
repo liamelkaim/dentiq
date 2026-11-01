@@ -33,7 +33,8 @@
     "recordings": "Enregistrements",
     "analytics": "Analyses",
     "study": "Étudier",
-    "calendar": "Calendrier"
+    "calendar": "Calendrier",
+    "off": "Désactivé"
   },
   "home": {
     "welcome": "Bon retour, {name}.",
@@ -295,7 +296,9 @@
       "notVerified": "Courriel non confirmé",
       "you": "vous",
       "joined": "Inscrit·e le {date}"
-    }
+    },
+    "tutor": "Réglages du tuteur IA",
+    "tutorHelp": "Désactivé. Il faut un fournisseur et un budget."
   },
   "resources": {
     "title": "Ressources",
@@ -987,7 +990,12 @@
         "body": "Activité, exactitude et cartes à réviser, à partir de vos seules données."
       },
       "calendarLine": "{count, plural, =0 {Aucune entrée pour l'instant} one {# entrée} other {# entrées}}",
-      "analyticsLine": "Jamais comparé à d'autres étudiants"
+      "analyticsLine": "Jamais comparé à d'autres étudiants",
+      "tutor": {
+        "title": "Tuteur IA",
+        "body": "Cherchez dans les sources d'un cours. Le tuteur lui-même est désactivé tant qu'il n'y a ni fournisseur ni budget."
+      },
+      "tutorLine": "Désactivé : il faut un fournisseur et un budget"
     },
     "scope": {
       "course": "Cours",
@@ -1659,6 +1667,120 @@
       "accuracy": "L'exactitude est le nombre de points divisé par le nombre de réponses notées : juste vaut 1 point, en partie juste vaut un demi-point.",
       "activeDay": "Un jour avec activité compte au moins une réponse enregistrée ou une révision de carte.",
       "due": "Une carte est à réviser quand son heure de révision prévue est passée. Les nouvelles cartes n'ont pas encore d'horaire et sont comptées à part."
+    }
+  },
+  "tutor": {
+    "title": "Tuteur IA",
+    "subtitle": "Un tuteur pour un seul cours, qui répond uniquement à partir des sources que vous pouvez ouvrir, et les cite.",
+    "badge": {
+      "off": "Désactivé",
+      "noProvider": "Aucun fournisseur",
+      "ready": "Prêt"
+    },
+    "status": {
+      "off": {
+        "title": "Le tuteur est désactivé : il faut un fournisseur d'IA et un budget",
+        "body": "Aucun fournisseur n'a été choisi et aucun budget n'a été approuvé, donc Dentiq ne génère aucune réponse. Rien de ce que vous saisissez sur cette page n'est envoyé ailleurs. Tout reste sur ce serveur."
+      },
+      "noProvider": {
+        "title": "Activé, mais aucun fournisseur n'est configuré",
+        "body": "Un administrateur a activé le tuteur, mais le serveur n'a aucun fournisseur d'IA : il ne génère donc toujours aucune réponse et n'envoie rien ailleurs."
+      },
+      "ready": {
+        "title": "Un fournisseur est configuré",
+        "body": "Le tuteur est activé et un fournisseur existe sur le serveur. Le formulaire de questions correspondant n'a pas encore été construit ni vérifié, il n'est donc pas proposé ici."
+      }
+    },
+    "search": {
+      "title": "Chercher dans les sources du cours",
+      "description": "Il s'agit d'une simple recherche, pas d'une réponse d'IA. Elle trouve des passages dans les sources que vous pouvez ouvrir pour un cours et indique d'où vient chacun. Rien n'est rédigé ni résumé pour vous.",
+      "course": "Cours",
+      "chooseCourse": "Choisir un cours",
+      "query": "Rechercher",
+      "queryHint": "Des mots de votre question. Les accents et les majuscules n'ont pas d'importance.",
+      "includeHistorical": "Chercher aussi dans les sessions précédentes",
+      "includeHistoricalHint": "Le matériel plus ancien peut être périmé : le contenu, la personne enseignante ou les examens ont pu changer. Il est listé après le matériel actuel et identifié.",
+      "submit": "Chercher dans les sources",
+      "noCoursesTitle": "Aucun cours pour l'instant",
+      "noCourses": "Le catalogue est vide, il n'y a donc rien à chercher.",
+      "pickCourseTitle": "Choisissez un cours et saisissez une recherche",
+      "pickCourse": "Les résultats apparaissent ici, chacun avec sa source."
+    },
+    "results": {
+      "title": "Passages trouvés",
+      "count": "{count, plural, =0 {Aucun passage trouvé} one {# passage trouvé} other {# passages trouvés}}",
+      "forQuery": "Pour « {q} » dans {course}",
+      "noneTitle": "Rien dans vos sources ne correspond",
+      "none": "Aucun passage des sources que vous pouvez ouvrir pour ce cours ne correspond à ces mots. Un tuteur devrait aussi répondre qu'il n'a aucune source. Essayez d'autres mots ou vérifiez l'orthographe.",
+      "scope": "Recherche dans {documents, plural, =0 {aucun document} one {# document} other {# documents}}, {notes, plural, =0 {aucune de vos notes} one {# de vos notes} other {# de vos notes}} et {questions, plural, =0 {aucune question d'examen publiée avec réponse vérifiée} one {# question d'examen publiée avec réponse vérifiée} other {# questions d'examen publiées avec réponse vérifiée}}.",
+      "documentsMetadata": "Dentiq ne lit pas encore l'intérieur des fichiers téléversés : les documents sont donc comparés à leur titre, leur sujet et leur description seulement.",
+      "historicalSkipped": "{count, plural, one {# source de sessions précédentes n'a pas été consultée.} other {# sources de sessions précédentes n'ont pas été consultées.}} Cochez « Chercher aussi dans les sessions précédentes » pour {count, plural, one {l'inclure} other {les inclure}}.",
+      "excerpt": "Extrait",
+      "open": "Ouvrir la source",
+      "metadataOnly": "Trouvé dans le titre, le sujet ou la description seulement",
+      "verifiedAnswer": "Réponse vérifiée",
+      "currentGroup": "Session actuelle",
+      "historicalGroup": "Sessions précédentes, peut être périmé"
+    },
+    "origin": {
+      "official": "Matériel officiel du cours (professeur ou école)",
+      "student": "Matériel fourni par des étudiants",
+      "ownNote": "Vos propres notes",
+      "ownDocument": "Votre propre document (privé)"
+    },
+    "type": {
+      "document": "Document",
+      "note": "Note",
+      "question": "Question d'examen"
+    },
+    "period": {
+      "current": "Session actuelle",
+      "historical": "Session précédente, peut être périmé"
+    },
+    "offering": {
+      "year": "{year}",
+      "yearTerm": "{year}, {term}",
+      "none": "Aucune session indiquée",
+      "exam": "Examen {year}"
+    },
+    "how": {
+      "title": "Comment le tuteur fonctionnera une fois activé",
+      "sources": "Il répondra uniquement à partir des sources ci-dessus pour le cours choisi : le matériel officiel d'abord, puis le matériel fourni par des étudiants, puis vos propres notes. Les notes et documents privés de quelqu'un d'autre ne sont jamais inclus.",
+      "citations": "Chaque réponse listera les passages sur lesquels elle s'appuie, avec un lien vers chacun. Si aucune source ne soutient une réponse, il le dira au lieu de deviner.",
+      "current": "Le matériel de la session actuelle est utilisé par défaut. Les sessions précédentes ne sont ajoutées que sur demande, et sont identifiées.",
+      "limits": "Limites prévues : {limit, plural, one {# question} other {# questions}} par étudiant par jour, et jusqu'à {chars} caractères de sources envoyés avec chaque question. Un administrateur peut modifier les deux.",
+      "privacy": "Seules votre question et les passages choisis quitteraient ce serveur, et seulement après qu'un administrateur a activé le tuteur et qu'un fournisseur est configuré. Aujourd'hui, rien ne quitte le serveur."
+    },
+    "errors": {
+      "noAccess": "Votre compte doit être approuvé avant de pouvoir utiliser le tuteur.",
+      "off": "Le tuteur est désactivé.",
+      "noProvider": "Aucun fournisseur d'IA n'est configuré, le tuteur ne peut donc pas répondre.",
+      "questionRequired": "Saisissez une question.",
+      "questionTooLong": "La question est trop longue.",
+      "courseNotFound": "Ce cours est introuvable.",
+      "dailyLimit": "Vous avez atteint la limite de questions d'aujourd'hui. Elle se réinitialise demain.",
+      "providerFailed": "Le fournisseur n'a pas répondu. Cette question n'a pas été comptée.",
+      "badCitations": "La réponse a été refusée parce qu'elle citait une source qui n'avait pas été fournie.",
+      "outOfRange": "Une valeur est hors limites. Utilisez des nombres entiers dans les limites indiquées.",
+      "forbidden": "Seuls les administrateurs peuvent modifier ces réglages.",
+      "invalid": "Une erreur est survenue."
+    },
+    "admin": {
+      "title": "Réglages du tuteur IA",
+      "subtitle": "L'interrupteur et les limites du tuteur de cours.",
+      "adminHelp": "Désactivé. Il faut un fournisseur et un budget.",
+      "warningTitle": "L'activer ne fait rien sans fournisseur",
+      "warning": "Dentiq n'a aucun fournisseur d'IA : aucun n'a été choisi et aucun budget n'a été approuvé. Activer le tuteur ne change aucun comportement et ne génère aucune réponse. L'activation ne prend effet qu'une fois un fournisseur ajouté au serveur par un développeur.",
+      "providerLabel": "Fournisseur sur le serveur",
+      "providerNone": "Aucun configuré",
+      "enabled": "Autoriser le tuteur (il faut encore un fournisseur)",
+      "limitsTitle": "Limites",
+      "dailyLimit": "Questions par étudiant par jour",
+      "dailyLimitHint": "Entre {min} et {max}. Compté par étudiant, par jour, selon le fuseau horaire de Toronto.",
+      "maxContext": "Caractères de sources par question",
+      "maxContextHint": "Entre {min} et {max}. La plus grande quantité de texte de sources qui serait envoyée avec une question.",
+      "save": "Enregistrer les réglages",
+      "saved": "Réglages enregistrés."
     }
   }
 }

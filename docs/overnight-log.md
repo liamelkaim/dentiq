@@ -19,7 +19,8 @@
 | A. Passes polish | built; typecheck, lint, 212 tests, build all clean; not yet browser-tested | d990d7c |
 | B. Study tools (practice, progress, flashcards, quizzes, export) | built; typecheck, lint, 269 tests, build clean; not yet browser-tested; Anki All in One compatibility UNVERIFIED | 72d3700 |
 | C. Notes and course library (topics, links, note versions, search, current vs previous) | built; typecheck, lint, 303 tests, build clean; not yet browser-tested | c3b1a3f |
-| D. Calendar and analytics (local only) | built; typecheck, lint, 375 tests, build clean; not yet browser-tested; .ics import into calendar apps UNVERIFIED | see git log |
+| D. Calendar and analytics (local only) | built; typecheck, lint, 375 tests, build clean; not yet browser-tested; .ics import into calendar apps UNVERIFIED | 4a0fbc4 |
+| E. Course-grounded AI tutor shell (retrieval, citations, provider interface; OFF, no provider) | built; typecheck, lint, 439 tests, build clean; not yet browser-tested | see git log |
 
 ## Decisions made for the owner
 
@@ -37,6 +38,10 @@
 - D: calendar never pre-fills dates; 1000 entries per student; analytics counts only the viewer's rows, excludes unscored answers, names weak topics only from 5 scored answers (constants in `src/server/analytics/constants.ts`).
 - D: migration `drizzle/0007_study_calendar.sql` (1 table, additive). Dashboard "progress coming soon" card replaced by an Analytics link.
 - D not built: reminders, recurring entries, .ics import/feed, per-user time zone.
+- E: tutor is OFF by default and needs BOTH an admin flag and a configured provider; `PROVIDER_FACTORIES` is empty on purpose, so it cannot turn on. No AI SDK, no key, no network call (checked: no AI package in `package.json`, no `fetch` in `src/server/tutor`). `/tutor` offers plain "search the course sources" with citations, labelled as search, not as an AI answer.
+- E: constants in `src/server/tutor/constants.ts`: 10 questions per student per day (admin-changeable 1 to 200), context 6000 characters, unverified answers excluded (`INCLUDE_UNVERIFIED_ANSWERS = false`), previous offerings excluded unless ticked. Documents are matched on title/topic/description only (no extracted text exists; no PDF parser added).
+- E: migration `drizzle/0008_ai_tutor_usage.sql` (1 table, counts only, no question text).
+- OWNER DECISION STILL OPEN: AI provider choice and budget (see `docs/ai-tutor.md`).
 
 ## Noted for later blocks
 

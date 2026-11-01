@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import type { ComponentType, SVGProps } from "react";
-import { CalendarIcon, CardsIcon, ChartIcon, ChevronRightIcon, DownloadIcon, PassesIcon, QuizIcon } from "@/components/icons";
+import { CalendarIcon, CardsIcon, ChartIcon, ChevronRightIcon, DownloadIcon, PassesIcon, QuizIcon, SparkleIcon } from "@/components/icons";
 import { PrivacyNote } from "@/components/study-ui";
 import { Notice, PageHeader, Panel } from "@/components/ui";
 import { getDb } from "@/db/client";
@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: (await getTranslations("studyTools"))("title") };
 }
 
-type Tile = { href: string; key: "practice" | "flashcards" | "quizzes" | "progress" | "calendar" | "analytics" | "export"; icon: ComponentType<SVGProps<SVGSVGElement>>; line: string };
+type Tile = { href: string; key: "practice" | "flashcards" | "quizzes" | "progress" | "calendar" | "analytics" | "tutor" | "export"; icon: ComponentType<SVGProps<SVGSVGElement>>; line: string };
 
 /** The Study hub: one entry per tool, each with a real number (never an invented one). */
 export default async function StudyHubPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
@@ -61,6 +61,7 @@ export default async function StudyHubPage({ searchParams }: { searchParams: Pro
     { href: "/practice/progress", key: "progress", icon: ChartIcon, line: progress.hasData ? t("hub.progressLine", { count: progress.totals.attempts }) : t("hub.progressNone") },
     { href: "/calendar", key: "calendar", icon: CalendarIcon, line: t("hub.calendarLine", { count: calendarCount }) },
     { href: "/analytics", key: "analytics", icon: ChartIcon, line: t("hub.analyticsLine") },
+    { href: "/tutor", key: "tutor", icon: SparkleIcon, line: t("hub.tutorLine") },
     { href: `/practice/export${query}`, key: "export", icon: DownloadIcon, line: t("hub.exportLine") },
   ];
 

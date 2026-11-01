@@ -102,3 +102,8 @@ question page, topic page, Related panel or in search. Topics are shared course 
 only. Audit entries for notes record ids and version numbers, never text. Notes are deleted with the account (cascade). Same
 caveat as private documents: this does not encrypt notes from the machine operator, and there is no user-facing "erase all my data"
 screen yet.
+
+
+## AI tutor privacy — 2026-11-01
+
+The tutor is off and has no provider: no question, note or document text leaves the server. The retrieval layer reuses the library, notes and published-question rules, so a student's search (and any future prompt) can contain only what that student may open: never another student's private note or document, and never a non-published question or an unverified answer (tests in `tests/tutor.test.ts`). Usage rows store counts, not text. If a provider is ever connected, the question and the matched excerpts, including the student's own private notes, would be sent to that third party; the conditions to settle first (Law 25 assessment, no-training terms, student notice and opt-in, rights over shared material) are listed in `docs/ai-tutor.md`. Retrieved text is wrapped as quoted data before it reaches any model (prompt-injection mitigation, not a guarantee).

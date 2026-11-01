@@ -87,6 +87,7 @@ Tables (see `src/db/schema/`):
 | `resource_reports` | Problem reports; one open report per person per document (partial unique index) |
 | `course_topics`, `course_notes`, `course_note_versions`, `resource_topics`, `note_topics`, `question_topics`, `resource_question_links`, `note_question_links` | Course library (topics, private notes with versions, link tables). See `docs/library-topics.md` |
 | `study_calendar_entries` | The student's own calendar entries (private, `user_id` owner-only). See `docs/calendar-analytics.md` |
+| `tutor_usage` | One row per question sent to an AI provider (counts only), for the per-student daily limit. Empty while no provider exists. See `docs/ai-tutor.md` |
 
 ### Shared documents (Phase 2)
 - **Current vs historical** is computed, not stored: a document tied to the course's most recent offering (latest academic year, then fall < winter < summer) is *current*; one tied to an older offering is *historical*; one with no offering is *general* and shown with current material. Adding a new offering automatically moves older material to the archive without editing it.
@@ -109,7 +110,7 @@ Constraints are enforced by the database too (unique codes, year of study 1–8,
 | Notes & outlines (Phase 2) | ✅ Implemented — see "Shared documents" above. |
 | Exam passes (Phase 3) | `questions` linked to offerings, with status (submitted → verified/rejected); reuse the Phase 2 moderation queue, reports pattern and audit log. |
 | Flashcards & Anki (Phase 4) | 🔄 First version built: `src/server/study/*`, tables in `src/db/schema/study.ts`, screens under `/practice`. See `docs/study-tools.md`. |
-| AI tutors (Phase 5) | Text chunks + embeddings in Postgres (`pgvector`), retrieval filtered by offering; provider behind an interface. |
+| AI tutors (Phase 5) | 🔄 Grounding layer built, tutor OFF: keyword retrieval (BM25, no embeddings yet) filtered by course and offering, citations, provider behind the `TutorProvider` interface with no provider. See `docs/ai-tutor.md`. Embeddings (`pgvector`) only if keyword search proves too weak. |
 | Audio (Phase 6) | Uploads to private storage; a transcription provider interface; transcripts become searchable chunks. |
 
 ## Testing

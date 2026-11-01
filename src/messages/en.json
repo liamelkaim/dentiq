@@ -33,7 +33,8 @@
     "recordings": "Recordings",
     "analytics": "Analytics",
     "study": "Study",
-    "calendar": "Calendar"
+    "calendar": "Calendar",
+    "off": "Off"
   },
   "home": {
     "welcome": "Welcome back, {name}.",
@@ -295,7 +296,9 @@
       "notVerified": "Email not confirmed",
       "you": "you",
       "joined": "Joined {date}"
-    }
+    },
+    "tutor": "AI tutor settings",
+    "tutorHelp": "Off. Needs a provider and a budget."
   },
   "resources": {
     "title": "Resources",
@@ -987,7 +990,12 @@
         "body": "Activity, accuracy and cards due, from your own data only."
       },
       "calendarLine": "{count, plural, =0 {No entries yet} one {# entry} other {# entries}}",
-      "analyticsLine": "Never compared with other students"
+      "analyticsLine": "Never compared with other students",
+      "tutor": {
+        "title": "AI tutor",
+        "body": "Search the sources of a course. The tutor itself is off until a provider and a budget exist."
+      },
+      "tutorLine": "Off: needs a provider and a budget"
     },
     "scope": {
       "course": "Course",
@@ -1659,6 +1667,120 @@
       "accuracy": "Accuracy is points divided by scored answers, where correct is 1 point and partly right is half a point.",
       "activeDay": "A day with activity has at least one recorded answer or card review.",
       "due": "A card is due when its scheduled review time has passed. New cards have no schedule yet and are counted apart."
+    }
+  },
+  "tutor": {
+    "title": "AI tutor",
+    "subtitle": "A tutor for one course that answers only from the sources you may open, and cites them.",
+    "badge": {
+      "off": "Off",
+      "noProvider": "No provider",
+      "ready": "Ready"
+    },
+    "status": {
+      "off": {
+        "title": "The tutor is off: it needs an AI provider and a budget",
+        "body": "No provider has been chosen and no budget approved, so Dentiq generates no answers. Nothing you type on this page is sent anywhere. It stays on this server."
+      },
+      "noProvider": {
+        "title": "Switched on, but no provider is configured",
+        "body": "An administrator switched the tutor on, but there is no AI provider on the server, so it still generates no answers and sends nothing anywhere."
+      },
+      "ready": {
+        "title": "A provider is configured",
+        "body": "The tutor is switched on and a provider exists on the server. The question form for it has not been built or checked yet, so it is not offered here."
+      }
+    },
+    "search": {
+      "title": "Search the course sources",
+      "description": "This is a plain search, not an AI answer. It finds passages in the sources you may open for one course and shows each with where it comes from. Nothing is written or summarised for you.",
+      "course": "Course",
+      "chooseCourse": "Choose a course",
+      "query": "Search for",
+      "queryHint": "Words from your question. Accents and capital letters do not matter.",
+      "includeHistorical": "Also search previous offerings",
+      "includeHistoricalHint": "Older material may be outdated: content, instructor or exams may have changed. It is listed after the current material and labelled.",
+      "submit": "Search the sources",
+      "noCoursesTitle": "No courses yet",
+      "noCourses": "The catalog is empty, so there is nothing to search.",
+      "pickCourseTitle": "Choose a course and type a search",
+      "pickCourse": "Results appear here, each with its source."
+    },
+    "results": {
+      "title": "Passages found",
+      "count": "{count, plural, =0 {No passage found} one {# passage found} other {# passages found}}",
+      "forQuery": "For \"{q}\" in {course}",
+      "noneTitle": "Nothing in your sources matches",
+      "none": "No passage in the sources you may open for this course matches these words. A tutor would have to say it has no source for this too. Try other words, or check the spelling.",
+      "scope": "Searched {documents, plural, =0 {no documents} one {# document} other {# documents}}, {notes, plural, =0 {none of your notes} one {# of your notes} other {# of your notes}} and {questions, plural, =0 {no published exam questions with a verified answer} one {# published exam question with a verified answer} other {# published exam questions with a verified answer}}.",
+      "documentsMetadata": "Dentiq does not read inside uploaded files yet, so documents are matched on their title, topic and description only.",
+      "historicalSkipped": "{count, plural, one {# source from previous offerings was not searched.} other {# sources from previous offerings were not searched.}} Tick \"Also search previous offerings\" to include {count, plural, one {it} other {them}}.",
+      "excerpt": "Excerpt",
+      "open": "Open the source",
+      "metadataOnly": "Matched on title, topic or description only",
+      "verifiedAnswer": "Verified answer",
+      "currentGroup": "Current offering",
+      "historicalGroup": "Previous offerings, may be outdated"
+    },
+    "origin": {
+      "official": "Official course material (professor or school)",
+      "student": "Student-contributed material",
+      "ownNote": "Your own notes",
+      "ownDocument": "Your own document (private)"
+    },
+    "type": {
+      "document": "Document",
+      "note": "Note",
+      "question": "Exam question"
+    },
+    "period": {
+      "current": "Current offering",
+      "historical": "Previous offering, may be outdated"
+    },
+    "offering": {
+      "year": "{year}",
+      "yearTerm": "{year}, {term}",
+      "none": "No offering set",
+      "exam": "Exam {year}"
+    },
+    "how": {
+      "title": "How the tutor will work once it is switched on",
+      "sources": "It will answer only from the sources above for the course you pick: official material first, then student-contributed material, then your own notes. Nobody else's private notes or documents are ever included.",
+      "citations": "Every answer will list the passages it relies on, with a link to each. If no source supports an answer, it will say so instead of guessing.",
+      "current": "Current-offering material is used by default. Previous offerings are only added when you ask, and are labelled.",
+      "limits": "Planned limits: {limit, plural, one {# question} other {# questions}} per student per day, and up to {chars} characters of sources sent with each question. An administrator can change both.",
+      "privacy": "Only your question and the selected passages would leave this server, and only after an administrator turns the tutor on and a provider is configured. Today nothing leaves."
+    },
+    "errors": {
+      "noAccess": "Your account needs to be approved before you can use the tutor.",
+      "off": "The tutor is off.",
+      "noProvider": "No AI provider is configured, so the tutor cannot answer.",
+      "questionRequired": "Type a question.",
+      "questionTooLong": "The question is too long.",
+      "courseNotFound": "This course was not found.",
+      "dailyLimit": "You reached today's question limit. It resets tomorrow.",
+      "providerFailed": "The provider did not answer. This question was not counted.",
+      "badCitations": "The answer was refused because it cited a source that was not provided.",
+      "outOfRange": "A value is out of range. Use whole numbers within the limits shown.",
+      "forbidden": "Only administrators can change these settings.",
+      "invalid": "Something went wrong."
+    },
+    "admin": {
+      "title": "AI tutor settings",
+      "subtitle": "The switch and the limits for the course tutor.",
+      "adminHelp": "Off. Needs a provider and a budget.",
+      "warningTitle": "Turning this on does nothing without a provider",
+      "warning": "Dentiq has no AI provider: none has been chosen and no budget approved. Switching the tutor on changes no behaviour and generates no answers. It only takes effect once a provider is added to the server by a developer.",
+      "providerLabel": "Provider on the server",
+      "providerNone": "None configured",
+      "enabled": "Allow the tutor (still needs a provider)",
+      "limitsTitle": "Limits",
+      "dailyLimit": "Questions per student per day",
+      "dailyLimitHint": "Between {min} and {max}. Counted per student, per day in the Toronto time zone.",
+      "maxContext": "Characters of sources per question",
+      "maxContextHint": "Between {min} and {max}. The most source text that would be sent with one question.",
+      "save": "Save settings",
+      "saved": "Settings saved."
     }
   }
 }
