@@ -44,3 +44,10 @@ Status key: **DONE** = built and tested in code (a real host still has to confir
 | Resend (verified sender, new key) | BLOCKED: needs a Resend account; a vercel.app address cannot send from its own domain, so the sandbox sender only reaches the account owner's email. |
 | New `BETTER_AUTH_SECRET`, env vars, preview deploy, live checks, production deploy | NOT STARTED (depend on the four rows above) |
 | Latest migration is now `0010_file_retention` (after `0009_rate_limits`) | NOTE |
+
+### Vercel findings (read-only, after owner signed in)
+
+- A Vercel project named `dentiq` already exists (created before tonight, never deployed). It still holds the OLD credentials: Neon integration resource `neon-crimson-marble` plus its `DATABASE_*`/`PG*` variables, a Blob store (`BLOB_*`), `RESEND_API_KEY`, `EMAIL_FROM`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `ADMIN_EMAILS`. Values were not read.
+- Rule from the owner: never reuse old credentials. So before deploying: detach the old Neon resource (`vercel integration resource disconnect neon-crimson-marble dentiq`, does not delete data), remove the old variables, create a NEW Neon database, a NEW private Blob store, a NEW Resend key and a NEW `BETTER_AUTH_SECRET`, then delete the old Neon resource and Blob store after confirming they hold nothing needed.
+- BLOCKED: the detach command was refused by Claude Code's permission classifier (modifies a shared resource). Needs the owner to run it or to allow it.
+- Resend is available as a Vercel Marketplace product (`resend/resend-email`); a vercel.app address cannot send from its own domain, so mail only reaches the account owner until a domain is verified.
