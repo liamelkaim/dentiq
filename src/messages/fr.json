@@ -34,7 +34,8 @@
     "analytics": "Analyses",
     "study": "Étudier",
     "calendar": "Calendrier",
-    "off": "Désactivé"
+    "off": "Désactivé",
+    "profile": "Profil"
   },
   "home": {
     "welcome": "Bon retour, {name}.",
@@ -223,7 +224,10 @@
     "email": "Courriel",
     "role": "Rôle",
     "status": "Statut",
-    "emailVerified": "Courriel confirmé"
+    "emailVerified": "Courriel confirmé",
+    "profileTitle": "Profil et données",
+    "profileHelp": "Modifiez votre nom affiché, téléchargez une copie de vos données ou supprimez votre compte.",
+    "openProfile": "Ouvrir le profil"
   },
   "admin": {
     "title": "Administration",
@@ -478,7 +482,7 @@
     "back": "Retour",
     "privacyLink": "Confidentialité",
     "termsLink": "Conditions",
-    "updated": "Version provisoire, mise à jour le 31 octobre 2026. Pas encore révisée par un juriste.",
+    "updated": "Version provisoire, mise à jour le 1er novembre 2026. Pas encore révisée par un juriste.",
     "privacy": {
       "title": "Confidentialité",
       "intro": "Cette page explique ce que Dentiq conserve à votre sujet et pourquoi. C'est une version de travail rédigée pour l'état actuel de l'application.",
@@ -500,7 +504,7 @@
       "privateTitle": "Matériel privé",
       "private": "Le matériel que vous marquez comme personnel reste visible pour vous seulement. Le matériel partagé est visible par les utilisateurs approuvés. L'accès est vérifié sur le serveur, pas seulement dans l'interface.",
       "rightsTitle": "Vos choix",
-      "rights": "Vous pouvez demander à voir, corriger ou supprimer les données de votre compte. Les coordonnées pour ces demandes seront ajoutées avant le lancement public.",
+      "rights": "Vous pouvez télécharger une copie de vos données et supprimer vous-même votre compte, comme décrit plus haut. Pour toute autre demande concernant vos données, utilisez le contact ci-dessous une fois qu'il sera complété.",
       "reviewTitle": "Statut",
       "review": "Cette version provisoire n'a pas été révisée par un juriste. Elle ne prétend pas respecter la Loi 25 du Québec ni aucune autre loi."
     },
@@ -532,6 +536,18 @@
           "title": "Changements",
           "body": "Ces conditions peuvent changer avant et après le lancement. Nous mettrons à jour la date en haut de cette page."
         }
+      ]
+    },
+    "draftBanner": "VERSION PROVISOIRE, non révisée par un juriste. Ce texte décrit l'application telle qu'elle fonctionne aujourd'hui et ne constitue pas un avis juridique.",
+    "contactTitle": "Contact pour les demandes de confidentialité",
+    "contactPlaceholder": "[À COMPLÉTER AVANT LE LANCEMENT : la personne responsable et une adresse de contact pour les demandes de confidentialité. Rien n'a été mis en place pour l'instant.]",
+    "privacyExtra": {
+      "exportDeleteTitle": "Téléchargement et suppression",
+      "exportDelete": [
+        "Depuis votre profil, vous pouvez télécharger un fichier JSON avec vos propres données : votre profil et vos historiques de connexion, vos téléversements (noms et détails, pas les fichiers), les questions d'examen que vous avez proposées, vos notes et leurs versions, vos données d'étude, vos entrées de calendrier et le nombre de questions posées au tuteur. Il ne contient jamais votre mot de passe ni les données d'autres personnes.",
+        "Depuis votre profil, vous pouvez supprimer votre compte. Cela retire votre compte, vos sessions, vos notes, vos données d'étude, vos entrées de calendrier, le nombre de questions posées au tuteur, vos documents personnels et leurs fichiers, ainsi que tout ce que vous avez soumis sans que cela soit publié.",
+        "Les documents et questions d'examen que vous avez proposés et qui ont déjà été publiés ou masqués par un modérateur restent, détachés de votre compte, parce que d'autres étudiants peuvent s'en servir. Les traces d'audit restent sans votre nom.",
+        "Vous pouvez modifier votre nom affiché depuis votre profil. Le changement d'adresse courriel n'est pas encore disponible."
       ]
     }
   },
@@ -1781,6 +1797,97 @@
       "maxContextHint": "Entre {min} et {max}. La plus grande quantité de texte de sources qui serait envoyée avec une question.",
       "save": "Enregistrer les réglages",
       "saved": "Réglages enregistrés."
+    }
+  },
+  "account": {
+    "title": "Profil",
+    "subtitle": "Les détails de votre compte, vos préférences et vos données. Personne d'autre ne voit cette page.",
+    "identityTitle": "Vos renseignements",
+    "name": "Nom affiché",
+    "nameHelp": "Visible par vous et par les modérateurs. {max} caractères au maximum.",
+    "nameSave": "Enregistrer le nom",
+    "nameSaved": "Nom enregistré.",
+    "email": "Courriel",
+    "emailVerified": "Courriel confirmé",
+    "emailChangePlanned": "Le changement d'adresse courriel est prévu et n'est pas encore disponible.",
+    "role": "Rôle",
+    "status": "Statut",
+    "memberSince": "Compte créé le",
+    "preferencesTitle": "Préférences",
+    "preferencesHelp": "Enregistrées dans ce navigateur. Les mêmes réglages se trouvent dans Réglages.",
+    "openSettings": "Ouvrir les réglages",
+    "dataTitle": "Vos données",
+    "dataHelp": "Une copie de ce que Dentiq conserve à votre sujet, et le moyen de l'effacer.",
+    "exportTitle": "Télécharger une copie de vos données",
+    "exportBody": "Un fichier JSON qui contient seulement vos propres données. Il est produit sur le serveur pour votre compte et n'est conservé nulle part.",
+    "exportButton": "Télécharger mes données (JSON)",
+    "exportIncludesTitle": "Inclus",
+    "exportIncludes": [
+      "Votre profil et vos historiques de connexion (dates, navigateur, adresse IP).",
+      "Vos téléversements personnels et partagés : titres, noms de fichier, types et tailles.",
+      "Les questions d'examen que vous avez proposées, avec leur statut.",
+      "Vos notes et chacune de leurs versions enregistrées.",
+      "Vos réponses, marques, cartes mémoire, quiz et historique de révision.",
+      "Vos entrées de calendrier et le nombre de questions posées au tuteur."
+    ],
+    "exportExcludesTitle": "Non inclus",
+    "exportExcludes": [
+      "Votre mot de passe ou tout secret de connexion.",
+      "Les fichiers et images eux-mêmes, seulement leurs détails.",
+      "Tout ce qui concerne d'autres étudiants, ou les dossiers de modération sur d'autres personnes.",
+      "Les sauvegardes et les journaux techniques de l'hébergeur."
+    ],
+    "exportLimits": "Limité à {rows} lignes par table, {mb} Mo au total et {perHour} téléchargements par heure.",
+    "deleteTitle": "Supprimer mon compte",
+    "deleteBody": "Retire définitivement votre compte et vos données privées. Cette action est irréversible.",
+    "deleteLink": "Lire et supprimer mon compte",
+    "legalTitle": "Juridique",
+    "legalDraft": "Les pages de confidentialité et de conditions sont des versions provisoires non révisées par un juriste.",
+    "delete": {
+      "title": "Supprimer mon compte",
+      "back": "Retour au profil",
+      "intro": "Lisez ce qui suit avant de continuer. La suppression de votre compte est irréversible.",
+      "deletedTitle": "Ce qui est supprimé",
+      "deleted": [
+        "Votre compte, vos historiques de connexion et vos sessions ouvertes.",
+        "Vos notes et toutes leurs versions enregistrées.",
+        "Vos données d'étude : réponses, marques, cartes mémoire, quiz et historique de révision.",
+        "Vos entrées de calendrier et le nombre de questions posées au tuteur.",
+        "Vos documents personnels, y compris les fichiers conservés.",
+        "Les documents que vous avez téléversés et qui attendent encore une révision, et les questions d'examen encore en attente ou refusées, y compris leurs fichiers."
+      ],
+      "keptTitle": "Ce qui est conservé, sans votre nom",
+      "kept": [
+        "Les documents et questions d'examen que vous avez proposés et qui ont déjà été publiés ou masqués par un modérateur, avec leurs versions et leurs images.",
+        "Les signalements de problème que vous avez faits.",
+        "Les traces d'audit des actions, avec la date et le type d'action, mais sans nom ni courriel."
+      ],
+      "keptWhy": "Les contributions publiées ont été partagées avec la communauté et d'autres étudiants peuvent s'en servir pour étudier : elles restent donc. Elles sont détachées de votre compte : votre nom et votre courriel n'y sont plus liés. Si vous voulez qu'une contribution publiée soit aussi retirée, demandez à un modérateur de la retirer avant de supprimer votre compte.",
+      "draftNote": "Version provisoire. Ces règles n'ont pas été révisées par un juriste et seront vérifiées au regard de la Loi 25 du Québec avant le lancement public.",
+      "lastAdmin": "Vous êtes le seul administrateur. Nommez un autre compte approuvé comme administrateur avant de supprimer celui-ci.",
+      "confirmLabel": "Saisissez votre adresse courriel pour confirmer",
+      "confirmHint": "Saisissez exactement : {email}",
+      "passwordLabel": "Votre mot de passe",
+      "passwordHint": "Nous le redemandons pour nous assurer que c'est bien vous.",
+      "submit": "Supprimer mon compte définitivement",
+      "cancel": "Annuler"
+    },
+    "deleted": {
+      "title": "Compte supprimé",
+      "body": "Votre compte et vos données privées ont été retirés. Les contributions publiées restent, sans votre nom.",
+      "signIn": "Retour à la connexion"
+    },
+    "errors": {
+      "invalid": "Quelque chose n'est pas valide. Vérifiez ce que vous avez saisi et réessayez.",
+      "nameRequired": "Saisissez un nom affiché.",
+      "nameTooLong": "Ce nom est trop long.",
+      "notFound": "Ce compte est introuvable.",
+      "confirmationMismatch": "L'adresse courriel saisie ne correspond pas à votre compte.",
+      "wrongPassword": "Le mot de passe est incorrect.",
+      "lastAdmin": "Vous êtes le seul administrateur : ce compte ne peut pas être supprimé.",
+      "tooManyAttempts": "Trop de tentatives. Attendez quelques minutes et réessayez.",
+      "tooLarge": "Vos données sont trop volumineuses pour un seul fichier d'exportation.",
+      "tooManyExports": "Trop de téléchargements. Réessayez plus tard."
     }
   }
 }

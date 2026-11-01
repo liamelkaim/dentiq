@@ -20,7 +20,8 @@
 | B. Study tools (practice, progress, flashcards, quizzes, export) | built; typecheck, lint, 269 tests, build clean; not yet browser-tested; Anki All in One compatibility UNVERIFIED | 72d3700 |
 | C. Notes and course library (topics, links, note versions, search, current vs previous) | built; typecheck, lint, 303 tests, build clean; not yet browser-tested | c3b1a3f |
 | D. Calendar and analytics (local only) | built; typecheck, lint, 375 tests, build clean; not yet browser-tested; .ics import into calendar apps UNVERIFIED | 4a0fbc4 |
-| E. Course-grounded AI tutor shell (retrieval, citations, provider interface; OFF, no provider) | built; typecheck, lint, 439 tests, build clean; not yet browser-tested | see git log |
+| E. Course-grounded AI tutor shell (retrieval, citations, provider interface; OFF, no provider) | built; typecheck, lint, 439 tests, build clean; not yet browser-tested | 4ade38a |
+| F. Profile and account (profile, own-data JSON export, account deletion, legal draft banners) | built; typecheck, lint, 468 tests, build clean; not yet browser-tested; deletion semantics need Law 25 legal review | see git log |
 
 ## Decisions made for the owner
 
@@ -42,6 +43,9 @@
 - E: constants in `src/server/tutor/constants.ts`: 10 questions per student per day (admin-changeable 1 to 200), context 6000 characters, unverified answers excluded (`INCLUDE_UNVERIFIED_ANSWERS = false`), previous offerings excluded unless ticked. Documents are matched on title/topic/description only (no extracted text exists; no PDF parser added).
 - E: migration `drizzle/0008_ai_tutor_usage.sql` (1 table, counts only, no question text).
 - OWNER DECISION STILL OPEN: AI provider choice and budget (see `docs/ai-tutor.md`).
+- F: no migration needed (author columns already nullable with SET NULL). Deletion removes private data and detaches (anonymizes) published contributions; typed email plus password re-check; last-admin guard. Constants in `src/server/account/constants.ts` (export cap 25 MB / 50,000 rows per table, 5 exports per hour, 5 deletion attempts per 15 minutes; the limiter is in-memory per server instance, so it needs a shared store before multi-instance hosting).
+- F: Better Auth's own deleteUser stays disabled. Better Auth's verify-password endpoint answers over HTTP for the caller's own password (checks only the caller); left as is.
+- F: privacy and terms keep a DRAFT banner and a contact placeholder marked TO FILL IN (no address invented). Email change is marked planned.
 
 ## Noted for later blocks
 

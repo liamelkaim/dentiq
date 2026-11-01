@@ -51,8 +51,8 @@ Decision needed before launch: which combination to require.
 - [ ] HTTPS deployment; confirm `BETTER_AUTH_URL` uses `https://`.
 - [ ] Shared rate-limit storage if running more than one server instance.
 - [ ] Content Security Policy header.
-- [ ] Account deletion and data export for users.
-- [ ] Privacy policy and terms (French and English).
+- [~] Account deletion and data export for users: built 2026-11-01 (`docs/account-data.md`); **needs legal (Law 25) review** and a browser test.
+- [~] Privacy policy and terms (French and English): drafts exist with a visible DRAFT banner and a contact placeholder; **not reviewed by a lawyer**, contact not filled in.
 - [ ] Dependency update routine (`pnpm outdated`, `pnpm audit`).
 
 ## Legal questions to review (Québec / Canada)
@@ -107,3 +107,8 @@ screen yet.
 ## AI tutor privacy — 2026-11-01
 
 The tutor is off and has no provider: no question, note or document text leaves the server. The retrieval layer reuses the library, notes and published-question rules, so a student's search (and any future prompt) can contain only what that student may open: never another student's private note or document, and never a non-published question or an unverified answer (tests in `tests/tutor.test.ts`). Usage rows store counts, not text. If a provider is ever connected, the question and the matched excerpts, including the student's own private notes, would be sent to that third party; the conditions to settle first (Law 25 assessment, no-training terms, student notice and opt-in, rights over shared material) are listed in `docs/ai-tutor.md`. Retrieved text is wrapped as quoted data before it reaches any model (prompt-injection mitigation, not a guarantee).
+
+
+## Profile, export and deletion privacy — 2026-11-01
+
+`/profile/export` builds the JSON from explicit column lists, filtered on the signed-in user's id, and is sent `private, no-store` as an attachment. It never contains password hashes, session tokens, storage keys, file fingerprints, other students' data or moderator identities (tests in `tests/account.test.ts`). Account deletion re-checks the password through Better Auth, requires the typed email, refuses the last approved administrator, runs in one transaction, deletes private rows and their stored files, detaches published contributions (author columns become empty) and keeps an audit entry with counts only. Better Auth's own `/delete-user` endpoint stays disabled (tested). The export and deletion forms are rate limited in memory per server instance. Everything here is a draft pending legal review; see `docs/account-data.md` for the open questions.

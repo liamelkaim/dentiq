@@ -34,7 +34,8 @@
     "analytics": "Analytics",
     "study": "Study",
     "calendar": "Calendar",
-    "off": "Off"
+    "off": "Off",
+    "profile": "Profile"
   },
   "home": {
     "welcome": "Welcome back, {name}.",
@@ -223,7 +224,10 @@
     "email": "Email",
     "role": "Role",
     "status": "Status",
-    "emailVerified": "Email confirmed"
+    "emailVerified": "Email confirmed",
+    "profileTitle": "Profile and data",
+    "profileHelp": "Edit your display name, download a copy of your data or delete your account.",
+    "openProfile": "Open profile"
   },
   "admin": {
     "title": "Admin",
@@ -478,7 +482,7 @@
     "back": "Back",
     "privacyLink": "Privacy",
     "termsLink": "Terms",
-    "updated": "Draft, last updated October 31, 2026. Not yet reviewed by a lawyer.",
+    "updated": "Draft, last updated November 1, 2026. Not yet reviewed by a lawyer.",
     "privacy": {
       "title": "Privacy",
       "intro": "This explains what Dentiq stores about you and why. It is a working draft written for the current version of the app.",
@@ -500,7 +504,7 @@
       "privateTitle": "Private material",
       "private": "Material you mark as personal stays visible only to you. Shared material is visible to approved users. Access is checked on the server, not only in the interface.",
       "rightsTitle": "Your choices",
-      "rights": "You can ask to see, correct or delete your account data. Contact details for these requests will be added before the public launch.",
+      "rights": "You can download a copy of your data and delete your account yourself, as described above. For any other request about your data, use the contact below once it is filled in.",
       "reviewTitle": "Status",
       "review": "This draft has not been reviewed by a legal professional. It does not claim compliance with Quebec Law 25 or any other law."
     },
@@ -532,6 +536,18 @@
           "title": "Changes",
           "body": "These terms may change before and after launch. We will update the date at the top of this page."
         }
+      ]
+    },
+    "draftBanner": "DRAFT, not legally reviewed. This text describes the app as it works today and is not legal advice.",
+    "contactTitle": "Contact for privacy requests",
+    "contactPlaceholder": "[TO FILL IN BEFORE LAUNCH: the person in charge and a contact address for privacy requests. Nothing has been set up yet.]",
+    "privacyExtra": {
+      "exportDeleteTitle": "Download and deletion",
+      "exportDelete": [
+        "From your profile you can download a JSON file with your own data: your profile and sign-in records, your uploads (names and details, not the files), exam questions you contributed, your notes and versions, your study data, your calendar entries and your tutor usage counts. It never contains your password or other people's data.",
+        "From your profile you can delete your account. This removes your account, sessions, notes, study data, calendar entries, tutor usage counts, personal documents and their files, and anything you submitted that was never published.",
+        "Documents and exam questions you contributed that were already published or hidden by a moderator stay, detached from your account, because other students may use them. Audit records stay without your name.",
+        "You can change your display name from your profile. Changing your email address is not available yet."
       ]
     }
   },
@@ -1781,6 +1797,97 @@
       "maxContextHint": "Between {min} and {max}. The most source text that would be sent with one question.",
       "save": "Save settings",
       "saved": "Settings saved."
+    }
+  },
+  "account": {
+    "title": "Profile",
+    "subtitle": "Your own account details, preferences and data. Nobody else sees this page.",
+    "identityTitle": "Your details",
+    "name": "Display name",
+    "nameHelp": "Shown to you and to moderators. Up to {max} characters.",
+    "nameSave": "Save name",
+    "nameSaved": "Name saved.",
+    "email": "Email",
+    "emailVerified": "Email confirmed",
+    "emailChangePlanned": "Changing your email address is planned and not available yet.",
+    "role": "Role",
+    "status": "Status",
+    "memberSince": "Account created",
+    "preferencesTitle": "Preferences",
+    "preferencesHelp": "Saved in this browser. The same controls are in Settings.",
+    "openSettings": "Open settings",
+    "dataTitle": "Your data",
+    "dataHelp": "A copy of what Dentiq holds about you, and the way to remove it.",
+    "exportTitle": "Download a copy of your data",
+    "exportBody": "A JSON file with your own data only. It is built on the server for your account and is not stored anywhere.",
+    "exportButton": "Download my data (JSON)",
+    "exportIncludesTitle": "Included",
+    "exportIncludes": [
+      "Your profile and your sign-in records (dates, browser, IP address).",
+      "Your personal and shared uploads: titles, file names, types and sizes.",
+      "Exam questions you contributed, with their status.",
+      "Your notes and every saved version.",
+      "Your answers, flags, flashcards, quizzes and review history.",
+      "Your calendar entries and your tutor usage counts."
+    ],
+    "exportExcludesTitle": "Not included",
+    "exportExcludes": [
+      "Your password or any sign-in secret.",
+      "The files and images themselves, only their details.",
+      "Anything about other students, or moderation records about other people.",
+      "Backups and technical logs of the hosting provider."
+    ],
+    "exportLimits": "Limited to {rows} rows per table, {mb} MB in total and {perHour} downloads per hour.",
+    "deleteTitle": "Delete my account",
+    "deleteBody": "Permanently removes your account and your private data. This cannot be undone.",
+    "deleteLink": "Review and delete my account",
+    "legalTitle": "Legal",
+    "legalDraft": "The privacy and terms pages are drafts that have not been reviewed by a lawyer.",
+    "delete": {
+      "title": "Delete my account",
+      "back": "Back to profile",
+      "intro": "Read this before you continue. Deleting your account cannot be undone.",
+      "deletedTitle": "What is deleted",
+      "deleted": [
+        "Your account, your sign-in records and your open sessions.",
+        "Your notes and all their saved versions.",
+        "Your study data: answers, flags, flashcards, quizzes and review history.",
+        "Your calendar entries and your tutor usage counts.",
+        "Your personal documents, including the stored files.",
+        "Documents you uploaded that are still waiting for review, and exam questions that are still pending or were rejected, including their files."
+      ],
+      "keptTitle": "What is kept, without your name",
+      "kept": [
+        "Documents and exam questions you contributed that were already published or hidden by a moderator, with their versions and images.",
+        "Problem reports you filed.",
+        "Audit records of actions, with the date and the type of action but no name and no email."
+      ],
+      "keptWhy": "Published contributions were shared with the community and other students may study from them, so they stay. They are detached from your account: your name and email are no longer linked to them. If you want a published contribution removed as well, ask a moderator to remove it before you delete your account.",
+      "draftNote": "Draft. These rules have not been reviewed by a lawyer and will be checked against Quebec Law 25 before the public launch.",
+      "lastAdmin": "You are the only administrator. Make another account an approved administrator before deleting this one.",
+      "confirmLabel": "Type your email address to confirm",
+      "confirmHint": "Type exactly: {email}",
+      "passwordLabel": "Your password",
+      "passwordHint": "We ask again to make sure it is you.",
+      "submit": "Delete my account permanently",
+      "cancel": "Cancel"
+    },
+    "deleted": {
+      "title": "Account deleted",
+      "body": "Your account and your private data have been removed. Published contributions stay without your name.",
+      "signIn": "Back to sign in"
+    },
+    "errors": {
+      "invalid": "Something is not valid. Check what you typed and try again.",
+      "nameRequired": "Enter a display name.",
+      "nameTooLong": "That name is too long.",
+      "notFound": "This account was not found.",
+      "confirmationMismatch": "The email address you typed does not match your account.",
+      "wrongPassword": "The password is not correct.",
+      "lastAdmin": "You are the only administrator, so this account cannot be deleted.",
+      "tooManyAttempts": "Too many attempts. Wait a few minutes and try again.",
+      "tooLarge": "Your data is too large to export in one file.",
+      "tooManyExports": "Too many downloads. Try again later."
     }
   }
 }

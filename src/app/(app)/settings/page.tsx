@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { SignOutButton } from "@/components/app-shell";
 import { LanguageSwitcher, ThemeSwitcher } from "@/components/preferences";
-import { Badge, DescriptionList, PageHeader, Panel, Section } from "@/components/ui";
+import { Badge, ButtonLink, DescriptionList, PageHeader, Panel, Section } from "@/components/ui";
 import { requireUser } from "@/server/auth/session";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -50,9 +50,15 @@ export default async function SettingsPage() {
             },
           ]}
         />
-        <div className="mt-4">
+        <div className="mt-4 flex flex-wrap items-center gap-2">
           <SignOutButton className="border border-border-strong bg-surface" />
         </div>
+      </Section>
+
+      <Section title={t("settings.profileTitle")} description={t("settings.profileHelp")}>
+        <ButtonLink href="/profile" variant="secondary">
+          {t("settings.openProfile")}
+        </ButtonLink>
       </Section>
     </>
   );

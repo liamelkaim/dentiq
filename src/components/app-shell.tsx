@@ -175,7 +175,16 @@ export function AppShell({
             <ThemeSwitcher compact />
             <LanguageSwitcher compact />
           </div>
-          <div className="flex min-w-0 items-center gap-3 px-2">
+          {/* The user block opens the profile page (name, data export, account deletion). */}
+          <Link
+            href="/profile"
+            aria-label={`${t("nav.profile")}: ${user.name}`}
+            aria-current={isActive(pathname, "/profile") ? "page" : undefined}
+            className={cx(
+              "flex min-w-0 items-center gap-3 rounded-[10px] px-2 py-1.5 transition-colors hover:bg-surface-muted",
+              isActive(pathname, "/profile") && "bg-accent-soft",
+            )}
+          >
             <span aria-hidden="true" className="grid size-9 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-semibold text-accent">
               {initials(user.name)}
             </span>
@@ -183,7 +192,7 @@ export function AppShell({
               <span className="block truncate text-[13px] font-medium text-text">{user.name}</span>
               <span className="block truncate text-[12px] text-text-subtle">{t(`roles.${user.role}`)}</span>
             </span>
-          </div>
+          </Link>
           <SignOutButton className="justify-start" />
         </div>
       </aside>
@@ -226,6 +235,10 @@ export function AppShell({
       <main id="main" className="px-4 pt-6 pb-28 sm:px-6 lg:ml-64 lg:px-10 lg:pt-10 lg:pb-12">
         <div className="mx-auto w-full max-w-6xl">{children}</div>
         <p className="mx-auto mt-12 max-w-6xl text-[12px] text-text-subtle">{t("common.disclaimer")}</p>
+        <p className="mx-auto mt-1 flex max-w-6xl flex-wrap gap-x-4 text-[12px] text-text-subtle">
+          <Link href="/privacy" className="inline-flex min-h-11 items-center underline-offset-2 hover:underline">{t("legal.privacyLink")}</Link>
+          <Link href="/terms" className="inline-flex min-h-11 items-center underline-offset-2 hover:underline">{t("legal.termsLink")}</Link>
+        </p>
       </main>
 
       {/* Mobile tab bar */}
