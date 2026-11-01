@@ -6,22 +6,29 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useId, useState, type ReactNode } from "react";
+import { makeUploadAction } from "@/lib/upload-client";
 import {
-  editQuestionAction,
   markDuplicateAction,
   reportQuestionAction,
   reviewQuestionAction,
-  submitQuestionAction,
   unverifyAnswerAction,
   updatePassSettingsAction,
   verifyAnswerAction,
-  type PassFormState,
 } from "@/server/passes/actions";
+import type { PassFormState } from "@/server/passes/form-state";
 import { QUESTION_TYPES, type AnswerRule } from "@/server/passes/question-types";
 import { Button, Field, Input, Notice, Panel, Select, Textarea, cx } from "./ui";
 import { useKeepingForm as useKeepingFormBase } from "./use-keeping-form";
 
 const initial: PassFormState = { status: "idle" };
+
+// Questions with images go to /api/uploads (not a server action): see src/lib/upload-client.ts.
+const uploadFallback = {
+  tooLarge: { status: "error", message: "passes.errors.fileTooLarge", fieldErrors: { images: "passes.errors.fileTooLarge" } },
+  failed: { status: "error", message: "errors.generic" },
+} satisfies { tooLarge: PassFormState; failed: PassFormState };
+const submitQuestionAction = makeUploadAction<PassFormState>("question", uploadFallback);
+const editQuestionAction = makeUploadAction<PassFormState>("question-edit", uploadFallback);
 
 // Mirror constants in src/db/schema (kept out of the browser bundle).
 const terms = ["fall", "winter", "summer"] as const;

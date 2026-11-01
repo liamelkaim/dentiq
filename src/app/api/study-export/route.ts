@@ -4,6 +4,8 @@
 import { getDb } from "@/db/client";
 import { textError } from "@/server/api-errors";
 import { getCurrentUser } from "@/server/auth/session";
+import { checkRate } from "@/server/rate-limit/guard";
+import { RATE_STUDY_EXPORT } from "@/server/rate-limit/limits";
 import { contentDisposition } from "@/server/resources/files";
 import { canAccessLibrary } from "@/server/resources/service";
 import { loadCardLabels } from "@/server/study/card-labels";
@@ -20,6 +22,9 @@ export async function GET(request: Request) {
   const format = params.get("format") ?? "csv";
   if (!kind || !(exportKinds as readonly string[]).includes(kind)) return textError("unknownExport", 400, { "Cache-Control": "private, no-store" });
   if (!(exportFormats as readonly string[]).includes(format)) return textError("unknownFormat", 400, { "Cache-Control": "private, no-store" });
+
+  const rate = await checkRate(RATE_STUDY_EXPORT, viewer.id);
+  if (!rate.allowed) return textError("tooManyRequests", 429, { "Cache-Control": "private, no-store", "Retry-After": String(rate.retryAfterSeconds) });
 
   const result = await buildExport(
     getDb(),

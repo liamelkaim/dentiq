@@ -487,6 +487,7 @@
   },
   "apiErrors": {
     "tooManyExports": "Trop d'exportations, réessayez plus tard.",
+    "tooManyRequests": "Trop de requêtes. Patientez un instant et réessayez.",
     "exportTooLarge": "Vos données sont trop volumineuses pour être exportées dans un seul fichier.",
     "notFound": "Introuvable.",
     "unknownExport": "Exportation inconnue.",
@@ -953,6 +954,8 @@
   "search": {
     "title": "Recherche",
     "noQueryTitle": "Écrivez quelque chose à chercher",
+    "tooManyTitle": "Trop de recherches",
+    "tooMany": "Vous cherchez très vite. Attendez une minute et réessayez.",
     "noQueryBody": "Cherchez dans les documents, vos notes, les sujets des cours et les questions d'examen publiées.",
     "forQuery": "Résultats pour « {q} »",
     "documents": "{count, plural, =0 {Aucun document} one {# document} other {# documents}}",
@@ -1745,6 +1748,8 @@
       "noCoursesTitle": "Aucun cours pour l'instant",
       "noCourses": "Le catalogue est vide, il n'y a donc rien à chercher.",
       "pickCourseTitle": "Choisissez un cours et saisissez une recherche",
+      "tooManyTitle": "Trop de recherches",
+      "tooMany": "Vous cherchez très vite. Attendez une minute et réessayez.",
       "pickCourse": "Les résultats apparaissent ici, chacun avec sa source."
     },
     "results": {

@@ -8,3 +8,4 @@ export * from "./study";
 export * from "./library";
 export * from "./calendar";
 export * from "./tutor";
+export * from "./rate-limit";

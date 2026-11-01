@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import manifest from "@/app/manifest";
 import en from "@/messages/en.json";
 import fr from "@/messages/fr.json";
-import { buildCsp, buildHeaderRules } from "@/lib/security-headers";
+import { API_CSP, buildCsp, buildHeaderRules, buildNonceCsp, createNonce } from "@/lib/security-headers";
 
 const ROOT = path.resolve(__dirname, "..");
 const SRC = path.join(ROOT, "src");
@@ -335,25 +335,66 @@ describe("service worker (offline-safe shell)", () => {
 
 describe("security headers", () => {
   const rules = buildHeaderRules({ production: true });
-  const cspRule = rules.find((r) => r.headers.some((h) => h.key === "Content-Security-Policy"))!;
-  const csp = cspRule.headers.find((h) => h.key === "Content-Security-Policy")!.value;
+  const ruleWith = (predicate: (source: string) => boolean) => rules.find((r) => predicate(r.source) && r.headers.some((h) => h.key === "Content-Security-Policy"))!;
+  const nonce = createNonce();
+  const csp = buildNonceCsp(nonce);
 
   it("restricts everything to this origin and forbids plugins, framing and foreign forms", () => {
-    for (const directive of ["default-src 'self'", "connect-src 'self'", "object-src 'none'", "base-uri 'self'", "form-action 'self'", "frame-ancestors 'none'", "img-src 'self' data: blob:", "frame-src 'self'", "worker-src 'self'"]) {
-      expect(csp).toContain(directive);
+    for (const policy of [csp, buildCsp()]) {
+      for (const directive of ["default-src 'self'", "connect-src 'self'", "object-src 'none'", "base-uri 'self'", "form-action 'self'", "frame-ancestors 'none'", "img-src 'self' data: blob:", "frame-src 'self'", "worker-src 'self'"]) {
+        expect(policy).toContain(directive);
+      }
+      expect(policy).not.toMatch(/https?:|\*/);
     }
-    expect(csp).not.toMatch(/https?:|\*/);
   });
 
-  it("allows inline scripts only because Next.js and next-themes inject them, and eval only in development", () => {
-    expect(buildCsp()).toContain("script-src 'self' 'unsafe-inline';");
-    expect(buildCsp()).not.toContain("unsafe-eval");
-    expect(buildCsp({ dev: true })).toContain("'unsafe-eval'");
+  it("page policy: scripts need the per-request nonce, no unsafe-inline for scripts, eval only in development", () => {
+    const script = csp.split("; ").find((d) => d.startsWith("script-src"))!;
+    expect(script).toBe(`script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`);
+    expect(script).not.toContain("unsafe-inline");
+    expect(csp).not.toContain("unsafe-eval");
+    expect(buildNonceCsp(nonce, { dev: true })).toContain("'unsafe-eval'");
+    // A nonce in style-src would make browsers ignore 'unsafe-inline' and break style attributes.
+    expect(csp).toContain("style-src 'self' 'unsafe-inline'");
+    expect(csp).not.toMatch(/style-src[^;]*nonce/);
+  });
+
+  it("makes a new unpredictable nonce for every request", () => {
+    const seen = new Set(Array.from({ length: 50 }, () => createNonce()));
+    expect(seen.size).toBe(50);
+    for (const n of seen) expect(n).toMatch(/^[A-Za-z0-9+/]{22}==$/);
+  });
+
+  it("the proxy puts the nonce policy on the request (for Next.js) and the response (for the browser)", () => {
+    const proxy = read("src", "proxy.ts");
+    expect(proxy).toContain("buildNonceCsp(nonce");
+    expect(proxy).toContain('requestHeaders.set("x-nonce", nonce)');
+    expect(proxy).toContain('requestHeaders.set("Content-Security-Policy", policy)');
+    expect(proxy).toContain('response.headers.set("Content-Security-Policy", policy)');
+    // Not for API routes, static assets, prefetches or server-action posts.
+    for (const skipped of ["api/", "_next/static", "sw.js", "offline", "next-router-prefetch", "next-action"]) expect(proxy).toContain(skipped);
+    // The layout hands the nonce to next-themes (its inline script).
+    expect(read("src", "app", "layout.tsx")).toContain('get("x-nonce")');
+    expect(read("src", "components", "providers.tsx")).toContain("nonce={nonce}");
+  });
+
+  it("static policies: no inline scripts for API routes, a fixed policy for the offline page, none duplicated on files and images", () => {
+    const api = ruleWith((s) => s.startsWith("/api/"));
+    expect(api.headers.find((h) => h.key === "Content-Security-Policy")!.value).toBe(API_CSP);
+    expect(API_CSP).toContain("default-src 'none'");
+    expect(ruleWith((s) => s === "/offline").headers.find((h) => h.key === "Content-Security-Policy")!.value).toBe(buildCsp());
+    // Pages never get a static policy from next.config (the proxy sets theirs): no catch-all CSP rule.
+    expect(rules.filter((r) => r.headers.some((h) => h.key === "Content-Security-Policy")).map((r) => r.source)).toEqual([api.source, "/offline", "/offline.html"]);
   });
 
   it("leaves /api/files and /api/question-images to set their own headers", () => {
-    expect(cspRule.source).toContain("api/files/");
-    expect(cspRule.source).toContain("api/question-images/");
+    const api = ruleWith((s) => s.startsWith("/api/"));
+    expect(api.source).toContain("files/");
+    expect(api.source).toContain("question-images/");
+    const source = new RegExp(`^${api.source}$`);
+    expect(source.test("/api/files/abc")).toBe(false);
+    expect(source.test("/api/question-images/abc")).toBe(false);
+    expect(source.test("/api/study-export")).toBe(true);
     const file = read("src", "app", "api", "files", "[versionId]", "route.ts");
     expect(file).toContain("frame-ancestors 'self'");
   });

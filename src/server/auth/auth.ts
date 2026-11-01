@@ -3,7 +3,8 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
 import type { Database } from "@/db/client";
-import { account, session, user, verification } from "@/db/schema";
+import { account, authRateLimit, session, user, verification } from "@/db/schema";
+import { trustedIpHeaders } from "@/server/rate-limit/client-ip";
 import { getMailer, type Mailer } from "@/server/email";
 import { isBootstrapAdmin, isEmailDomainAllowed } from "./roles";
 
@@ -11,9 +12,13 @@ type AuthOptions = {
   mailer?: Mailer;
   /** Next.js cookie integration; off in tests, which run outside a request. */
   nextjs?: boolean;
+  /** Override for the rate limiter (it follows NODE_ENV otherwise: on in production only). Tests turn it on. */
+  rateLimitEnabled?: boolean;
+  /** Trusted client-IP headers; defaults to the TRUSTED_IP_HEADER setting (see src/server/rate-limit/client-ip.ts). */
+  ipHeaders?: string[];
 };
 
-export function createAuth(db: Database, { mailer, nextjs = true }: AuthOptions = {}) {
+export function createAuth(db: Database, { mailer, nextjs = true, rateLimitEnabled, ipHeaders }: AuthOptions = {}) {
   const plugins: BetterAuthPlugin[] = nextjs ? [nextCookies()] : [];
 
   return betterAuth({
@@ -22,7 +27,8 @@ export function createAuth(db: Database, { mailer, nextjs = true }: AuthOptions 
     baseURL: process.env.BETTER_AUTH_URL,
     database: drizzleAdapter(db, {
       provider: "pg",
-      schema: { user, session, account, verification },
+      // rateLimit: Better Auth's table for rateLimit.storage "database" (model name "rateLimit").
+      schema: { user, session, account, verification, rateLimit: authRateLimit },
     }),
     emailAndPassword: {
       enabled: true,
@@ -67,8 +73,10 @@ export function createAuth(db: Database, { mailer, nextjs = true }: AuthOptions 
       },
     },
     rateLimit: {
-      // Better Auth's limiter; enabled in production. In-memory, so per server instance.
-      enabled: process.env.NODE_ENV === "production",
+      // Better Auth's limiter; enabled in production. Counters live in the database (table auth_rate_limit), so every
+      // serverless instance shares them. Keys are "<client ip>|<path>"; which header carries the IP: see advanced.ipAddress.
+      enabled: rateLimitEnabled ?? process.env.NODE_ENV === "production",
+      storage: "database",
       window: 60,
       max: 100,
       customRules: {
@@ -76,6 +84,11 @@ export function createAuth(db: Database, { mailer, nextjs = true }: AuthOptions 
         "/sign-up/email": { window: 60, max: 3 },
         "/send-verification-email": { window: 60, max: 3 },
       },
+    },
+    advanced: {
+      // Only a header our own proxy overwrites may be trusted for the client IP (otherwise the sign-in limit can be dodged
+      // by forging it). On Vercel that is x-forwarded-for; elsewhere none unless TRUSTED_IP_HEADER says so.
+      ipAddress: { ipAddressHeaders: ipHeaders ?? trustedIpHeaders() },
     },
     session: {
       expiresIn: 60 * 60 * 24 * 30,

@@ -2,7 +2,7 @@
 // the pages). Keys live under "apiErrors" in src/messages/{fr,en}.json.
 import { getTranslations } from "next-intl/server";
 
-export type ApiErrorKey = "tooManyExports" | "exportTooLarge" | "notFound" | "unknownExport" | "unknownFormat";
+export type ApiErrorKey = "tooManyExports" | "tooManyRequests" | "exportTooLarge" | "notFound" | "unknownExport" | "unknownFormat";
 
 export async function textError(key: ApiErrorKey, status: number, headers: Record<string, string> = {}): Promise<Response> {
   const t = await getTranslations("apiErrors");

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Providers } from "@/components/providers";
@@ -27,11 +28,13 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
+  // The per-request nonce made by src/proxy.ts; next-themes needs it for the one inline script that sets the theme.
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider>
-          <Providers>{children}</Providers>
+          <Providers nonce={nonce}>{children}</Providers>
           <ServiceWorkerRegister />
         </NextIntlClientProvider>
       </body>

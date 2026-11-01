@@ -3,17 +3,22 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
-import {
-  addVersionAction,
-  reportResourceAction,
-  uploadResourceAction,
-  type ResourceFormState,
-} from "@/server/resources/actions";
+import { makeUploadAction } from "@/lib/upload-client";
+import { reportResourceAction } from "@/server/resources/actions";
+import type { ResourceFormState } from "@/server/resources/form-helpers";
 import { NoTopicsHint, TopicCheckboxes, type TopicOption } from "./library-forms";
 import { Button, Field, Input, Notice, Panel, Select, Textarea } from "./ui";
 import { useKeepingForm } from "./use-keeping-form";
 
 const initial: ResourceFormState = { status: "idle" };
+
+// Files go to /api/uploads (not a server action): see src/lib/upload-client.ts.
+const uploadFallback = {
+  tooLarge: { status: "error", message: "errors.uploadTooLarge", fieldErrors: { file: "errors.uploadTooLarge" } },
+  failed: { status: "error", message: "errors.generic" },
+} satisfies { tooLarge: ResourceFormState; failed: ResourceFormState };
+const uploadResourceAction = makeUploadAction<ResourceFormState>("resource", uploadFallback);
+const addVersionAction = makeUploadAction<ResourceFormState>("resource-version", uploadFallback);
 
 // Mirrors constants in src/db/schema/resources.ts (kept out of the browser bundle).
 const kinds = ["outline", "notes", "study_guide", "other"] as const;

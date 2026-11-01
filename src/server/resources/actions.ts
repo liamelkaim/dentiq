@@ -1,120 +1,20 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getDb } from "@/db/client";
 import { requireUser } from "@/server/auth/session";
-import { TOPICS_PER_ITEM_MAX } from "@/server/library/constants";
-import { checkTopicIds, setItemTopics } from "@/server/library/links";
-import { getStorage } from "@/server/storage";
-import { getMaxFileBytes } from "./files";
+import { errorMessage, formObject, revalidateResources, toFieldErrors, type ResourceFormState } from "./form-helpers";
 import {
-  addVersion,
-  createResource,
   moderateResource,
   moderationActions,
   reportInputSchema,
   reportResource,
   resolveReport,
-  resourceInputSchema,
   setOfficial,
-  versionInputSchema,
-  type UploadFile,
 } from "./service";
 
-/** Messages are translation keys; forms translate them. */
-export type ResourceFormState = {
-  status: "idle" | "success" | "error";
-  message?: string;
-  fieldErrors?: Record<string, string>;
-  duplicateOf?: string;
-};
-
-const errorKeys: Record<string, string> = {
-  fileTooLarge: "errors.uploadTooLarge",
-  fileType: "errors.uploadType",
-  fileMissing: "errors.fileMissing",
-};
-const knownFieldErrors = new Set(["required", "rightsRequired"]);
-
-function errorMessage(code: string) {
-  return errorKeys[code] ?? `errors.${code}`;
-}
-
-function toFieldErrors(error: z.ZodError): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const issue of error.issues) {
-    const field = String(issue.path[0] ?? "form");
-    out[field] ??= `errors.${knownFieldErrors.has(issue.message) ? issue.message : "invalid"}`;
-  }
-  return out;
-}
-
-async function readFile(form: FormData): Promise<UploadFile | null> {
-  const file = form.get("file");
-  if (!(file instanceof File) || file.size === 0) return null;
-  return { name: file.name, bytes: new Uint8Array(await file.arrayBuffer()) };
-}
-
-function formObject(form: FormData) {
-  return Object.fromEntries([...form.entries()].filter(([, v]) => typeof v === "string"));
-}
-
-function revalidateResources(resourceId?: string) {
-  revalidatePath("/");
-  revalidatePath("/study", "layout");
-  revalidatePath("/resources");
-  revalidatePath("/moderation");
-  revalidatePath("/courses", "layout");
-  if (resourceId) revalidatePath(`/resources/${resourceId}`);
-}
-
-export async function uploadResourceAction(_prev: ResourceFormState, form: FormData): Promise<ResourceFormState> {
-  const viewer = await requireUser();
-  const parsed = resourceInputSchema.safeParse(formObject(form));
-  if (!parsed.success) return { status: "error", message: "errors.invalid", fieldErrors: toFieldErrors(parsed.error) };
-  const candidate = form.get("file");
-  if (candidate instanceof File && candidate.size > getMaxFileBytes()) {
-    return { status: "error", message: "errors.uploadTooLarge", fieldErrors: { file: "errors.uploadTooLarge" } };
-  }
-  const file = await readFile(form);
-  if (!file) return { status: "error", message: "errors.fileMissing", fieldErrors: { file: "errors.fileMissing" } };
-
-  // Topics come from the course's shared list. Checked before anything is stored, so a stale form fails cleanly.
-  const rawTopicIds = form.getAll("topicIds").filter((v): v is string => typeof v === "string" && v !== "");
-  const topicIdsParsed = z.array(z.uuid()).max(TOPICS_PER_ITEM_MAX).safeParse(rawTopicIds);
-  if (!topicIdsParsed.success) return { status: "error", message: "library.errors.invalidTopics" };
-  const topicIds = topicIdsParsed.data;
-  if (topicIds.length > 0 && !(await checkTopicIds(getDb(), parsed.data.courseId, topicIds))) {
-    return { status: "error", message: "library.errors.invalidTopics" };
-  }
-
-  const result = await createResource(getDb(), getStorage(), viewer, parsed.data, file);
-  if (!result.ok) {
-    return { status: "error", message: errorMessage(result.error), duplicateOf: result.resourceId };
-  }
-  if (topicIds.length > 0) await setItemTopics(getDb(), viewer, "resource", result.value.id, topicIds);
-  revalidateResources(result.value.id);
-  redirect(`/resources/${result.value.id}`);
-}
-
-export async function addVersionAction(_prev: ResourceFormState, form: FormData): Promise<ResourceFormState> {
-  const viewer = await requireUser();
-  const parsed = versionInputSchema.safeParse(formObject(form));
-  if (!parsed.success) return { status: "error", message: "errors.invalid", fieldErrors: toFieldErrors(parsed.error) };
-  const candidate = form.get("file");
-  if (candidate instanceof File && candidate.size > getMaxFileBytes()) {
-    return { status: "error", message: "errors.uploadTooLarge", fieldErrors: { file: "errors.uploadTooLarge" } };
-  }
-  const file = await readFile(form);
-  if (!file) return { status: "error", message: "errors.fileMissing", fieldErrors: { file: "errors.fileMissing" } };
-
-  const result = await addVersion(getDb(), getStorage(), viewer, parsed.data.resourceId, file, parsed.data.changeNote);
-  if (!result.ok) return { status: "error", message: errorMessage(result.error), duplicateOf: result.resourceId };
-  revalidateResources(parsed.data.resourceId);
-  return { status: "success", message: "resources.version.added" };
-}
+// Document uploads are NOT server actions: see upload-handlers.ts and /api/uploads.
 
 export async function reportResourceAction(_prev: ResourceFormState, form: FormData): Promise<ResourceFormState> {
   const viewer = await requireUser();

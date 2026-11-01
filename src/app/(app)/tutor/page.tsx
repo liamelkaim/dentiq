@@ -6,6 +6,8 @@ import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { requireUser } from "@/server/auth/session";
 import { listCourseChoices } from "@/server/passes/queries";
+import { checkRate } from "@/server/rate-limit/guard";
+import { RATE_TUTOR_SEARCH } from "@/server/rate-limit/limits";
 import { canAccessLibrary } from "@/server/resources/service";
 import { QUESTION_MAX_CHARS } from "@/server/tutor/constants";
 import { getTutorStatus, searchSources } from "@/server/tutor/service";
@@ -45,7 +47,10 @@ export default async function TutorPage({ searchParams }: { searchParams: Promis
   const course = courses.find((c) => c.code === first(params.course));
   const q = (first(params.q) ?? "").trim().slice(0, QUESTION_MAX_CHARS);
   const includeHistorical = first(params.historical) === "1";
-  const result = course && q ? await searchSources(db, viewer, { courseId: course.id, query: q, includeHistorical, locale }) : null;
+  // Only an actual source search counts (it reads every source of the course); opening the page does not.
+  const searching = Boolean(course && q);
+  const limited = searching && !(await checkRate(RATE_TUTOR_SEARCH, viewer.id)).allowed;
+  const result = course && q && !limited ? await searchSources(db, viewer, { courseId: course.id, query: q, includeHistorical, locale }) : null;
 
   const current: Passage[] = result?.passages.filter((p) => p.source.period === "current") ?? [];
   const historical: Passage[] = result?.passages.filter((p) => p.source.period === "historical") ?? [];
@@ -95,7 +100,13 @@ export default async function TutorPage({ searchParams }: { searchParams: Promis
         )}
       </Section>
 
-      {courses.length > 0 && !result && <EmptyState title={t("search.pickCourseTitle")} body={t("search.pickCourse")} />}
+      {limited && (
+        <Notice tone="warning" title={t("search.tooManyTitle")}>
+          {t("search.tooMany")}
+        </Notice>
+      )}
+
+      {courses.length > 0 && !result && !limited && <EmptyState title={t("search.pickCourseTitle")} body={t("search.pickCourse")} />}
 
       {result && course && (
         <Section title={t("results.title")} description={t("results.forQuery", { q: result.query, course: course.code })}>

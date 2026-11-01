@@ -32,7 +32,6 @@ import { DELETE_UNSHARED_QUESTION_STATUSES } from "@/server/account/constants";
 import { confirmationMatches, deleteAccount, isLastAdmin } from "@/server/account/delete";
 import { buildAccountExport } from "@/server/account/export";
 import { normalizeDisplayName, updateDisplayName } from "@/server/account/profile";
-import { allowAttempt, resetAttempts, trackedKeyCount } from "@/server/account/rate-limit";
 import { createMemoryStorage, type FileStorage } from "@/server/storage";
 
 let db: Database;
@@ -99,7 +98,6 @@ async function insertQuestion(owner: string, text: string, status: "pending" | "
 beforeEach(async () => {
   db = await createTestDatabase();
   storage = createMemoryStorage();
-  resetAttempts();
   await db.insert(user).values([
     { id: "admin-1", name: "Admin One", email: "admin1@example.com", emailVerified: true, role: "admin", approvalStatus: "approved" },
     { id: A, name: "Student A", email: "a@example.com", emailVerified: true, approvalStatus: "approved" },
@@ -281,29 +279,6 @@ describe("data export", () => {
     expect(await buildAccountExport(db, A, { maxBytes: 100 })).toEqual({ ok: false, error: "tooLarge" });
     expect((await buildAccountExport(db, A, { maxRowsPerTable: 3 })).ok).toBe(true);
     expect(await buildAccountExport(db, "nobody")).toEqual({ ok: false, error: "notFound" });
-  });
-});
-
-describe("rate guard", () => {
-  it("allows the configured number of attempts per window and then refuses", () => {
-    expect([1, 2, 3].map((i) => allowAttempt("k", 2, 1000, i))).toEqual([true, true, false]);
-    expect(allowAttempt("k", 2, 1000, 1500)).toBe(true); // the first attempt has left the window
-    expect(allowAttempt("other", 2, 1000, 1)).toBe(true);
-  });
-
-  it("forgets keys whose window has passed, and keeps the ones still counting", () => {
-    resetAttempts();
-    for (let i = 0; i < 50; i++) allowAttempt(`old-${i}`, 2, 1000, 10);
-    allowAttempt("long-window", 5, 10 * 60_000, 10);
-    expect(trackedKeyCount()).toBe(51);
-    // Two minutes later a new attempt triggers the sweep: the short windows are gone, the 10 minute one stays.
-    expect(allowAttempt("fresh", 2, 1000, 120_000)).toBe(true);
-    expect(trackedKeyCount()).toBe(2);
-    // Behaviour is unchanged for a key that was swept: it simply starts again.
-    expect([1, 2, 3].map((i) => allowAttempt("old-1", 2, 1000, 120_000 + i))).toEqual([true, true, false]);
-    // The surviving long-window key still remembers its attempt.
-    expect([1, 2, 3, 4, 5].map((i) => allowAttempt("long-window", 5, 10 * 60_000, 120_000 + i))).toEqual([true, true, true, true, false]);
-    resetAttempts();
   });
 });
 

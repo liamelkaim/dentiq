@@ -11,11 +11,13 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enables forbidden() for server-side role checks.
     authInterrupts: true,
-    // Document uploads go through server actions (25 MB file limit + form fields).
-    serverActions: { bodySizeLimit: "26mb" },
+    // Every server action is capped small: they carry text forms and a 1 MB CSV import. Anything that sends files goes to
+    // /api/uploads/<kind>, which checks its own size per kind after the session check (src/server/uploads).
+    serverActions: { bodySizeLimit: "2mb" },
   },
   async headers() {
-    // Content-Security-Policy, framing, referrer and (production only) HSTS: see src/lib/security-headers.ts.
+    // Framing, referrer and (production only) HSTS, plus the fixed policies for /api and the offline page: see
+    // src/lib/security-headers.ts. Pages get their nonce-based Content-Security-Policy from src/proxy.ts.
     return buildHeaderRules({ production: process.env.NODE_ENV === "production", dev: process.env.NODE_ENV === "development" });
   },
   async rewrites() {

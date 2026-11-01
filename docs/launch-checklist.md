@@ -12,8 +12,8 @@ Status is based on reading the code on 2026-11-01, not on a live deployment. DON
 | Verified email sender | NOT DONE | Resend path exists behind `DENTIQ_ENABLE_RESEND`, `RESEND_API_KEY`, `EMAIL_FROM`. Needs a domain you own, DNS records added, sender verified. Resend's test sender cannot reach arbitrary students. Email verification stays on. |
 | Admin account setup | NEEDS ME | `ADMIN_EMAILS` makes a matching sign-up an approved admin (`src/server/auth/auth.ts`, user.create.before). Owner must set it to their real address, sign up first, and verify the email. Last-admin guard exists. Decide `ALLOWED_EMAIL_DOMAINS` (enrollment policy, e.g. umontreal.ca). |
 | Backups | NOT DONE | No backup or restore tested. Relies on the provider (Neon point-in-time restore: 6 h free, up to 7 days Launch per pricing page). Blob has no versioning in this app; removed files are kept on storage. Owner needs a tested restore and a periodic export. |
-| Security headers | DONE | `src/lib/security-headers.ts`, applied in `next.config.ts`: nosniff, referrer policy, X-Frame-Options DENY, permissions policy, CSP, HSTS (production only). Tested by `tests/platform-quality.test.ts`. Caveat: CSP keeps `'unsafe-inline'`. |
-| Rate limits | PARTIAL, effectively NOT DONE on serverless | Better Auth limiter (`src/server/auth/auth.ts`: sign-in 5/min, sign-up 3/min, verification 3/min, production only) and export/deletion limiter (`src/server/account/rate-limit.ts`) are in memory per instance, so they do little on Vercel. No limit on search, tutor search, study export. |
+| Security headers | DONE | `src/lib/security-headers.ts`, `src/proxy.ts`, `next.config.ts`: nosniff, referrer policy, X-Frame-Options DENY, permissions policy, nonce-based CSP for pages (no inline scripts allowed; styles keep `'unsafe-inline'`), HSTS (production only). Browser-tested on a production build and in development; tested by `tests/platform-quality.test.ts`. |
+| Rate limits | DONE in code (verify on host) | Shared in the database: Better Auth limiter (`storage: "database"`: sign-in 5/min, sign-up 3/min, verification 3/min, production only) and `rate_limits` for export, deletion, `/search`, tutor search, study and calendar export (`src/server/rate-limit/limits.ts`). Needs migration `0009` on the hosted database. Trusted IP header: automatic on Vercel, else `TRUSTED_IP_HEADER` (`docs/hosting-plan.md`). |
 | Error pages (404 and 500) | DONE | `src/app/not-found.tsx`, `src/app/error.tsx`, `src/app/global-error.tsx`, `src/app/forbidden.tsx`. Browser-tested on the production build (overnight log, block I). |
 | HTTPS only | DONE in code, verify on host | HSTS `max-age=31536000` in production; preflight rejects a non-https `BETTER_AUTH_URL`. Vercel serves https and redirects http. Confirm with curl after the first deploy. |
 | Cookie settings | DONE in code, verify on host | Better Auth: HttpOnly, SameSite=Lax, signed with `BETTER_AUTH_SECRET`, Secure over https (`docs/security-privacy.md`; `src/server/auth/auth.ts` sets session 30 days, refresh daily). No explicit `useSecureCookies` or `cookiePrefix` is set in `auth.ts`; check the cookie flags in the browser on the real https domain. |
@@ -21,15 +21,11 @@ Status is based on reading the code on 2026-11-01, not on a live deployment. DON
 
 ## Known gaps (not fixed)
 
-- **In-memory rate limiters** (login, sign-up, verification email, export, deletion). Replace with a shared store (Better Auth `rateLimit.storage: "database"` plus a database-backed counter) and configure the trusted client-IP header.
-- **26 MB server-action body** (`next.config.ts`, `serverActions.bodySizeLimit`) accepted before auth checks. Vercel itself caps function payloads near 4.5 MB, so hosted uploads are 4 MB; cap other paths or move uploads to a dedicated route.
-- **CSP `'unsafe-inline'`** for scripts and styles; move to a nonce-based policy once it can be tested in a browser.
 - **Retention**: removed documents and question images stay on storage; no retention or hard-delete policy; note versions unbounded.
 - **Logo**: source is 224x93 px; need 1024 px PNG or SVG, then regenerate the icons.
 - **Dependency advisory**: a zod advisory reported through `@vercel/blob` (owner-reported; not re-verified here). Run `pnpm audit` and `pnpm outdated`; the project pins `zod` 4.6.7 itself.
-- No per-user cost limit on expensive reads (search, tutor search, study export).
 - Password reset is not built (needed before real users forget passwords).
-- Not browser-tested: Safari, Firefox, real devices, screen readers, PWA install prompt, PDF preview inside the CSP.
+- Not browser-tested: Safari, Firefox, real devices, screen readers, PWA install prompt, (the PDF preview inside the nonce CSP was tested in Chrome).
 - No antivirus scanning or per-user upload quota.
 
 ## Must do before anyone can go live
@@ -37,11 +33,10 @@ Status is based on reading the code on 2026-11-01, not on a live deployment. DON
 1. Rotate every credential that ever sat in an iCloud-synced `.env.vercel` or `.env.local` (names: `DATABASE_URL`, `BLOB_READ_WRITE_TOKEN`, `RESEND_API_KEY`, `BETTER_AUTH_SECRET`, Vercel token).
 2. Buy the domain; set `BETTER_AUTH_URL` to its https address.
 3. Create hosted Postgres, a private Blob store and a verified Resend sender; run migrations on a copy first (hosting plan).
-4. Replace the in-memory rate limiters with shared storage.
-5. Cap request bodies for non-upload paths.
-6. Fill in the privacy contact, get a Law 25 / legal review, remove the DRAFT banners only after that.
-7. Set `ADMIN_EMAILS`, decide `ALLOWED_EMAIL_DOMAINS`, create the first admin, run the smoke test.
-8. Confirm backups work with a real restore test.
-9. Decide whether Vercel Hobby (non-commercial terms) or Pro fits; check the pricing pages again before buying.
-10. Replace the low-resolution logo and regenerate icons (cosmetic, can follow launch, but fix before public sharing).
-11. Run `pnpm check`, `pnpm build`, and `pnpm audit` before the first deploy.
+4. (Done) Shared rate limits, request-body cap and nonce CSP: `docs/go-live-blockers.md`.
+5. Fill in the privacy contact, get a Law 25 / legal review, remove the DRAFT banners only after that.
+6. Set `ADMIN_EMAILS`, decide `ALLOWED_EMAIL_DOMAINS`, create the first admin, run the smoke test.
+7. Confirm backups work with a real restore test.
+8. Decide whether Vercel Hobby (non-commercial terms) or Pro fits; check the pricing pages again before buying.
+9. Replace the low-resolution logo and regenerate icons (cosmetic, can follow launch, but fix before public sharing).
+10. Run `pnpm check`, `pnpm build`, and `pnpm audit` before the first deploy.

@@ -21,7 +21,8 @@ Legend: **Verified** = exercised in a real browser on a scratch database with fa
 | Responsive 320 to 1440, dark/light, FR/EN, keyboard, reduced motion | Verified | See log for what was not covered |
 | AI tutor | Incomplete (grounding layer only) | OFF; no provider, no answers; needs provider and budget |
 | Recordings and transcription | Planned | `docs/audio-readiness.md` |
-| Shared rate limiting, nonce CSP, retention policy | Planned | Needed before hosting |
+| Shared rate limiting (database), body-size cap, nonce CSP | Done (2026-11-01, browser-tested on a production build) | `docs/go-live-blockers.md` |
+| Retention policy | Planned | Needed before hosting |
 | Hosting (Vercel/Neon/Blob/Resend) | Blocked | Needs owner decisions and credential rotation |
 | High-resolution logo | Blocked | Needs a 1024 px PNG/SVG from the owner |
 | Real course/professor data | Blocked | Needs owner/faculty input |
@@ -110,7 +111,7 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 - The local database server accepts one connection at a time (safe for transactions; fine for one developer).
 - A student's new version sends the whole document back to review, hiding the previous published version until a moderator approves.
 - No password reset yet — a user who forgets their password needs an admin (or a database reset) for now.
-- Rate limiting is in-memory and only active in production mode.
+- Rate limiting is shared in the database (`rate_limits`, `auth_rate_limit`); Better Auth's limiter is only active in production mode.
 - TypeScript is pinned to 6.0 because the lint tooling doesn't support TypeScript 7 yet.
 
 
@@ -144,7 +145,7 @@ Findings confirmed by independent reviewers and fixed (tests in `tests/review-fi
 - ✅ Quiz completion is derived the same way when rating as when displaying; the quiz list shows "waiting for your rating" instead of a percentage from rated items only.
 - ✅ Analytics "X of N" never has X above N (only questions inside the study pool are counted against it).
 - ✅ Pages past the last page of Passes redirect to the last page; focus moves to the result, the next question or the back of the card in practice and flashcard review.
-- ✅ In-memory limiter for exports and deletion forgets expired keys (Better Auth's own limiter already prunes). The shared limiter store for multi-instance hosting is still a hosting decision (not built).
+- ✅ In-memory limiter for exports and deletion forgets expired keys (Better Auth's own limiter already prunes). Superseded: the shared database limiter is built (`docs/go-live-blockers.md`).
 - ✅ Recorded decision: scored outcomes are fixed at the moment of answering and are not re-scored (`docs/study-tools.md`, shown on the analytics page).
 
 ## Browser test, part 2 (block I): phones, tablets, dark mode, keyboard, reduced motion, zoom, production shell

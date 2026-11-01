@@ -36,11 +36,11 @@ The `DENTIQ_ENABLE_*` flags default off even if keys are present on your compute
 
 1. Rotate every credential that has ever been in an iCloud-synced `.env.vercel` or `.env.local` (database, Blob, Resend, auth secret, Vercel token).
 2. Use a hosted Postgres, private file storage and a verified email sender. Run migrations first (see `docs/hosting-plan.md`).
-3. Replace the in-memory rate limiters with a shared store (login, export, account deletion). They do nothing on serverless hosting.
-4. Cap request bodies for non-upload paths (server actions accept 26 MB today).
+3. Rate limits are shared in the database now (done). On a host other than Vercel, set `TRUSTED_IP_HEADER` only if a proxy you control overwrites that header (see `docs/hosting-plan.md`).
+4. Request bodies are capped (done): server actions 2 MB, file uploads checked per kind in `/api/uploads`.
 5. Set `BETTER_AUTH_URL` to the https address and decide `ALLOWED_EMAIL_DOMAINS` (enrollment policy).
 6. Fill in the contact address in the privacy and terms pages and get a legal (Law 25) review. The pages are marked DRAFT.
 7. Add a high-resolution logo (1024 px PNG or SVG) and regenerate the icons.
-8. Move to a nonce-based Content-Security-Policy once it can be tested in a browser.
+8. Nonce-based Content-Security-Policy is on (done, browser-tested). Re-check the browser console for CSP messages on the real host.
 9. Decide the file retention policy and backups.
 10. Check the Vercel, Neon, Blob and Resend dashboards for anything unexpected before connecting anything.

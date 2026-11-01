@@ -7,11 +7,11 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getDb } from "@/db/client";
 import { getAuth, requireUser } from "@/server/auth/session";
+import { checkRate } from "@/server/rate-limit/guard";
+import { RATE_ACCOUNT_DELETE } from "@/server/rate-limit/limits";
 import { getStorage } from "@/server/storage";
-import { DELETE_ATTEMPTS_MAX, DELETE_ATTEMPTS_WINDOW_MS } from "./constants";
 import { deleteAccount } from "./delete";
 import { updateDisplayName } from "./profile";
-import { allowAttempt } from "./rate-limit";
 
 export type AccountFormState = {
   status: "idle" | "error" | "saved";
@@ -35,7 +35,7 @@ export async function deleteAccountAction(_prev: AccountFormState, form: FormDat
   if (typeof typed !== "string" || typeof password !== "string" || !password) return { status: "error", message: "invalid" };
 
   // Every submission counts, right or wrong, so the form cannot be used to guess the password.
-  if (!allowAttempt(`delete:${viewer.id}`, DELETE_ATTEMPTS_MAX, DELETE_ATTEMPTS_WINDOW_MS)) return { status: "error", message: "tooManyAttempts" };
+  if (!(await checkRate(RATE_ACCOUNT_DELETE, viewer.id)).allowed) return { status: "error", message: "tooManyAttempts" };
 
   // Re-authentication: Better Auth checks the password against the stored hash for the current session. Its own
   // deleteUser endpoint stays disabled (tested) so nothing can skip the checks in deleteAccount().

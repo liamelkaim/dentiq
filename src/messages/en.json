@@ -487,6 +487,7 @@
   },
   "apiErrors": {
     "tooManyExports": "Too many exports, try again later.",
+    "tooManyRequests": "Too many requests. Wait a moment and try again.",
     "exportTooLarge": "Your data is too large to export in one file.",
     "notFound": "Not found.",
     "unknownExport": "Unknown export.",
@@ -953,6 +954,8 @@
   "search": {
     "title": "Search",
     "noQueryTitle": "Type something to search",
+    "tooManyTitle": "Too many searches",
+    "tooMany": "You are searching very fast. Wait a minute and try again.",
     "noQueryBody": "Search documents, your notes, course topics and published exam questions.",
     "forQuery": "Results for \"{q}\"",
     "documents": "{count, plural, =0 {No documents} one {# document} other {# documents}}",
@@ -1745,6 +1748,8 @@
       "noCoursesTitle": "No courses yet",
       "noCourses": "The catalog is empty, so there is nothing to search.",
       "pickCourseTitle": "Choose a course and type a search",
+      "tooManyTitle": "Too many searches",
+      "tooMany": "You are searching very fast. Wait a minute and try again.",
       "pickCourse": "Results appear here, each with its source."
     },
     "results": {

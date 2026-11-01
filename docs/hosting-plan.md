@@ -59,12 +59,19 @@ Caveats that matter more than the totals:
 5. **Blob**: create a **private** Blob store linked to the project.
 6. **Email**: add the domain in Resend, add its DNS records, wait for "verified", choose the sender address.
 7. **Environment variables** (set in Vercel, never in chat or git; names only): `DATABASE_URL`, `BETTER_AUTH_SECRET` (random, 32+ chars), `BETTER_AUTH_URL` (the https domain), `BLOB_READ_WRITE_TOKEN`, `DENTIQ_ENABLE_BLOB=true`, `RESEND_API_KEY`, `EMAIL_FROM`, `DENTIQ_ENABLE_RESEND=true`, `ADMIN_EMAILS` (your email), optionally `ALLOWED_EMAIL_DOMAINS`, `ACADEMIC_YEAR_START_MONTH`. Do **not** set `ALLOW_LOCAL_DATABASE` or `UPLOADS_DIR`. `vercel.json` runs `scripts/vercel-preflight.mjs` and fails the build if required ones are missing.
-8. **Before deploying**: resolve the "must do" list in `docs/launch-checklist.md` (rate limits, body cap, privacy contact). Run `pnpm check` and `pnpm build`.
-9. **Migrations**: follow the safe procedure below, on a preview copy first, then production.
+8. **Before deploying**: resolve the open items in `docs/go-live-blockers.md` (privacy contact and legal review, backups, retention, logo). Rate limits, the body cap and the nonce CSP are already done in code. Run `pnpm check` and `pnpm build`.
+9. **Migrations**: follow the safe procedure below, on a preview copy first, then production. The latest, `0009_rate_limits.sql`, adds two small tables (`rate_limits`, `auth_rate_limit`); without it sign-in is refused by the production rate limiter.
 10. **Deploy**: deploy a Preview first and use a separate database branch and Blob store for it; promote to production only after the smoke test.
 11. **First admin**: sign up at the site with the `ADMIN_EMAILS` address, click the verification email, confirm you land as admin.
 12. **Smoke test** (as in `docs/vercel-deployment.md`): sign up a second test account, email arrives and verifies, admin approves it, create a course, upload a private file (under 4 MB), owner preview and download work, second account is denied the private file (404), response headers present (`curl -I`), cookies are Secure/HttpOnly in the browser, 404 and error pages render, no console errors.
 13. **Invite** a small group first; watch Vercel, Neon and Resend usage for a week.
+
+## Rate limiting, request size and CSP on the host (done in code, 2026-11-01)
+
+- **Rate limits are in the database** (tables `rate_limits` and `auth_rate_limit`, migration `0009_rate_limits.sql`), so they work across Vercel's serverless instances with no paid service. They add one small database round trip to sign-in, exports, `/search` and the tutor search; expired rows are deleted by about 2% of calls, no cron job. Limits are listed in `src/server/rate-limit/limits.ts` and `src/server/auth/auth.ts`.
+- **Trusted client IP** (the sign-in and sign-up limits count per IP): on Vercel nothing to set, `VERCEL=1` makes the app trust `x-forwarded-for`, which Vercel overwrites with the real client address (`x-real-ip` is equivalent: set `TRUSTED_IP_HEADER=x-real-ip` to use it). Off Vercel, leave `TRUSTED_IP_HEADER` empty unless a proxy you control overwrites the header; empty means all visitors share one counter per page (safe, coarse). Never point it at a header a browser can send directly. After the first deploy, check that two different networks get separate sign-in counters (table `auth_rate_limit`, keys like `<ip>|/sign-in/email`; a key starting `no-trusted-ip` means the header is not being read).
+- **Request size**: server actions are capped at 2 MB; uploads go to `/api/uploads/<kind>` with their own cap (4 MB file on Vercel, `src/server/resources/files.ts`). Vercel itself rejects bodies over about 4.5 MB before the app sees them.
+- **CSP**: nonce-based, set per request by `src/proxy.ts`; all pages render per request. If the console on the real domain shows CSP violations, see `docs/security-privacy.md` for the report-only fallback.
 
 ## Safe database migration procedure
 

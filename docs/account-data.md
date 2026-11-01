@@ -34,7 +34,7 @@ Every table is read with an **explicit column list** (`src/server/account/export
 
 **Not included:** password or any sign-in secret; session tokens; file and image bytes; storage keys and file fingerprints (SHA-256); other students' data; who reviewed, verified or resolved (moderator identities and resolution notes); verified-answer data written by moderators; shared course material written by others; hosting-provider logs and backups.
 
-**Guards (`src/server/account/constants.ts`):** `EXPORT_MAX_ROWS_PER_TABLE = 50000`, `EXPORT_MAX_BYTES = 25 MB`, `EXPORT_MAX_PER_HOUR = 5` (in memory, per server instance, 429 over the limit). Going over a row or size cap makes the export **fail with 413**; it is never truncated silently. Tests prove another student's rows, hashes, tokens, storage keys and secret-like field names never appear (`tests/account.test.ts`).
+**Guards (`src/server/account/constants.ts`):** `EXPORT_MAX_ROWS_PER_TABLE = 50000`, `EXPORT_MAX_BYTES = 25 MB`, `EXPORT_MAX_PER_HOUR = 5` (shared counter in the database, 429 over the limit). Going over a row or size cap makes the export **fail with 413**; it is never truncated silently. Tests prove another student's rows, hashes, tokens, storage keys and secret-like field names never appear (`tests/account.test.ts`).
 
 ## Account deletion (`/profile/delete`)
 

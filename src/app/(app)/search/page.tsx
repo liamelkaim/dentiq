@@ -12,6 +12,8 @@ import { SEARCH_QUERY_MAX, SEARCH_RESULT_LIMIT } from "@/server/library/constant
 import { cleanQuery, searchLibrary } from "@/server/library/search";
 import { topicLabel } from "@/server/library/topics";
 import { listCourseChoices } from "@/server/passes/queries";
+import { checkRate } from "@/server/rate-limit/guard";
+import { RATE_SEARCH } from "@/server/rate-limit/limits";
 import { canAccessLibrary } from "@/server/resources/service";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -72,6 +74,19 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <PageHeader title={t("title")} />
         {form}
         <EmptyState title={t("noQueryTitle")} body={t("noQueryBody")} />
+      </>
+    );
+  }
+
+  // Only an actual search counts; opening the empty form does not.
+  if (!(await checkRate(RATE_SEARCH, viewer.id)).allowed) {
+    return (
+      <>
+        <PageHeader title={t("title")} />
+        {form}
+        <Notice tone="warning" title={t("tooManyTitle")}>
+          {t("tooMany")}
+        </Notice>
       </>
     );
   }

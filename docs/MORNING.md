@@ -31,8 +31,7 @@ typecheck: exit 0. lint: exit 0. tests: 29 files, 543 passed. production build: 
 
 ## d) Known problems
 
-- Rate limiters are in memory and do nothing useful once hosted on serverless.
-- Server actions accept 26 MB bodies; the content security policy still allows inline scripts.
+- (Fixed afterwards: shared database rate limits, 2 MB server-action cap with uploads on `/api/uploads`, nonce-based CSP. See `docs/go-live-blockers.md`.)
 - Very narrow effective screens (390 px at 200% zoom) clip some dropdowns.
 - Not tested: Safari, Firefox, real phones, screen readers, the install prompt.
 - The logo source is low resolution (224x93), so icons are soft.

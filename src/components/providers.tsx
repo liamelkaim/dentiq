@@ -3,9 +3,9 @@
 import { ThemeProvider } from "next-themes";
 
 /** Theme choice (light / dark / system) is saved in localStorage by next-themes. */
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children, nonce }: { children: React.ReactNode; nonce?: string }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange storageKey="dentos-theme">
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange storageKey="dentos-theme" nonce={nonce}>
       {children}
     </ThemeProvider>
   );

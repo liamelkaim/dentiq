@@ -1,4 +1,6 @@
 // Limits and settings for the profile, the data export and account deletion, in ONE place.
+// (How often the export and the deletion form may be used: src/server/rate-limit/limits.ts.)
+import { RATE_ACCOUNT_EXPORT } from "@/server/rate-limit/limits";
 
 /** Display name: same maximum as the sign-up form. */
 export const PROFILE_NAME_MAX = 120;
@@ -10,15 +12,11 @@ export const PROFILE_NAME_MAX = 120;
  */
 export const EXPORT_MAX_ROWS_PER_TABLE = 50_000;
 export const EXPORT_MAX_BYTES = 25 * 1024 * 1024;
-/** How many exports one account may download per hour (in memory, per server instance). */
-export const EXPORT_MAX_PER_HOUR = 5;
+/** How many exports one account may download per hour (shared counter in the database). */
+export const EXPORT_MAX_PER_HOUR = RATE_ACCOUNT_EXPORT.limit;
 
 /** Bumped when the shape of the export file changes. */
 export const EXPORT_SCHEMA_VERSION = 1;
-
-/** Wrong-password or wrong-confirmation attempts allowed on the deletion form per window. */
-export const DELETE_ATTEMPTS_MAX = 5;
-export const DELETE_ATTEMPTS_WINDOW_MS = 15 * 60 * 1000;
 
 /**
  * Deletion rule for contributions that other people may already rely on. Statuses listed here were never shared with

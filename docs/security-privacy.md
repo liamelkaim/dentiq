@@ -10,7 +10,7 @@ This is a record of decisions, not a claim of compliance. **Dentiq is not yet pr
 - Email must be confirmed before first sign-in.
 - New accounts start as **pending students**. `role` and `approval_status` cannot be set by the user (tested against the real sign-up endpoint).
 - Admins cannot change their own role or approval status (prevents accidental lock-out).
-- Rate limiting on sign-in, sign-up and verification emails in production (Better Auth's built-in limiter; in-memory, so per server instance).
+- Rate limiting on sign-in, sign-up and verification emails in production (Better Auth's built-in limiter, counters in the database table `auth_rate_limit`, keyed by client IP and path; see "Rate limiting" below).
 
 **Authorization**
 - Every protected page and every server action checks the user's role **on the server** (`requireUser` / `requireRole`). Hidden buttons are only a convenience.
@@ -49,8 +49,8 @@ Decision needed before launch: which combination to require.
 - [ ] Real email provider for verification and password reset (password reset not implemented yet).
 - [ ] Hosted Postgres with automated backups and a tested restore.
 - [ ] HTTPS deployment; confirm `BETTER_AUTH_URL` uses `https://`.
-- [ ] Shared rate-limit storage if running more than one server instance.
-- [~] Content Security Policy header: added (see "Content Security Policy" below); script and style `'unsafe-inline'` remain, and it has not been tried in a browser yet.
+- [x] Shared rate-limit storage (database): done, see "Rate limiting" below.
+- [x] Content Security Policy: nonce-based for pages (`src/proxy.ts`), browser-tested on a production build and in development; see "Content Security Policy and headers" below.
 - [~] Account deletion and data export for users: built 2026-11-01 (`docs/account-data.md`); **needs legal (Law 25) review** and a browser test.
 - [~] Privacy policy and terms (French and English): drafts exist with a visible DRAFT banner and a contact placeholder; **not reviewed by a lawyer**, contact not filled in.
 - [ ] Dependency update routine (`pnpm outdated`, `pnpm audit`).
@@ -114,26 +114,38 @@ The tutor is off and has no provider: no question, note or document text leaves 
 `/profile/export` builds the JSON from explicit column lists, filtered on the signed-in user's id, and is sent `private, no-store` as an attachment. It never contains password hashes, session tokens, storage keys, file fingerprints, other students' data or moderator identities (tests in `tests/account.test.ts`). Account deletion re-checks the password through Better Auth, requires the typed email, refuses the last approved administrator, runs in one transaction, deletes private rows and their stored files, detaches published contributions (author columns become empty) and keeps an audit entry with counts only. Better Auth's own `/delete-user` endpoint stays disabled (tested). The export and deletion forms are rate limited in memory per server instance. Everything here is a draft pending legal review; see `docs/account-data.md` for the open questions.
 
 
-## Content Security Policy and headers - 2026-11-01
+## Content Security Policy and headers - 2026-11-01 (nonce-based since the same day)
 
-Defined in `src/lib/security-headers.ts` and applied from `next.config.ts` (`headers()`); `tests/platform-quality.test.ts` reads the exact policy.
+Pages get their policy from `src/proxy.ts` (the Next.js 16 "proxy", formerly middleware), built by `buildNonceCsp()` in `src/lib/security-headers.ts`, with a fresh 128-bit nonce for every request. Next.js reads the nonce from the request's policy header and puts it on its own scripts; the root layout reads `x-nonce` and passes it to next-themes (its theme script). `tests/platform-quality.test.ts` reads the exact policy.
 
 ```
-default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:;
+default-src 'self'; script-src 'self' 'nonce-<random>' 'strict-dynamic'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:;
 font-src 'self' data:; connect-src 'self'; frame-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none';
 base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 ```
 
 (`'unsafe-eval'` is added to `script-src` in development only, because React uses it for debugging.)
 
-**Why not a nonce-based policy.** The Next.js guide's strict policy needs a proxy that creates a nonce for every request, and every inline
-script then has to carry it: Next.js hydration data and the next-themes theme script both inject inline scripts. Without a browser available
-to confirm that pages still hydrate, a strict policy could silently break every page. So scripts and styles keep `'unsafe-inline'` and
-everything else is restricted to this origin. What this still stops: scripts, images, fonts, frames and connections to other sites (so an
-injected script cannot load code from or send data to a third party), plugins, `<base>` tag tricks, form posts to other sites and framing of
-Dentiq pages. What it does not stop: an injected inline script running on the page. The input handling in the rest of this document is the
-defence against injection; this is a second layer. **Follow-up:** move to nonces (proxy plus `connection()` and the `nonce` prop on
-`ThemeProvider`) once it can be tested in a browser.
+- **Scripts**: no `'unsafe-inline'`. An injected inline script or `onclick=` attribute does not run; only scripts with the nonce, or loaded by one (`'strict-dynamic'`), do.
+- **Styles keep `'unsafe-inline'`** on purpose: React and Tailwind use `style` attributes, which a nonce cannot cover, and a style cannot run code. (A nonce in `style-src` would make browsers ignore `'unsafe-inline'` and break those attributes, so none is added.)
+- **Cost**: every page is rendered per request, no static page or CDN page cache. Dentiq pages already were (the layout reads the language cookie and the session); the only static outputs are the icons and the manifest.
+- **Not run through the proxy** (matcher in `src/proxy.ts`): `/api/*`, `/_next/static`, `/_next/image`, `sw.js`, the manifest, the offline page, icons, link prefetches and server-action posts (a proxy on those would buffer the request body). `/api/*` routes answer data, so `next.config.ts` gives them `default-src 'none'; frame-ancestors 'none'` (except `/api/files` and `/api/question-images`, which set their own). The offline page is a static file with one inline script, so it gets the older fixed policy with `'unsafe-inline'` from `next.config.ts` (no user content is served from it).
+- **Verified in a real browser** (production build, `next start`, and `next dev`): sign-up, sign-in, dashboard, theme toggle (hydration works), admin forms, document upload and PDF preview in the iframe, question page with an image, practice, calendar, tutor, search, privacy, `/offline`, service worker registration. Zero CSP violations in the console; `eval` is refused.
+- **If a page ever shows nothing after a deploy**: look for "Content Security Policy" in the browser console. To fall back quickly, change `src/proxy.ts` to send the header as `Content-Security-Policy-Report-Only` (violations are reported, nothing is blocked) while you investigate.
+
+What it still stops: scripts, images, fonts, frames and connections to other sites, plugins, `<base>` tag tricks, form posts to other sites, framing of Dentiq pages, and now injected inline scripts. The input handling in the rest of this document remains the first defence against injection.
+
+## Rate limiting - 2026-11-01
+
+Counters live in the database, so every serverless instance shares them (no paid service).
+
+- **Own limiter**: table `rate_limits` (key, window start, window length, count), `src/server/rate-limit/service.ts`. One atomic `INSERT ... ON CONFLICT DO UPDATE` per attempt (fixed window, safe under concurrency, refused attempts do not extend the window); about 2% of calls also delete expired rows. All limits are in `src/server/rate-limit/limits.ts`, per signed-in user: account export 5/hour, deletion form 5/15 min, `/search` 40/min, tutor source search 20/min, study export 30/hour, calendar export 30/hour. Over the limit: HTTP 429 with `Retry-After` for downloads, a friendly notice on the pages.
+- **Better Auth's limiter** (`storage: "database"`, table `auth_rate_limit`): sign-in 5/min, sign-up 3/min, verification email 3/min, 100/min otherwise, per client IP and path; on in production only, as before.
+- **Which IP to trust**: a forwarding header is only trustworthy when your own proxy overwrites it, otherwise anyone can forge it and dodge the limit. `TRUSTED_IP_HEADER` (see `.env.example`): on Vercel (`VERCEL=1`) it defaults to `x-forwarded-for` (Vercel overwrites it with the real client address; `x-real-ip` also works); anywhere else the default is none, so all visitors share one counter per path (safe but coarse; Better Auth logs a warning once). Unknown values are ignored.
+
+## Request body limits - 2026-11-01
+
+Server actions accept at most 2 MB (`next.config.ts`, `serverActions.bodySizeLimit`; the 1 MB CSV import still fits). Forms that send files (new document, new version, question with images) post to `/api/uploads/<kind>` instead (`src/app/api/uploads/[kind]/route.ts`), which checks the session and the request origin first, then reads the body with a hard cap per kind (file limit or image limit plus 512 KB of form fields), counting bytes as they arrive. Over the cap: HTTP 413 and the same friendly "file too large" message as before.
 
 **File previews.** `/api/files/` and `/api/question-images/` are excluded from this rule because they set their own headers (PDF previews:
 `frame-ancestors 'self'`; other files and images: `default-src 'none'`, sandbox). The PDF preview is a plain `<iframe>` of `/api/files/...?inline=1`
