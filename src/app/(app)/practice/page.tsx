@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import type { ComponentType, SVGProps } from "react";
-import { CardsIcon, ChartIcon, ChevronRightIcon, DownloadIcon, PassesIcon, QuizIcon } from "@/components/icons";
+import { CalendarIcon, CardsIcon, ChartIcon, ChevronRightIcon, DownloadIcon, PassesIcon, QuizIcon } from "@/components/icons";
 import { PrivacyNote } from "@/components/study-ui";
 import { Notice, PageHeader, Panel } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { requireUser } from "@/server/auth/session";
+import { countEntries } from "@/server/calendar/service";
 import { listQuestions } from "@/server/passes/service";
 import { listCourseChoices } from "@/server/passes/queries";
 import { canAccessLibrary } from "@/server/resources/service";
@@ -17,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: (await getTranslations("studyTools"))("title") };
 }
 
-type Tile = { href: string; key: "practice" | "flashcards" | "quizzes" | "progress" | "export"; icon: ComponentType<SVGProps<SVGSVGElement>>; line: string };
+type Tile = { href: string; key: "practice" | "flashcards" | "quizzes" | "progress" | "calendar" | "analytics" | "export"; icon: ComponentType<SVGProps<SVGSVGElement>>; line: string };
 
 /** The Study hub: one entry per tool, each with a real number (never an invented one). */
 export default async function StudyHubPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
@@ -38,11 +39,12 @@ export default async function StudyHubPage({ searchParams }: { searchParams: Pro
 
   const db = getDb();
   const scope = parseStudyScope(await searchParams);
-  const [available, overview, progress, courseChoices] = await Promise.all([
+  const [available, overview, progress, courseChoices, calendarCount] = await Promise.all([
     listQuestions(db, viewer, { publishedOnly: true, courseId: scope.course, limit: 1 }),
     cardOverview(db, viewer, { course: scope.course }),
     getProgress(db, viewer),
     scope.course ? listCourseChoices(db) : Promise.resolve([]),
+    countEntries(db, viewer),
   ]);
   const course = scope.course ? courseChoices.find((c) => c.id === scope.course) : undefined;
   const query = course ? `?course=${course.id}` : "";
@@ -57,6 +59,8 @@ export default async function StudyHubPage({ searchParams }: { searchParams: Pro
     },
     { href: "/practice/quizzes" + query, key: "quizzes", icon: QuizIcon, line: progress.quizzes.completed + progress.quizzes.inProgress > 0 ? t("hub.quizzesLine", { count: progress.quizzes.completed }) : t("hub.quizzesNone") },
     { href: "/practice/progress", key: "progress", icon: ChartIcon, line: progress.hasData ? t("hub.progressLine", { count: progress.totals.attempts }) : t("hub.progressNone") },
+    { href: "/calendar", key: "calendar", icon: CalendarIcon, line: t("hub.calendarLine", { count: calendarCount }) },
+    { href: "/analytics", key: "analytics", icon: ChartIcon, line: t("hub.analyticsLine") },
     { href: `/practice/export${query}`, key: "export", icon: DownloadIcon, line: t("hub.exportLine") },
   ];
 

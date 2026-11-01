@@ -22,6 +22,9 @@ import { Badge, DescriptionList, EmptyState, List, ListRow, Notice, Panel, Secti
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { hasRole } from "@/server/auth/roles";
+import { CALENDAR_TIME_ZONE, UPCOMING_LIMIT } from "@/server/calendar/constants";
+import { daysUntil, isoDateIn } from "@/server/calendar/dates";
+import { upcomingEntries } from "@/server/calendar/service";
 import { passesSummary } from "@/server/passes/queries";
 import { listQuestionQueue } from "@/server/passes/service";
 import { requireUser } from "@/server/auth/session";
@@ -77,13 +80,16 @@ export default async function DashboardPage() {
   const moderator = isModerator(user);
   const library = canAccessLibrary(user);
 
-  const [courses, recent, pending, queue, examQueue, passes] = await Promise.all([
+  const calendarToday = isoDateIn(new Date(), CALENDAR_TIME_ZONE);
+  const [courses, recent, pending, queue, examQueue, passes, upcoming] = await Promise.all([
     listCourseSummaries(db, user, { limit: 6 }),
     library ? listResources(db, user, { period: "all" }) : Promise.resolve([]),
     isAdmin ? listUsers(db, { approvalStatus: "pending" }) : Promise.resolve([]),
     listModerationQueue(db, user),
     listQuestionQueue(db, user),
     passesSummary(db, user),
+    // Only entries the student wrote themselves; an empty list renders nothing.
+    upcomingEntries(db, user, calendarToday, UPCOMING_LIMIT),
   ]);
   const recentPublished = recent
     .filter((r) => r.status === "published")
@@ -302,15 +308,48 @@ export default async function DashboardPage() {
             />
           </Section>
 
-          {/* No activity data exists yet, so no chart — say so instead. */}
+          {/* The student's own upcoming calendar entries. Nothing is shown when there are none: no placeholder. */}
+          {upcoming.length > 0 && (
+            <Section
+              title={t("calendar.upcoming.title")}
+              actions={
+                <Link href="/calendar" className="inline-flex min-h-10 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
+                  {t("calendar.upcoming.open")}
+                </Link>
+              }
+            >
+              <List>
+                {upcoming.map((e) => (
+                  <li key={e.id}>
+                    <Link href={`/calendar/${e.id}`} className="flex min-h-14 flex-col justify-center gap-0.5 px-4 py-3 transition-colors hover:bg-surface-hover focus-visible:rounded-none focus-visible:outline-offset-[-2px]">
+                      <span className="truncate text-[14px] font-medium">{e.title}</span>
+                      <span className="text-[12px] text-text-subtle">
+                        {format.dateTime(new Date(`${e.date}T12:00:00Z`), { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })}
+                        {" · "}
+                        {t(`calendar.kinds.${e.kind}`)}
+                        {" · "}
+                        {t("calendar.agenda.daysUntil", { days: daysUntil(calendarToday, e.date) })}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </List>
+            </Section>
+          )}
+
+          {/* Progress and analytics: a link to the page built from the student's own data. */}
           <Section title={t("home.progressTitle")}>
             <Panel className="flex gap-3 p-4">
               <span className="grid size-9 shrink-0 place-items-center rounded-[10px] bg-surface-muted text-text-subtle">
                 <ChartIcon width={18} height={18} />
               </span>
               <div>
-                <Badge>{t("nav.comingSoon")}</Badge>
-                <p className="mt-1.5 text-[13px] text-text-muted">{t("home.progressBody")}</p>
+                <p className="text-[13px] text-text-muted">{t("home.progressBody")}</p>
+                {library && (
+                  <Link href="/analytics" className="mt-1.5 inline-flex min-h-11 items-center text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0">
+                    {t("nav.analytics")}
+                  </Link>
+                )}
               </div>
             </Panel>
           </Section>

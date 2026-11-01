@@ -50,6 +50,13 @@
       "when": 1793513021139,
       "tag": "0006_library_topics",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793514162899,
+      "tag": "0007_study_calendar",
+      "breakpoints": true
     }
   ]
 }

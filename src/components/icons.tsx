@@ -211,6 +211,13 @@ export const QuizIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const CalendarIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3.25" y="4.5" width="13.5" height="12.25" rx="2" />
+    <path d="M3.25 8.25h13.5M7 3v3M13 3v3" />
+  </Icon>
+);
+
 export const TagIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M3.5 3.5h5.8l7.2 7.2a1.4 1.4 0 0 1 0 2l-3.8 3.8a1.4 1.4 0 0 1-2 0L3.5 9.3z" />

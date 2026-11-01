@@ -32,7 +32,8 @@
     "tutor": "Tuteur IA",
     "recordings": "Enregistrements",
     "analytics": "Analyses",
-    "study": "Étudier"
+    "study": "Étudier",
+    "calendar": "Calendrier"
   },
   "home": {
     "welcome": "Bon retour, {name}.",
@@ -52,7 +53,7 @@
     "recent": "Ajoutés récemment",
     "recentEmpty": "Aucun document publié pour l'instant.",
     "progressTitle": "Progression d'étude",
-    "progressBody": "La progression s'affichera quand les cartes mémoire et les quiz seront disponibles. Dentiq n'affiche que des données réelles.",
+    "progressBody": "Consultez votre activité, votre exactitude et vos cartes à réviser dans les analyses. Dentiq n'affiche que des données réelles.",
     "quickPasses": "Passes",
     "searchEverything": "Rechercher des documents et des questions d'examen…"
   },
@@ -976,7 +977,17 @@
       "progressNone": "Aucune activité pour l'instant",
       "exportLine": "Limité à ce que vous pouvez voir",
       "courseFilter": "Cours : {code}.",
-      "clearCourse": "Tous les cours"
+      "clearCourse": "Tous les cours",
+      "calendar": {
+        "title": "Calendrier",
+        "body": "Vos propres dates d'examen, échéances et séances d'étude."
+      },
+      "analytics": {
+        "title": "Analyses",
+        "body": "Activité, exactitude et cartes à réviser, à partir de vos seules données."
+      },
+      "calendarLine": "{count, plural, =0 {Aucune entrée pour l'instant} one {# entrée} other {# entrées}}",
+      "analyticsLine": "Jamais comparé à d'autres étudiants"
     },
     "scope": {
       "course": "Cours",
@@ -1464,6 +1475,190 @@
       "invalid": "Valeur invalide.",
       "tooLong": "Texte trop long.",
       "tooMany": "Trop d'éléments choisis."
+    }
+  },
+  "calendar": {
+    "title": "Calendrier",
+    "subtitle": "Vos propres dates : examens, travaux et séances d'étude. Dentiq n'ajoute jamais de dates à votre place.",
+    "privacy": "Votre calendrier est privé. Vous seul·e pouvez voir ces entrées.",
+    "noAccess": "Le calendrier est réservé aux membres approuvés.",
+    "kinds": {
+      "exam": "Examen",
+      "assignment": "Travail",
+      "study_session": "Séance d'étude",
+      "other": "Autre"
+    },
+    "nav": {
+      "previous": "Mois précédent",
+      "next": "Mois suivant",
+      "today": "Aller à aujourd'hui",
+      "month": "Mois",
+      "list": "Liste",
+      "views": "Affichage du calendrier",
+      "add": "Ajouter une entrée"
+    },
+    "grid": {
+      "label": "Calendrier de {month}",
+      "cell": "{date} : {count, plural, =0 {aucune entrée} one {# entrée} other {# entrées}}",
+      "cellToday": "{date}, aujourd'hui : {count, plural, =0 {aucune entrée} one {# entrée} other {# entrées}}",
+      "today": "Aujourd'hui",
+      "more": "+{count} de plus",
+      "count": "{count, plural, one {# entrée} other {# entrées}}"
+    },
+    "agenda": {
+      "titleMonth": "Entrées de {month}",
+      "titleDay": "Entrées du {date}",
+      "showMonth": "Afficher tout le mois",
+      "empty": "Aucune entrée en {month}.",
+      "emptyDay": "Aucune entrée ce jour-là.",
+      "allDay": "Toute la journée",
+      "daysUntil": "{days, plural, =0 {Aujourd'hui} one {Dans # jour} other {Dans # jours}}",
+      "edit": "Modifier",
+      "editLabel": "Modifier l'entrée {title}",
+      "addOnDay": "Ajouter une entrée ce jour-là"
+    },
+    "empty": {
+      "title": "Votre calendrier est vide",
+      "body": "Dentiq ne connaît pas vos dates d'examen et ne les devine pas. Ajoutez les dates que vous connaissez : examens, échéances de travaux, séances d'étude. Vous seul·e les voyez.",
+      "action": "Ajouter votre première entrée"
+    },
+    "form": {
+      "newTitle": "Nouvelle entrée",
+      "editTitle": "Modifier l'entrée",
+      "title": "Titre",
+      "date": "Date",
+      "dateHint": "Années {min} à {max}.",
+      "time": "Heure",
+      "timeHint": "Laissez vide pour une entrée sur toute la journée.",
+      "course": "Cours",
+      "noCourse": "Aucun cours",
+      "kind": "Type",
+      "note": "Note",
+      "delete": "Supprimer cette entrée",
+      "limit": "Vous pouvez garder jusqu'à {max} entrées."
+    },
+    "export": {
+      "title": "Exporter vos entrées",
+      "body": "Téléchargez vos entrées dans un fichier .ics. Il s'agit d'un export de fichier local : rien n'est envoyé à un service de calendrier, et vous choisissez où importer le fichier.",
+      "action": "Télécharger le fichier .ics",
+      "none": "Ajoutez une entrée pour activer l'export."
+    },
+    "upcoming": {
+      "title": "À venir dans votre calendrier",
+      "open": "Ouvrir le calendrier"
+    },
+    "errors": {
+      "noAccess": "Le calendrier est réservé aux membres approuvés.",
+      "notFound": "Cette entrée est introuvable.",
+      "tooManyEntries": "Vous avez atteint la limite d'entrées du calendrier.",
+      "courseNotFound": "Ce cours est introuvable.",
+      "invalid": "Certaines informations ne sont pas valides.",
+      "titleRequired": "Veuillez saisir un titre.",
+      "titleTooLong": "Ce titre est trop long.",
+      "noteTooLong": "Cette note est trop longue.",
+      "invalidDate": "Cette date n'existe pas.",
+      "dateOutOfRange": "Cette date est hors des années acceptées par le calendrier.",
+      "invalidTime": "Saisissez une heure comme 14:30, ou laissez vide."
+    }
+  },
+  "analytics": {
+    "title": "Analyses",
+    "subtitle": "Des chiffres construits uniquement à partir de votre activité enregistrée. Aucune estimation, aucune comparaison avec d'autres étudiants.",
+    "privacy": "Vous seul·e voyez cette page. Elle n'utilise les données de personne d'autre.",
+    "noAccess": "Les analyses sont réservées aux membres approuvés.",
+    "empty": {
+      "title": "Rien à analyser pour l'instant",
+      "body": "Ces chiffres apparaissent après avoir répondu à des questions, révisé des cartes, fait un quiz ou ajouté des entrées au calendrier. Dentiq n'affiche aucun chiffre inventé.",
+      "action": "Commencer à pratiquer"
+    },
+    "activity": {
+      "title": "Activité, {days} derniers jours",
+      "description": "Une barre par jour : les réponses données en pratique ou en quiz, plus les cartes révisées. Les jours sont comptés à l'heure de {zone}.",
+      "summary": "{active} jours sur {days} avec au moins une réponse ou une révision de carte ({answers} réponses et {reviews} révisions de cartes au total).",
+      "answers": "Réponses",
+      "reviews": "Révisions de cartes",
+      "legend": "Légende",
+      "tableToggle": "Afficher les chiffres sous forme de tableau",
+      "date": "Date",
+      "total": "Total",
+      "chartLabel": "Diagramme à barres de l'activité quotidienne sur les {days} derniers jours. Le tableau sous le diagramme donne les mêmes chiffres.",
+      "max": "Journée la plus active : {count}",
+      "none": "Aucune activité dans les {days} derniers jours."
+    },
+    "accuracy": {
+      "title": "Exactitude sur les réponses vérifiées",
+      "description": "Seules les réponses notées selon une réponse vérifiée comptent. Une réponse à une question sans réponse vérifiée est non notée : elle est listée, mais jamais comptée comme juste ou fausse. Une réponse en partie juste vaut un demi-point.",
+      "overall": "Tous les cours",
+      "percent": "{percent} %",
+      "points": "Score de {points} sur {scored} {scored, plural, one {réponse notée} other {réponses notées}}",
+      "noScore": "Rien de noté pour l'instant",
+      "unscored": "{count} non notées et non comptées",
+      "volume": "{attempts, plural, one {# réponse enregistrée} other {# réponses enregistrées}} sur {questions, plural, one {# question} other {# questions différentes}}",
+      "answered": "Questions répondues au moins une fois : {answered} sur {pool} questions publiées que vous pouvez étudier.",
+      "byCourse": "Par cours",
+      "empty": "Aucune réponse enregistrée pour l'instant."
+    },
+    "cards": {
+      "title": "Cartes mémoire",
+      "description": "Cartes issues des questions publiées, plus vos propres cartes. Une carte est à réviser quand son heure de révision est passée.",
+      "dueNow": "À réviser maintenant",
+      "dueLine": "{due} sur {started} {started, plural, one {carte commencée} other {cartes commencées}}",
+      "fresh": "Nouvelles, jamais révisées",
+      "freshLine": "{fresh} sur {total} {total, plural, one {carte} other {cartes}}",
+      "none": "Aucune carte disponible pour l'instant.",
+      "review": "Réviser les cartes"
+    },
+    "marks": {
+      "title": "Questions marquées",
+      "description": "Questions que vous avez signalées ou marquées pour plus tard, parmi les questions publiées que vous pouvez étudier.",
+      "flagged": "Signalées",
+      "reviewLater": "À revoir plus tard",
+      "of": "{count} sur {pool}"
+    },
+    "topics": {
+      "title": "Sujets les plus faibles",
+      "description": "Un sujet n'est classé que lorsqu'il compte au moins {min} réponses notées selon une réponse vérifiée. Le sujet est celui lié à la question, ou celui saisi dessus. Une réponse compte une fois dans chaque sujet de sa question.",
+      "notEnough": "Pas assez de données pour l'instant. Aucun sujet n'a encore {min} réponses notées.",
+      "belowMinimum": "{count, plural, one {# sujet a} other {# sujets ont}} quelques réponses notées, mais moins de {min}.",
+      "allFull": "Chaque sujet comptant au moins {min} réponses notées est à 100 %.",
+      "withoutTopic": "{count, plural, one {# réponse notée porte} other {# réponses notées portent}} sur des questions sans sujet et ne figurent pas ici.",
+      "topic": "Sujet",
+      "course": "Cours",
+      "accuracy": "Exactitude",
+      "scored": "Réponses notées",
+      "line": "{percent} % sur {scored} {scored, plural, one {réponse notée} other {réponses notées}}"
+    },
+    "quizzes": {
+      "title": "Résultats des quiz",
+      "description": "Quiz terminés, du plus récent au plus ancien. Un résultat est le nombre de points sur les éléments notés selon une réponse vérifiée ; les éléments non notés ne sont pas comptés.",
+      "line": "{points} points sur {scored} ({percent} %)",
+      "noScore": "Aucun résultat",
+      "unscored": "{count} non notées",
+      "size": "{count, plural, one {# question} other {# questions}}",
+      "empty": "Aucun quiz terminé pour l'instant.",
+      "shown": "Affichage des {shown} derniers quiz terminés sur {total}.",
+      "open": "{count, plural, one {# quiz encore en cours} other {# quiz encore en cours}}",
+      "history": "Tous les quiz"
+    },
+    "yourDates": {
+      "title": "Calendrier",
+      "description": "Seulement les dates que vous avez ajoutées vous-même.",
+      "line": "{upcoming} à venir sur {total} {total, plural, one {entrée} other {entrées}}",
+      "next": "Prochaine entrée : {title}, {date} ({days})",
+      "nextExam": "Prochain examen ajouté : {title}, {date} ({days})",
+      "none": "Vous n'avez ajouté aucune entrée au calendrier.",
+      "open": "Ouvrir le calendrier",
+      "today": "aujourd'hui",
+      "inDays": "{days, plural, one {dans # jour} other {dans # jours}}"
+    },
+    "definitions": {
+      "title": "Ce que compte chaque chiffre",
+      "attempt": "Une réponse enregistrée est une question à laquelle vous avez répondu en pratique ou en quiz. Répondre deux fois à la même question enregistre deux réponses.",
+      "scored": "Une réponse notée est comparée à une réponse vérifiée : juste, en partie juste ou fausse.",
+      "unscored": "Une réponse non notée a été donnée quand la question n'avait pas de réponse vérifiée. Elle est affichée, mais jamais comptée dans une exactitude.",
+      "accuracy": "L'exactitude est le nombre de points divisé par le nombre de réponses notées : juste vaut 1 point, en partie juste vaut un demi-point.",
+      "activeDay": "Un jour avec activité compte au moins une réponse enregistrée ou une révision de carte.",
+      "due": "Une carte est à réviser quand son heure de révision prévue est passée. Les nouvelles cartes n'ont pas encore d'horaire et sont comptées à part."
     }
   }
 }

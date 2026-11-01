@@ -86,6 +86,7 @@ Tables (see `src/db/schema/`):
 | `resource_versions` | Every uploaded file (append-only): storage key, original name, type, size, SHA-256, change note, rights confirmation |
 | `resource_reports` | Problem reports; one open report per person per document (partial unique index) |
 | `course_topics`, `course_notes`, `course_note_versions`, `resource_topics`, `note_topics`, `question_topics`, `resource_question_links`, `note_question_links` | Course library (topics, private notes with versions, link tables). See `docs/library-topics.md` |
+| `study_calendar_entries` | The student's own calendar entries (private, `user_id` owner-only). See `docs/calendar-analytics.md` |
 
 ### Shared documents (Phase 2)
 - **Current vs historical** is computed, not stored: a document tied to the course's most recent offering (latest academic year, then fall < winter < summer) is *current*; one tied to an older offering is *historical*; one with no offering is *general* and shown with current material. Adding a new offering automatically moves older material to the archive without editing it.

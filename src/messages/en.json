@@ -32,7 +32,8 @@
     "tutor": "AI Tutor",
     "recordings": "Recordings",
     "analytics": "Analytics",
-    "study": "Study"
+    "study": "Study",
+    "calendar": "Calendar"
   },
   "home": {
     "welcome": "Welcome back, {name}.",
@@ -52,7 +53,7 @@
     "recent": "Recently added",
     "recentEmpty": "No published documents yet.",
     "progressTitle": "Study progress",
-    "progressBody": "Progress will appear once flashcards and quizzes are available. Dentiq only shows real data.",
+    "progressBody": "See your own activity, accuracy and cards due on the Analytics page. Dentiq only shows real data.",
     "quickPasses": "Passes",
     "searchEverything": "Search documents and exam questions…"
   },
@@ -976,7 +977,17 @@
       "progressNone": "No activity yet",
       "exportLine": "Limited to what you may see",
       "courseFilter": "Course: {code}.",
-      "clearCourse": "All courses"
+      "clearCourse": "All courses",
+      "calendar": {
+        "title": "Calendar",
+        "body": "Your own exam dates, deadlines and study sessions."
+      },
+      "analytics": {
+        "title": "Analytics",
+        "body": "Activity, accuracy and cards due, from your own data only."
+      },
+      "calendarLine": "{count, plural, =0 {No entries yet} one {# entry} other {# entries}}",
+      "analyticsLine": "Never compared with other students"
     },
     "scope": {
       "course": "Course",
@@ -1464,6 +1475,190 @@
       "invalid": "Invalid value.",
       "tooLong": "Text too long.",
       "tooMany": "Too many items chosen."
+    }
+  },
+  "calendar": {
+    "title": "Calendar",
+    "subtitle": "Your own dates: exams, assignments and study sessions. Dentiq never adds dates for you.",
+    "privacy": "Your calendar is private. Only you can see these entries.",
+    "noAccess": "The calendar is available to approved members.",
+    "kinds": {
+      "exam": "Exam",
+      "assignment": "Assignment",
+      "study_session": "Study session",
+      "other": "Other"
+    },
+    "nav": {
+      "previous": "Previous month",
+      "next": "Next month",
+      "today": "Go to today",
+      "month": "Month",
+      "list": "List",
+      "views": "Calendar view",
+      "add": "Add an entry"
+    },
+    "grid": {
+      "label": "Calendar for {month}",
+      "cell": "{date}: {count, plural, =0 {no entries} one {# entry} other {# entries}}",
+      "cellToday": "{date}, today: {count, plural, =0 {no entries} one {# entry} other {# entries}}",
+      "today": "Today",
+      "more": "+{count} more",
+      "count": "{count, plural, one {# entry} other {# entries}}"
+    },
+    "agenda": {
+      "titleMonth": "Entries in {month}",
+      "titleDay": "Entries on {date}",
+      "showMonth": "Show the whole month",
+      "empty": "No entries in {month}.",
+      "emptyDay": "No entries on this day.",
+      "allDay": "All day",
+      "daysUntil": "{days, plural, =0 {Today} one {In # day} other {In # days}}",
+      "edit": "Edit",
+      "editLabel": "Edit the entry {title}",
+      "addOnDay": "Add an entry on this day"
+    },
+    "empty": {
+      "title": "Your calendar is empty",
+      "body": "Dentiq does not know your exam dates and will not guess them. Add the dates you know: exams, assignment deadlines, study sessions. Only you can see them.",
+      "action": "Add your first entry"
+    },
+    "form": {
+      "newTitle": "New entry",
+      "editTitle": "Edit entry",
+      "title": "Title",
+      "date": "Date",
+      "dateHint": "Years {min} to {max}.",
+      "time": "Time",
+      "timeHint": "Leave empty for an all-day entry.",
+      "course": "Course",
+      "noCourse": "No course",
+      "kind": "Kind",
+      "note": "Note",
+      "delete": "Delete this entry",
+      "limit": "You can keep up to {max} entries."
+    },
+    "export": {
+      "title": "Export your entries",
+      "body": "Download your entries as a .ics file. This is a local file export: nothing is sent to any calendar service, and you choose where to import the file.",
+      "action": "Download .ics file",
+      "none": "Add an entry to enable the export."
+    },
+    "upcoming": {
+      "title": "Upcoming in your calendar",
+      "open": "Open calendar"
+    },
+    "errors": {
+      "noAccess": "The calendar is available to approved members.",
+      "notFound": "This entry was not found.",
+      "tooManyEntries": "You have reached the limit of calendar entries.",
+      "courseNotFound": "This course was not found.",
+      "invalid": "Some of the information is not valid.",
+      "titleRequired": "Please enter a title.",
+      "titleTooLong": "This title is too long.",
+      "noteTooLong": "This note is too long.",
+      "invalidDate": "This is not a real date.",
+      "dateOutOfRange": "This date is outside the years the calendar accepts.",
+      "invalidTime": "Enter a time like 14:30, or leave it empty."
+    }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "subtitle": "Numbers built only from your own recorded activity. No estimates, and no comparison with other students.",
+    "privacy": "Only you can see this page. It uses no one else's data.",
+    "noAccess": "Analytics are available to approved members.",
+    "empty": {
+      "title": "Nothing to analyze yet",
+      "body": "These figures appear after you answer questions, review flashcards, take a quiz or add calendar entries. Dentiq does not show invented numbers.",
+      "action": "Start practicing"
+    },
+    "activity": {
+      "title": "Activity, last {days} days",
+      "description": "One bar per day: answers you gave in practice or quizzes, plus flashcards you reviewed. Days are counted in {zone} time.",
+      "summary": "{active} of {days} days with at least one answer or card review ({answers} answers and {reviews} card reviews in all).",
+      "answers": "Answers",
+      "reviews": "Card reviews",
+      "legend": "Legend",
+      "tableToggle": "Show the numbers as a table",
+      "date": "Date",
+      "total": "Total",
+      "chartLabel": "Bar chart of daily activity over the last {days} days. The table below the chart gives the same numbers.",
+      "max": "Highest day: {count}",
+      "none": "No activity in the last {days} days."
+    },
+    "accuracy": {
+      "title": "Accuracy on verified answers",
+      "description": "Only answers scored against a verified answer count. An answer on a question without a verified answer is unscored: it is listed, but never counted as right or wrong. A partly right answer counts as half a point.",
+      "overall": "All courses",
+      "percent": "{percent}%",
+      "points": "Score {points} out of {scored} scored {scored, plural, one {answer} other {answers}}",
+      "noScore": "Nothing scored yet",
+      "unscored": "{count} unscored and not counted",
+      "volume": "{attempts, plural, one {# recorded answer} other {# recorded answers}} on {questions, plural, one {# question} other {# different questions}}",
+      "answered": "Questions answered at least once: {answered} of {pool} published questions you can study.",
+      "byCourse": "By course",
+      "empty": "No answers recorded yet."
+    },
+    "cards": {
+      "title": "Flashcards",
+      "description": "Cards made from published questions plus your own cards. A card is due when its next review time has passed.",
+      "dueNow": "Due now",
+      "dueLine": "{due} of {started} started {started, plural, one {card} other {cards}}",
+      "fresh": "New, never reviewed",
+      "freshLine": "{fresh} of {total} {total, plural, one {card} other {cards}}",
+      "none": "No cards available yet.",
+      "review": "Review cards"
+    },
+    "marks": {
+      "title": "Marked questions",
+      "description": "Questions you flagged or marked for later, out of the published questions you can study.",
+      "flagged": "Flagged",
+      "reviewLater": "Review later",
+      "of": "{count} of {pool}"
+    },
+    "topics": {
+      "title": "Weakest topics",
+      "description": "A topic is ranked only once it has at least {min} answers scored against a verified answer. The topic is the one linked to the question, or the one typed on it. An answer counts once in each topic its question has.",
+      "notEnough": "Not enough data yet. No topic has {min} scored answers so far.",
+      "belowMinimum": "{count, plural, one {# topic has} other {# topics have}} some scored answers, but fewer than {min}.",
+      "allFull": "Every topic with at least {min} scored answers is at 100%.",
+      "withoutTopic": "{count, plural, one {# scored answer is} other {# scored answers are}} on questions without a topic and not listed here.",
+      "topic": "Topic",
+      "course": "Course",
+      "accuracy": "Accuracy",
+      "scored": "Scored answers",
+      "line": "{percent}% on {scored} scored {scored, plural, one {answer} other {answers}}"
+    },
+    "quizzes": {
+      "title": "Quiz scores",
+      "description": "Completed quizzes, newest first. A score is points out of the items scored against a verified answer; unscored items are not counted.",
+      "line": "{points} of {scored} points ({percent}%)",
+      "noScore": "No score",
+      "unscored": "{count} unscored",
+      "size": "{count, plural, one {# question} other {# questions}}",
+      "empty": "No completed quiz yet.",
+      "shown": "Showing the latest {shown} of {total} completed quizzes.",
+      "open": "{count, plural, one {# quiz still in progress} other {# quizzes still in progress}}",
+      "history": "All quizzes"
+    },
+    "yourDates": {
+      "title": "Calendar",
+      "description": "Only dates you added yourself.",
+      "line": "{upcoming} upcoming of {total} {total, plural, one {entry} other {entries}}",
+      "next": "Next entry: {title}, {date} ({days})",
+      "nextExam": "Next exam you added: {title}, {date} ({days})",
+      "none": "You have not added any calendar entry.",
+      "open": "Open calendar",
+      "today": "today",
+      "inDays": "{days, plural, one {in # day} other {in # days}}"
+    },
+    "definitions": {
+      "title": "What each number counts",
+      "attempt": "A recorded answer is one question answered in practice or in a quiz. Answering the same question twice records two answers.",
+      "scored": "A scored answer is an answer checked against a verified answer: correct, partly right or incorrect.",
+      "unscored": "An unscored answer was given when the question had no verified answer. It is shown but never counted in any accuracy.",
+      "accuracy": "Accuracy is points divided by scored answers, where correct is 1 point and partly right is half a point.",
+      "activeDay": "A day with activity has at least one recorded answer or card review.",
+      "due": "A card is due when its scheduled review time has passed. New cards have no schedule yet and are counted apart."
     }
   }
 }

@@ -7,6 +7,7 @@ import { useTransition, type ComponentType, type SVGProps } from "react";
 import { authClient } from "@/lib/auth-client";
 import {
   BookIcon,
+  CalendarIcon,
   CardsIcon,
   ChartIcon,
   FlagIcon,
@@ -24,7 +25,7 @@ import { cx, Wordmark } from "./ui";
 
 type NavItem = {
   href: string;
-  key: "dashboard" | "courses" | "resources" | "passes" | "study" | "moderation" | "settings" | "admin";
+  key: "dashboard" | "courses" | "resources" | "passes" | "study" | "calendar" | "analytics" | "moderation" | "settings" | "admin";
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   /** Hidden from the mobile tab bar (reachable from another page instead). */
   desktopOnly?: boolean;
@@ -63,7 +64,6 @@ export function SignOutButton({ className }: { className?: string }) {
 const comingSoon = [
   { key: "tutor", icon: SparkleIcon },
   { key: "recordings", icon: MicIcon },
-  { key: "analytics", icon: ChartIcon },
 ] as const;
 
 function initials(name: string): string {
@@ -99,6 +99,10 @@ export function AppShell({
     // Study hub: practice, flashcards, quizzes, progress, export. Students get it in the phone tab bar (five items);
     // moderators and admins already have five, so on phones theirs sits in the header next to the gear.
     { href: "/practice", key: "study", icon: CardsIcon, desktopOnly: isModerator || isAdmin },
+    // Calendar and Analytics are live links on desktop; on phones they are reached from the Study hub, which keeps the
+    // tab bar to five items.
+    { href: "/calendar", key: "calendar", icon: CalendarIcon, desktopOnly: true },
+    { href: "/analytics", key: "analytics", icon: ChartIcon, desktopOnly: true },
     // Admins reach moderation from the Admin page on phones, keeping the tab bar to five items.
     ...(isModerator ? [{ href: "/moderation", key: "moderation", icon: FlagIcon, desktopOnly: isAdmin } as NavItem] : []),
     ...(isAdmin ? [{ href: "/admin", key: "admin", icon: ShieldIcon } as NavItem] : []),

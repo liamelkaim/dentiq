@@ -18,7 +18,8 @@
 | Phase 3 screens (carried over) | committed | 9ddb7a0 |
 | A. Passes polish | built; typecheck, lint, 212 tests, build all clean; not yet browser-tested | d990d7c |
 | B. Study tools (practice, progress, flashcards, quizzes, export) | built; typecheck, lint, 269 tests, build clean; not yet browser-tested; Anki All in One compatibility UNVERIFIED | 72d3700 |
-| C. Notes and course library (topics, links, note versions, search, current vs previous) | built; typecheck, lint, 303 tests, build clean; not yet browser-tested | see git log |
+| C. Notes and course library (topics, links, note versions, search, current vs previous) | built; typecheck, lint, 303 tests, build clean; not yet browser-tested | c3b1a3f |
+| D. Calendar and analytics (local only) | built; typecheck, lint, 375 tests, build clean; not yet browser-tested; .ics import into calendar apps UNVERIFIED | see git log |
 
 ## Decisions made for the owner
 
@@ -32,6 +33,10 @@
 - C: when a course has topics the upload form uses the picker instead of free text; legacy free-text topics stay readable with a badge.
 - C: migration `drizzle/0006_library_topics.sql` (8 tables, additive).
 - C not done: no topic picker inside question submit/edit forms, no note delete/share, no "My notes" in main nav, search not accent-insensitive.
+- D: no per-user time zone yet; one constant `CALENDAR_TIME_ZONE = "America/Toronto"` in `src/server/calendar/constants.ts` decides "today". Change it if wrong.
+- D: calendar never pre-fills dates; 1000 entries per student; analytics counts only the viewer's rows, excludes unscored answers, names weak topics only from 5 scored answers (constants in `src/server/analytics/constants.ts`).
+- D: migration `drizzle/0007_study_calendar.sql` (1 table, additive). Dashboard "progress coming soon" card replaced by an Analytics link.
+- D not built: reminders, recurring entries, .ics import/feed, per-user time zone.
 
 ## Noted for later blocks
 
