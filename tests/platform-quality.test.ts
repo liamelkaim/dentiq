@@ -153,7 +153,7 @@ describe("navigation", () => {
     };
     // The sidebar hides unbuilt features entirely (no "coming soon" list); course tabs still show a disabled one.
     expect(list("app-shell.tsx", "comingSoon")).toEqual([]);
-    expect(list("course-layout.tsx", "futureTabs")).toEqual(["recordings"]);
+    expect(list("course-layout.tsx", "futureTabs")).toEqual([]);
     expect(existsSync(path.join(SRC, "app", "(app)", "recordings"))).toBe(false);
   });
 });

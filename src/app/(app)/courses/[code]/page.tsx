@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { CourseForm, OfferingForm } from "@/components/admin-forms";
 import { CourseHeader, loadCourseByCode, loadCourseSummary } from "@/components/course-layout";
-import { FolderIcon, PassesIcon } from "@/components/icons";
-import { Badge, ButtonLink, DescriptionList, List, ListRow, Notice, Panel, Section } from "@/components/ui";
+import { BookIcon, CardsIcon, ChevronRightIcon, FolderIcon, PassesIcon, TagIcon, UsersIcon } from "@/components/icons";
+import { Badge, ButtonLink, Notice, Panel, Section } from "@/components/ui";
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import { hasRole } from "@/server/auth/roles";
@@ -14,6 +16,35 @@ import { publishedQuestionCount } from "@/server/passes/queries";
 import { canAccessLibrary } from "@/server/resources/service";
 
 type Params = Promise<{ code: string }>;
+
+function OverviewCard({ icon, title, children, className }: { icon: ReactNode; title: string; children: ReactNode; className?: string }) {
+  return (
+    <Panel className={className}>
+      <section className="p-5" aria-label={title}>
+        <h2 className="mb-4 flex items-center gap-3 text-[19px] font-semibold tracking-[-0.01em]">
+          <span className="text-accent">{icon}</span>
+          {title}
+        </h2>
+        {children}
+      </section>
+    </Panel>
+  );
+}
+
+function ResourceTile({ href, icon, value, label }: { href: string; icon: ReactNode; value: number | null; label: string }) {
+  return (
+    <Link href={href} className="flex min-h-[104px] flex-col justify-between rounded-[12px] border border-border bg-surface-muted/40 p-3.5 transition-colors hover:border-border-strong">
+      <span className="flex items-start justify-between text-accent">
+        {icon}
+        <ChevronRightIcon width={16} height={16} className="text-text-muted" />
+      </span>
+      <span>
+        {value !== null && <span className="block text-[22px] leading-none font-bold tabular-nums">{value}</span>}
+        <span className="mt-1 block text-[13px] text-text-muted">{label}</span>
+      </span>
+    </Link>
+  );
+}
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const course = await loadCourseByCode((await params).code);
@@ -74,112 +105,84 @@ export default async function CourseOverviewPage({ params }: { params: Params })
         </p>
       )}
 
-      <div className="grid grid-cols-1 gap-x-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="min-w-0">
-          <Section title={t("course.details")}>
-            <DescriptionList
-              items={[
-                { label: t("course.credits"), value: course.credits ? format.number(Number(course.credits)) : notSpecified },
-                {
-                  label: t("course.yearOfStudy"),
-                  value: course.yearOfStudy ? t("courses.yearN", { year: course.yearOfStudy }) : notSpecified,
-                },
-                { label: t("course.typicalTerm"), value: course.typicalTerm ? t(`terms.${course.typicalTerm}`) : notSpecified },
-                {
-                  label: t("course.program"),
-                  value: course.program ? localized(locale, course.program.nameFr, course.program.nameEn) : notSpecified,
-                },
-                { label: t("course.source"), value: sourceValue },
-              ]}
-            />
-          </Section>
-
-          {description && (
-            <Section title={t("course.description")}>
-              <Panel className="px-4 py-3 text-[15px] leading-relaxed whitespace-pre-line text-text">{description}</Panel>
-            </Section>
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+        {/* Course overview: description and the facts the catalog actually holds */}
+        <OverviewCard icon={<BookIcon width={26} height={26} />} title={t("course.overviewTitle")}>
+          {description ? (
+            <p className="text-[15px] leading-relaxed whitespace-pre-line text-text">{description}</p>
+          ) : (
+            <p className="text-[14px] text-text-muted">{t("course.descriptionEmpty")}</p>
           )}
+          <dl className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-5 sm:grid-cols-4">
+            {[
+              [t("course.credits"), course.credits ? format.number(Number(course.credits)) : null],
+              [t("course.yearOfStudy"), course.yearOfStudy ? t("courses.yearN", { year: course.yearOfStudy }) : null],
+              [t("course.typicalTerm"), course.typicalTerm ? t(`terms.${course.typicalTerm}`) : null],
+              [t("course.program"), course.program ? localized(locale, course.program.nameFr, course.program.nameEn) : null],
+            ].map(([label, value]) => (
+              <div key={label}>
+                <dt className="text-[12px] font-medium text-text-muted">{label}</dt>
+                <dd className="mt-0.5 text-[14px] font-semibold">{value ?? notSpecified}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-4 text-[12px] text-text-muted">
+            {t("course.source")}: {sourceValue}
+          </p>
+        </OverviewCard>
 
-          <Section title={t("course.offerings")} description={t("course.offeringsHelp")}>
-            {course.offerings.length === 0 ? (
-              <Panel className="px-4 py-6 text-center text-[14px] text-text-muted">{t("course.offeringsEmpty")}</Panel>
-            ) : (
-              <List>
-                {course.offerings.map((offering) => (
-                  <ListRow key={offering.id} className="flex-col items-start gap-1 sm:flex-row sm:items-center sm:justify-between">
-                    <span className="text-[15px] font-medium tabular-nums">
-                      {offering.academicYear} · {t(`terms.${offering.term}`)}
-                    </span>
-                    <span className="text-[14px] text-text-muted">
-                      {offering.instructors.length > 0 ? (
-                        offering.instructors.map((i) => i.fullName).join(", ")
-                      ) : (
-                        <span className="text-text-subtle">{t("course.noInstructors")}</span>
-                      )}
-                    </span>
-                  </ListRow>
-                ))}
-              </List>
-            )}
-          </Section>
-        </div>
-
-        <aside className="min-w-0">
-          <Section title={t("courseLayout.notes")}>
-            {libraryAccess ? (
-              <Panel className="flex flex-col gap-4 p-5">
-                <div className="flex items-center gap-3">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-[10px] bg-accent-soft text-accent">
-                    <FolderIcon />
-                  </span>
-                  <p className="text-[15px] font-medium">{t("home.documents", { count: summary.documentCount ?? 0 })}</p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <ButtonLink href={notesHref}>{t("courseLayout.seeNotes")}</ButtonLink>
-                  {!course.archivedAt && (
-                    <ButtonLink href={`/courses/${encodeURIComponent(course.code)}/upload`} variant="secondary">
-                      {t("resources.upload")}
-                    </ButtonLink>
-                  )}
-                  <ButtonLink href={`/notes?course=${encodeURIComponent(course.code)}`} variant="secondary">
-                    {t("library.notes.title")}
-                  </ButtonLink>
-                  <ButtonLink href={`${base}/topics`} variant="secondary">
-                    {t("courseLayout.topics")}
-                  </ButtonLink>
-                </div>
-              </Panel>
-            ) : (
-              <Notice tone="warning" title={t("resources.noAccessTitle")}>
-                {t("resources.noAccessBody")}
-              </Notice>
-            )}
-          </Section>
-
-          {libraryAccess && passCount !== null && (
-            <Section title={t("passes.title")}>
-              <Panel className="flex flex-col gap-4 p-5">
-                <div className="flex items-center gap-3">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-[10px] bg-accent-soft text-accent">
-                    <PassesIcon />
-                  </span>
-                  <div>
-                    <p className="text-[15px] font-medium">{t("passes.browser.count", { count: passCount })}</p>
-                    {passCount === 0 && <p className="text-[13px] text-text-muted">{t("passes.courseCard.empty")}</p>}
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <ButtonLink href={passesHref}>{t("passes.courseCard.open")}</ButtonLink>
-                  {passCount === 0 && !course.archivedAt && (
-                    <ButtonLink href={`${passesHref}/new`} variant="secondary">
-                      {t("passes.add")}
-                    </ButtonLink>
-                  )}
-                </div>
-              </Panel>
-            </Section>
+        {/* Course resources: real counts, each tile opens its page */}
+        <OverviewCard icon={<PassesIcon width={26} height={26} />} title={t("course.resourcesTitle")}>
+          {libraryAccess ? (
+            <div className="grid grid-cols-2 gap-3">
+              <ResourceTile href={notesHref} icon={<FolderIcon width={26} height={26} />} value={summary.documentCount ?? 0} label={t("courseLayout.notes")} />
+              <ResourceTile href={passesHref} icon={<PassesIcon width={26} height={26} />} value={passCount ?? 0} label={t("passes.title")} />
+              <ResourceTile href={`${base}/topics`} icon={<TagIcon width={26} height={26} />} value={null} label={t("courseLayout.topics")} />
+              <ResourceTile href={`/practice?course=${course.id}`} icon={<CardsIcon width={26} height={26} />} value={null} label={t("nav.flashcards")} />
+            </div>
+          ) : (
+            <Notice tone="warning" title={t("resources.noAccessTitle")}>
+              {t("resources.noAccessBody")}
+            </Notice>
           )}
-        </aside>
+          {libraryAccess && !course.archivedAt && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              <ButtonLink href={`${base}/upload`} variant="secondary">
+                {t("resources.upload")}
+              </ButtonLink>
+              {passCount === 0 && (
+                <ButtonLink href={`${passesHref}/new`} variant="secondary">
+                  {t("passes.add")}
+                </ButtonLink>
+              )}
+            </div>
+          )}
+        </OverviewCard>
+
+        {/* Offerings, with their instructors */}
+        <OverviewCard icon={<UsersIcon width={26} height={26} />} title={t("course.offerings")} className="lg:col-span-2">
+          <p className="mb-3 text-[13px] text-text-muted">{t("course.offeringsHelp")}</p>
+          {course.offerings.length === 0 ? (
+            <p className="rounded-[10px] border border-border bg-surface-muted/40 px-4 py-6 text-center text-[14px] text-text-muted">{t("course.offeringsEmpty")}</p>
+          ) : (
+            <ul className="divide-y divide-border rounded-[10px] border border-border bg-surface-muted/30">
+              {course.offerings.map((offering) => (
+                <li key={offering.id} className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                  <span className="text-[15px] font-medium tabular-nums">
+                    {offering.academicYear} · {t(`terms.${offering.term}`)}
+                  </span>
+                  <span className="text-[14px] text-text-muted">
+                    {offering.instructors.length > 0 ? (
+                      offering.instructors.map((i) => i.fullName).join(", ")
+                    ) : (
+                      <span className="text-text-subtle">{t("course.noInstructors")}</span>
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </OverviewCard>
       </div>
 
       {isAdmin && (

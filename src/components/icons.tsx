@@ -243,3 +243,10 @@ export const BellIcon = (p: IconProps) => (
     <path d="M5 8a5 5 0 0 1 10 0c0 4.5 1.8 5.6 1.8 5.6H3.2S5 12.5 5 8ZM8.3 16.3a1.9 1.9 0 0 0 3.4 0" />
   </Icon>
 );
+
+export const UsersIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="7.5" cy="7" r="2.8" />
+    <path d="M2.5 16c0-2.8 2.2-4.6 5-4.6s5 1.8 5 4.6M13 4.4a2.8 2.8 0 0 1 0 5.2M14.5 11.6c1.8.5 3 2 3 4.4" />
+  </Icon>
+);

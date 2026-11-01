@@ -77,6 +77,7 @@
   },
   "courseLayout": {
     "tabs": "Course sections",
+    "breadcrumb": "Breadcrumb",
     "overview": "Overview",
     "notes": "Notes",
     "soonLabel": "{feature}: coming soon",
@@ -216,6 +217,9 @@
     "open": "Open"
   },
   "course": {
+    "overviewTitle": "Course overview",
+    "resourcesTitle": "Course resources",
+    "descriptionEmpty": "No description has been added for this course yet.",
     "details": "Details",
     "credits": "Credits",
     "yearOfStudy": "Year of study",

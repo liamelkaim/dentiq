@@ -3,7 +3,7 @@
 // The tutor tab is a real link: the page exists and says plainly whether the tutor is off.
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import type { ComponentType, ReactNode, SVGProps } from "react";
+import type { ReactNode } from "react";
 import { getDb } from "@/db/client";
 import { localized, type Locale } from "@/i18n/config";
 import type { CurrentUser } from "@/server/auth/session";
@@ -11,7 +11,7 @@ import { getCourseByCode } from "@/server/catalog/service";
 import { courseCodeFromSegment } from "@/server/catalog/validation";
 import { listCourseSummaries, type CourseSummary } from "@/server/resources/service";
 import { isTutorReady } from "@/server/tutor/service";
-import { BookIcon, CardsIcon, ChevronLeftIcon, FolderIcon, MicIcon, PassesIcon, SparkleIcon, TagIcon } from "./icons";
+import { ChevronLeftIcon } from "./icons";
 import { cx } from "./ui";
 
 type CourseDetail = NonNullable<Awaited<ReturnType<typeof getCourseByCode>>>;
@@ -101,11 +101,20 @@ export function CourseCover({ code, className, compact = false }: { code: string
 type Tab = {
   key: "overview" | "notes" | "passes" | "topics" | "study" | "tutor";
   href: string;
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
   /** Small status label next to the name (the tutor says "Off" while it cannot answer). */
   badge?: string;
 };
-const futureTabs = [{ key: "recordings", icon: MicIcon }] as const;
+
+function initials(name: string): string {
+  return (
+    name
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]!.toUpperCase())
+      .join("") || "?"
+  );
+}
 
 export async function CourseHeader({
   course,
@@ -122,65 +131,68 @@ export async function CourseHeader({
   const locale = (await getLocale()) as Locale;
   const base = `/courses/${encodeURIComponent(course.code)}`;
   const tutorReady = await isTutorReady(getDb());
+  // Recordings has no page yet, so it is not shown at all.
   const tabs: Tab[] = [
-    { key: "overview", href: base, icon: BookIcon },
-    { key: "notes", href: `${base}/notes`, icon: FolderIcon },
-    { key: "passes", href: `${base}/passes`, icon: PassesIcon },
-    { key: "topics", href: `${base}/topics`, icon: TagIcon },
+    { key: "overview", href: base },
+    { key: "notes", href: `${base}/notes` },
+    { key: "passes", href: `${base}/passes` },
+    { key: "topics", href: `${base}/topics` },
     // The Study hub (practice, flashcards, quizzes, progress, export) for this course.
-    { key: "study", href: `/practice?course=${course.id}`, icon: CardsIcon },
+    { key: "study", href: `/practice?course=${course.id}` },
     // Live page: the course is preselected; it states when the tutor is off and offers the source search.
-    { key: "tutor", href: `/tutor?course=${encodeURIComponent(course.code)}`, icon: SparkleIcon, badge: tutorReady ? undefined : t("nav.off") },
+    { key: "tutor", href: `/tutor?course=${encodeURIComponent(course.code)}`, badge: tutorReady ? undefined : t("nav.off") },
   ];
-  const offeringLine = course.currentOffering
-    ? [
-        course.instructors.join(", "),
-        `${course.currentOffering.academicYear} · ${t(`terms.${course.currentOffering.term}`)}`,
-      ]
-        .filter(Boolean)
-        .join(" · ")
-    : t("home.noOffering");
+  const title = localized(locale, course.titleFr, course.titleEn);
+  const instructor = course.instructors[0];
 
   return (
     <header className="mb-6">
-      <Link
-        href="/courses"
-        className="mb-3 -ml-1 inline-flex min-h-11 items-center gap-0.5 rounded-md px-1 text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0"
-      >
-        <ChevronLeftIcon width={16} height={16} />
-        {t("courses.allCourses")}
-      </Link>
+      <nav aria-label={t("courseLayout.breadcrumb")} className="mb-5 flex items-center gap-2 px-1 text-[14px] text-text-muted">
+        <Link href="/courses" className="inline-flex min-h-11 items-center gap-1.5 rounded-md hover:text-text sm:min-h-0">
+          <ChevronLeftIcon width={16} height={16} />
+          {t("nav.courses")}
+        </Link>
+        <span aria-hidden="true">/</span>
+        <span className="truncate font-medium text-text">{title}</span>
+      </nav>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <CourseCover code={course.code} compact className="size-16 shrink-0 sm:size-20" />
+      <div className="flex flex-col gap-5 px-1 sm:flex-row sm:items-center">
+        <CourseCover code={course.code} className="h-[120px] w-full shrink-0 rounded-[12px] sm:h-[140px] sm:w-[205px]" />
         <div className="min-w-0 flex-1">
           <p className="text-[13px] font-semibold tracking-wide text-text-subtle tabular-nums">{course.code}</p>
-          <h1 className="text-[24px] leading-tight font-semibold tracking-[-0.02em] sm:text-[28px]">
-            {localized(locale, course.titleFr, course.titleEn)}
-          </h1>
-          <p className="mt-0.5 text-[14px] text-text-muted">
+          <h1 className="text-[28px] leading-tight font-bold tracking-[-0.03em] text-mountain-title sm:text-[36px]">{title}</h1>
+          <p className="mt-2 flex items-center gap-2.5 text-[15px] text-text-muted">
             <span className="sr-only">{t("courseLayout.currentOffering")}: </span>
-            {offeringLine}
+            {instructor && (
+              <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full bg-accent-soft text-[11px] font-semibold text-accent">
+                {initials(instructor)}
+              </span>
+            )}
+            <span className="truncate">
+              {course.currentOffering
+                ? [course.instructors.join(", "), `${course.currentOffering.academicYear} · ${t(`terms.${course.currentOffering.term}`)}`].filter(Boolean).join(" · ")
+                : t("home.noOffering")}
+            </span>
           </p>
-        </div>
-        <dl className="flex shrink-0 gap-5 text-[13px] sm:text-right">
-          {course.documentCount !== null && (
-            <div>
-              <dt className="sr-only">{t("courseLayout.notes")}</dt>
-              <dd className="font-medium">{t("home.documents", { count: course.documentCount })}</dd>
+          <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-[14px] text-text-muted">
+            {course.documentCount !== null && (
+              <div className="flex items-center gap-2">
+                <dt className="sr-only">{t("courseLayout.notes")}</dt>
+                <dd>{t("home.documents", { count: course.documentCount })}</dd>
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              <dt className="sr-only">{t("course.offerings")}</dt>
+              <dd>{t("courseLayout.offerings", { count: offeringCount })}</dd>
             </div>
-          )}
-          <div>
-            <dt className="sr-only">{t("course.offerings")}</dt>
-            <dd className="font-medium">{t("courseLayout.offerings", { count: offeringCount })}</dd>
-          </div>
-        </dl>
+          </dl>
+        </div>
         {actions && <div className="flex shrink-0 gap-2">{actions}</div>}
       </div>
 
-      <nav aria-label={t("courseLayout.tabs")} className="mt-5 -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-        <ul className="flex min-w-max gap-1 border-b border-border">
-          {tabs.map(({ key, href, icon: Icon, badge }) => {
+      <nav aria-label={t("courseLayout.tabs")} className="mt-6 -mx-4 overflow-x-auto overflow-y-hidden border-b border-border px-4 sm:mx-0 sm:px-1">
+        <ul className="flex min-w-max gap-2">
+          {tabs.map(({ key, href, badge }) => {
             const current = key === active;
             return (
               <li key={key}>
@@ -188,11 +200,10 @@ export async function CourseHeader({
                   href={href}
                   aria-current={current ? "page" : undefined}
                   className={cx(
-                    "-mb-px flex h-11 items-center gap-2 border-b-2 px-3 text-[14px] font-medium transition-colors",
-                    current ? "border-accent text-text" : "border-transparent text-text-subtle hover:text-text",
+                    "-mb-px flex h-12 items-center gap-2 border-b-[3px] px-4 text-[15px] transition-colors",
+                    current ? "border-accent-solid font-semibold text-accent" : "border-transparent text-text-muted hover:text-text",
                   )}
                 >
-                  <Icon width={16} height={16} className={current ? "text-accent" : undefined} />
                   {t(key === "tutor" ? "nav.tutor" : `courseLayout.${key}`)}
                   {badge && (
                     <span className="rounded-full bg-surface-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-text-subtle uppercase">{badge}</span>
@@ -201,21 +212,6 @@ export async function CourseHeader({
               </li>
             );
           })}
-          {futureTabs.map(({ key, icon: Icon }) => (
-            <li key={key}>
-              <span
-                aria-disabled="true"
-                title={t("courseLayout.soonLabel", { feature: t(`nav.${key}`) })}
-                className="-mb-px flex h-11 cursor-not-allowed items-center gap-2 border-b-2 border-transparent px-3 text-[14px] text-text-subtle"
-              >
-                <Icon width={16} height={16} />
-                {t(`nav.${key}`)}
-                <span className="rounded-full bg-surface-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase">
-                  {t("nav.soon")}
-                </span>
-              </span>
-            </li>
-          ))}
         </ul>
       </nav>
     </header>
