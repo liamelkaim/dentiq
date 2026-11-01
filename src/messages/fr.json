@@ -1507,6 +1507,11 @@
       "noCourses": "Le catalogue ne contient pas encore de cours. Une note a besoin d'un cours.",
       "aboutQuestion": "Cette note sera liée à la question : {question}",
       "emptyBodyNote": "Cette note n'a pas encore de contenu.",
+      "pageTitle": "Mes notes",
+      "searchPlaceholder": "Rechercher des notes…",
+      "sortUpdated": "Dernière modification",
+      "open": "Ouvrir",
+      "wordCount": "{count, plural, one {# mot} other {# mots}}",
       "editHelp": "Enregistrer crée une nouvelle version. Les anciennes versions restent dans l'historique et peuvent être restaurées."
     },
     "history": {

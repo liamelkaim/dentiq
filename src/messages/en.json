@@ -1507,6 +1507,11 @@
       "noCourses": "The catalog has no courses yet. A note needs a course.",
       "aboutQuestion": "This note will be linked to the question: {question}",
       "emptyBodyNote": "This note has no content yet.",
+      "pageTitle": "My notes",
+      "searchPlaceholder": "Search notes…",
+      "sortUpdated": "Last updated",
+      "open": "Open",
+      "wordCount": "{count, plural, one {# word} other {# words}}",
       "editHelp": "Saving creates a new version. Earlier versions stay in the history and can be restored."
     },
     "history": {
