@@ -48,7 +48,7 @@ function RightsCheckbox({ id, error, privateDocument = false }: { id: string; er
   const msg = useMessage();
   return (
     <div>
-      <label htmlFor={id} className="flex items-start gap-3 text-[14px] text-text-muted">
+      <label htmlFor={id} className="flex min-h-11 items-start gap-3 text-[14px] text-text-muted">
         <input
           id={id}
           name="rightsConfirmed"
@@ -177,7 +177,7 @@ export function UploadResourceForm({
         </div>
 
         {isModerator && visibility === "shared" && (
-          <label className="flex items-center gap-3 text-[14px]">
+          <label className="flex min-h-11 items-center gap-3 text-[14px]">
             <input name="isOfficial" type="checkbox" className="size-4 accent-[var(--accent)]" />
             {t("form.official")}
           </label>

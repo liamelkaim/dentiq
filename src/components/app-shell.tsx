@@ -21,7 +21,7 @@ import {
   SparkleIcon,
 } from "./icons";
 import { LanguageSwitcher, ThemeSwitcher } from "./preferences";
-import { cx, Wordmark } from "./ui";
+import { cx, SkipLink, Wordmark } from "./ui";
 
 type NavItem = {
   href: string;
@@ -53,7 +53,7 @@ export function SignOutButton({ className }: { className?: string }) {
         })
       }
       className={cx(
-        "inline-flex h-9 items-center gap-2 rounded-[10px] px-3 text-[14px] font-medium text-text-muted transition-colors hover:bg-surface-muted hover:text-text disabled:opacity-50",
+        "inline-flex h-11 items-center gap-2 rounded-[10px] px-3 text-[14px] font-medium text-text-muted transition-colors hover:bg-surface-muted hover:text-text disabled:opacity-50 lg:h-9",
         className,
       )}
     >
@@ -119,16 +119,11 @@ export function AppShell({
 
   return (
     <div className="min-h-dvh">
-      <a
-        href="#main"
-        className="sr-only z-50 rounded-md bg-surface px-3 py-2 text-[14px] font-medium focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
-      >
-        {t("common.skipToContent")}
-      </a>
+      <SkipLink label={t("common.skipToContent")} />
 
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col overflow-y-auto border-r border-border bg-sidebar px-3 py-5 lg:flex">
-        <Link href="/" className="mb-7 rounded-md px-2" aria-label={`Dentiq — ${t("nav.dashboard")}`}>
+        <Link href="/" className="mb-7 rounded-md px-2" aria-label={`Dentiq · ${t("nav.dashboard")}`}>
           <Wordmark slogan />
         </Link>
         <nav aria-label={t("nav.main")} className="flex flex-col gap-0.5">
@@ -198,8 +193,8 @@ export function AppShell({
       </aside>
 
       {/* Mobile top bar */}
-      <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-sidebar/90 px-4 pt-[env(safe-area-inset-top)] backdrop-blur-xl lg:hidden">
-        <Link href="/" className="rounded-md">
+      <header className="sticky top-0 z-30 flex h-[calc(3.5rem+env(safe-area-inset-top))] items-center justify-between border-b border-border bg-sidebar/90 pt-[env(safe-area-inset-top)] pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))] backdrop-blur-xl lg:hidden">
+        <Link href="/" className="inline-flex min-h-11 items-center rounded-md" aria-label={`Dentiq · ${t("nav.dashboard")}`}>
           <Wordmark />
         </Link>
         <div className="flex items-center gap-2">
@@ -211,7 +206,7 @@ export function AppShell({
               aria-label={t("nav.study")}
               aria-current={isActive(pathname, "/practice") ? "page" : undefined}
               className={cx(
-                "grid size-10 place-items-center rounded-[10px] transition-colors hover:bg-surface-muted",
+                "grid size-11 place-items-center rounded-[10px] transition-colors hover:bg-surface-muted",
                 isActive(pathname, "/practice") ? "text-accent" : "text-text-muted",
               )}
             >
@@ -223,7 +218,7 @@ export function AppShell({
             aria-label={t("nav.settings")}
             aria-current={isActive(pathname, "/settings") ? "page" : undefined}
             className={cx(
-              "grid size-10 place-items-center rounded-[10px] transition-colors hover:bg-surface-muted",
+              "grid size-11 place-items-center rounded-[10px] transition-colors hover:bg-surface-muted",
               isActive(pathname, "/settings") ? "text-accent" : "text-text-muted",
             )}
           >
@@ -232,7 +227,12 @@ export function AppShell({
         </div>
       </header>
 
-      <main id="main" className="px-4 pt-6 pb-28 sm:px-6 lg:ml-64 lg:px-10 lg:pt-10 lg:pb-12">
+      {/* tabIndex -1 lets the skip link move focus here. Bottom padding clears the phone tab bar (3.5rem) plus the home-indicator safe area. */}
+      <main
+        id="main"
+        tabIndex={-1}
+        className="pt-6 pr-[max(1rem,env(safe-area-inset-right))] pb-[calc(6rem+env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] outline-none sm:pr-[max(1.5rem,env(safe-area-inset-right))] sm:pl-[max(1.5rem,env(safe-area-inset-left))] lg:ml-64 lg:px-10 lg:pt-10 lg:pb-12"
+      >
         <div className="mx-auto w-full max-w-6xl">{children}</div>
         <p className="mx-auto mt-12 max-w-6xl text-[12px] text-text-subtle">{t("common.disclaimer")}</p>
         <p className="mx-auto mt-1 flex max-w-6xl flex-wrap gap-x-4 text-[12px] text-text-subtle">
@@ -244,7 +244,7 @@ export function AppShell({
       {/* Mobile tab bar */}
       <nav
         aria-label={t("nav.main")}
-        className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-sidebar/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-sidebar/90 pr-[env(safe-area-inset-right)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] backdrop-blur-xl lg:hidden"
       >
         <ul className="mx-auto flex max-w-lg">
           {mobileItems.map(({ href, key, icon: Icon }) => {

@@ -87,7 +87,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                       <label htmlFor={`role-${u.id}`} className="sr-only">
                         {t("admin.usersPage.role")}
                       </label>
-                      <Select id={`role-${u.id}`} name="role" defaultValue={u.role} className="h-9 w-auto text-[14px]">
+                      <Select id={`role-${u.id}`} name="role" defaultValue={u.role} className="w-auto text-[14px]">
                         {roles.map((r) => (
                           <option key={r} value={r}>
                             {t(`roles.${r}`)}

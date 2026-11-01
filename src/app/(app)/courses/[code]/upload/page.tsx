@@ -43,7 +43,7 @@ export default async function UploadPage({ params }: { params: Promise<{ code: s
     id: o.id,
     label: [`${o.academicYear} · ${t(`terms.${o.term}`)}`, o.instructors.map((i) => i.fullName).join(", ")]
       .filter(Boolean)
-      .join(" — "),
+      .join(" · "),
   }));
 
   return (

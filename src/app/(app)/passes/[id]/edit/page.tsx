@@ -34,7 +34,7 @@ export default async function EditQuestionPage({ params }: { params: Promise<{ i
   const offerings = (course?.offerings ?? []).map((o) => ({
     id: o.id,
     academicYear: o.academicYear,
-    label: [termName(o.term), o.instructors.map((i) => i.fullName).join(", ")].filter(Boolean).join(" — "),
+    label: [termName(o.term), o.instructors.map((i) => i.fullName).join(", ")].filter(Boolean).join(" · "),
   }));
 
   return (

@@ -41,7 +41,13 @@ function changedFields(current: Snapshot, previous: Snapshot | null): string[] {
 }
 
 const asChoices = (value: unknown): SnapshotChoice[] => (Array.isArray(value) ? (value as SnapshotChoice[]) : []);
-const mark = (v: boolean | null) => (v === true ? "✓" : v === false ? "✗" : "–");
+
+/** Text badge, never a glyph or a color alone: the word carries the meaning. */
+function Mark({ value, label }: { value: boolean | null; label: { correct: string; incorrect: string; none: string } }) {
+  if (value === true) return <Badge tone="success">{label.correct}</Badge>;
+  if (value === false) return <Badge tone="danger">{label.incorrect}</Badge>;
+  return <span className="text-text-subtle">{label.none}</span>;
+}
 
 export default async function QuestionHistoryPage({ params }: { params: Promise<{ id: string }> }) {
   const viewer = await requireUser();
@@ -53,6 +59,7 @@ export default async function QuestionHistoryPage({ params }: { params: Promise<
   if (!q.canEdit && !q.canModerate) forbidden();
 
   const t = await getTranslations("passes.history");
+  const markLabels = { correct: t("mark.correct"), incorrect: t("mark.incorrect"), none: t("mark.none") };
   const root = await getTranslations("passes");
   const format = await getFormatter();
   const revisions = await listQuestionRevisions(db, viewer, id);
@@ -117,8 +124,8 @@ export default async function QuestionHistoryPage({ params }: { params: Promise<
                             {choices.map((c) => (
                               <tr key={c.position} className="border-t border-border">
                                 <td className="py-1 pr-2 break-words">{c.text}</td>
-                                <td className="px-2 py-1">{mark(c.proposedCorrect)}</td>
-                                <td className="px-2 py-1">{mark(c.verifiedCorrect)}</td>
+                                <td className="px-2 py-1"><Mark value={c.proposedCorrect} label={markLabels} /></td>
+                                <td className="px-2 py-1"><Mark value={c.verifiedCorrect} label={markLabels} /></td>
                               </tr>
                             ))}
                           </tbody>

@@ -21,7 +21,8 @@
 | C. Notes and course library (topics, links, note versions, search, current vs previous) | built; typecheck, lint, 303 tests, build clean; not yet browser-tested | c3b1a3f |
 | D. Calendar and analytics (local only) | built; typecheck, lint, 375 tests, build clean; not yet browser-tested; .ics import into calendar apps UNVERIFIED | 4a0fbc4 |
 | E. Course-grounded AI tutor shell (retrieval, citations, provider interface; OFF, no provider) | built; typecheck, lint, 439 tests, build clean; not yet browser-tested | 4ade38a |
-| F. Profile and account (profile, own-data JSON export, account deletion, legal draft banners) | built; typecheck, lint, 468 tests, build clean; not yet browser-tested; deletion semantics need Law 25 legal review | see git log |
+| F. Profile and account (profile, own-data JSON export, account deletion, legal draft banners) | built; typecheck, lint, 468 tests, build clean; not yet browser-tested; deletion semantics need Law 25 legal review | e9a830c |
+| G. Platform quality (PWA shell, CSP, focus, touch targets, loading/error pages, em dash cleanup) | built; typecheck, lint, 496 tests, build clean; needs a browser to verify install, offline page, CSP hydration, safe areas | see git log |
 
 ## Decisions made for the owner
 
@@ -46,10 +47,13 @@
 - F: no migration needed (author columns already nullable with SET NULL). Deletion removes private data and detaches (anonymizes) published contributions; typed email plus password re-check; last-admin guard. Constants in `src/server/account/constants.ts` (export cap 25 MB / 50,000 rows per table, 5 exports per hour, 5 deletion attempts per 15 minutes; the limiter is in-memory per server instance, so it needs a shared store before multi-instance hosting).
 - F: Better Auth's own deleteUser stays disabled. Better Auth's verify-password endpoint answers over HTTP for the caller's own password (checks only the caller); left as is.
 - F: privacy and terms keep a DRAFT banner and a contact placeholder marked TO FILL IN (no address invented). Email change is marked planned.
+- G: CSP uses `'unsafe-inline'` for scripts and styles (nonce-based CSP not confirmed safe without a browser); everything external is blocked (`src/lib/security-headers.ts`). HSTS only in production, no includeSubDomains/preload until the domain is known.
+- G: service worker (`public/sw.js`) caches only the offline page, manifest and icons; never pages, API, files or images. Recordings is the only remaining "soon" item. The tutor course tab now links to /tutor with an "Off" badge.
+- G could not check at runtime: `/manifest.webmanifest` and 404 on a production start (needs a DATABASE_URL; I do not read or set env values). Block I covers them in the dev server.
 
 ## Noted for later blocks
 
-- Four UI strings still contain em dashes (`soonLabel`, `fileHint`, FR and EN). Fix in block G copy pass.
+- (Fixed in G) the four em-dash strings; a test now blocks em/en dashes in messages and code.
 - No logo file of 1024 px or more in the project; a kit sits in Downloads (outside the project).
 - `pnpm audit`: 1 high advisory, `zod` below 4.6.6, transitive via `@vercel/blob`. Not used locally.
 

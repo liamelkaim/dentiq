@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex" />
+    <title>Dentiq</title>
+    <link rel="icon" href="/icon-192.png" />
+    <style>
+      /* Static file, so it cannot import globals.css. These values are copies of the tokens in src/app/globals.css
+         (--bg, --surface, --border, --text, --text-muted, --accent-solid, --accent-solid-hover, --on-accent, --focus);
+         tests/platform-quality.test.ts fails if they drift. */
+      :root {
+        --bg: #f5f8fc;
+        --surface: #ffffff;
+        --border: #d9e3ec;
+        --text: #13243a;
+        --text-muted: #4f6480;
+        --accent-solid: #2563eb;
+        --accent-solid-hover: #1d4ed8;
+        --on-accent: #ffffff;
+        --focus: #1d4ed8;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #07111f;
+          --surface: #0d1b2b;
+          --border: #23374c;
+          --text: #f8fafc;
+          --text-muted: #a6b7cc;
+          --focus: #93c5fd;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #07111f;
+        --surface: #0d1b2b;
+        --border: #23374c;
+        --text: #f8fafc;
+        --text-muted: #a6b7cc;
+        --focus: #93c5fd;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
+        background: var(--bg);
+        color: var(--text);
+        font: 15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        -webkit-text-size-adjust: 100%;
+      }
+      main {
+        width: 100%;
+        max-width: 28rem;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+      }
+      img { width: 48px; height: 48px; border-radius: 22%; border: 1px solid var(--border); }
+      .name { margin: 0.75rem 0 1.25rem; font-size: 19px; font-weight: 700; letter-spacing: -0.02em; }
+      h1 { margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+      p { margin: 0.5rem 0 0; color: var(--text-muted); }
+      button {
+        margin-top: 1.5rem;
+        min-height: 44px;
+        padding: 0 1.25rem;
+        border: 0;
+        border-radius: 10px;
+        background: var(--accent-solid);
+        color: var(--on-accent);
+        font: inherit;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      button:hover { background: var(--accent-solid-hover); }
+      :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+      html[lang="fr"] [data-lang="en"], html[lang="en"] [data-lang="fr"] { display: none; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/brand/dentiq-icon.png" alt="" width="48" height="48" />
+      <p class="name">Dentiq</p>
+      <div data-lang="fr">
+        <h1>Vous êtes hors ligne</h1>
+        <p>Dentiq a besoin d'une connexion Internet pour afficher vos cours, vos questions d'examen et vos notes. Rien de ce contenu n'est conservé sur cet appareil pour une lecture hors ligne.</p>
+        <p>Reconnectez-vous, puis réessayez.</p>
+        <button type="button" data-retry>Réessayer</button>
+      </div>
+      <div data-lang="en">
+        <h1>You are offline</h1>
+        <p>Dentiq needs an internet connection to show your courses, exam questions and notes. None of this content is kept on this device for offline reading.</p>
+        <p>Reconnect, then try again.</p>
+        <button type="button" data-retry>Try again</button>
+      </div>
+    </main>
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var lang = "fr";
+        try {
+          // Same choice as the app: the saved language cookie first, then the browser language, then French.
+          var m = document.cookie.match(/(?:^|; )DENTOS_LOCALE=(fr|en)/);
+          var guess = m ? m[1] : (navigator.language || "fr").slice(0, 2).toLowerCase();
+          if (guess === "en" || guess === "fr") lang = guess;
+        } catch (e) {}
+        root.setAttribute("lang", lang);
+        try {
+          var theme = localStorage.getItem("dentos-theme");
+          if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+        } catch (e) {}
+        var buttons = document.querySelectorAll("[data-retry]");
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener("click", function () { location.reload(); });
+        }
+      })();
+    </script>
+  </body>
+</html>

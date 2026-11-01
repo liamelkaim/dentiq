@@ -298,7 +298,7 @@ export function QuestionForm(props: QuestionFormProps) {
                   <li key={image.id} className="flex gap-3 rounded-[10px] border border-border p-2">
                     {/* eslint-disable-next-line @next/next/no-img-element -- private image behind an auth check */}
                     <img src={`/api/question-images/${image.id}`} alt={image.altText ?? ""} className={cx("size-16 shrink-0 rounded-md object-cover", gone && "opacity-40")} />
-                    <label className="flex min-w-0 flex-1 items-center gap-2 text-[13px]">
+                    <label className="flex min-h-11 min-w-0 flex-1 items-center gap-2 text-[13px]">
                       <input
                         type="checkbox"
                         name="removeImage"
@@ -369,26 +369,30 @@ export function QuestionForm(props: QuestionFormProps) {
                 <li key={row.key} className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <div className="flex min-w-0 flex-1 items-center gap-2">
                     {rule === "single" && (
-                      <input
-                        type="radio"
-                        name="correct"
-                        value={i}
-                        checked={row.correct}
-                        onChange={(e) => choose(i, e.target.checked)}
-                        aria-label={t("form.markCorrect", { n: i + 1 })}
-                        className="size-5 shrink-0 accent-[var(--accent)]"
-                      />
+                      <label className="grid size-11 shrink-0 cursor-pointer place-items-center sm:size-6">
+                        <input
+                          type="radio"
+                          name="correct"
+                          value={i}
+                          checked={row.correct}
+                          onChange={(e) => choose(i, e.target.checked)}
+                          aria-label={t("form.markCorrect", { n: i + 1 })}
+                          className="size-5 shrink-0 accent-[var(--accent)]"
+                        />
+                      </label>
                     )}
                     {rule === "multiple" && (
-                      <input
-                        type="checkbox"
-                        name="correct"
-                        value={i}
-                        checked={row.correct}
-                        onChange={(e) => choose(i, e.target.checked)}
-                        aria-label={t("form.markCorrect", { n: i + 1 })}
-                        className="size-5 shrink-0 accent-[var(--accent)]"
-                      />
+                      <label className="grid size-11 shrink-0 cursor-pointer place-items-center sm:size-6">
+                        <input
+                          type="checkbox"
+                          name="correct"
+                          value={i}
+                          checked={row.correct}
+                          onChange={(e) => choose(i, e.target.checked)}
+                          aria-label={t("form.markCorrect", { n: i + 1 })}
+                          className="size-5 shrink-0 accent-[var(--accent)]"
+                        />
+                      </label>
                     )}
                     <span aria-hidden="true" className="w-5 shrink-0 text-center text-[13px] font-semibold text-text-subtle">
                       {String.fromCharCode(65 + i)}
@@ -471,7 +475,7 @@ export function QuestionForm(props: QuestionFormProps) {
 
       {props.mode === "new" && (
         <div>
-          <label htmlFor={`${p}-rights`} className="flex items-start gap-3 text-[14px] text-text-muted">
+          <label htmlFor={`${p}-rights`} className="flex min-h-11 items-start gap-3 text-[14px] text-text-muted">
             <input
               id={`${p}-rights`}
               name="rightsConfirmed"
@@ -616,9 +620,9 @@ export function VerifyForm(props: VerifyFormProps) {
               <div className="flex min-w-0 flex-1 items-start gap-2 text-[14px]">
                 {props.rule !== "perChoice" &&
                   (props.rule === "single" ? (
-                    <input type="radio" name="verified" value={i} defaultChecked={start[i] === true} aria-label={t("markCorrect", { n: i + 1 })} className="mt-0.5 size-5 shrink-0 accent-[var(--accent)]" />
+                    <label className="grid size-11 shrink-0 cursor-pointer place-items-center sm:size-6"><input type="radio" name="verified" value={i} defaultChecked={start[i] === true} aria-label={t("markCorrect", { n: i + 1 })} className="size-5 shrink-0 accent-[var(--accent)]" /></label>
                   ) : (
-                    <input type="checkbox" name="verified" value={i} defaultChecked={start[i] === true} aria-label={t("markCorrect", { n: i + 1 })} className="mt-0.5 size-5 shrink-0 accent-[var(--accent)]" />
+                    <label className="grid size-11 shrink-0 cursor-pointer place-items-center sm:size-6"><input type="checkbox" name="verified" value={i} defaultChecked={start[i] === true} aria-label={t("markCorrect", { n: i + 1 })} className="size-5 shrink-0 accent-[var(--accent)]" /></label>
                   ))}
                 <span aria-hidden="true" className="mt-0.5 w-5 shrink-0 text-center text-[13px] font-semibold text-text-subtle">
                   {letter(i)}
@@ -718,7 +722,7 @@ export type PassSettingsFormProps = {
 
 function Check({ children, ...props }: { children: ReactNode } & React.ComponentProps<"input">) {
   return (
-    <label className="flex min-h-10 items-center gap-3 text-[14px]">
+    <label className="flex min-h-11 items-center gap-3 text-[14px]">
       <input type="checkbox" className="size-4 shrink-0 accent-[var(--accent)]" {...props} />
       <span>{children}</span>
     </label>

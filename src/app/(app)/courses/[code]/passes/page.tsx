@@ -30,7 +30,7 @@ export default async function CoursePassesPage({
   const summary = await loadCourseSummary(viewer, course);
   const offerings = course.offerings.map((o) => ({
     id: o.id,
-    label: [`${o.academicYear} · ${t(`terms.${o.term}`)}`, o.instructors.map((i) => i.fullName).join(", ")].filter(Boolean).join(" — "),
+    label: [`${o.academicYear} · ${t(`terms.${o.term}`)}`, o.instructors.map((i) => i.fullName).join(", ")].filter(Boolean).join(" · "),
   }));
 
   return (

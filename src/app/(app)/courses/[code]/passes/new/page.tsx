@@ -43,7 +43,7 @@ export default async function NewCoursePassPage({ params }: { params: Promise<{ 
   const offerings = course.offerings.map((o) => ({
     id: o.id,
     academicYear: o.academicYear,
-    label: [t(`terms.${o.term}`), o.instructors.map((i) => i.fullName).join(", ")].filter(Boolean).join(" — "),
+    label: [t(`terms.${o.term}`), o.instructors.map((i) => i.fullName).join(", ")].filter(Boolean).join(" · "),
   }));
 
   return (

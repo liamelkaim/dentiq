@@ -79,7 +79,7 @@ export default async function TutorPage({ searchParams }: { searchParams: Promis
             <Field label={t("search.query")} htmlFor="tutor-q" hint={t("search.queryHint")}>
               <Input id="tutor-q" name="q" type="search" defaultValue={q} maxLength={QUESTION_MAX_CHARS} required aria-describedby="tutor-q-hint" />
             </Field>
-            <label className="flex items-start gap-3 text-[14px] sm:col-span-2">
+            <label className="flex min-h-11 items-start gap-3 text-[14px] sm:col-span-2">
               <input type="checkbox" name="historical" value="1" defaultChecked={includeHistorical} className="mt-0.5 size-4 shrink-0 accent-[var(--accent)]" aria-describedby="tutor-hist-hint" />
               <span>
                 <span className="font-medium">{t("search.includeHistorical")}</span>

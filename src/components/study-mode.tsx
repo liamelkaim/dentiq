@@ -57,7 +57,7 @@ export function StudyShell({
 
   return (
     <div className="flex h-dvh flex-col bg-bg">
-      <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border bg-sidebar px-2 pt-[env(safe-area-inset-top)] sm:gap-3 sm:px-4">
+      <header className="flex h-[calc(3.5rem+env(safe-area-inset-top))] shrink-0 items-center gap-2 border-b border-border bg-sidebar pt-[env(safe-area-inset-top)] pr-[max(0.5rem,env(safe-area-inset-right))] pl-[max(0.5rem,env(safe-area-inset-left))] sm:gap-3 sm:pr-[max(1rem,env(safe-area-inset-right))] sm:pl-[max(1rem,env(safe-area-inset-left))]">
         <Link
           href={exitHref}
           className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-[10px] px-3 text-[14px] font-medium text-text hover:bg-surface-muted"
@@ -107,7 +107,7 @@ export function StudyShell({
         >
           {nav}
         </nav>
-        <main id="main" className="min-w-0 flex-1 overflow-y-auto">
+        <main id="main" tabIndex={-1} className="min-w-0 flex-1 overflow-y-auto outline-none">
           {children}
         </main>
       </div>

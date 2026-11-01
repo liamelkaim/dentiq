@@ -60,9 +60,9 @@ function Segmented({
             disabled={disabled}
             onClick={() => onChange(option.value)}
             className={cx(
-              // 40 px targets on touch screens, denser on desktop.
-              "inline-flex h-10 items-center justify-center gap-1.5 rounded-[8px] text-[13px] font-medium transition-colors sm:h-8",
-              compact ? "w-10 sm:w-9" : "px-3",
+              // 44 px targets on touch screens, denser on desktop.
+              "inline-flex h-11 items-center justify-center gap-1.5 rounded-[8px] text-[13px] font-medium transition-colors sm:h-8",
+              compact ? "w-11 sm:w-9" : "px-3",
               selected ? "bg-surface text-text shadow-card" : "text-text-subtle hover:text-text",
             )}
           >

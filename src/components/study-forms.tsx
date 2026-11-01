@@ -525,7 +525,7 @@ export function QuizForm({ children, defaultCount, maxCount }: { children: React
           min={1}
           max={maxCount}
           defaultValue={defaultCount}
-          className="block h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text focus:border-accent focus:outline-none"
+          className="block h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text focus:border-accent"
         />
       </Field>
       <div className="col-span-2 flex items-end lg:col-span-4">

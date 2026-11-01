@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { buildHeaderRules } from "./src/lib/security-headers";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -14,18 +15,12 @@ const nextConfig: NextConfig = {
     serverActions: { bodySizeLimit: "26mb" },
   },
   async headers() {
-    return [
-      {
-        // Everything except /api/files, which sets its own headers so previews can be framed by DentOS.
-        source: "/((?!api/files/).*)",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "X-Frame-Options", value: "DENY" },
-          { key: "Permissions-Policy", value: "camera=(), geolocation=(), microphone=(self)" },
-        ],
-      },
-    ];
+    // Content-Security-Policy, framing, referrer and (production only) HSTS: see src/lib/security-headers.ts.
+    return buildHeaderRules({ production: process.env.NODE_ENV === "production", dev: process.env.NODE_ENV === "development" });
+  },
+  async rewrites() {
+    // The offline page is a static file so the service worker can cache it; /offline is its friendly address.
+    return { beforeFiles: [{ source: "/offline", destination: "/offline.html" }], afterFiles: [], fallback: [] };
   },
 };
 

@@ -243,7 +243,7 @@ export function ImportForm({ programs, header }: { programs: ProgramOption[]; he
             <ul className="mt-1 max-h-40 overflow-auto text-[13px] text-text-muted">
               {summary.skipped.map((e) => (
                 <li key={`${e.line}-${e.message}`}>
-                  {t("line", { line: e.line })} — <code className="text-[12px]">{e.message}</code>
+                  {t("line", { line: e.line })} · <code className="text-[12px]">{e.message}</code>
                 </li>
               ))}
             </ul>

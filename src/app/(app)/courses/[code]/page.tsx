@@ -55,7 +55,7 @@ export default async function CourseOverviewPage({ params }: { params: Params })
           course.sourceName
         )}
         {course.sourceRetrievedOn && (
-          <span className="text-text-subtle"> — {t("course.retrievedOn", { date: formatDay(course.sourceRetrievedOn) })}</span>
+          <span className="text-text-subtle"> · {t("course.retrievedOn", { date: formatDay(course.sourceRetrievedOn) })}</span>
         )}
       </span>
     ) : (

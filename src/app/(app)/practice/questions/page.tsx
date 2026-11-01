@@ -88,7 +88,7 @@ export default async function PracticePage({ searchParams }: { searchParams: Pro
               min={1}
               max={PRACTICE_MAX_QUESTIONS}
               defaultValue={PRACTICE_DEFAULT_COUNT}
-              className="block h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text focus:border-accent focus:outline-none"
+              className="block h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text focus:border-accent"
             />
           </Field>
           <div className="col-span-2 flex items-end lg:col-span-4">

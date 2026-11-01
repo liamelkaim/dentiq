@@ -105,7 +105,7 @@ export default async function StudyPage({ params }: { params: Params }) {
               href={`/api/files/${latest.id}`}
               download
               className={buttonClass("secondary", undefined, "sm")}
-              aria-label={`${t("resources.detail.download")} — ${latest.fileName} (${formatBytes(latest.sizeBytes, locale)})`}
+              aria-label={`${t("resources.detail.download")} · ${latest.fileName} (${formatBytes(latest.sizeBytes, locale)})`}
             >
               <DownloadIcon width={17} height={17} />
               <span className="hidden sm:inline">{t("resources.detail.download")}</span>
@@ -115,14 +115,14 @@ export default async function StudyPage({ params }: { params: Params }) {
 
         {resource.period === "historical" && (
           <Notice tone="neutral">
-            {t("resources.detail.historicalNotice", { offering: [offering, resource.instructors.join(", ")].filter(Boolean).join(" — ") })}
+            {t("resources.detail.historicalNotice", { offering: [offering, resource.instructors.join(", ")].filter(Boolean).join(" · ") })}
           </Notice>
         )}
 
         {latest && preview === "pdf" && (
           <iframe
             src={`/api/files/${latest.id}?inline=1`}
-            title={`${resource.title} — ${latest.fileName}`}
+            title={`${resource.title} · ${latest.fileName}`}
             className="min-h-[70vh] w-full flex-1 rounded-[var(--radius-card)] border border-border bg-surface-muted"
           />
         )}

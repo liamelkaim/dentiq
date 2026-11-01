@@ -77,7 +77,7 @@ export default async function ResourcePage({ params }: { params: Params }) {
         {resource.period === "historical" && offeringLabel && (
           <Notice tone="neutral">
             {t("resources.detail.historicalNotice", {
-              offering: [offeringLabel, resource.instructors.join(", ")].filter(Boolean).join(" — "),
+              offering: [offeringLabel, resource.instructors.join(", ")].filter(Boolean).join(" · "),
             })}
           </Notice>
         )}
@@ -89,7 +89,7 @@ export default async function ResourcePage({ params }: { params: Params }) {
             {preview === "pdf" && (
               <iframe
                 src={`/api/files/${latest.id}?inline=1`}
-                title={`${t("resources.detail.preview")} — ${latest.fileName}`}
+                title={`${t("resources.detail.preview")} · ${latest.fileName}`}
                 className="block h-[70vh] min-h-96 w-full bg-surface-muted"
               />
             )}
@@ -122,7 +122,7 @@ export default async function ResourcePage({ params }: { params: Params }) {
               label: t("resources.detail.course"),
               value: (
                 <Link href={courseHref} className="text-accent hover:text-accent-hover">
-                  {resource.course.code} — {localized(locale, resource.course.titleFr, resource.course.titleEn)}
+                  {resource.course.code} · {localized(locale, resource.course.titleFr, resource.course.titleEn)}
                 </Link>
               ),
             },
@@ -204,7 +204,7 @@ export default async function ResourcePage({ params }: { params: Params }) {
               <a
                 href={`/api/files/${v.id}`}
                 className={buttonClass("ghost", "shrink-0 px-2.5", "sm")}
-                aria-label={`${t("resources.detail.download")} — ${t("resources.detail.version", { number: v.versionNumber })}`}
+                aria-label={`${t("resources.detail.download")} · ${t("resources.detail.version", { number: v.versionNumber })}`}
               >
                 <DownloadIcon width={18} height={18} />
               </a>
@@ -264,7 +264,7 @@ export default async function ResourcePage({ params }: { params: Params }) {
                         <label htmlFor={`note-${r.id}`} className="sr-only">
                           {t("resources.moderate.note")}
                         </label>
-                        <Input id={`note-${r.id}`} name="note" maxLength={500} placeholder={t("resources.moderate.note")} className="h-9 sm:flex-1" />
+                        <Input id={`note-${r.id}`} name="note" maxLength={500} placeholder={t("resources.moderate.note")} className="sm:flex-1" />
                         <div className="flex gap-2">
                           <Button type="submit" name="outcome" value="resolved" variant="secondary" size="sm">
                             {t("resources.moderate.resolve")}

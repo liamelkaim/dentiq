@@ -172,7 +172,7 @@ export default async function CourseNotesPage({
                   href={`/api/files/${latest.id}`}
                   download
                   className={buttonClass("ghost", "px-3")}
-                  aria-label={`${t("resources.detail.download")} — ${latest.fileName} (${formatBytes(latest.sizeBytes, locale)})`}
+                  aria-label={`${t("resources.detail.download")} · ${latest.fileName} (${formatBytes(latest.sizeBytes, locale)})`}
                 >
                   <DownloadIcon width={18} height={18} />
                 </a>
@@ -183,14 +183,14 @@ export default async function CourseNotesPage({
                 {t("resources.detail.historicalNotice", {
                   offering: [`${selected.offering.academicYear} · ${t(`terms.${selected.offering.term}`)}`, selected.instructors.join(", ")]
                     .filter(Boolean)
-                    .join(" — "),
+                    .join(" · "),
                 })}
               </Notice>
             )}
             {preview === "pdf" && (
               <iframe
                 src={`/api/files/${latest.id}?inline=1`}
-                title={`${t("resources.detail.preview")} — ${latest.fileName}`}
+                title={`${t("resources.detail.preview")} · ${latest.fileName}`}
                 className="block h-[65vh] min-h-96 w-full bg-surface-muted"
               />
             )}

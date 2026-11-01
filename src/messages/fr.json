@@ -63,7 +63,7 @@
     "tabs": "Sections du cours",
     "overview": "Aperçu",
     "notes": "Notes",
-    "soonLabel": "{feature} — bientôt disponible",
+    "soonLabel": "{feature} : bientôt disponible",
     "currentOffering": "Offre actuelle",
     "offerings": "{count, plural, =0 {Aucune offre} one {# offre} other {# offres}}",
     "studyMode": "Mode étude",
@@ -388,7 +388,7 @@
       "offeringHint": "Associez le document à l'année et au trimestre où il a été produit.",
       "noOffering": "Général (aucune offre précise)",
       "file": "Fichier",
-      "fileHint": "PDF, DOCX, PPTX, PNG ou JPG — {maxMB} Mo maximum.",
+      "fileHint": "PDF, DOCX, PPTX, PNG ou JPG. {maxMB} Mo maximum.",
       "official": "Document officiel (fourni par l'enseignant·e ou la faculté)",
       "rights": "Je confirme avoir le droit de partager ce document avec les membres de Dentiq. Il ne contient ni examen non autorisé ni renseignements personnels.",
       "reviewNotice": "Votre document sera visible après la révision d'un modérateur.",
@@ -475,7 +475,8 @@
     "forbiddenTitle": "Accès refusé",
     "forbiddenBody": "Votre compte n'a pas les droits nécessaires pour voir cette page.",
     "errorTitle": "Quelque chose n'a pas fonctionné",
-    "errorBody": "Le problème a été enregistré. Vous pouvez réessayer.",
+    "errorBody": "Un problème est survenu de notre côté. Vous pouvez réessayer.",
+    "reference": "Référence : {code}",
     "goHome": "Retour à l'accueil"
   },
   "legal": {
@@ -821,6 +822,11 @@
       "showState": "Voir l'état à ce moment",
       "proposed": "Proposition",
       "verified": "Vérifié",
+      "mark": {
+        "correct": "Correct",
+        "incorrect": "Incorrect",
+        "none": "Non précisé"
+      },
       "basis": "Base de la vérification",
       "fields": {
         "status": "statut",

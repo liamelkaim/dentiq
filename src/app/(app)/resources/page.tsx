@@ -98,7 +98,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
             defaultValue={filters.q}
             maxLength={100}
             placeholder={t("resources.filters.qPlaceholder")}
-            className="h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[15px] placeholder:text-text-subtle focus:border-accent focus:outline-none"
+            className="h-10 w-full rounded-[var(--radius-control)] border border-border-strong bg-surface pr-3 pl-9 text-[15px] placeholder:text-text-subtle focus:border-accent"
           />
         </div>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -107,7 +107,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
             t("resources.filters.course"),
             t("resources.filters.anyCourse"),
             filters.courseId,
-            options.courses.map((c) => ({ value: c.id, label: `${c.code} — ${localized(locale, c.titleFr, c.titleEn)}` })),
+            options.courses.map((c) => ({ value: c.id, label: `${c.code} · ${localized(locale, c.titleFr, c.titleEn)}` })),
           )}
           {select(
             "professor",
@@ -153,7 +153,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
             href={periodHref(period)}
             aria-current={filters.period === period ? "page" : undefined}
             className={cx(
-              "flex h-8 flex-1 items-center justify-center rounded-[8px] px-3 text-[13px] font-medium",
+              "flex h-11 flex-1 items-center justify-center rounded-[8px] px-3 text-[13px] font-medium sm:h-8",
               filters.period === period ? "bg-surface text-text shadow-card" : "text-text-subtle hover:text-text",
             )}
           >

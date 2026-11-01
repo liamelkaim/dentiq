@@ -11,7 +11,7 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 | Theme switcher (light / dark / system), persisted | ✅ | Verified in browser across reloads |
 | French / English, switcher, persisted | ✅ | French default; verified in browser |
 | Responsive shell: sidebar (desktop), tab bar (mobile) | ✅ | Checked at 390 px and 1200 px, no horizontal overflow |
-| Installable PWA (manifest + icons) | ✅ | No offline mode yet |
+| Installable PWA (manifest + icons) | ✅ | Offline-safe shell added in block G (offline page only, no cached study content; see `docs/pwa.md`) |
 | Database + migrations (Postgres via Drizzle; PGlite locally) | ✅ | |
 | Accounts: sign-up, email confirmation, sign-in, sign-out | ✅ | Emails printed to console (no provider yet) |
 | Roles (student / moderator / admin), approval workflow | ✅ | Moderator tools come in Phase 2–3 |
@@ -50,6 +50,7 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 | 7a | Study calendar (`/calendar`, student-entered dates only, month grid + agenda, `.ics` local export) and analytics (`/analytics`, own data only, every metric with its denominator, weakest topics only above a minimum sample) | 🔄 **Built (2026-11-01), uncommitted, covered by automated tests, not yet browser-tested.** Migration `0007_study_calendar.sql` (1 additive table). `.ics` import into Apple/Google/Outlook **unverified**. **Not built:** reminders, recurring entries, per-user time zone, calendar feeds, per-topic trends. See `docs/calendar-analytics.md` |
 | 5 | AI course tutors (retrieval + citations) | 🔄 **Grounding layer built (2026-11-01), uncommitted, covered by automated tests, not yet browser-tested. The tutor itself is OFF and planned: no provider, no key, no AI call, no generated answer.** Built: retrieval over the viewer's authorized sources (documents by title/topic/description only, own notes, published questions with verified answers), BM25 ranking, citations with official/student/own labels, current-vs-previous separation, `TutorProvider` interface with a `NullProvider`, admin switch (default off) and limits, usage table, prompt-injection wrapper, `/tutor` page with a working "search the course sources". Migration `0008_ai_tutor_usage.sql` (1 additive table). 🔐 **Needs an AI provider and budget approval** before any answer exists. Not built: any provider, question form, reading inside uploaded files, embeddings. See `docs/ai-tutor.md` |
 | 7b | Profile and account: `/profile` (own details, editable display name, language and theme controls, links to Privacy and Terms), own-data JSON export (`/profile/export`), account deletion with typed confirmation and password re-check (`/profile/delete`), draft-banner and contact placeholder on `/privacy` and `/terms`, legal links in the app footer | 🔄 **Built (2026-11-01), uncommitted, covered by automated tests, not yet browser-tested.** No migration (author columns were already nullable). Deletion removes private data and detaches published contributions; **the deletion semantics and the legal pages need a legal (Law 25) review**. **Not built:** email change (planned), undo window, per-contribution deletion, CSV export. See `docs/account-data.md` |
+| 8 | Platform quality (block G): em dash and glyph copy rules enforced by tests, live features no longer labelled soon (course Tutor tab is a link; only Recordings stays planned), link-existence test over every literal internal link, offline-safe shell (`public/sw.js`, `/offline`, `docs/pwa.md`), 44 px touch targets and safe-area padding, skip link on every layout, visible focus on every input, loading skeletons for practice/analytics/calendar/tutor/search, root and global error boundaries that never print internal messages, Content-Security-Policy and production-only HSTS (`docs/security-privacy.md`) | 🔄 **Built (2026-11-01), uncommitted, covered by automated tests, not yet browser-tested.** CSP keeps `'unsafe-inline'` for scripts and styles (nonce policy left for when it can be tried in a browser). Install prompt, service worker registration, offline page, safe areas, focus order and the PDF preview under the new CSP are **unverified in a browser** |
 | 6 | Audio: upload, recording, transcription | 📋 🔐 consent/legal review; provider choice |
 | 7 | Advanced learning: summaries, study plans, analytics, voice | 📋 |
 
@@ -62,7 +63,7 @@ Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · �
 - Edit/delete offerings and programs in the UI
 - Accent-insensitive search (`unaccent`)
 - Browser end-to-end tests (Playwright)
-- Offline support (service worker)
+- Offline study content (deliberately not built: a service worker would have to store private material; the current worker caches only public static files, see `docs/pwa.md`)
 - Send only needed translation namespaces to the browser
 - Edit a document's title/description/topic after upload (only new versions and moderation for now)
 - Moderator view of pending items inside the library filters (currently only in the Moderation queue)

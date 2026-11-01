@@ -277,7 +277,7 @@ export default async function QuestionPage({ params, searchParams }: { params: P
                             maxLength={500}
                             aria-label={t("moderator.resolveNote")}
                             placeholder={t("moderator.resolveNote")}
-                            className="h-10 rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[14px]"
+                            className="h-11 rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[14px] sm:h-10"
                           />
                           <div className="flex gap-2">
                             <Button type="submit" name="outcome" value="resolved" size="sm">

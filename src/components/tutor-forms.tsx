@@ -42,7 +42,7 @@ export function TutorSettingsForm(props: TutorSettingsFormProps) {
         <p className="text-[14px]">
           <span className="font-medium">{t("providerLabel")}:</span> <span className="text-text-muted">{props.providerId ?? t("providerNone")}</span>
         </p>
-        <label className="flex min-h-10 items-center gap-3 text-[14px]">
+        <label className="flex min-h-11 items-center gap-3 text-[14px]">
           <input type="checkbox" name="enabled" defaultChecked={props.enabled} className="size-4 shrink-0 accent-[var(--accent)]" />
           <span>{t("enabled")}</span>
         </label>

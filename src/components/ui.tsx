@@ -50,6 +50,18 @@ export function Wordmark({ className, slogan = false }: { className?: string; sl
 
 // ---------- Layout ----------
 
+/** First focusable element on a page: jumps keyboard and screen-reader users to `<main id="main" tabIndex={-1}>`. */
+export function SkipLink({ label }: { label: string }) {
+  return (
+    <a
+      href="#main"
+      className="sr-only z-50 rounded-md border border-border-strong bg-surface px-3 py-2 text-[14px] font-medium text-text focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      {label}
+    </a>
+  );
+}
+
 export function PageHeader({
   title,
   subtitle,
@@ -67,7 +79,7 @@ export function PageHeader({
         {back && (
           <Link
             href={back.href}
-            className="mb-2 -ml-1 inline-flex items-center gap-0.5 rounded-md px-1 text-[13px] font-medium text-accent hover:text-accent-hover"
+            className="mb-2 -ml-1 inline-flex min-h-11 items-center gap-0.5 rounded-md px-1 text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0"
           >
             <ChevronLeftIcon width={16} height={16} />
             {back.label}
@@ -208,7 +220,7 @@ const buttonBase =
 const buttonSizes: Record<ButtonSize, string> = {
   // Phones get 44 px targets; desktop keeps the denser size.
   md: "h-11 px-4 text-[14px] sm:h-10",
-  sm: "h-10 px-3 text-[13px] sm:h-9",
+  sm: "h-11 px-3 text-[13px] sm:h-9",
 };
 
 const buttonVariants: Record<ButtonVariant, string> = {
@@ -244,7 +256,7 @@ const controlBase =
   "block w-full rounded-[var(--radius-control)] border border-border-strong bg-surface px-3 text-[15px] text-text placeholder:text-text-subtle transition-colors focus:border-accent focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-0 aria-invalid:border-danger disabled:opacity-60";
 
 export function Input({ className, ...props }: ComponentProps<"input">) {
-  return <input className={cx(controlBase, "h-10", className)} {...props} />;
+  return <input className={cx(controlBase, "h-11 sm:h-10", className)} {...props} />;
 }
 
 export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
@@ -252,7 +264,7 @@ export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
 }
 
 export function Select({ className, ...props }: ComponentProps<"select">) {
-  return <select className={cx(controlBase, "h-10 appearance-auto pr-8", className)} {...props} />;
+  return <select className={cx(controlBase, "h-11 appearance-auto pr-8 sm:h-10", className)} {...props} />;
 }
 
 export function Field({

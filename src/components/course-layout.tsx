@@ -1,5 +1,6 @@
 // Reusable course layout: cover art, header with real stats, and section tabs.
-// Tabs for features that don't exist yet are shown disabled with a "Soon" label, never as links.
+// Tabs for features that don't exist yet (recordings) are shown disabled with a "Soon" label, never as links.
+// The tutor tab is a real link: the page exists and says plainly whether the tutor is off.
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { ComponentType, ReactNode, SVGProps } from "react";
@@ -9,6 +10,7 @@ import type { CurrentUser } from "@/server/auth/session";
 import { getCourseByCode } from "@/server/catalog/service";
 import { normalizeCourseCode } from "@/server/catalog/validation";
 import { listCourseSummaries, type CourseSummary } from "@/server/resources/service";
+import { isTutorReady } from "@/server/tutor/service";
 import { BookIcon, CardsIcon, ChevronLeftIcon, FolderIcon, MicIcon, PassesIcon, SparkleIcon, TagIcon } from "./icons";
 import { cx } from "./ui";
 
@@ -67,11 +69,14 @@ export function CourseCover({ code, className, compact = false }: { code: string
   );
 }
 
-type Tab = { key: "overview" | "notes" | "passes" | "topics" | "study"; href: string; icon: ComponentType<SVGProps<SVGSVGElement>> };
-const futureTabs = [
-  { key: "recordings", icon: MicIcon },
-  { key: "tutor", icon: SparkleIcon },
-] as const;
+type Tab = {
+  key: "overview" | "notes" | "passes" | "topics" | "study" | "tutor";
+  href: string;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  /** Small status label next to the name (the tutor says "Off" while it cannot answer). */
+  badge?: string;
+};
+const futureTabs = [{ key: "recordings", icon: MicIcon }] as const;
 
 export async function CourseHeader({
   course,
@@ -87,6 +92,7 @@ export async function CourseHeader({
   const t = await getTranslations();
   const locale = (await getLocale()) as Locale;
   const base = `/courses/${encodeURIComponent(course.code)}`;
+  const tutorReady = await isTutorReady(getDb());
   const tabs: Tab[] = [
     { key: "overview", href: base, icon: BookIcon },
     { key: "notes", href: `${base}/notes`, icon: FolderIcon },
@@ -94,6 +100,8 @@ export async function CourseHeader({
     { key: "topics", href: `${base}/topics`, icon: TagIcon },
     // The Study hub (practice, flashcards, quizzes, progress, export) for this course.
     { key: "study", href: `/practice?course=${course.id}`, icon: CardsIcon },
+    // Live page: the course is preselected; it states when the tutor is off and offers the source search.
+    { key: "tutor", href: `/tutor?course=${encodeURIComponent(course.code)}`, icon: SparkleIcon, badge: tutorReady ? undefined : t("nav.off") },
   ];
   const offeringLine = course.currentOffering
     ? [
@@ -101,14 +109,14 @@ export async function CourseHeader({
         `${course.currentOffering.academicYear} · ${t(`terms.${course.currentOffering.term}`)}`,
       ]
         .filter(Boolean)
-        .join(" — ")
+        .join(" · ")
     : t("home.noOffering");
 
   return (
     <header className="mb-6">
       <Link
         href="/courses"
-        className="mb-3 -ml-1 inline-flex min-h-10 items-center gap-0.5 rounded-md px-1 text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0"
+        className="mb-3 -ml-1 inline-flex min-h-11 items-center gap-0.5 rounded-md px-1 text-[13px] font-medium text-accent hover:text-accent-hover sm:min-h-0"
       >
         <ChevronLeftIcon width={16} height={16} />
         {t("courses.allCourses")}
@@ -143,7 +151,7 @@ export async function CourseHeader({
 
       <nav aria-label={t("courseLayout.tabs")} className="mt-5 -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
         <ul className="flex min-w-max gap-1 border-b border-border">
-          {tabs.map(({ key, href, icon: Icon }) => {
+          {tabs.map(({ key, href, icon: Icon, badge }) => {
             const current = key === active;
             return (
               <li key={key}>
@@ -156,7 +164,10 @@ export async function CourseHeader({
                   )}
                 >
                   <Icon width={16} height={16} className={current ? "text-accent" : undefined} />
-                  {t(`courseLayout.${key}`)}
+                  {t(key === "tutor" ? "nav.tutor" : `courseLayout.${key}`)}
+                  {badge && (
+                    <span className="rounded-full bg-surface-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-text-subtle uppercase">{badge}</span>
+                  )}
                 </Link>
               </li>
             );

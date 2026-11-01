@@ -21,7 +21,7 @@ This is a record of decisions, not a claim of compliance. **Dentiq is not yet pr
 - Source links must be `http(s)` (no `javascript:` links). Search input is escaped.
 - CSV import: `.csv` only, 1 MB / 2,000 rows maximum.
 - Secrets live in `.env` (ignored by git). `.env.example` contains placeholders only. The app refuses to start with missing or placeholder secrets.
-- Security headers: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, strict referrer policy, permissions policy.
+- Security headers: `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, strict referrer policy, permissions policy, a Content-Security-Policy and (production only) Strict-Transport-Security. See "Content Security Policy" below.
 - Audit log for catalog changes, imports, approvals and role changes.
 
 **Uploaded documents (Phase 2)**
@@ -50,7 +50,7 @@ Decision needed before launch: which combination to require.
 - [ ] Hosted Postgres with automated backups and a tested restore.
 - [ ] HTTPS deployment; confirm `BETTER_AUTH_URL` uses `https://`.
 - [ ] Shared rate-limit storage if running more than one server instance.
-- [ ] Content Security Policy header.
+- [~] Content Security Policy header: added (see "Content Security Policy" below); script and style `'unsafe-inline'` remain, and it has not been tried in a browser yet.
 - [~] Account deletion and data export for users: built 2026-11-01 (`docs/account-data.md`); **needs legal (Law 25) review** and a browser test.
 - [~] Privacy policy and terms (French and English): drafts exist with a visible DRAFT banner and a contact placeholder; **not reviewed by a lawyer**, contact not filled in.
 - [ ] Dependency update routine (`pnpm outdated`, `pnpm audit`).
@@ -112,3 +112,36 @@ The tutor is off and has no provider: no question, note or document text leaves 
 ## Profile, export and deletion privacy — 2026-11-01
 
 `/profile/export` builds the JSON from explicit column lists, filtered on the signed-in user's id, and is sent `private, no-store` as an attachment. It never contains password hashes, session tokens, storage keys, file fingerprints, other students' data or moderator identities (tests in `tests/account.test.ts`). Account deletion re-checks the password through Better Auth, requires the typed email, refuses the last approved administrator, runs in one transaction, deletes private rows and their stored files, detaches published contributions (author columns become empty) and keeps an audit entry with counts only. Better Auth's own `/delete-user` endpoint stays disabled (tested). The export and deletion forms are rate limited in memory per server instance. Everything here is a draft pending legal review; see `docs/account-data.md` for the open questions.
+
+
+## Content Security Policy and headers - 2026-11-01
+
+Defined in `src/lib/security-headers.ts` and applied from `next.config.ts` (`headers()`); `tests/platform-quality.test.ts` reads the exact policy.
+
+```
+default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:;
+font-src 'self' data:; connect-src 'self'; frame-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none';
+base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+```
+
+(`'unsafe-eval'` is added to `script-src` in development only, because React uses it for debugging.)
+
+**Why not a nonce-based policy.** The Next.js guide's strict policy needs a proxy that creates a nonce for every request, and every inline
+script then has to carry it: Next.js hydration data and the next-themes theme script both inject inline scripts. Without a browser available
+to confirm that pages still hydrate, a strict policy could silently break every page. So scripts and styles keep `'unsafe-inline'` and
+everything else is restricted to this origin. What this still stops: scripts, images, fonts, frames and connections to other sites (so an
+injected script cannot load code from or send data to a third party), plugins, `<base>` tag tricks, form posts to other sites and framing of
+Dentiq pages. What it does not stop: an injected inline script running on the page. The input handling in the rest of this document is the
+defence against injection; this is a second layer. **Follow-up:** move to nonces (proxy plus `connection()` and the `nonce` prop on
+`ThemeProvider`) once it can be tested in a browser.
+
+**File previews.** `/api/files/` and `/api/question-images/` are excluded from this rule because they set their own headers (PDF previews:
+`frame-ancestors 'self'`; other files and images: `default-src 'none'`, sandbox). The PDF preview is a plain `<iframe>` of `/api/files/...?inline=1`
+that uses the browser's built-in viewer; the parent page allows it with `frame-src 'self'`. No PDF.js, no worker, no blob URL is used today
+(`blob:` is allowed for images only). Not verified in a browser.
+
+**Strict-Transport-Security** (`max-age=31536000`, no `includeSubDomains` or `preload`) is sent only when `NODE_ENV` is `production`; browsers
+ignore it over plain HTTP, so a local `next start` is unaffected. Adding `includeSubDomains` or preloading is one-way and left to the owner once
+the final domain exists.
+
+**Service worker.** `/sw.js` caches only public static files and never pages, API responses, uploads or images; see `docs/pwa.md`.

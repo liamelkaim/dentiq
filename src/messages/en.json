@@ -63,7 +63,7 @@
     "tabs": "Course sections",
     "overview": "Overview",
     "notes": "Notes",
-    "soonLabel": "{feature} — coming soon",
+    "soonLabel": "{feature}: coming soon",
     "currentOffering": "Current offering",
     "offerings": "{count, plural, =0 {No offerings} one {# offering} other {# offerings}}",
     "studyMode": "Study mode",
@@ -388,7 +388,7 @@
       "offeringHint": "Link the document to the year and term it was produced in.",
       "noOffering": "General (no specific offering)",
       "file": "File",
-      "fileHint": "PDF, DOCX, PPTX, PNG or JPG — {maxMB} MB maximum.",
+      "fileHint": "PDF, DOCX, PPTX, PNG or JPG. {maxMB} MB maximum.",
       "official": "Official document (provided by the instructor or faculty)",
       "rights": "I confirm I have the right to share this document with Dentiq members. It contains no unauthorized exam and no personal information.",
       "reviewNotice": "Your document will be visible after a moderator reviews it.",
@@ -475,7 +475,8 @@
     "forbiddenTitle": "Access denied",
     "forbiddenBody": "Your account doesn't have permission to view this page.",
     "errorTitle": "Something didn't work",
-    "errorBody": "The problem was logged. You can try again.",
+    "errorBody": "Something went wrong on our side. You can try again.",
+    "reference": "Reference: {code}",
     "goHome": "Back to home"
   },
   "legal": {
@@ -821,6 +822,11 @@
       "showState": "Show the state at that time",
       "proposed": "Proposed",
       "verified": "Verified",
+      "mark": {
+        "correct": "Correct",
+        "incorrect": "Incorrect",
+        "none": "Not set"
+      },
       "basis": "Basis of the verification",
       "fields": {
         "status": "status",

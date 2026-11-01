@@ -125,7 +125,7 @@ export default async function DashboardPage() {
               type="search"
               maxLength={100}
               placeholder={library ? t("home.searchEverything") : t("home.searchCourses")}
-              className="h-12 w-full rounded-[12px] border border-border-strong bg-surface/90 pr-4 pl-10 text-[15px] shadow-card backdrop-blur placeholder:text-text-subtle focus:border-accent focus:outline-none"
+              className="h-12 w-full rounded-[12px] border border-border-strong bg-surface/90 pr-4 pl-10 text-[15px] shadow-card backdrop-blur placeholder:text-text-subtle focus:border-accent"
             />
           </form>
 
@@ -182,7 +182,7 @@ export default async function DashboardPage() {
                           {course.currentOffering
                             ? [course.instructors.join(", "), `${course.currentOffering.academicYear} · ${t(`terms.${course.currentOffering.term}`)}`]
                                 .filter(Boolean)
-                                .join(" — ")
+                                .join(" · ")
                             : t("home.noOffering")}
                         </p>
                         <div className="mt-3 flex flex-wrap gap-1.5">

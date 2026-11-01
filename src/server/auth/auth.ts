@@ -39,7 +39,7 @@ export function createAuth(db: Database, { mailer, nextjs = true }: AuthOptions 
       async sendVerificationEmail({ user, url }) {
         await (mailer ?? getMailer()).send({
           to: user.email,
-          subject: "Dentiq — confirmez votre adresse / confirm your email",
+          subject: "Dentiq · confirmez votre adresse / confirm your email",
           text: `Confirmez votre adresse courriel / Confirm your email:\n${url}`,
         });
       },
