@@ -581,10 +581,14 @@ export function QuizForm({ children, defaultCount, maxCount }: { children: React
   );
 }
 
-export function QuizTake({ quizId, items, total, answeredBefore }: { quizId: string; items: { id: string; question: PublicQuestion }[]; total: number; answeredBefore: number }) {
+export function QuizTake({ quizId, items: liveItems, total, answeredBefore: liveAnsweredBefore }: { quizId: string; items: { id: string; question: PublicQuestion }[]; total: number; answeredBefore: number }) {
   const t = useTranslations("studyTools.quizzes.take");
   const errorText = useErrorText();
   const router = useRouter();
+  // Saving an answer revalidates the page, so the server sends a shorter "remaining" list while `index`
+  // keeps counting. Freeze the list this component started with, or the next question is skipped and the
+  // last step renders nothing (found in the browser test, block I).
+  const [{ items, answeredBefore }] = useState(() => ({ items: liveItems, answeredBefore: liveAnsweredBefore }));
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(emptyDraft);
   const [error, setError] = useState<string | undefined>();

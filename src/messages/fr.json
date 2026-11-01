@@ -1229,7 +1229,7 @@
         "yourAnswer": "Votre réponse",
         "scoreTitle": "Note",
         "points": "{points} sur {scored}",
-        "breakdown": "{correct} correctes, {partial} en partie justes, {incorrect} incorrectes",
+        "breakdown": "{correct, plural, one {# correcte} other {# correctes}}, {partial, plural, one {# en partie juste} other {# en partie justes}}, {incorrect, plural, one {# incorrecte} other {# incorrectes}}",
         "noScore": "Pas de note : aucune des questions répondues n'a de réponse vérifiée.",
         "scoreRule": "La note ne compte que les questions notées selon une réponse vérifiée. Une réponse ouverte en partie juste vaut un demi-point.",
         "unscoredCount": "{count, plural, one {# question n'est pas notée (pas de réponse vérifiée).} other {# questions ne sont pas notées (pas de réponse vérifiée).}}",
@@ -1679,7 +1679,7 @@
     "quizzes": {
       "title": "Résultats des quiz",
       "description": "Quiz terminés, du plus récent au plus ancien. Un résultat est le nombre de points sur les éléments notés selon une réponse vérifiée ; les éléments non notés ne sont pas comptés.",
-      "line": "{points} points sur {scored} ({percent} %)",
+      "line": "{points, plural, one {# point} other {# points}} sur {scored} ({percent} %)",
       "noScore": "Aucun résultat",
       "unscored": "{count, plural, one {# question non notée} other {# questions non notées}}",
       "size": "{count, plural, one {# question} other {# questions}}",

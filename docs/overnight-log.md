@@ -23,7 +23,8 @@
 | E. Course-grounded AI tutor shell (retrieval, citations, provider interface; OFF, no provider) | built; typecheck, lint, 439 tests, build clean; not yet browser-tested | 4ade38a |
 | F. Profile and account (profile, own-data JSON export, account deletion, legal draft banners) | built; typecheck, lint, 468 tests, build clean; not yet browser-tested; deletion semantics need Law 25 legal review | e9a830c |
 | G. Platform quality (PWA shell, CSP, focus, touch targets, loading/error pages, em dash cleanup) | built; typecheck, lint, 496 tests, build clean; needs a browser to verify install, offline page, CSP hydration, safe areas | b6b2837 |
-| H. Independent review (security + correctness) and fixes (20 items) | done; typecheck, lint, 533 tests, build clean | see git log |
+| H. Independent review (security + correctness) and fixes (20 items) | done; typecheck, lint, 533 tests, build clean | 65dc482 |
+| I1. Browser walkthrough, clean scratch DB, desktop, FR then EN spot-check (student, moderator, admin) | done; ~40 steps PASS, 3 defects found and fixed; 537 tests, build clean | see git log |
 
 ## Decisions made for the owner
 
@@ -81,3 +82,14 @@ NOT fixed here, needs a decision or hosting (owner list):
 ## Skipped / failed
 
 (none yet)
+
+
+## Block I part 1: browser results (scratch DB, fake example.com accounts, desktop 1440px, light)
+
+PASS: sign-up, console email verification, unverified sign-in blocked, domain and password rules, approval, role promotion, moderator denied admin pages, sign-in/out, course and offering creation, upload validation (fake PDF, .exe, 27 MB blocked), moderated publish and inline PDF, all four question types with image upload and rejection of fake or oversize images, moderator verification, practice (verified scored; kprim/open shown as unverified and unscored), progress numbers, flashcards, exports (CSV, TSV, Anki, progress; no author names), My contributions, search, topics, notes with history and restore, calendar with .ics, analytics (empty then with data), tutor OFF state with cited search and no AI answer, profile rename, own-data JSON export (no password or token fields), account deletion with a throwaway account, privacy and terms DRAFT banners, /offline, manifest, sw.js, 404, security headers, unauthenticated API routes return 401, foreign-origin sign-in POST returns 403, no requests left localhost, no console errors.
+
+Defects found and fixed: (1) quiz skipped questions and went blank at the end (list changed after revalidation; `QuizTake` now freezes its list); (2) French plural errors ("1 correctes", "1 points sur 2"); (3) dashboard listed flashcards as planned though live.
+
+Not fixed (cosmetic or already listed): Période select text cut off on the practice form; 404 page title is just "Dentiq"; sidebar scrolls for admins at ~780 px height; stale "Question published" message after verifying; a request over 26 MB bypassing the client check shows the generic error page (listed under review items).
+
+Not tested: service worker registration and real offline fallback (production only); pending-user contribution block; moderator reject/hide/report paths; question edit; PWA install prompt; downloads through the browser dialog; dark theme and phone/tablet widths (part 2). Anki All in One compatibility remains unverified.

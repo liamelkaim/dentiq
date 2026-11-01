@@ -258,7 +258,7 @@ export default async function AnalyticsPage() {
                   {q.percent === null ? (
                     <Badge>{t("quizzes.noScore")}</Badge>
                   ) : (
-                    <span className="tabular-nums">{t("quizzes.line", { points: n(q.points), scored: q.scored, percent: q.percent })}</span>
+                    <span className="tabular-nums">{t("quizzes.line", { points: q.points, scored: q.scored, percent: q.percent })}</span>
                   )}
                 </span>
               </li>

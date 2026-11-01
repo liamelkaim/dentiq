@@ -6,7 +6,6 @@ import { CourseCover } from "@/components/course-layout";
 import { PassRow } from "@/components/pass-ui";
 import {
   BookIcon,
-  CardsIcon,
   ChartIcon,
   ChevronRightIcon,
   FileIcon,
@@ -35,8 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: (await getTranslations("dashboard"))("title") };
 }
 
+// Flashcards are live (Study); only the AI tutor (off) and recordings remain planned.
 const futureFeatures = [
-  { key: "flashcards", icon: CardsIcon },
   { key: "tutor", icon: SparkleIcon },
   { key: "recordings", icon: MicIcon },
 ] as const;
