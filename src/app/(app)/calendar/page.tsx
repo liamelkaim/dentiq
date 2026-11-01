@@ -66,43 +66,45 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
     from: formatIso(month.year, month.month, 1),
     to: formatIso(month.year, month.month, daysInMonth(month.year, month.month)),
   });
-  const shown = day ? entries.filter((e) => e.date === day) : entries;
+  // The right panel shows the chosen day, or today when the month on screen is the current one.
+  const panelDay = day ?? (month.year === todayParts.year && month.month === todayParts.month ? today : null);
+  const shown = panelDay ? entries.filter((e) => e.date === panelDay) : entries;
   const format = await getFormatter();
   const monthLabel = format.dateTime(new Date(Date.UTC(month.year, month.month - 1, 1, 12)), { month: "long", year: "numeric", timeZone: "UTC" });
-  const dayLabel = day ? format.dateTime(new Date(Date.UTC(parsedDay!.year, parsedDay!.month - 1, parsedDay!.day, 12)), { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) : "";
+  const panelParts = panelDay ? parseIsoDate(panelDay) : null;
+  const dayLabel = panelParts ? format.dateTime(new Date(Date.UTC(panelParts.year, panelParts.month - 1, panelParts.day, 12)), { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) : "";
 
   return (
     <>
       <PageHeader title={t("title")} subtitle={t("subtitle")} actions={<ButtonLink href={addHref}>{t("nav.add")}</ButtonLink>} />
-      <MonthNav month={month} today={today} day={day} view={view} />
-      <MonthGridView month={month} today={today} entries={entries} selectedDay={day} view={view} />
 
-      <Section title={day ? t("agenda.titleDay", { date: dayLabel }) : t("agenda.titleMonth", { month: monthLabel })}>
-        {shown.length === 0 ? (
-          <Panel className="flex flex-col items-start gap-3 px-4 py-5 text-[14px] text-text-muted">
-            <p>{day ? t("agenda.emptyDay") : t("agenda.empty", { month: monthLabel })}</p>
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <div className="min-w-0 rounded-[var(--radius-card)] border border-border bg-surface p-4 shadow-card">
+          <MonthNav month={month} today={today} day={day} view={view} />
+          <MonthGridView month={month} today={today} entries={entries} selectedDay={day} view={view} />
+        </div>
+
+        <aside aria-label={panelDay ? t("agenda.titleDay", { date: dayLabel }) : t("agenda.titleMonth", { month: monthLabel })} className="min-w-0 rounded-[var(--radius-card)] border border-border bg-surface p-4 shadow-card">
+          <h2 className="mb-3 text-[19px] leading-snug font-semibold">
+            {panelDay ? t("agenda.titleDay", { date: dayLabel }) : t("agenda.titleMonth", { month: monthLabel })}
+          </h2>
+          {shown.length === 0 ? (
+            <div className="flex flex-col items-start gap-3 rounded-[10px] border border-border bg-surface-muted/40 px-4 py-5 text-[14px] text-text-muted">
+              <p>{panelDay ? t("agenda.emptyDay") : t("agenda.empty", { month: monthLabel })}</p>
+            </div>
+          ) : (
+            <AgendaList entries={shown} today={today} />
+          )}
+          <div className="mt-4 flex flex-col gap-2">
+            <ButtonLink href={`/calendar/new${panelDay ? `?date=${panelDay}` : ""}`}>+ {t("agenda.addOnDay")}</ButtonLink>
             {day && (
-              <Link href={`/calendar/new?date=${day}`} className="inline-flex min-h-11 items-center font-medium text-accent hover:text-accent-hover">
-                {t("agenda.addOnDay")}
+              <Link href={calendarHref({ month, view })} className="inline-flex min-h-11 items-center justify-center text-[14px] font-medium text-accent hover:text-accent-hover">
+                {t("agenda.showMonth")}
               </Link>
             )}
-          </Panel>
-        ) : (
-          <AgendaList entries={shown} today={today} />
-        )}
-        {day && (
-          <p className="mt-3 flex flex-wrap gap-x-4">
-            <Link href={calendarHref({ month, view })} className="inline-flex min-h-11 items-center text-[14px] font-medium text-accent hover:text-accent-hover">
-              {t("agenda.showMonth")}
-            </Link>
-            {shown.length > 0 && (
-              <Link href={`/calendar/new?date=${day}`} className="inline-flex min-h-11 items-center text-[14px] font-medium text-accent hover:text-accent-hover">
-                {t("agenda.addOnDay")}
-              </Link>
-            )}
-          </p>
-        )}
-      </Section>
+          </div>
+        </aside>
+      </div>
 
       <Section title={t("export.title")}>
         <Panel className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">

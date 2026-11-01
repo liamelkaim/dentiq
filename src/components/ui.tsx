@@ -74,7 +74,7 @@ export function PageHeader({
   back?: { href: string; label: string };
 }) {
   return (
-    <header className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
+    <header className="mb-6 flex flex-col gap-3 px-1 sm:mb-8 sm:flex-row sm:items-end sm:justify-between lg:min-h-[96px] lg:px-3">
       <div className="min-w-0">
         {back && (
           <Link
@@ -85,8 +85,8 @@ export function PageHeader({
             {back.label}
           </Link>
         )}
-        <h1 className="text-[26px] leading-tight font-semibold tracking-[-0.02em] text-text sm:text-[28px]">{title}</h1>
-        {subtitle && <p className="mt-1 text-[15px] text-text-muted">{subtitle}</p>}
+        <h1 className="text-[32px] leading-[1.1] font-bold tracking-[-0.03em] text-mountain-title sm:text-[40px] lg:text-[46px]">{title}</h1>
+        {subtitle && <p className="mt-1 text-[17px] text-text-muted sm:text-[20px] lg:text-[24px]">{subtitle}</p>}
       </div>
       {actions && <div className="flex shrink-0 gap-2">{actions}</div>}
     </header>
