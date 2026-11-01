@@ -51,3 +51,22 @@ Status key: **DONE** = built and tested in code (a real host still has to confir
 - Rule from the owner: never reuse old credentials. So before deploying: detach the old Neon resource (`vercel integration resource disconnect neon-crimson-marble dentiq`, does not delete data), remove the old variables, create a NEW Neon database, a NEW private Blob store, a NEW Resend key and a NEW `BETTER_AUTH_SECRET`, then delete the old Neon resource and Blob store after confirming they hold nothing needed.
 - BLOCKED: the detach command was refused by Claude Code's permission classifier (modifies a shared resource). Needs the owner to run it or to allow it.
 - Resend is available as a Vercel Marketplace product (`resend/resend-email`); a vercel.app address cannot send from its own domain, so mail only reaches the account owner until a domain is verified.
+
+## Deployment status, new project `dentiq-app` (2026-11-01, run while owner away)
+
+Old `dentiq` project: untouched (still holds old credentials and the old Neon resource `neon-crimson-marble`; nothing was disconnected or deleted).
+
+| Step | State |
+|---|---|
+| New Vercel project `dentiq-app` (Hobby), this folder linked to it | DONE |
+| New Neon database `dentiq-app-db` (free plan), connected to dentiq-app only | DONE |
+| Migrations 0000 to 0010 applied to the new database (11 recorded, 38 tables, `rate_limits` and `auth_rate_limit` present) | DONE |
+| New private Blob store `dentiq-app-files` (region yul1), connected to dentiq-app | DONE |
+| New `BETTER_AUTH_SECRET` (generated here, never printed), `BETTER_AUTH_URL=https://dentiq-app.vercel.app`, `ADMIN_EMAILS` (production and preview) | DONE; confirm the URL after the first deploy and that ADMIN_EMAILS is the address you will sign up with |
+| Resend (free) | BLOCKED: Vercel needs you to accept the Resend terms in a browser: https://vercel.com/liamelkaim/~/integrations/accept-terms/resend?source=cli . Then rerun `npx vercel integration add resend/resend-email --name dentiq-app-mail --billing-plan free --no-env-pull -e production -e preview`. A vercel.app address cannot send from its own domain, so mail only reaches the Resend account owner's email until a domain is verified. |
+| `EMAIL_FROM` | NOT SET (needs Resend; e.g. the Resend sandbox sender) |
+| Preview deploy, live checks (admin sign-up, sign-in, upload, pass question, CSP console check, legal pages), production promote | NOT DONE (the app refuses to start on Vercel without RESEND_API_KEY and EMAIL_FROM, by design) |
+
+When Resend is connected: set `EMAIL_FROM`, run `npx vercel deploy` (preview), check it, then `npx vercel deploy --prod`. If the console shows CSP errors, switch the header in `src/proxy.ts` to `Content-Security-Policy-Report-Only`.
+
+Cleanup for you later (never done by me): the old `dentiq` project's Neon resource and Blob store, and the old credentials, once confirmed empty/unneeded. Old credentials must still be rotated at the providers.

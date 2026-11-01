@@ -1,5 +1,10 @@
 # Morning handover
 
+## Deployment status (updated while you were away)
+
+**Live URL: none yet. Nothing is deployed.** New project `dentiq-app` is created and linked; new Neon database (migrations 0000-0010 applied), private Blob store, auth secret and admin email are set. **Blocked on one thing only you can do:** accept the Resend terms in a browser (link in `docs/go-live-blockers.md`), then I can finish the preview, the live checks and production. The old `dentiq` project was not touched. Code is pushed to the private repo `liamelkaim/dentiq`.
+
+
 Nothing was pushed, deployed or connected to Vercel, Neon, Blob or Resend. Everything is committed locally on `main`.
 
 ## a) Start the app and sign in
