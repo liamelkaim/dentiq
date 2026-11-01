@@ -163,6 +163,8 @@ export const examQuestionImages = pgTable(
     altText: text(),
     uploadedBy: text().references(() => user.id, { onDelete: "set null" }),
     removedAt: timestamp({ withTimezone: true }),
+    // Set by the retention job (src/server/retention) once the stored file has been hard-deleted. The row stays.
+    fileDeletedAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [

@@ -308,7 +308,9 @@
       }
     },
     "tutor": "AI tutor settings",
-    "tutorHelp": "Off. Needs a provider and a budget."
+    "tutorHelp": "Off. Needs a provider and a budget.",
+    "retention": "File retention",
+    "retentionHelp": "Review and delete old removed files. Dry run first."
   },
   "resources": {
     "title": "Resources",
@@ -1919,6 +1921,34 @@
       "tryAgain": "Two changes collided. Your account was not deleted; try again.",
       "tooLarge": "Your data is too large to export in one file.",
       "tooManyExports": "Too many downloads. Try again later."
+    }
+  },
+  "retention": {
+    "title": "File retention",
+    "subtitle": "Removed files and old note versions can be deleted for good. This page only reports until you apply.",
+    "warningTitle": "Deleting is permanent",
+    "warning": "Removed question images and removed documents keep their file for {days} days. After that, applying deletes the stored file for good; it cannot be recovered. Documents that are only hidden are never touched.",
+    "reportTitle": "Dry run report",
+    "images": "Removed question images",
+    "documents": "Removed document files",
+    "noteVersions": "Old note versions",
+    "orphans": "Orphaned files",
+    "fileLine": "{count, plural, =0 {Nothing to delete} one {# file to delete} other {# files to delete}} ({size}). Still within the grace period: {grace}.",
+    "noteLine": "{count, plural, =0 {Nothing to delete} one {# version over the limit} other {# versions over the limit}}. The newest {max} versions of each note are kept, and the current version is never deleted.",
+    "orphanLine": "{count, plural, =0 {None found} one {# file found} other {# files found}} ({size}) with no matching record and older than {days} days. Reported only.",
+    "orphansTruncated": "The scan stopped early; there may be more.",
+    "orphansUnavailable": "This storage cannot be scanned for orphaned files.",
+    "batchNote": "Each run handles at most {batch} items per category. Run it again to continue.",
+    "applyTitle": "Apply",
+    "applyHelp": "Deletes the files and versions counted above. Every run is recorded in the audit history with counts only.",
+    "confirm": "I understand that this permanently deletes files.",
+    "confirmOrphans": "Also delete the orphaned files found (optional).",
+    "apply": "Apply retention",
+    "done": "Retention applied.",
+    "doneDetail": "{files, plural, =0 {No files deleted} one {# file deleted} other {# files deleted}}, {noteVersions, plural, =0 {no note versions deleted} one {# note version deleted} other {# note versions deleted}}, {orphans, plural, =0 {no orphaned files deleted} one {# orphaned file deleted} other {# orphaned files deleted}}. {failed, plural, =0 {} one {# deletion failed and will be retried next run.} other {# deletions failed and will be retried next run.}}",
+    "errors": {
+      "confirmRequired": "Tick the confirmation box to apply.",
+      "forbidden": "Only administrators can do this."
     }
   }
 }

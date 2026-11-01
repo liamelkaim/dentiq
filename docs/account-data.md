@@ -73,4 +73,36 @@ Last administrator: an admin cannot delete the account if no other **approved** 
 
 ## Not built
 
-Email change, soft delete or undo window, deletion of a single contribution by its author, export as CSV or ZIP, scheduled or emailed export, a retention policy for removed files, browser end-to-end tests.
+Email change, soft delete or undo window, deletion of a single contribution by its author, export as CSV or ZIP, scheduled or emailed export, scheduling of the retention job, browser end-to-end tests.
+
+## File retention job (built 2026-11-01, safe defaults, owner has not set a rule)
+
+Code: `src/server/retention/` (`constants.ts`, `service.ts`, `actions.ts`, `cli.ts`), page `/admin/retention` (administrators only, linked from `/admin`), command `scripts/retention.ts`, migration `0010_file_retention.sql` (adds nullable `file_deleted_at` to `exam_question_images` and `resource_versions`). Tests: `tests/retention.test.ts`. Covered by automated tests only; **not browser-tested**.
+
+**Defaults (constants in `src/server/retention/constants.ts`; changing one is a code change, not an admin setting, on purpose):**
+
+| Rule | Value |
+| --- | --- |
+| Grace period after removal (`RETENTION_GRACE_DAYS`) | 30 days |
+| Note versions kept per note (`NOTE_VERSIONS_MAX`) | newest 100; the current version is never deleted |
+| Orphan minimum age (`ORPHAN_MIN_AGE_DAYS`) | 7 days |
+| Items per category per run (`RETENTION_BATCH_SIZE`) | 200 |
+| Orphan scan cap per folder (`ORPHAN_SCAN_MAX_FILES`) | 5000 files |
+
+**What it deletes, and only on apply:**
+
+- Question images with `removed_at` at least 30 days old: the stored file is hard-deleted; the row stays with `file_deleted_at` set, so revision history never points at a missing row. Study data references questions, not images, so attempts are unaffected.
+- Documents with status `removed` whose last change (`resources.updated_at`, which every status change bumps, so it can only lengthen the grace) is at least 30 days old: every version's file is deleted; rows stay, marked. **Hidden documents are never touched** (a moderator can restore them). Published and pending documents are never touched.
+- Note versions beyond the newest 100 per note: rows deleted, oldest first, never the current version. Only counts are read; no note text is read or logged.
+- Orphaned files (a file in `resources/` or `questions/` with no row, at least 7 days old): **reported only**. They are deleted only with `--delete-orphans --apply` (CLI) or the separate tick box on the page.
+
+**Safety:** dry run is the default everywhere (`pnpm retention`); deleting needs `--apply` or the confirmation tick box. Every candidate is re-checked just before its file is deleted. A failed storage delete leaves the row unmarked and counts as failed, so the next run retries it (the CLI exits with code 1). Safe to run again: marked rows are skipped. Each run writes one audit entry (`retention.dry_run` or `retention.apply`) with counts only; opening the page writes nothing. Account deletion still removes a student's own files immediately and is unchanged.
+
+**Limits and what remains:**
+
+- Orphan scan needs the optional `list()` method on the storage backend. Local disk and the in-memory test storage have it; **the Blob backend does not, so the scan reports "unavailable" there** and the Blob backend is untested with this job. A scan is capped (5000 files per folder) and says when it was cut short.
+- A permanently failing delete is retried first on every run; more than 200 such rows would block newer ones. Not expected, not handled.
+- A removed document keeps its row and report history; only the file goes.
+- Backups are not covered: a database or Blob backup keeps deleted data until it expires (see the legal questions above).
+
+**Scheduling later (not set up, no cron config in the repo):** on the host, run `pnpm retention --apply` (without `--delete-orphans`) from a scheduled job, for example weekly, with the same environment as the app (`DATABASE_URL`, and the Blob settings once the Blob backend supports it). On Vercel this would be a Cron Job calling a protected route or a separate worker; both need new code and a decision, so nothing is wired up. Run `pnpm retention` by hand first and read the report.

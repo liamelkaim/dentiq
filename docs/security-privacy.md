@@ -31,7 +31,7 @@ This is a record of decisions, not a claim of compliance. **Dentiq is not yet pr
 - Responses: `Content-Disposition` (attachment unless previewing a PDF/image), `X-Content-Type-Options: nosniff`, `Cache-Control: private, no-store`, framing allowed only by Dentiq itself; non-PDF files are additionally sandboxed by CSP.
 - Only approved members (and moderators) can see shared files. Student uploads are reviewed before publication. Removed documents are hidden from everyone but moderators; the file is kept for the record (no hard delete yet).
 - Uploaders must confirm they have the right to share; each document shows a personal-use notice. **This is not a copyright clearance process** — see legal questions below.
-- Not yet: antivirus scanning, per-user upload quotas, retention/deletion policy for removed files.
+- Not yet: antivirus scanning, per-user upload quotas, a reviewed retention rule (a file retention job with safe defaults exists: see docs/account-data.md; it is not scheduled).
 
 **Data minimization**
 We store only: name, email, password hash, role, approval status, session metadata (IP address and browser, from Better Auth). No real student data is used in development; test data uses `@example.com` addresses and `TEST`/`DEMO` course codes.

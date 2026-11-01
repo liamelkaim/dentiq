@@ -24,7 +24,7 @@ Status key: **DONE** = built and tested in code (a real host still has to confir
 | Admin account and enrollment policy | NEEDS ME | Set `ADMIN_EMAILS` and `ALLOWED_EMAIL_DOMAINS`; sign up first with the admin address and verify. |
 | Backups and a tested restore | NEEDS ME | Neon branch or point-in-time restore plus a periodic export; Blob files are not covered by a database restore. |
 | Logo | NEEDS ME | Source is 224x93 px; a 1024 px PNG or SVG is needed, then I regenerate the icons. |
-| File retention and deletion policy | OPEN (needs a decision) | Removed documents and images stay on storage; note versions unbounded. I can build a hard-delete job once you pick the rule. |
+| File retention and deletion policy | BUILT with safe defaults (2026-11-01); owner to confirm the defaults | `/admin/retention` (dry run, then Apply) and `pnpm retention` / `pnpm retention --apply`. Defaults: 30-day grace after removal, 100 note versions per note, orphans reported only. No scheduler yet. Remaining: confirm or change the defaults (`src/server/retention/constants.ts`), schedule it on the host, test against the real Blob backend (it has no file listing, so the orphan scan reports "unavailable" there and only the local disk backend is tested), and decide on backups. Details in `docs/account-data.md`. |
 | Password reset | OPEN | Not built; users who forget a password need an admin. Needs the email sender first. |
 | Upload hardening | OPEN | No antivirus scan, no per-user upload quota. |
 | Dependency advisory (zod via `@vercel/blob`) | OPEN | Owner-reported, not re-verified. Run `pnpm audit` and `pnpm outdated` before deploy. |

@@ -17,7 +17,8 @@
     "test:watch": "vitest",
     "check": "pnpm typecheck && pnpm lint && pnpm test",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx scripts/migrate.ts"
+    "db:migrate": "tsx scripts/migrate.ts",
+    "retention": "tsx scripts/retention.ts"
   },
   "dependencies": {
     "@electric-sql/pglite": "0.5.13",

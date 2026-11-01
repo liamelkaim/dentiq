@@ -308,7 +308,9 @@
       }
     },
     "tutor": "Réglages du tuteur IA",
-    "tutorHelp": "Désactivé. Il faut un fournisseur et un budget."
+    "tutorHelp": "Désactivé. Il faut un fournisseur et un budget.",
+    "retention": "Conservation des fichiers",
+    "retentionHelp": "Examiner et supprimer les anciens fichiers retirés. Simulation d'abord."
   },
   "resources": {
     "title": "Ressources",
@@ -1919,6 +1921,34 @@
       "tryAgain": "Deux changements se sont croisés. Votre compte n'a pas été supprimé ; réessayez.",
       "tooLarge": "Vos données sont trop volumineuses pour un seul fichier d'exportation.",
       "tooManyExports": "Trop de téléchargements. Réessayez plus tard."
+    }
+  },
+  "retention": {
+    "title": "Conservation des fichiers",
+    "subtitle": "Les fichiers retirés et les anciennes versions de notes peuvent être supprimés définitivement. Cette page ne fait que rapporter tant que vous n'appliquez pas.",
+    "warningTitle": "La suppression est définitive",
+    "warning": "Les images de questions et les documents retirés gardent leur fichier pendant {days} jours. Ensuite, appliquer supprime le fichier stocké pour de bon; il est impossible de le récupérer. Les documents simplement masqués ne sont jamais touchés.",
+    "reportTitle": "Rapport de simulation",
+    "images": "Images de questions retirées",
+    "documents": "Fichiers de documents retirés",
+    "noteVersions": "Anciennes versions de notes",
+    "orphans": "Fichiers orphelins",
+    "fileLine": "{count, plural, =0 {Rien à supprimer} one {# fichier à supprimer} other {# fichiers à supprimer}} ({size}). Encore dans le délai de grâce : {grace}.",
+    "noteLine": "{count, plural, =0 {Rien à supprimer} one {# version au-delà de la limite} other {# versions au-delà de la limite}}. Les {max} versions les plus récentes de chaque note sont conservées, et la version actuelle n'est jamais supprimée.",
+    "orphanLine": "{count, plural, =0 {Aucun trouvé} one {# fichier trouvé} other {# fichiers trouvés}} ({size}) sans enregistrement correspondant et vieux de plus de {days} jours. Signalés seulement.",
+    "orphansTruncated": "L'analyse s'est arrêtée tôt; il peut y en avoir d'autres.",
+    "orphansUnavailable": "Ce stockage ne peut pas être analysé pour trouver des fichiers orphelins.",
+    "batchNote": "Chaque exécution traite au plus {batch} éléments par catégorie. Relancez pour continuer.",
+    "applyTitle": "Appliquer",
+    "applyHelp": "Supprime les fichiers et les versions comptés ci-dessus. Chaque exécution est inscrite dans l'historique d'audit, avec des totaux seulement.",
+    "confirm": "Je comprends que cela supprime des fichiers définitivement.",
+    "confirmOrphans": "Supprimer aussi les fichiers orphelins trouvés (facultatif).",
+    "apply": "Appliquer la conservation",
+    "done": "Conservation appliquée.",
+    "doneDetail": "{files, plural, =0 {Aucun fichier supprimé} one {# fichier supprimé} other {# fichiers supprimés}}, {noteVersions, plural, =0 {aucune version de note supprimée} one {# version de note supprimée} other {# versions de note supprimées}}, {orphans, plural, =0 {aucun fichier orphelin supprimé} one {# fichier orphelin supprimé} other {# fichiers orphelins supprimés}}. {failed, plural, =0 {} one {# suppression a échoué et sera reprise à la prochaine exécution.} other {# suppressions ont échoué et seront reprises à la prochaine exécution.}}",
+    "errors": {
+      "confirmRequired": "Cochez la case de confirmation pour appliquer.",
+      "forbidden": "Seuls les administrateurs peuvent faire cela."
     }
   }
 }

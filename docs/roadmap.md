@@ -22,7 +22,7 @@ Legend: **Verified** = exercised in a real browser on a scratch database with fa
 | AI tutor | Incomplete (grounding layer only) | OFF; no provider, no answers; needs provider and budget |
 | Recordings and transcription | Planned | `docs/audio-readiness.md` |
 | Shared rate limiting (database), body-size cap, nonce CSP | Done (2026-11-01, browser-tested on a production build) | `docs/go-live-blockers.md` |
-| Retention policy | Planned | Needed before hosting |
+| File retention job | Implemented (tests only, not browser-checked) | Safe defaults, dry run first; owner to confirm rules; not scheduled; Blob backend untested. `docs/account-data.md` |
 | Hosting (Vercel/Neon/Blob/Resend) | Blocked | Needs owner decisions and credential rotation |
 | High-resolution logo | Blocked | Needs a 1024 px PNG/SVG from the owner |
 | Real course/professor data | Blocked | Needs owner/faculty input |

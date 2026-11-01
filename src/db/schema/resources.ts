@@ -67,6 +67,8 @@ export const resourceVersions = pgTable(
     // The uploader confirmed they have the right to share this file.
     rightsConfirmed: boolean().notNull(),
     uploadedBy: text().references(() => user.id, { onDelete: "set null" }),
+    // Set by the retention job (src/server/retention) once the stored file has been hard-deleted. The row stays.
+    fileDeletedAt: timestamp({ withTimezone: true }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [
