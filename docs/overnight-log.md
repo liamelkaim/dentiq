@@ -16,12 +16,17 @@
 | Block | Status | Commit |
 |---|---|---|
 | Phase 3 screens (carried over) | committed | 9ddb7a0 |
-| A. Passes polish | built; typecheck, lint, 212 tests, build all clean; not yet browser-tested | see git log |
+| A. Passes polish | built; typecheck, lint, 212 tests, build all clean; not yet browser-tested | d990d7c |
+| B. Study tools (practice, progress, flashcards, quizzes, export) | built; typecheck, lint, 269 tests, build clean; not yet browser-tested; Anki All in One compatibility UNVERIFIED | see git log |
 
 ## Decisions made for the owner
 
 - A: search page shows the 10 most recent matching questions (`SEARCH_QUESTION_LIMIT` in `src/server/passes/queries.ts`).
 - A: dashboard search now opens `/search?q=` (documents plus published questions) instead of `/resources`.
+- B: Leitner schedule with six boxes (10 min, 1, 3, 7, 14, 30 days) in `src/server/study/schedule.ts`; other limits in `src/server/study/constants.ts` (10 questions per practice or quiz, max 50; 30 cards per review; 2000 personal cards; 5000 export rows); partly right = half a point (`PARTIAL_CREDIT`).
+- B: attempts on unverified answers are stored as unscored and never counted as correct (database CHECK plus tests). Quiz scores are fixed when answered.
+- B: still-"soon" nav item renamed "Analytics" so it does not clash with the new Progress page. Flashcards "soon" replaced by a live Study entry (`/practice`).
+- B: new migration `drizzle/0005_study_tools.sql` (7 tables, additive).
 
 ## Noted for later blocks
 

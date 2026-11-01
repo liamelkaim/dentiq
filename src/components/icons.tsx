@@ -194,3 +194,19 @@ export const SidebarIcon = (p: IconProps) => (
     <path d="M7.5 3.5v13" />
   </Icon>
 );
+
+// ---------- Study tools ----------
+
+export const ClockIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="10" cy="10" r="7" />
+    <path d="M10 6v4.25l2.75 1.75" />
+  </Icon>
+);
+
+export const QuizIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3.25" y="3.25" width="13.5" height="13.5" rx="2" />
+    <path d="m6.75 8.25 1.5 1.5 2.5-2.75M6.75 13.25h6.5" />
+  </Icon>
+);

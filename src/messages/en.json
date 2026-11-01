@@ -31,7 +31,8 @@
     "flashcards": "Flashcards",
     "tutor": "AI Tutor",
     "recordings": "Recordings",
-    "analytics": "Progress"
+    "analytics": "Analytics",
+    "study": "Study"
   },
   "home": {
     "welcome": "Welcome back, {name}.",
@@ -66,7 +67,8 @@
     "openDetails": "Document details",
     "selectDocument": "Choose a document to show it here.",
     "seeNotes": "See the course notes",
-    "passes": "Passes"
+    "passes": "Passes",
+    "study": "Study"
   },
   "study": {
     "title": "Study mode",
@@ -916,5 +918,348 @@
     "noQuestionsTitle": "No exam questions",
     "noQuestions": "No published exam question matches this search.",
     "allQuestions": "See all {count} matching questions in Passes"
+  },
+  "studyTools": {
+    "title": "Study",
+    "subtitle": "Practice questions, flashcards, quizzes and your progress.",
+    "privacy": "Your attempts, marks, cards and quiz results are private. Only you can see them.",
+    "imageAlt": "Image {n} of the question",
+    "hub": {
+      "practice": {
+        "title": "Practice",
+        "body": "Answer published exam questions from a course, then see the answer."
+      },
+      "flashcards": {
+        "title": "Flashcards",
+        "body": "Review cards made from questions, plus your own, on a spaced schedule."
+      },
+      "quizzes": {
+        "title": "Quizzes",
+        "body": "Build a quiz from a course and see a score from verified answers."
+      },
+      "progress": {
+        "title": "Progress",
+        "body": "Your own attempts, marks and card activity, by course."
+      },
+      "export": {
+        "title": "Export",
+        "body": "Download questions, your cards and your progress as CSV, TSV or an Anki text file."
+      },
+      "practiceLine": "{count, plural, one {# published question available} other {# published questions available}}",
+      "practiceNone": "No published questions yet",
+      "flashcardsLine": "{due} due, {fresh} new",
+      "flashcardsNone": "No cards yet",
+      "quizzesLine": "{count, plural, =0 {No quiz completed yet} one {# quiz completed} other {# quizzes completed}}",
+      "quizzesNone": "No quiz yet",
+      "progressLine": "{count, plural, one {# answer recorded} other {# answers recorded}}",
+      "progressNone": "No activity yet",
+      "exportLine": "Limited to what you may see",
+      "courseFilter": "Course: {code}.",
+      "clearCourse": "All courses"
+    },
+    "scope": {
+      "course": "Course",
+      "chooseCourse": "Choose a course",
+      "allCourses": "All courses",
+      "year": "Exam year",
+      "allYears": "All years",
+      "type": "Question type",
+      "allTypes": "All types",
+      "topic": "Topic",
+      "allTopics": "All topics",
+      "period": "Period",
+      "allPeriods": "Current and previous years",
+      "current": "Current year",
+      "previous": "Previous years",
+      "mark": "Marked questions",
+      "anyMark": "Any question",
+      "flagged": "Flagged only",
+      "reviewLater": "Review later only"
+    },
+    "answerFields": {
+      "writeAnswer": "Your answer",
+      "optional": "optional",
+      "writeAnswerHint": "Write it out, or just reveal the answer and rate yourself.",
+      "perChoiceHint": "Mark each statement true or false.",
+      "true": "True",
+      "false": "False",
+      "multipleHint": "Select every correct answer.",
+      "singleHint": "Select one answer."
+    },
+    "marks": {
+      "flag": "Flag this question",
+      "unflag": "Remove flag",
+      "reviewLater": "Review later",
+      "unreviewLater": "Remove from review later"
+    },
+    "outcome": {
+      "pending": "Waiting for your rating",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "partial": "Partly right",
+      "unscored": "Not scored",
+      "correctTitle": "Correct",
+      "incorrectTitle": "Incorrect",
+      "partialTitle": "Partly right",
+      "unscoredTitle": "Not scored",
+      "unscoredNone": "No answer is available for this question yet, so it cannot be scored.",
+      "unscoredProposed": "This question has no verified answer yet, so your answer is not scored. The answer below is a student's proposal and may be wrong.",
+      "selfRated": "Scored against the verified answer from your own rating.",
+      "scoredAgainstVerified": "Scored against the verified answer."
+    },
+    "reveal": {
+      "verifiedTitle": "Verified answer",
+      "proposedTitle": "Proposed answer, not verified",
+      "noneTitle": "No answer yet",
+      "noneBody": "Nobody has proposed an answer for this question yet.",
+      "yourChoice": "Your choice",
+      "yourVerdict": "You said: {verdict}",
+      "trueWord": "true",
+      "falseWord": "false",
+      "proposedWarning": "A moderator has not confirmed this proposal. Do not treat it as the correct answer.",
+      "explanation": "Explanation"
+    },
+    "practice": {
+      "title": "Practice",
+      "subtitle": "Pick a course, answer published questions, then see the answer.",
+      "noQuestionsTitle": "No published questions match",
+      "noQuestionsBody": "There are no published questions for this scope yet. Try another course or remove a filter.",
+      "changeScope": "Change scope",
+      "count": "Number of questions",
+      "countHint": "Up to {max}.",
+      "start": "Start practice",
+      "setupNote": "Only published questions you may see are used. A question with no verified answer is shown with its proposed answer, clearly labeled, and is never scored.",
+      "endTitle": "Session finished",
+      "endAnswered": "{count, plural, one {# question answered} other {# questions answered}}",
+      "endScored": "Scored against verified answers: {correct} correct and {partial} partly right out of {scored}.",
+      "endNoneScored": "None of these questions had a verified answer to score against.",
+      "endUnscored": "{count, plural, one {# question was not scored} other {# questions were not scored}}.",
+      "endUnscoredNote": "Not scored means the question has no verified answer yet.",
+      "newSession": "New session",
+      "seeProgress": "See progress",
+      "progress": "Question {n} of {total}",
+      "poolInfo": "{pool, plural, one {# question matches} other {# questions match}}, showing {shown}",
+      "badgeVerified": "Verified answer",
+      "badgeProposed": "No verified answer",
+      "notScoredHint": "This question has no verified answer, so your answer will not be scored.",
+      "yourAnswer": "Your answer",
+      "showAnswer": "Show answer",
+      "check": "Check answer",
+      "ratePrompt": "How did you do?",
+      "rateUnverifiedPrompt": "How did you do? This is recorded but not scored.",
+      "rating": {
+        "got_it": "Got it",
+        "partly": "Partly",
+        "missed": "Missed"
+      },
+      "finish": "Finish",
+      "next": "Next question"
+    },
+    "flashcards": {
+      "title": "Flashcards",
+      "subtitle": "Cards made from published questions, plus your own. Reviewed on a spaced schedule.",
+      "newCard": "New card",
+      "applyScope": "Apply",
+      "emptyTitle": "No cards yet",
+      "emptyBody": "Cards appear here once published questions exist for your scope. You can also write your own cards.",
+      "stats": {
+        "due": "Due now",
+        "new": "New",
+        "fromQuestions": "From questions",
+        "personal": "Your own cards"
+      },
+      "startReview": "Start review",
+      "sessionNote": "A session has at most {max} cards, including at most {fresh} new ones.",
+      "nothingDue": "No cards are due right now.",
+      "scheduleNote": "Schedule: boxes 0 to 5. A card comes back after 10 minutes, 1, 3, 7, 14 or 30 days depending on its box. Rating again resets it.",
+      "personalTitle": "Your own cards",
+      "personalHelp": "Private to you. Only you can see, edit or export them.",
+      "personalEmpty": "You have not written any card yet.",
+      "badgeNew": "New",
+      "badgeBox": "Box {box}",
+      "exportLink": "Export cards and questions",
+      "interval": {
+        "minutes": "{count} min",
+        "hours": "{count} h",
+        "days": "{count, plural, one {# day} other {# days}}"
+      },
+      "review": {
+        "title": "Review",
+        "nothingTitle": "Nothing to review",
+        "nothingBody": "No cards are due and no new cards are available for this scope.",
+        "back": "Back",
+        "doneTitle": "Review finished",
+        "doneBody": "{count, plural, one {# review recorded.} other {# reviews recorded.}}",
+        "rating": {
+          "again": "Again",
+          "hard": "Hard",
+          "good": "Good",
+          "easy": "Easy"
+        },
+        "seeProgress": "See progress",
+        "progress": "{reviewed} reviewed, {left} left",
+        "personalBadge": "Your card",
+        "questionBadge": "From a question",
+        "proposedBadge": "Answer not verified",
+        "verifiedBadge": "Verified answer",
+        "front": "Front",
+        "showAnswer": "Show answer",
+        "imageAlt": "Image {n} of the question"
+      },
+      "form": {
+        "newTitle": "New card",
+        "editTitle": "Edit card",
+        "front": "Front",
+        "back": "Back",
+        "course": "Course",
+        "noCourse": "No course",
+        "private": "This card is private. Nobody else can see it.",
+        "delete": "Delete this card"
+      }
+    },
+    "quizzes": {
+      "title": "Quizzes",
+      "subtitle": "Build a quiz from a course. You see the score at the end.",
+      "newTitle": "New quiz",
+      "scoreNote": "The score only counts questions with a verified answer. Questions without one are listed separately and never scored.",
+      "historyTitle": "Your quizzes",
+      "emptyTitle": "No quiz yet",
+      "emptyBody": "Quizzes you take will be listed here, privately.",
+      "courseRemoved": "Course",
+      "rowScore": "{points} of {scored} scored, {unscored} not scored",
+      "rowNoScore": "No score ({unscored} not scored)",
+      "rowProgress": "{answered} of {size} answered",
+      "statusDone": "Completed",
+      "statusOpen": "In progress",
+      "takeSubtitle": "Answer every question. Results are shown at the end.",
+      "resultsSubtitle": "Results",
+      "newQuiz": "New quiz",
+      "form": {
+        "count": "Number of questions",
+        "countHint": "Up to {max}.",
+        "start": "Start quiz"
+      },
+      "take": {
+        "progress": "Question {n} of {total}",
+        "finish": "Finish quiz",
+        "saveNext": "Save and continue",
+        "noFeedback": "Answers are shown when the quiz is finished."
+      },
+      "results": {
+        "questionN": "Question {n}",
+        "selfRated": "Self-rated",
+        "yourAnswer": "Your answer",
+        "scoreTitle": "Score",
+        "points": "{points} of {scored}",
+        "breakdown": "{correct} correct, {partial} partly right, {incorrect} incorrect",
+        "noScore": "No score: none of the answered questions has a verified answer.",
+        "scoreRule": "The score only counts questions scored against a verified answer. A partly right open answer counts as half a point.",
+        "unscoredCount": "{count, plural, one {# question is not scored (no verified answer).} other {# questions are not scored (no verified answer).}}",
+        "awaitingCount": "{count, plural, one {# open question is waiting for your rating.} other {# open questions are waiting for your rating.}}",
+        "unavailableCount": "{count, plural, one {# question is no longer available.} other {# questions are no longer available.}}",
+        "awaitingTitle": "Waiting for your rating",
+        "awaitingHelp": "Read the verified answer, then rate yourself. The score updates after you rate.",
+        "scoredTitle": "Scored questions",
+        "unscoredTitle": "Not scored",
+        "unscoredHelp": "These questions have no verified answer yet. The answer shown, if any, is a proposal and may be wrong.",
+        "unavailableNote": "Some questions of this quiz are no longer published and are not shown."
+      }
+    },
+    "progress": {
+      "title": "Progress",
+      "subtitle": "Only your own recorded activity. Nothing is estimated.",
+      "emptyTitle": "Nothing to show yet",
+      "emptyBody": "Your progress appears here after you answer questions, review cards or take a quiz.",
+      "emptyAction": "Start practicing",
+      "tiles": {
+        "answered": "Questions answered",
+        "attempts": "Answers recorded",
+        "scored": "Scored answers",
+        "unscored": "Not scored"
+      },
+      "scoreNote": "Scored answers are those checked against a verified answer. Not scored means the question had no verified answer at the time.",
+      "byCourseTitle": "By course",
+      "byCourseEmpty": "No answers recorded yet.",
+      "courseLine": "{answered, plural, one {# question} other {# questions}} answered, {attempts, plural, one {# answer} other {# answers}}",
+      "courseScored": "{correct} correct and {partial} partly right out of {scored} scored",
+      "courseNoScore": "nothing scored yet",
+      "courseUnscored": "{count} not scored",
+      "practiceCourse": "Practice {code}",
+      "marksTitle": "Marked questions",
+      "flagged": "Flagged",
+      "flaggedEmpty": "No flagged question.",
+      "reviewLater": "Review later",
+      "reviewLaterEmpty": "Nothing marked for later.",
+      "cardsTitle": "Flashcards",
+      "cardsPersonal": "{count, plural, one {# personal card} other {# personal cards}}",
+      "cardsStarted": "{count, plural, one {# card from a question started} other {# cards from questions started}}",
+      "cardsReviews": "{count, plural, one {# review recorded} other {# reviews recorded}}",
+      "quizzesTitle": "Quizzes",
+      "quizzesLine": "{done, plural, one {# quiz completed} other {# quizzes completed}}, {open} in progress",
+      "quizHistory": "Quiz history"
+    },
+    "export": {
+      "title": "Export",
+      "subtitle": "Download your study material. Only what you are allowed to see is included.",
+      "format": "Format",
+      "formatCsv": "CSV (Excel, Sheets)",
+      "formatTsv": "TSV (tab separated)",
+      "kinds": {
+        "questions": {
+          "title": "Questions",
+          "body": "Published questions in the scope above, with source columns (course code, exam year, term, source) and answer status.",
+          "button": "Download questions"
+        },
+        "cards": {
+          "title": "Your own cards",
+          "body": "The flashcards you wrote yourself (front, back, course).",
+          "button": "Download your cards"
+        },
+        "progress": {
+          "title": "Your progress",
+          "body": "Your recorded answers with date, course, exam year, outcome and whether the answer was verified.",
+          "button": "Download progress"
+        },
+        "anki": {
+          "title": "Anki text file",
+          "body": "Front, Back and Tags in a tab-separated file, from published questions and your own cards. Always tab separated.",
+          "button": "Download for Anki"
+        }
+      },
+      "ankiUnverified": "Unverified: this file has not been tested in Anki. Compatibility with the Anki All in One template is not confirmed. In Anki, tick Allow HTML in fields when importing.",
+      "scopeNote": "The scope filters apply to questions and to the Anki file. Cards and progress follow the course filter only.",
+      "columnsNote": "Question files include the answer status. A verified answer and a student's proposal are in separate columns, and a proposal is marked unverified.",
+      "formulaNote": "Cells that start with = + - or @ get a leading apostrophe so spreadsheets show them as text and never run them."
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "invalid": "Some of the information is not valid.",
+      "noAccess": "Study tools are available to approved members.",
+      "questionNotFound": "This question is not available.",
+      "answerRequired": "Please answer before checking.",
+      "invalidAnswer": "This answer is not valid for the question.",
+      "courseRequired": "Choose a course first.",
+      "noQuestions": "There are no published questions for this scope yet.",
+      "courseNotFound": "This course was not found.",
+      "tooManyCards": "You have reached the limit of personal cards.",
+      "cardNotFound": "This card was not found.",
+      "quizNotFound": "This quiz was not found.",
+      "alreadyAnswered": "This question was already answered.",
+      "quizNotComplete": "Finish the quiz first.",
+      "cannotRate": "This item cannot be rated.",
+      "required": "This field is required.",
+      "tooLong": "This text is too long."
+    },
+    "cardLabels": {
+      "verified": "Verified answer",
+      "proposedUnverified": "Proposed answer (NOT verified, may be wrong)",
+      "noAnswer": "No answer available yet.",
+      "true": "True",
+      "false": "False",
+      "explanation": "Explanation",
+      "source": "Source",
+      "recalled": "recalled by a student",
+      "released": "released by the instructor"
+    }
   }
 }

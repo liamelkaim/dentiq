@@ -36,6 +36,13 @@
       "when": 1793490376326,
       "tag": "0004_pass_types_images_settings",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793511709695,
+      "tag": "0005_study_tools",
+      "breakpoints": true
     }
   ]
 }

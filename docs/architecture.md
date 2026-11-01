@@ -106,7 +106,7 @@ Constraints are enforced by the database too (unique codes, year of study 1–8,
 | --- | --- |
 | Notes & outlines (Phase 2) | ✅ Implemented — see "Shared documents" above. |
 | Exam passes (Phase 3) | `questions` linked to offerings, with status (submitted → verified/rejected); reuse the Phase 2 moderation queue, reports pattern and audit log. |
-| Flashcards & Anki (Phase 4) | Cards generated from questions/resources; TSV export first. |
+| Flashcards & Anki (Phase 4) | 🔄 First version built: `src/server/study/*`, tables in `src/db/schema/study.ts`, screens under `/practice`. See `docs/study-tools.md`. |
 | AI tutors (Phase 5) | Text chunks + embeddings in Postgres (`pgvector`), retrieval filtered by offering; provider behind an interface. |
 | Audio (Phase 6) | Uploads to private storage; a transcription provider interface; transcripts become searchable chunks. |
 

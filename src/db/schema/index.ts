@@ -4,3 +4,4 @@ export * from "./catalog";
 export * from "./passes";
 export * from "./resources";
 export * from "./settings";
+export * from "./study";

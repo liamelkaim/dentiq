@@ -24,7 +24,7 @@ import { cx, Wordmark } from "./ui";
 
 type NavItem = {
   href: string;
-  key: "dashboard" | "courses" | "resources" | "passes" | "moderation" | "settings" | "admin";
+  key: "dashboard" | "courses" | "resources" | "passes" | "study" | "moderation" | "settings" | "admin";
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   /** Hidden from the mobile tab bar (reachable from another page instead). */
   desktopOnly?: boolean;
@@ -61,7 +61,6 @@ export function SignOutButton({ className }: { className?: string }) {
 }
 
 const comingSoon = [
-  { key: "flashcards", icon: CardsIcon },
   { key: "tutor", icon: SparkleIcon },
   { key: "recordings", icon: MicIcon },
   { key: "analytics", icon: ChartIcon },
@@ -97,6 +96,9 @@ export function AppShell({
     { href: "/courses", key: "courses", icon: BookIcon },
     { href: "/resources", key: "resources", icon: FolderIcon },
     { href: "/passes", key: "passes", icon: PassesIcon },
+    // Study hub: practice, flashcards, quizzes, progress, export. Students get it in the phone tab bar (five items);
+    // moderators and admins already have five, so on phones theirs sits in the header next to the gear.
+    { href: "/practice", key: "study", icon: CardsIcon, desktopOnly: isModerator || isAdmin },
     // Admins reach moderation from the Admin page on phones, keeping the tab bar to five items.
     ...(isModerator ? [{ href: "/moderation", key: "moderation", icon: FlagIcon, desktopOnly: isAdmin } as NavItem] : []),
     ...(isAdmin ? [{ href: "/admin", key: "admin", icon: ShieldIcon } as NavItem] : []),
@@ -181,6 +183,19 @@ export function AppShell({
         <div className="flex items-center gap-2">
           {/* The theme switcher lives in Settings on phones; the header keeps the language toggle and a gear. */}
           <LanguageSwitcher compact />
+          {(isModerator || isAdmin) && (
+            <Link
+              href="/practice"
+              aria-label={t("nav.study")}
+              aria-current={isActive(pathname, "/practice") ? "page" : undefined}
+              className={cx(
+                "grid size-10 place-items-center rounded-[10px] transition-colors hover:bg-surface-muted",
+                isActive(pathname, "/practice") ? "text-accent" : "text-text-muted",
+              )}
+            >
+              <CardsIcon width={20} height={20} />
+            </Link>
+          )}
           <Link
             href="/settings"
             aria-label={t("nav.settings")}

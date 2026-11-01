@@ -31,7 +31,8 @@
     "flashcards": "Cartes mémoire",
     "tutor": "Tuteur IA",
     "recordings": "Enregistrements",
-    "analytics": "Progression"
+    "analytics": "Analyses",
+    "study": "Étudier"
   },
   "home": {
     "welcome": "Bon retour, {name}.",
@@ -66,7 +67,8 @@
     "openDetails": "Fiche du document",
     "selectDocument": "Choisissez un document pour l'afficher ici.",
     "seeNotes": "Voir les notes du cours",
-    "passes": "Passes"
+    "passes": "Passes",
+    "study": "Étude"
   },
   "study": {
     "title": "Mode étude",
@@ -916,5 +918,348 @@
     "noQuestionsTitle": "Aucune question d'examen",
     "noQuestions": "Aucune question d'examen publiée ne correspond à cette recherche.",
     "allQuestions": "Voir les {count} questions correspondantes dans Passes"
+  },
+  "studyTools": {
+    "title": "Étudier",
+    "subtitle": "Pratique de questions, cartes mémoire, quiz et progression.",
+    "privacy": "Vos tentatives, marques, cartes et résultats de quiz sont privés. Vous seul·e pouvez les voir.",
+    "imageAlt": "Image {n} de la question",
+    "hub": {
+      "practice": {
+        "title": "Pratique",
+        "body": "Répondez aux questions d'examens publiées d'un cours, puis consultez la réponse."
+      },
+      "flashcards": {
+        "title": "Cartes mémoire",
+        "body": "Révisez des cartes tirées des questions et les vôtres, selon un calendrier espacé."
+      },
+      "quizzes": {
+        "title": "Quiz",
+        "body": "Créez un quiz à partir d'un cours et obtenez une note fondée sur les réponses vérifiées."
+      },
+      "progress": {
+        "title": "Progression",
+        "body": "Vos tentatives, marques et activités de cartes, par cours."
+      },
+      "export": {
+        "title": "Exporter",
+        "body": "Téléchargez les questions, vos cartes et votre progression en CSV, TSV ou fichier texte Anki."
+      },
+      "practiceLine": "{count, plural, one {# question publiée disponible} other {# questions publiées disponibles}}",
+      "practiceNone": "Aucune question publiée pour l'instant",
+      "flashcardsLine": "{due} à réviser, {fresh} nouvelles",
+      "flashcardsNone": "Aucune carte pour l'instant",
+      "quizzesLine": "{count, plural, =0 {Aucun quiz terminé} one {# quiz terminé} other {# quiz terminés}}",
+      "quizzesNone": "Aucun quiz pour l'instant",
+      "progressLine": "{count, plural, one {# réponse enregistrée} other {# réponses enregistrées}}",
+      "progressNone": "Aucune activité pour l'instant",
+      "exportLine": "Limité à ce que vous pouvez voir",
+      "courseFilter": "Cours : {code}.",
+      "clearCourse": "Tous les cours"
+    },
+    "scope": {
+      "course": "Cours",
+      "chooseCourse": "Choisir un cours",
+      "allCourses": "Tous les cours",
+      "year": "Année de l'examen",
+      "allYears": "Toutes les années",
+      "type": "Type de question",
+      "allTypes": "Tous les types",
+      "topic": "Sujet",
+      "allTopics": "Tous les sujets",
+      "period": "Période",
+      "allPeriods": "Année en cours et années précédentes",
+      "current": "Année en cours",
+      "previous": "Années précédentes",
+      "mark": "Questions marquées",
+      "anyMark": "Toutes les questions",
+      "flagged": "Signalées seulement",
+      "reviewLater": "À revoir seulement"
+    },
+    "answerFields": {
+      "writeAnswer": "Votre réponse",
+      "optional": "facultatif",
+      "writeAnswerHint": "Rédigez-la, ou affichez simplement la réponse et évaluez-vous.",
+      "perChoiceHint": "Indiquez si chaque énoncé est vrai ou faux.",
+      "true": "Vrai",
+      "false": "Faux",
+      "multipleHint": "Cochez toutes les bonnes réponses.",
+      "singleHint": "Choisissez une réponse."
+    },
+    "marks": {
+      "flag": "Signaler cette question",
+      "unflag": "Retirer le signalement",
+      "reviewLater": "À revoir plus tard",
+      "unreviewLater": "Retirer de « à revoir »"
+    },
+    "outcome": {
+      "pending": "En attente de votre évaluation",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "partial": "En partie juste",
+      "unscored": "Non noté",
+      "correctTitle": "Correct",
+      "incorrectTitle": "Incorrect",
+      "partialTitle": "En partie juste",
+      "unscoredTitle": "Non noté",
+      "unscoredNone": "Aucune réponse n'est encore disponible pour cette question : elle ne peut pas être notée.",
+      "unscoredProposed": "Cette question n'a pas encore de réponse vérifiée : votre réponse n'est pas notée. La réponse ci-dessous est une proposition d'un·e étudiant·e et peut être fausse.",
+      "selfRated": "Noté selon la réponse vérifiée, à partir de votre propre évaluation.",
+      "scoredAgainstVerified": "Noté selon la réponse vérifiée."
+    },
+    "reveal": {
+      "verifiedTitle": "Réponse vérifiée",
+      "proposedTitle": "Réponse proposée, non vérifiée",
+      "noneTitle": "Pas encore de réponse",
+      "noneBody": "Personne n'a encore proposé de réponse pour cette question.",
+      "yourChoice": "Votre choix",
+      "yourVerdict": "Vous avez répondu : {verdict}",
+      "trueWord": "vrai",
+      "falseWord": "faux",
+      "proposedWarning": "Un·e modérateur·rice n'a pas confirmé cette proposition. Ne la prenez pas pour la bonne réponse.",
+      "explanation": "Explication"
+    },
+    "practice": {
+      "title": "Pratique",
+      "subtitle": "Choisissez un cours, répondez aux questions publiées, puis consultez la réponse.",
+      "noQuestionsTitle": "Aucune question publiée ne correspond",
+      "noQuestionsBody": "Il n'y a pas encore de question publiée pour cette sélection. Essayez un autre cours ou retirez un filtre.",
+      "changeScope": "Changer la sélection",
+      "count": "Nombre de questions",
+      "countHint": "Jusqu'à {max}.",
+      "start": "Commencer",
+      "setupNote": "Seules les questions publiées que vous pouvez voir sont utilisées. Une question sans réponse vérifiée est affichée avec sa réponse proposée, clairement indiquée, et n'est jamais notée.",
+      "endTitle": "Séance terminée",
+      "endAnswered": "{count, plural, one {# question répondue} other {# questions répondues}}",
+      "endScored": "Notées selon les réponses vérifiées : {correct} correctes et {partial} en partie justes sur {scored}.",
+      "endNoneScored": "Aucune de ces questions n'avait de réponse vérifiée pour être notée.",
+      "endUnscored": "{count, plural, one {# question n'a pas été notée} other {# questions n'ont pas été notées}}.",
+      "endUnscoredNote": "Non noté signifie que la question n'a pas encore de réponse vérifiée.",
+      "newSession": "Nouvelle séance",
+      "seeProgress": "Voir la progression",
+      "progress": "Question {n} sur {total}",
+      "poolInfo": "{pool, plural, one {# question correspond} other {# questions correspondent}}, {shown} affichées",
+      "badgeVerified": "Réponse vérifiée",
+      "badgeProposed": "Pas de réponse vérifiée",
+      "notScoredHint": "Cette question n'a pas de réponse vérifiée : votre réponse ne sera pas notée.",
+      "yourAnswer": "Votre réponse",
+      "showAnswer": "Afficher la réponse",
+      "check": "Vérifier la réponse",
+      "ratePrompt": "Comment avez-vous fait ?",
+      "rateUnverifiedPrompt": "Comment avez-vous fait ? Ce sera enregistré, mais non noté.",
+      "rating": {
+        "got_it": "Réussi",
+        "partly": "En partie",
+        "missed": "Raté"
+      },
+      "finish": "Terminer",
+      "next": "Question suivante"
+    },
+    "flashcards": {
+      "title": "Cartes mémoire",
+      "subtitle": "Des cartes tirées des questions publiées, et les vôtres. Révisées selon un calendrier espacé.",
+      "newCard": "Nouvelle carte",
+      "applyScope": "Appliquer",
+      "emptyTitle": "Aucune carte pour l'instant",
+      "emptyBody": "Des cartes apparaissent ici dès que des questions publiées existent pour votre sélection. Vous pouvez aussi écrire les vôtres.",
+      "stats": {
+        "due": "À réviser",
+        "new": "Nouvelles",
+        "fromQuestions": "Issues de questions",
+        "personal": "Vos cartes"
+      },
+      "startReview": "Commencer la révision",
+      "sessionNote": "Une séance compte au plus {max} cartes, dont au plus {fresh} nouvelles.",
+      "nothingDue": "Aucune carte à réviser pour le moment.",
+      "scheduleNote": "Calendrier : boîtes 0 à 5. Une carte revient après 10 minutes, 1, 3, 7, 14 ou 30 jours selon sa boîte. « Encore » la remet à zéro.",
+      "personalTitle": "Vos propres cartes",
+      "personalHelp": "Privées. Vous seul·e pouvez les voir, les modifier ou les exporter.",
+      "personalEmpty": "Vous n'avez écrit aucune carte pour l'instant.",
+      "badgeNew": "Nouvelle",
+      "badgeBox": "Boîte {box}",
+      "exportLink": "Exporter les cartes et les questions",
+      "interval": {
+        "minutes": "{count} min",
+        "hours": "{count} h",
+        "days": "{count, plural, one {# jour} other {# jours}}"
+      },
+      "review": {
+        "title": "Révision",
+        "nothingTitle": "Rien à réviser",
+        "nothingBody": "Aucune carte à réviser et aucune nouvelle carte disponible pour cette sélection.",
+        "back": "Verso",
+        "doneTitle": "Révision terminée",
+        "doneBody": "{count, plural, one {# révision enregistrée.} other {# révisions enregistrées.}}",
+        "rating": {
+          "again": "Encore",
+          "hard": "Difficile",
+          "good": "Bien",
+          "easy": "Facile"
+        },
+        "seeProgress": "Voir la progression",
+        "progress": "{reviewed} révisées, {left} restantes",
+        "personalBadge": "Votre carte",
+        "questionBadge": "Issue d'une question",
+        "proposedBadge": "Réponse non vérifiée",
+        "verifiedBadge": "Réponse vérifiée",
+        "front": "Recto",
+        "showAnswer": "Afficher la réponse",
+        "imageAlt": "Image {n} de la question"
+      },
+      "form": {
+        "newTitle": "Nouvelle carte",
+        "editTitle": "Modifier la carte",
+        "front": "Recto",
+        "back": "Verso",
+        "course": "Cours",
+        "noCourse": "Aucun cours",
+        "private": "Cette carte est privée. Personne d'autre ne peut la voir.",
+        "delete": "Supprimer cette carte"
+      }
+    },
+    "quizzes": {
+      "title": "Quiz",
+      "subtitle": "Créez un quiz à partir d'un cours. La note s'affiche à la fin.",
+      "newTitle": "Nouveau quiz",
+      "scoreNote": "La note ne compte que les questions ayant une réponse vérifiée. Les autres sont listées à part et jamais notées.",
+      "historyTitle": "Vos quiz",
+      "emptyTitle": "Aucun quiz pour l'instant",
+      "emptyBody": "Les quiz que vous ferez seront listés ici, en privé.",
+      "courseRemoved": "Cours",
+      "rowScore": "{points} sur {scored} notées, {unscored} non notées",
+      "rowNoScore": "Pas de note ({unscored} non notées)",
+      "rowProgress": "{answered} répondues sur {size}",
+      "statusDone": "Terminé",
+      "statusOpen": "En cours",
+      "takeSubtitle": "Répondez à toutes les questions. Les résultats s'affichent à la fin.",
+      "resultsSubtitle": "Résultats",
+      "newQuiz": "Nouveau quiz",
+      "form": {
+        "count": "Nombre de questions",
+        "countHint": "Jusqu'à {max}.",
+        "start": "Commencer le quiz"
+      },
+      "take": {
+        "progress": "Question {n} sur {total}",
+        "finish": "Terminer le quiz",
+        "saveNext": "Enregistrer et continuer",
+        "noFeedback": "Les réponses s'affichent à la fin du quiz."
+      },
+      "results": {
+        "questionN": "Question {n}",
+        "selfRated": "Auto-évalué",
+        "yourAnswer": "Votre réponse",
+        "scoreTitle": "Note",
+        "points": "{points} sur {scored}",
+        "breakdown": "{correct} correctes, {partial} en partie justes, {incorrect} incorrectes",
+        "noScore": "Pas de note : aucune des questions répondues n'a de réponse vérifiée.",
+        "scoreRule": "La note ne compte que les questions notées selon une réponse vérifiée. Une réponse ouverte en partie juste vaut un demi-point.",
+        "unscoredCount": "{count, plural, one {# question n'est pas notée (pas de réponse vérifiée).} other {# questions ne sont pas notées (pas de réponse vérifiée).}}",
+        "awaitingCount": "{count, plural, one {# question ouverte attend votre évaluation.} other {# questions ouvertes attendent votre évaluation.}}",
+        "unavailableCount": "{count, plural, one {# question n'est plus disponible.} other {# questions ne sont plus disponibles.}}",
+        "awaitingTitle": "En attente de votre évaluation",
+        "awaitingHelp": "Lisez la réponse vérifiée, puis évaluez-vous. La note se met à jour après votre évaluation.",
+        "scoredTitle": "Questions notées",
+        "unscoredTitle": "Non notées",
+        "unscoredHelp": "Ces questions n'ont pas encore de réponse vérifiée. La réponse affichée, s'il y en a une, est une proposition et peut être fausse.",
+        "unavailableNote": "Certaines questions de ce quiz ne sont plus publiées et ne sont pas affichées."
+      }
+    },
+    "progress": {
+      "title": "Progression",
+      "subtitle": "Seulement votre activité enregistrée. Rien n'est estimé.",
+      "emptyTitle": "Rien à afficher pour l'instant",
+      "emptyBody": "Votre progression apparaît ici après avoir répondu à des questions, révisé des cartes ou fait un quiz.",
+      "emptyAction": "Commencer à pratiquer",
+      "tiles": {
+        "answered": "Questions répondues",
+        "attempts": "Réponses enregistrées",
+        "scored": "Réponses notées",
+        "unscored": "Non notées"
+      },
+      "scoreNote": "Les réponses notées sont celles vérifiées selon une réponse vérifiée. Non noté signifie que la question n'avait pas de réponse vérifiée à ce moment-là.",
+      "byCourseTitle": "Par cours",
+      "byCourseEmpty": "Aucune réponse enregistrée pour l'instant.",
+      "courseLine": "{answered, plural, one {# question répondue} other {# questions répondues}}, {attempts, plural, one {# réponse} other {# réponses}}",
+      "courseScored": "{correct} correctes et {partial} en partie justes sur {scored} notées",
+      "courseNoScore": "rien de noté pour l'instant",
+      "courseUnscored": "{count} non notées",
+      "practiceCourse": "Pratiquer {code}",
+      "marksTitle": "Questions marquées",
+      "flagged": "Signalées",
+      "flaggedEmpty": "Aucune question signalée.",
+      "reviewLater": "À revoir plus tard",
+      "reviewLaterEmpty": "Rien de marqué pour plus tard.",
+      "cardsTitle": "Cartes mémoire",
+      "cardsPersonal": "{count, plural, one {# carte personnelle} other {# cartes personnelles}}",
+      "cardsStarted": "{count, plural, one {# carte issue d'une question commencée} other {# cartes issues de questions commencées}}",
+      "cardsReviews": "{count, plural, one {# révision enregistrée} other {# révisions enregistrées}}",
+      "quizzesTitle": "Quiz",
+      "quizzesLine": "{done, plural, one {# quiz terminé} other {# quiz terminés}}, {open} en cours",
+      "quizHistory": "Historique des quiz"
+    },
+    "export": {
+      "title": "Exporter",
+      "subtitle": "Téléchargez votre matériel d'étude. Seul ce que vous avez le droit de voir est inclus.",
+      "format": "Format",
+      "formatCsv": "CSV (Excel, Sheets)",
+      "formatTsv": "TSV (séparé par tabulations)",
+      "kinds": {
+        "questions": {
+          "title": "Questions",
+          "body": "Les questions publiées de la sélection ci-dessus, avec les colonnes de source (code du cours, année d'examen, session, source) et le statut de la réponse.",
+          "button": "Télécharger les questions"
+        },
+        "cards": {
+          "title": "Vos propres cartes",
+          "body": "Les cartes que vous avez écrites vous-même (recto, verso, cours).",
+          "button": "Télécharger vos cartes"
+        },
+        "progress": {
+          "title": "Votre progression",
+          "body": "Vos réponses enregistrées avec la date, le cours, l'année d'examen, le résultat et si la réponse était vérifiée.",
+          "button": "Télécharger la progression"
+        },
+        "anki": {
+          "title": "Fichier texte Anki",
+          "body": "Recto, verso et étiquettes dans un fichier séparé par tabulations, à partir des questions publiées et de vos cartes. Toujours séparé par tabulations.",
+          "button": "Télécharger pour Anki"
+        }
+      },
+      "ankiUnverified": "Non vérifié : ce fichier n'a pas été testé dans Anki. La compatibilité avec le modèle Anki All in One n'est pas confirmée. Dans Anki, cochez « Autoriser le HTML dans les champs » à l'importation.",
+      "scopeNote": "Les filtres s'appliquent aux questions et au fichier Anki. Les cartes et la progression suivent seulement le filtre de cours.",
+      "columnsNote": "Les fichiers de questions incluent le statut de la réponse. Une réponse vérifiée et une proposition d'étudiant·e sont dans des colonnes séparées, et la proposition est marquée non vérifiée.",
+      "formulaNote": "Les cellules qui commencent par = + - ou @ reçoivent une apostrophe au début pour que les tableurs les affichent comme du texte sans jamais les exécuter."
+    },
+    "errors": {
+      "generic": "Une erreur est survenue. Veuillez réessayer.",
+      "invalid": "Certaines informations ne sont pas valides.",
+      "noAccess": "Les outils d'étude sont réservés aux membres approuvés.",
+      "questionNotFound": "Cette question n'est pas disponible.",
+      "answerRequired": "Veuillez répondre avant de vérifier.",
+      "invalidAnswer": "Cette réponse n'est pas valide pour la question.",
+      "courseRequired": "Choisissez d'abord un cours.",
+      "noQuestions": "Il n'y a pas encore de question publiée pour cette sélection.",
+      "courseNotFound": "Ce cours est introuvable.",
+      "tooManyCards": "Vous avez atteint la limite de cartes personnelles.",
+      "cardNotFound": "Cette carte est introuvable.",
+      "quizNotFound": "Ce quiz est introuvable.",
+      "alreadyAnswered": "Cette question a déjà reçu une réponse.",
+      "quizNotComplete": "Terminez d'abord le quiz.",
+      "cannotRate": "Cet élément ne peut pas être évalué.",
+      "required": "Ce champ est obligatoire.",
+      "tooLong": "Ce texte est trop long."
+    },
+    "cardLabels": {
+      "verified": "Réponse vérifiée",
+      "proposedUnverified": "Réponse proposée (NON vérifiée, peut être fausse)",
+      "noAnswer": "Aucune réponse disponible pour l'instant.",
+      "true": "Vrai",
+      "false": "Faux",
+      "explanation": "Explication",
+      "source": "Source",
+      "recalled": "rappelée par un·e étudiant·e",
+      "released": "diffusée par le professeur"
+    }
   }
 }

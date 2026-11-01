@@ -80,3 +80,14 @@ members may upload in either mode. Existing shared-resource moderation policy is
 This does not encrypt documents from the machine/server operator. Personal documents remain on
 private local disk, with the existing file limits and validation. Account deletion, retention,
 malware scanning and hosted storage remain production prerequisites.
+
+
+## Study tools privacy — 2026-11-01
+
+Attempts, flag/review-later marks, personal flashcards, card schedules, quizzes and quiz results are stored per student
+(`study_*` tables) and every query filters on the signed-in user; other students and moderators cannot read them through
+the app (tested). Study tools only ever read published exam questions the viewer may see. Exports (`/api/study-export`)
+check the session on every request, include only published questions in the chosen scope plus the student's own cards and
+progress, are sent with `Cache-Control: private, no-store`, and neutralise spreadsheet formulas by prefixing cells that start
+with `=`, `+`, `-`, `@`, tab or carriage return. Study data is deleted with the account (cascade). Not yet: a user-facing
+"download or erase all my data" screen.

@@ -67,9 +67,8 @@ export function CourseCover({ code, className, compact = false }: { code: string
   );
 }
 
-type Tab = { key: "overview" | "notes" | "passes"; href: string; icon: ComponentType<SVGProps<SVGSVGElement>> };
+type Tab = { key: "overview" | "notes" | "passes" | "study"; href: string; icon: ComponentType<SVGProps<SVGSVGElement>> };
 const futureTabs = [
-  { key: "flashcards", icon: CardsIcon },
   { key: "recordings", icon: MicIcon },
   { key: "tutor", icon: SparkleIcon },
 ] as const;
@@ -92,6 +91,8 @@ export async function CourseHeader({
     { key: "overview", href: base, icon: BookIcon },
     { key: "notes", href: `${base}/notes`, icon: FolderIcon },
     { key: "passes", href: `${base}/passes`, icon: PassesIcon },
+    // The Study hub (practice, flashcards, quizzes, progress, export) for this course.
+    { key: "study", href: `/practice?course=${course.id}`, icon: CardsIcon },
   ];
   const offeringLine = course.currentOffering
     ? [
