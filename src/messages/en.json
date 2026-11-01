@@ -192,7 +192,7 @@
     }
   },
   "courses": {
-    "title": "Courses",
+    "title": "My courses",
     "subtitle": "Explore courses and materials for your dental studies.",
     "searchLabel": "Search courses",
     "searchPlaceholder": "Course code or title",
@@ -209,7 +209,11 @@
     "noMatchesTitle": "No courses found",
     "noMatchesBody": "Try another code or title, or remove the filters.",
     "credits": "{credits} cr.",
-    "allCourses": "All courses"
+    "allCourses": "All courses",
+    "view": "View",
+    "view_grid": "Grid view",
+    "view_list": "List view",
+    "open": "Open"
   },
   "course": {
     "details": "Details",

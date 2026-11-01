@@ -192,7 +192,7 @@
     }
   },
   "courses": {
-    "title": "Cours",
+    "title": "Mes cours",
     "subtitle": "Explorez les cours et les ressources pour vos études dentaires.",
     "searchLabel": "Rechercher un cours",
     "searchPlaceholder": "Code ou titre du cours",
@@ -209,7 +209,11 @@
     "noMatchesTitle": "Aucun cours trouvé",
     "noMatchesBody": "Essayez un autre code, un autre titre ou retirez les filtres.",
     "credits": "{credits} cr.",
-    "allCourses": "Tous les cours"
+    "allCourses": "Tous les cours",
+    "view": "Affichage",
+    "view_grid": "Vue en grille",
+    "view_list": "Vue en liste",
+    "open": "Ouvrir"
   },
   "course": {
     "details": "Renseignements",
