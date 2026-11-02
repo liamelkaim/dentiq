@@ -573,7 +573,8 @@
     "errorTitle": "Something didn't work",
     "errorBody": "Something went wrong on our side. You can try again.",
     "reference": "Reference: {code}",
-    "goHome": "Back to home"
+    "goHome": "Back to home",
+    "quotaExceeded": "You have used your upload space. Delete an older document or ask a moderator."
   },
   "apiErrors": {
     "tooManyExports": "Too many exports, try again later.",

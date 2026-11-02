@@ -22,6 +22,7 @@ import { writeAudit } from "@/server/audit";
 import { escapeLike } from "@/server/library/like";
 import { canContribute, hasRole, type AccessUser } from "@/server/auth/roles";
 import type { FileStorage } from "@/server/storage";
+import { UPLOAD_QUOTA_BYTES_PER_USER } from "./constants";
 import { checkUpload } from "./files";
 
 export type Viewer = AccessUser & { id: string };
@@ -439,6 +440,21 @@ function duplicateError(viewer: Viewer, existing: NonNullable<Awaited<ReturnType
   return { ok: false, error: "duplicateFile", resourceId: canSeeResource(viewer, existing) ? existing.resourceId : undefined };
 }
 
+/** Bytes of stored files the viewer uploaded (files already removed by the retention job do not count). */
+export async function uploadedBytes(db: Database, userId: string): Promise<number> {
+  const [row] = await db
+    .select({ n: sql<number>`coalesce(sum(${resourceVersions.sizeBytes}), 0)::float8` })
+    .from(resourceVersions)
+    .where(and(eq(resourceVersions.uploadedBy, userId), isNull(resourceVersions.fileDeletedAt)));
+  return row?.n ?? 0;
+}
+
+/** Students have a total upload allowance; moderators and administrators do not (they curate the shared library). */
+async function overQuota(db: Database, viewer: Viewer, incoming: number): Promise<boolean> {
+  if (isModerator(viewer)) return false;
+  return (await uploadedBytes(db, viewer.id)) + incoming > UPLOAD_QUOTA_BYTES_PER_USER;
+}
+
 export async function createResource(
   db: Database,
   storage: FileStorage,
@@ -465,6 +481,7 @@ export async function createResource(
   if (!upload.ok) return upload;
   const duplicate = await findDuplicate(db, upload.hash, viewer, input.visibility);
   if (duplicate) return duplicateError(viewer, duplicate);
+  if (await overQuota(db, viewer, file.bytes.byteLength)) return { ok: false, error: "quotaExceeded" };
 
   const moderator = isModerator(viewer);
   const storageKey = `resources/${randomUUID()}`;
@@ -529,6 +546,7 @@ export async function addVersion(
   if (!upload.ok) return upload;
   const duplicate = await findDuplicate(db, upload.hash, viewer, resource.visibility);
   if (duplicate) return duplicateError(viewer, duplicate);
+  if (await overQuota(db, viewer, file.bytes.byteLength)) return { ok: false, error: "quotaExceeded" };
 
   const moderator = isModerator(viewer);
   const storageKey = `resources/${randomUUID()}`;

@@ -573,7 +573,8 @@
     "errorTitle": "Quelque chose n'a pas fonctionné",
     "errorBody": "Un problème est survenu de notre côté. Vous pouvez réessayer.",
     "reference": "Référence : {code}",
-    "goHome": "Retour à l'accueil"
+    "goHome": "Retour à l'accueil",
+    "quotaExceeded": "Vous avez utilisé tout votre espace de téléversement. Supprimez un ancien document ou demandez à un modérateur."
   },
   "apiErrors": {
     "tooManyExports": "Trop d'exportations, réessayez plus tard.",

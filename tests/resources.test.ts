@@ -372,3 +372,26 @@ describe("personal documents", () => {
     await expect(db.insert(resources).values({ courseId, kind: "notes", title: "TEST", visibility: "public" as "private" })).rejects.toThrow();
   });
 });
+
+describe("per-student upload quota", () => {
+  it("refuses a file that would pass the student's total allowance; moderators are exempt; removed files stop counting", async () => {
+    const { uploadedBytes } = await import("@/server/resources/service");
+    const { UPLOAD_QUOTA_BYTES_PER_USER } = await import("@/server/resources/constants");
+    const { resourceVersions } = await import("@/db/schema");
+    expect(UPLOAD_QUOTA_BYTES_PER_USER).toBe(100 * 1024 * 1024);
+    // A student who already holds almost all the allowance (simulated with one version row) cannot add a file.
+    const first = await createResource(db, storage, alice, input({ title: "Premier" }), pdf("quota one"));
+    if (!first.ok) throw new Error(first.error);
+    await db.update(resourceVersions).set({ sizeBytes: UPLOAD_QUOTA_BYTES_PER_USER - 10 });
+    expect(await uploadedBytes(db, alice.id)).toBe(UPLOAD_QUOTA_BYTES_PER_USER - 10);
+    const second = await createResource(db, storage, alice, input({ title: "Second" }), pdf("quota two, a bit longer so it exceeds ten bytes"));
+    expect(second).toEqual({ ok: false, error: "quotaExceeded" });
+    const version = await addVersion(db, storage, alice, first.value.id, pdf("quota three, also longer than ten bytes"), null);
+    expect(version).toEqual({ ok: false, error: "quotaExceeded" });
+    // moderators curate the library and are not limited
+    expect((await createResource(db, storage, moderator, input({ title: "Mod" }), pdf("quota four, moderator upload here"))).ok).toBe(true);
+    // a file the retention job already deleted no longer counts
+    await db.update(resourceVersions).set({ fileDeletedAt: new Date() });
+    expect(await uploadedBytes(db, alice.id)).toBe(0);
+  });
+});

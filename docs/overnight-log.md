@@ -141,3 +141,6 @@ Recordings: tables (migration 0013), admin switch (default OFF), consent checkli
 
 ## finish/dentiq-polish, phase 6
 Tutor: safety refusal, consent (versioned), token and cost caps, conversations (list/delete/export), fake provider, ask UI and history page, admin fields, account export/delete coverage; migration 0014 (additive). 18 new tests (49 in tutor.test.ts); 706+ total pass; build passes. The ask UI was not run live in a browser (production mode makes the fake provider inert); the off state is browser-checked below.
+
+## finish/dentiq-polish, phase 7 (part 1)
+Per-student upload quota (100 MB, moderators exempt) with test. Zod advisory: override written, tested and reverted (pnpm cannot install through the iCloud symlink); exact steps in docs/go-live-blockers.md. Browser walk on a scratch DB, real Chrome: student sign-up -> email link -> onboarding -> admin approval -> note -> exam question -> calendar/schedule/recordings/tutor/help pages. Static accessibility sweep of 28 pages in EN and FR (titles, one h1, lang, labels, link names, alt, duplicate ids): clean. Overflow/touch-target sweep at 390 and 768 px, dark and light, EN and FR: no overflow; only checkbox inputs measure 16 px inside 44 px labels.
