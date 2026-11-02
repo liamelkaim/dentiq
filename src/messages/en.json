@@ -154,7 +154,9 @@
       "name": "Full name",
       "email": "Email address",
       "password": "Password",
-      "passwordHint": "At least 10 characters."
+      "passwordHint": "At least 10 characters.",
+      "emailDomainHint": "Use your university address, ending in @{domain}.",
+      "emailPlaceholder": "firstname.lastname@{domain}"
     },
     "verify": {
       "title": "Check your inbox",

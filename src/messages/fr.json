@@ -154,7 +154,9 @@
       "name": "Nom complet",
       "email": "Adresse courriel",
       "password": "Mot de passe",
-      "passwordHint": "10 caractères minimum."
+      "passwordHint": "10 caractères minimum.",
+      "emailDomainHint": "Utilisez votre adresse universitaire, qui se termine par @{domain}.",
+      "emailPlaceholder": "prenom.nom@{domain}"
     },
     "verify": {
       "title": "Vérifiez votre boîte de réception",
