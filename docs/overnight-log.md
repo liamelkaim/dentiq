@@ -124,3 +124,7 @@ Not tested: Safari, Firefox, real devices, screen readers, native select popup a
 ## finish/dentiq-polish, phase 1 (part)
 Added first-run onboarding (additive `user_profile` table, skippable, dashboard redirects once), a Help page and a Settings link. Check, tests (609) and build pass.
 Not done yet in phase 1: browser comparison of every screen at 390/768/1440 px in both themes and languages, loading and offline states review. Phases 2 to 9 not started.
+
+## finish/dentiq-polish, phase 1 (rest) and phase 2
+Phase 1 browser QA: 12 pages x 390/768 px x light/dark x EN/FR on a scratch DB, no overflow, theme and language correct, targets 44 px (one inline text link exempt). Window resizing does not change the viewport in the Chrome tool; popups opened by script give real widths. Home compared to mockup 09 at 1440 px.
+Phase 2: admin email-domain settings with UdeM preset, bilingual HTML/text verification and reset emails, forgot/reset pages, expired-link page with resend, rate limits. 15 new tests; 624 pass; build passes; reset flow walked in the browser.

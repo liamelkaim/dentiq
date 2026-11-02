@@ -6,7 +6,12 @@ import type { Database } from "@/db/client";
 import { account, authRateLimit, session, user, verification } from "@/db/schema";
 import { trustedIpHeaders } from "@/server/rate-limit/client-ip";
 import { getMailer, type Mailer } from "@/server/email";
+import { passwordResetEmail, verificationEmail } from "@/server/email-templates";
+import { getAllowedDomains } from "./domains";
 import { isBootstrapAdmin, isEmailDomainAllowed } from "./roles";
+
+export const VERIFICATION_HOURS = 24;
+export const RESET_HOURS = 1;
 
 type AuthOptions = {
   mailer?: Mailer;
@@ -36,18 +41,22 @@ export function createAuth(db: Database, { mailer, nextjs = true, rateLimitEnabl
       minPasswordLength: 10,
       maxPasswordLength: 128,
       autoSignIn: false,
+      resetPasswordTokenExpiresIn: RESET_HOURS * 3600,
+      revokeSessionsOnPasswordReset: true,
+      // Better Auth answers the same way whether or not the address has an account, so this form cannot be used to
+      // find out who is registered. The email is only sent when the account exists.
+      async sendResetPassword({ user, url }) {
+        await (mailer ?? getMailer()).send(passwordResetEmail(user.email, url, RESET_HOURS));
+      },
     },
     emailVerification: {
       sendOnSignUp: true,
+      expiresIn: VERIFICATION_HOURS * 3600,
       // Signing in with an unverified email sends a fresh link.
       sendOnSignIn: true,
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
-        await (mailer ?? getMailer()).send({
-          to: user.email,
-          subject: "Dentiq · confirmez votre adresse / confirm your email",
-          text: `Confirmez votre adresse courriel / Confirm your email:\n${url}`,
-        });
+        await (mailer ?? getMailer()).send(verificationEmail(user.email, url, VERIFICATION_HOURS));
       },
     },
     user: {
@@ -66,7 +75,7 @@ export function createAuth(db: Database, { mailer, nextjs = true, rateLimitEnabl
             if (isBootstrapAdmin(newUser.email)) {
               return { data: { ...newUser, role: "admin", approvalStatus: "approved" } };
             }
-            if (!isEmailDomainAllowed(newUser.email)) {
+            if (!isEmailDomainAllowed(newUser.email, (await getAllowedDomains(db)).join(","))) {
               throw new APIError("BAD_REQUEST", { message: "EMAIL_DOMAIN_NOT_ALLOWED" });
             }
             return { data: { ...newUser, role: "student", approvalStatus: "pending" } };
@@ -85,6 +94,8 @@ export function createAuth(db: Database, { mailer, nextjs = true, rateLimitEnabl
         "/sign-in/email": { window: 60, max: 5 },
         "/sign-up/email": { window: 60, max: 3 },
         "/send-verification-email": { window: 60, max: 3 },
+        "/request-password-reset": { window: 60, max: 3 },
+        "/reset-password": { window: 60, max: 5 },
       },
     },
     advanced: {

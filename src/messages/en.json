@@ -133,7 +133,9 @@
       "subtitle": "Access your courses and study resources.",
       "submit": "Sign in",
       "noAccount": "No account yet?",
-      "createAccount": "Create an account"
+      "createAccount": "Create an account",
+      "forgot": "Forgot your password?",
+      "resetDone": "Password changed. Sign in with the new one."
     },
     "signUp": {
       "title": "Create an account",
@@ -161,7 +163,37 @@
       "domainNotAllowed": "This email address isn't accepted at the moment.",
       "weakPassword": "Password must be at least 10 characters.",
       "tooManyRequests": "Too many attempts. Try again in a minute.",
-      "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again.",
+      "passwordMismatch": "The two passwords do not match.",
+      "resetLinkInvalid": "This reset link is invalid or has expired. Ask for a new one."
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email address. If an account exists, we send a link valid for one hour.",
+      "submit": "Send the link",
+      "sent": "If an account exists for this address, a reset link is on its way. Check your inbox and spam folder.",
+      "back": "Back to sign in"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "subtitle": "At least 10 characters. You will be signed out on other devices.",
+      "newPassword": "New password",
+      "confirm": "Confirm the new password",
+      "submit": "Save the password",
+      "invalid": "This reset link is invalid or has expired. Ask for a new one.",
+      "requestNew": "Ask for a new link"
+    },
+    "resend": {
+      "submit": "Send a new confirmation link",
+      "sent": "If this address has an unconfirmed account, a new link is on its way."
+    },
+    "verifyResult": {
+      "title": "Email confirmation",
+      "doneTitle": "Email confirmed",
+      "doneBody": "Your address is confirmed. Sign in to continue.",
+      "signIn": "Sign in",
+      "expiredTitle": "This link no longer works",
+      "expiredBody": "The confirmation link has expired or was already used. Enter your address to receive a new one."
     }
   },
   "dashboard": {
@@ -336,7 +368,23 @@
     "tutor": "AI tutor settings",
     "tutorHelp": "Off. Needs a provider and a budget.",
     "retention": "File retention",
-    "retentionHelp": "Review and delete old removed files. Dry run first."
+    "retentionHelp": "Review and delete old removed files. Dry run first.",
+    "domains": {
+      "title": "Email domains",
+      "adminHelp": "Who may sign up: university presets and domains.",
+      "subtitle": "Only addresses on these domains can create a student account. A domain also allows its subdomains.",
+      "label": "Allowed domains",
+      "hint": "One per line or separated by commas, for example umontreal.ca.",
+      "presetUdem": "Use Université de Montréal (umontreal.ca)",
+      "save": "Save",
+      "saved": "Saved.",
+      "invalid": "One of the entries is not a valid domain (for example umontreal.ca).",
+      "forbidden": "Only the administrator can change this.",
+      "inForce": "In force: {domains}",
+      "openSignup": "No domain is set: any email address can sign up. Add a domain before opening the app to students.",
+      "unverified": "UNVERIFIED: confirm with the faculty which addresses its students use before relying on the preset. The administrator address is always allowed.",
+      "resendNote": "Sending email to real students needs a domain verified in Resend. Until then, messages are only printed in the server console."
+    }
   },
   "resources": {
     "title": "Resources",

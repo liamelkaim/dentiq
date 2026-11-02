@@ -54,6 +54,12 @@ export default async function AdminPage() {
           subtitle={t("passes.settings.adminHelp")}
         />
         <ListLinkRow
+          href="/admin/email"
+          leading={<span className={iconBox}><ShieldIcon width={18} height={18} /></span>}
+          title={t("admin.domains.title")}
+          subtitle={t("admin.domains.adminHelp")}
+        />
+        <ListLinkRow
           href="/admin/tutor"
           leading={<span className={iconBox}><SparkleIcon width={18} height={18} /></span>}
           title={t("admin.tutor")}

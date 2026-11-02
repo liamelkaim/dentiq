@@ -1,5 +1,5 @@
 // Console delivery is local-only. Hosted verification uses Resend.
-export type EmailMessage = { to: string; subject: string; text: string };
+export type EmailMessage = { to: string; subject: string; text: string; html?: string };
 export interface Mailer { send(message: EmailMessage): Promise<void> }
 
 export const consoleMailer: Mailer = {
@@ -14,7 +14,7 @@ export function createResendMailer(apiKey: string, from: string, request: typeof
       const response = await request("https://api.resend.com/emails", {
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from, to: [message.to], subject: message.subject, text: message.text }),
+        body: JSON.stringify({ from, to: [message.to], subject: message.subject, text: message.text, ...(message.html ? { html: message.html } : {}) }),
         signal: AbortSignal.timeout(15000),
       });
       // Do not log recipient information, verification links, credentials or provider response bodies.

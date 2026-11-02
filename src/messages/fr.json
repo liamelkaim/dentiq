@@ -133,7 +133,9 @@
       "subtitle": "Accédez à vos cours et à vos ressources.",
       "submit": "Se connecter",
       "noAccount": "Pas encore de compte?",
-      "createAccount": "Créer un compte"
+      "createAccount": "Créer un compte",
+      "forgot": "Mot de passe oublié?",
+      "resetDone": "Mot de passe modifié. Connectez-vous avec le nouveau."
     },
     "signUp": {
       "title": "Créer un compte",
@@ -161,7 +163,37 @@
       "domainNotAllowed": "Cette adresse courriel n'est pas acceptée pour l'instant.",
       "weakPassword": "Le mot de passe doit contenir au moins 10 caractères.",
       "tooManyRequests": "Trop de tentatives. Réessayez dans une minute.",
-      "generic": "Une erreur est survenue. Réessayez."
+      "generic": "Une erreur est survenue. Réessayez.",
+      "passwordMismatch": "Les deux mots de passe ne correspondent pas.",
+      "resetLinkInvalid": "Ce lien de réinitialisation est invalide ou expiré. Demandez-en un nouveau."
+    },
+    "forgot": {
+      "title": "Réinitialiser votre mot de passe",
+      "subtitle": "Entrez votre adresse courriel. Si un compte existe, nous envoyons un lien valide une heure.",
+      "submit": "Envoyer le lien",
+      "sent": "Si un compte existe pour cette adresse, un lien de réinitialisation est en route. Vérifiez votre boîte de réception et vos indésirables.",
+      "back": "Retour à la connexion"
+    },
+    "reset": {
+      "title": "Choisir un nouveau mot de passe",
+      "subtitle": "Au moins 10 caractères. Vous serez déconnecté des autres appareils.",
+      "newPassword": "Nouveau mot de passe",
+      "confirm": "Confirmer le nouveau mot de passe",
+      "submit": "Enregistrer le mot de passe",
+      "invalid": "Ce lien de réinitialisation est invalide ou expiré. Demandez-en un nouveau.",
+      "requestNew": "Demander un nouveau lien"
+    },
+    "resend": {
+      "submit": "Envoyer un nouveau lien de confirmation",
+      "sent": "Si cette adresse a un compte non confirmé, un nouveau lien est en route."
+    },
+    "verifyResult": {
+      "title": "Confirmation du courriel",
+      "doneTitle": "Courriel confirmé",
+      "doneBody": "Votre adresse est confirmée. Connectez-vous pour continuer.",
+      "signIn": "Se connecter",
+      "expiredTitle": "Ce lien ne fonctionne plus",
+      "expiredBody": "Le lien de confirmation a expiré ou a déjà été utilisé. Entrez votre adresse pour en recevoir un nouveau."
     }
   },
   "dashboard": {
@@ -336,7 +368,23 @@
     "tutor": "Réglages du tuteur IA",
     "tutorHelp": "Désactivé. Il faut un fournisseur et un budget.",
     "retention": "Conservation des fichiers",
-    "retentionHelp": "Examiner et supprimer les anciens fichiers retirés. Simulation d'abord."
+    "retentionHelp": "Examiner et supprimer les anciens fichiers retirés. Simulation d'abord.",
+    "domains": {
+      "title": "Domaines courriel",
+      "adminHelp": "Qui peut s’inscrire : préréglages universitaires et domaines.",
+      "subtitle": "Seules les adresses de ces domaines peuvent créer un compte étudiant. Un domaine autorise aussi ses sous-domaines.",
+      "label": "Domaines autorisés",
+      "hint": "Un par ligne ou séparés par des virgules, par exemple umontreal.ca.",
+      "presetUdem": "Utiliser l’Université de Montréal (umontreal.ca)",
+      "save": "Enregistrer",
+      "saved": "Enregistré.",
+      "invalid": "Une des entrées n’est pas un domaine valide (par exemple umontreal.ca).",
+      "forbidden": "Seul l’administrateur peut modifier ceci.",
+      "inForce": "En vigueur : {domains}",
+      "openSignup": "Aucun domaine n’est défini : n’importe quelle adresse peut s’inscrire. Ajoutez un domaine avant d’ouvrir l’application aux étudiants.",
+      "unverified": "NON VÉRIFIÉ : confirmez auprès de la faculté les adresses utilisées par ses étudiants avant de vous fier au préréglage. L’adresse de l’administrateur est toujours acceptée.",
+      "resendNote": "L’envoi de courriels à de vrais étudiants exige un domaine vérifié dans Resend. D’ici là, les messages ne sont affichés que dans la console du serveur."
+    }
   },
   "resources": {
     "title": "Ressources",
