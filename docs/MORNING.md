@@ -1,75 +1,69 @@
-# Morning handover
+# Morning handover (2026-11-02)
 
-## UI redesign (latest, local only, not pushed or deployed)
+Branch `finish/dentiq-polish` (about 16 commits on top of `main`). Previous handover: `docs/morning-2026-11-01.md`. Deployment result is in the last section.
 
-Shell, Home, My Courses, course tabs, Notes, Calendar and the Passes title were restyled to match `docs/design-reference/`. Seven commits on `main` after `aaf5f36`; `pnpm check` (598 tests) and `pnpm build` pass. Details and what is NOT matched (Passes two-panel viewer, rich-text note editor, photos, light theme not reviewed) are in `docs/roadmap.md`. To see it: `pnpm dev`. Local test data only (a `DEMO 1001` course, a note and a calendar entry in the throwaway dev database). Production still runs the previous version; deploy only after you review.
+## What was done
 
-## Deployment status (updated while you were away)
+- **Phase 1** first-run onboarding (university preset, year, semester, skippable), Help page, loading/offline/empty states reviewed; browser QA of 12 pages at 390 and 768 px in both themes and languages.
+- **Phase 2** admin email-domain settings with a UdeM preset (umontreal.ca and subdomains, admin exempt), bilingual HTML and text emails, email verification (24 h) with an expired-link page and rate-limited resend, password reset (1 h link, no enumeration, rate limited).
+- **Phase 3** UdeM D.M.D. research from official pages only (`data/programs/udem-dmd.json`, `docs/udem-research.md`): 167 verified courses, 5 years, faculty calendar 2026-2027; calendar with class blocks, terms, breaks, exam periods, `.ics` import and export, "verify with your faculty" notes.
+- **Phase 4** intake CLI (`pnpm intake`, dry run by default, local-only import; `docs/intake.md`).
+- **Phase 5** recordings (private, OFF by default, consent checklist, limits, player, notes; `docs/recordings.md`).
+- **Phase 6** AI tutor built and OFF: consent, real-patient refusal, token and cost caps, saved conversations, fake provider (inert in production). Owner decisions at the top of `docs/ai-tutor.md`.
+- **Phase 7** per-student upload quota; zod advisory analysed (cannot be installed through the iCloud symlink, exact steps in `docs/go-live-blockers.md`); end-to-end walk in a real browser; accessibility and overflow sweeps.
+- **Phase 7B** public welcome page, Feedback button and admin inbox, shared footer, metadata, robots, sitemap, share image, favicon, phone menu drawer.
+- **Phase 8** independent Opus review: 0 critical, 3 important, 5 minor; all fixed with failing tests first; re-review said safe to deploy.
 
-**Production: LIVE at https://dentiq-app.vercel.app** (alias confirmed exact, so `BETTER_AUTH_URL` matches; public pages 200; owner checked sign-up, sign-in and the app by hand and said it looks good). The notes below describe the earlier preview. Preview: Ready at https://dentiq-61rftn8az-liamelkaim.vercel.app (Vercel login protection is on; use `npx vercel curl <path> --deployment <url>` or sign in to Vercel). Resend key and `EMAIL_FROM` are set. The old `dentiq` project was not touched.
+## Results
 
-**Done on the preview:** build OK (1m), `pnpm check` OK (598 tests), `/sign-in`, `/sign-up`, `/privacy`, `/terms`, `/offline` all 200, nonce CSP and security headers present.
+| Check | Result |
+|---|---|
+| Typecheck, lint | pass (0 warnings) |
+| Tests | 731 pass in 40 files |
+| Build | pass (a harmless "PGlite failed to initialize" line appears during local builds while `pnpm dev` holds the local database; not seen on a host with `DATABASE_URL`) |
+| Browser journeys (scratch DB, real Chrome) | sign-up, email link, onboarding, admin approval, note, exam question, calendar, schedule, recordings (upload with and without consent, Range 206/416, speed control), tutor (off state), feedback (real submit), password reset: all passed |
+| Link check | 251 internal links as a student and 29 as admin: no 4xx or 5xx |
+| Static accessibility sweep | 28 pages, EN and FR: titles, one h1, lang, labels, link names, alt, duplicate ids: clean |
+| Overflow and touch targets | 390 and 768 px, dark and light, EN and FR, public and app pages: no overflow; only checkboxes measure 16 px inside 44 px labels |
+| Lighthouse mobile (local production build) | welcome page 100/100/100/100; sign-in 100/100/100/100; course page (signed in) accessibility 97 (fixed), best practices 100, SEO 66 by design (noindex) |
 
-**Not done, and why:** admin sign-up/sign-in, upload, pass question and the browser CSP console check need an account. I can't create accounts or enter passwords, and the verification email goes to your inbox. `BETTER_AUTH_URL` is a hidden secret, so I could not read it; it is meant to be `https://dentiq-app.vercel.app`, which returns 404 until the first production deploy. The preview hostname differs, so sign-in will not work on the preview itself.
+## Screenshots taken (viewed in the session, not saved to the repo)
 
-**Next, in this order:**
-1. `npx vercel deploy --prod`, then `npx vercel inspect <url>` and confirm the alias is exactly `dentiq-app.vercel.app` (otherwise reset `BETTER_AUTH_URL` and redeploy).
-2. Sign up there with the `ADMIN_EMAILS` address, click the emailed link, sign in, upload a file, answer a pass question, open DevTools console and look for CSP errors (fallback: `Content-Security-Policy-Report-Only` in `src/proxy.ts`).
-3. If anything fails: `npx vercel rollback`.
+Home 1440 px vs mockup 09; My schedule (light); Calendar December 2026 with a break marker; Recording player with speed buttons; Welcome page full page (dark).
 
-Fix made: `.vercelignore` now excludes the iCloud copies (`.data 2`, `.next 2`, `node_modules 2`, `*.nosync`); without it the upload was about 4.5 GB and hung. Uncommitted. A stuck earlier `vercel deploy --yes` process (PID 53879) may still be running; kill it.
+## UNVERIFIED items (see `docs/open-questions.md`)
 
+UdeM student email domains (`umontreal.ca` preset); D.M.D. exam periods and re-sit dates (not published); 2027-2028 term dates; whether the general UdeM calendar applies to D.M.D. students; two weekday typos in the faculty PDF; onboarding year/semester ranges (generic 1 to 6 and 1 to 3 versus UdeM's 5 years).
 
-Nothing was pushed, deployed or connected to Vercel, Neon, Blob or Resend. Everything is committed locally on `main`.
+## Not tested
 
-## a) Start the app and sign in
+Safari, Firefox, real phones, screen readers, real email delivery to students, the tutor with a real provider, recordings on the hosted Blob store, the ask-the-tutor screen in a live browser (production mode makes the fake provider inert), keyboard focus order in the new dialogs beyond the native `<dialog>` behaviour.
 
-```
-cd "/Users/liamelkaim/Documents/Claude code projects/Adam's Database/DentOS"
-pnpm dev
-```
+## Owner steps still needed
 
-Open http://localhost:3000. Your own `.env` decides the first admin: sign up with the email listed in `ADMIN_EMAILS`. The confirmation link is printed in the terminal, not emailed.
+1. **Domain and Resend**: buy a domain, verify it in Resend, set `EMAIL_FROM`; until then mail reaches only the Resend account owner.
+2. **Faculty confirmation** of the email domains and the curriculum/calendar data.
+3. **Legal review** of the privacy and terms pages (DRAFT banner stays) and a Law 25 review.
+4. **Credential rotation** for anything that sat in iCloud-synced env files.
+5. **AI provider and budget**, privacy wording and consent text (`docs/ai-tutor.md`); keep the tutor OFF until decided.
+6. **Recordings policy** (lecturer permission, storage budget); keep OFF in production (Vercel's 4.5 MB request limit blocks real lectures anyway).
+7. **Logo** source at 1024 px or SVG; a contact email (`CONTACT_EMAIL`); spend limit on Vercel.
+8. **zod advisory**: copy the project out of iCloud, add the override, `pnpm install`, commit the lockfile.
+9. Real testimonials, counters, case studies or photos for the welcome page, only if true (slots listed in `docs/open-questions.md`).
 
-**Test accounts:** your own dev database has none. I only created fake `@example.com` accounts in throwaway databases in a temporary folder, which are not yours to sign into. To test, sign up with fake example.com emails (the terminal shows each link), approve them as admin, and promote one to moderator. `docs/setup.md` has details.
+## Ten-line summary
 
-## b) What works, what is off, what is planned
+1. Nine phases plus launch polish built on `finish/dentiq-polish`; nothing fabricated: UdeM data comes from official pages with sources.
+2. Onboarding, Help, public welcome page, Feedback, phone menu, metadata, robots, sitemap, share image.
+3. Email domain preset, bilingual emails, verification and password reset.
+4. UdeM D.M.D. courses and faculty calendar, personal schedule, `.ics` import and export.
+5. Intake CLI for your own notes and exams (dry run first, local only).
+6. Recordings and the AI tutor are built and OFF; no third party receives any data.
+7. Independent review fixed: feedback erasure, multi-day `.ics`, reset timing, and more.
+8. 731 tests, lint and build green; browser journeys, link check, accessibility and Lighthouse pass.
+9. Account export and deletion extended to every new table.
+10. Deployment outcome: see the section below.
 
-**Works (tested in a real browser on a scratch database):** accounts and approval, courses and documents with moderation, exam passes (4 question types, images, verification, history), practice, progress, flashcards, quizzes, CSV/TSV/Anki export, topics, private notes with version history, search, calendar, analytics, profile, data export, account deletion, French/English, light/dark, phone to desktop, keyboard use, offline page.
+## Deployment (Phase 9)
 
-**Switched off, on purpose:**
-- AI tutor: needs a provider and a budget. No answers are generated; the page only searches your course sources with citations.
-- Neon, Vercel Blob, Resend: not connected. Local database, local files, emails printed in the terminal.
-
-**Planned, not built:** recordings and transcription (`docs/audio-readiness.md`), reminders, shared notes, email change.
-
-**Unverified:** Anki "All in One" compatibility; importing the `.ics` file into Apple, Google or Outlook calendars.
-
-## c) Final check results
-
-typecheck: exit 0. lint: exit 0. tests: 29 files, 543 passed. production build: exit 0. Browser: about 40 functional steps passed, plus an 800-page-load matrix (7 widths, light/dark, FR/EN) that ended with 0 overflow, 0 touch targets under 44 px on phones, 0 low-contrast text and 0 console errors on the re-checked pages. Details in `docs/overnight-log.md`.
-
-## d) Known problems
-
-- (Fixed afterwards: shared database rate limits, 2 MB server-action cap with uploads on `/api/uploads`, nonce-based CSP. See `docs/go-live-blockers.md`.)
-- Very narrow effective screens (390 px at 200% zoom) clip some dropdowns.
-- Not tested: Safari, Firefox, real phones, screen readers, the install prompt.
-- The logo source is low resolution (224x93), so icons are soft.
-- One dependency advisory (`zod`, via `@vercel/blob`), not used locally.
-- Legal pages are drafts with a contact placeholder.
-
-## e) Things only you can do
-
-1. Rotate the Neon, Blob, Resend, auth and Vercel credentials that sat in iCloud-synced `.env.vercel` and `.env.local` files (names listed in `docs/hosting-plan.md`). I never read or printed their values.
-2. Check the Vercel dashboard for anything unexpected.
-3. Send a high-resolution logo (1024 px PNG or SVG) of the D monogram, and every icon can be regenerated.
-4. Get a legal review (Law 25) of the privacy policy, terms and account deletion, and fill in the contact address.
-5. Decide on an AI provider and a monthly budget (or leave the tutor off).
-6. Decide the recordings policy, if you want that feature.
-7. Provide real course and professor data when you are ready (nothing is invented).
-
-## f) Three most valuable next steps
-
-1. Fix the hosting blockers (shared rate limiting, body-size cap, nonce CSP) and follow `docs/hosting-plan.md` and `docs/launch-checklist.md`.
-2. Get a few real students (with consent) to try it on your computer or a private preview, and fix what confuses them.
-3. Load one real course with real, rights-cleared material, so the library, passes and practice can be judged on real content.
+(written when Phase 9 ends)
