@@ -15,6 +15,7 @@ import {
   FolderIcon,
   HomeIcon,
   LogOutIcon,
+  MicIcon,
   NotesIcon,
   PassesIcon,
   SearchIcon,
@@ -28,7 +29,7 @@ import { BrandMark, cx, SkipLink, Wordmark } from "./ui";
 
 type NavItem = {
   href: string;
-  key: "dashboard" | "courses" | "notes" | "flashcards" | "resources" | "passes" | "study" | "calendar" | "analytics" | "tutor" | "moderation" | "settings" | "admin";
+  key: "dashboard" | "courses" | "notes" | "flashcards" | "resources" | "passes" | "study" | "calendar" | "analytics" | "tutor" | "recordings" | "moderation" | "settings" | "admin";
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   /** Hidden from the mobile tab bar (reachable from another page instead). */
   desktopOnly?: boolean;
@@ -123,6 +124,7 @@ export function AppShell({
   isModerator,
   library = false,
   tutorReady = false,
+  recordingsOn = false,
   children,
 }: {
   user: { name: string; email: string; role: "student" | "moderator" | "admin" };
@@ -132,13 +134,15 @@ export function AppShell({
   library?: boolean;
   /** True only when the tutor flag is on AND a provider is configured. Otherwise the nav item says it is off. */
   tutorReady?: boolean;
+  /** Recordings are listed in the menu only while the administrator has switched them on. */
+  recordingsOn?: boolean;
   children: React.ReactNode;
 }) {
   const t = useTranslations();
   const pathname = usePathname();
 
   // Order follows the design mockups: Home, Courses, Notes, Passes, AI Tutor, Flashcards (Study hub), Calendar, Analytics.
-  // Recordings has no page yet, so it is not in the menu. Resources, moderation, admin and settings follow below.
+  // Recordings appears only while the administrator has switched it on. Resources, moderation, admin and settings follow below.
   const items: NavItem[] = [
     { href: "/", key: "dashboard", icon: HomeIcon },
     { href: "/courses", key: "courses", icon: BookIcon },
@@ -152,6 +156,7 @@ export function AppShell({
     // Calendar and Analytics are live links on desktop; on phones they are reached from the Study hub, which keeps the
     // tab bar to five items.
     { href: "/calendar", key: "calendar", icon: CalendarIcon, desktopOnly: true },
+    ...(recordingsOn ? [{ href: "/recordings", key: "recordings", icon: MicIcon, desktopOnly: true } as NavItem] : []),
     { href: "/analytics", key: "analytics", icon: ChartIcon, desktopOnly: true },
     { href: "/resources", key: "resources", icon: FolderIcon },
     // Admins reach moderation from the Admin page on phones, keeping the tab bar to five items.

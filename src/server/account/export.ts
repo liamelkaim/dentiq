@@ -37,6 +37,11 @@ import {
   studyQuizzes,
   tutorUsage,
   user,
+  userClassBlocks,
+  userCourses,
+  userProfile,
+  recordingNotes,
+  recordings,
 } from "@/db/schema";
 import type { ServiceResult } from "@/server/catalog/service";
 import { EXPORT_MAX_BYTES, EXPORT_MAX_ROWS_PER_TABLE, EXPORT_SCHEMA_VERSION } from "./constants";
@@ -409,6 +414,12 @@ export async function buildAccountExport(db: Database, userId: string, options: 
         .where(eq(studyCalendarEntries.userId, userId))
         .limit(LIMIT),
     );
+    const programProfile = await db.select({ universityPreset: userProfile.universityPreset, programYear: userProfile.programYear, semester: userProfile.semester, onboardedAt: userProfile.onboardedAt }).from(userProfile).where(eq(userProfile.userId, userId));
+    const classBlocks = capped(await db.select({ id: userClassBlocks.id, title: userClassBlocks.title, courseId: userClassBlocks.courseId, weekday: userClassBlocks.weekday, startTime: userClassBlocks.startTime, endTime: userClassBlocks.endTime, location: userClassBlocks.location, validFrom: userClassBlocks.validFrom, validTo: userClassBlocks.validTo, createdAt: userClassBlocks.createdAt }).from(userClassBlocks).where(eq(userClassBlocks.userId, userId)).limit(LIMIT));
+    const followedCourses = capped(await db.select({ courseId: userCourses.courseId, createdAt: userCourses.createdAt }).from(userCourses).where(eq(userCourses.userId, userId)).limit(LIMIT));
+    // Recordings: the file itself is not in this JSON (it can be large); its details and the student's notes on it are.
+    const recordingRows = capped(await db.select({ id: recordings.id, title: recordings.title, courseId: recordings.courseId, fileName: recordings.fileName, mimeType: recordings.mimeType, sizeBytes: recordings.sizeBytes, lecturerName: recordings.lecturerName, consentConfirmedAt: recordings.consentConfirmedAt, createdAt: recordings.createdAt }).from(recordings).where(eq(recordings.ownerId, userId)).limit(LIMIT));
+    const recordingNoteRows = capped(await db.select({ id: recordingNotes.id, recordingId: recordingNotes.recordingId, atSeconds: recordingNotes.atSeconds, body: recordingNotes.body, createdAt: recordingNotes.createdAt }).from(recordingNotes).where(eq(recordingNotes.ownerId, userId)).limit(LIMIT));
     const tutor = capped(
       await db
         .select({
@@ -482,7 +493,9 @@ export async function buildAccountExport(db: Database, userId: string, options: 
       },
       notes: { items: notes, versions: noteVersions, topicLinks: noteTopicLinks, questionLinks: noteQuestions },
       study: { attempts, marks, personalCards, questionCards, cardReviews, quizzes, quizItems },
-      calendar: { entries: calendar },
+      calendar: { entries: calendar, classBlocks, followedCourses },
+      program: programProfile[0] ?? null,
+      recordings: { items: recordingRows, notes: recordingNoteRows },
       tutorUsage: { entries: tutor },
       activity: { yourActions: actions, accountHistory },
       referenced: { courses: referencedCourses, topics: referencedTopics },

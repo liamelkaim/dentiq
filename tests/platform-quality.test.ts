@@ -145,7 +145,7 @@ describe("navigation", () => {
   });
 
   it("only features that do not exist are labelled soon", () => {
-    // Planned and not built: recordings. The tutor page, calendar, analytics and Study hub are live.
+    // Everything in the menu exists. Recordings is built but OFF by default, so its menu item is conditional.
     const list = (file: string, name: string) => {
       const source = readFileSync(path.join(SRC, "components", file), "utf8");
       const body = source.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\]`))?.[1] ?? "";
@@ -154,7 +154,8 @@ describe("navigation", () => {
     // The sidebar hides unbuilt features entirely (no "coming soon" list); course tabs still show a disabled one.
     expect(list("app-shell.tsx", "comingSoon")).toEqual([]);
     expect(list("course-layout.tsx", "futureTabs")).toEqual([]);
-    expect(existsSync(path.join(SRC, "app", "(app)", "recordings"))).toBe(false);
+    expect(existsSync(path.join(SRC, "app", "(app)", "recordings"))).toBe(true);
+    expect(readFileSync(path.join(SRC, "components", "app-shell.tsx"), "utf8")).toMatch(/recordingsOn \? \[\{ href: "\/recordings"/);
   });
 });
 

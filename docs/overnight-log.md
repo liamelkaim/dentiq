@@ -135,3 +135,6 @@ Built: terms/periods/class-block/followed-course tables (migration 0012), schedu
 
 ## finish/dentiq-polish, phase 4
 Intake CLI: detect (bytes over extension), extract (txt/md/csv/docx locally), question parser with proposed answers and review flags, dedupe, course inference, report without file text, local-only import. 16 synthetic-fixture tests; full suite green; dry run and import refusal verified from the command line.
+
+## finish/dentiq-polish, phase 5
+Recordings: tables (migration 0013), admin switch (default OFF), consent checklist, magic-byte type check, size and quota limits, owner-only playback with Range support and speed control, per-recording notes, delete. Account export/delete extended for all new tables. 19 tests; 688 total pass; build passes; walked in the browser (upload with and without consent, Range 206/416, speed control).

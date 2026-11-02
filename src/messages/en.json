@@ -394,6 +394,10 @@
       "done": "Loaded {courses} courses, {terms} terms and {periods} breaks or periods.",
       "error": "The data could not be loaded. Check the server log.",
       "sources": "Sources and retrieval dates are listed in docs/udem-research.md and stored on every course and term."
+    },
+    "recordings": {
+      "title": "Recordings",
+      "adminHelp": "Switch recordings on or off and set size limits."
     }
   },
   "resources": {
@@ -2193,6 +2197,96 @@
       "forbidden": "Your account must be approved first.",
       "endBeforeStart": "The end must be after the start.",
       "invalidTime": "Enter a valid time."
+    }
+  },
+  "recordings": {
+    "title": "Recordings",
+    "subtitle": "Your own lecture recordings, private to you.",
+    "noAccess": "Your account must be approved before you can use recordings.",
+    "privacyTitle": "Private by design",
+    "privacy": "Only you can see, play or delete your recordings, not even the administrator. They are never sent to a transcription or AI service.",
+    "offTitle": "Uploads are switched off",
+    "off": "The administrator has not turned recordings on, so you cannot add new ones. Existing recordings stay available to you.",
+    "transcriptionOff": "Automatic transcription is not available.",
+    "helpLink": "Help",
+    "list": {
+      "title": "Your recordings",
+      "usage": "Space used: {used} MB of {quota} MB.",
+      "emptyTitle": "No recordings yet",
+      "emptyBody": "Add a lecture you are allowed to record. You can play it back at your own speed and write notes against moments in it.",
+      "emptyOff": "Recordings are not turned on yet."
+    },
+    "form": {
+      "heading": "Add a recording",
+      "help": "Audio (mp3, m4a, wav, ogg, webm) or video (mp4, webm).",
+      "title": "Title",
+      "course": "Course",
+      "noCourse": "No course",
+      "optional": "Optional.",
+      "lecturer": "Lecturer who allowed it",
+      "file": "File",
+      "fileHint": "Up to {max} MB.",
+      "submit": "Add the recording",
+      "uploading": "Uploading…"
+    },
+    "consent": {
+      "title": "Before you add it",
+      "intro": "Recording a lecture needs the lecturer's permission. Tick each box to continue.",
+      "recordingAllowed": "I am allowed to record this lecture.",
+      "lecturerPermission": "The lecturer agreed that I may record it for my own study.",
+      "privateUse": "I will keep it private and will not share it."
+    },
+    "player": {
+      "speed": "Playback speed"
+    },
+    "notes": {
+      "title": "Your notes",
+      "emptyTitle": "No notes yet",
+      "emptyBody": "Write a note, and optionally the second it refers to.",
+      "general": "General",
+      "body": "Note",
+      "at": "At second",
+      "atHint": "Optional.",
+      "useCurrent": "Use the current time",
+      "add": "Add the note",
+      "delete": "Delete",
+      "deleteLabel": "Delete this note"
+    },
+    "delete": {
+      "title": "Delete this recording",
+      "help": "Removes the file and your notes for good. Consent was confirmed on {date}.",
+      "action": "Delete the recording"
+    },
+    "errors": {
+      "disabled": "Recordings are switched off by the administrator.",
+      "forbidden": "Your account must be approved first.",
+      "consentRequired": "Tick all three boxes to confirm you may record and keep this lecture.",
+      "titleRequired": "Give the recording a title.",
+      "fileMissing": "Choose a file.",
+      "fileTooLarge": "This file is larger than the limit.",
+      "fileType": "This file is not a supported audio or video format.",
+      "limitReached": "You reached the limit.",
+      "quotaExceeded": "This would go over your storage space. Delete a recording first.",
+      "invalid": "Something in the form is not valid.",
+      "notFound": "This recording was not found.",
+      "noteRequired": "Write something in the note.",
+      "noteTooLong": "The note is too long."
+    },
+    "admin": {
+      "title": "Recordings",
+      "adminHelp": "Switch recordings on or off and set size limits.",
+      "subtitle": "Lecture recordings are OFF by default.",
+      "warningTitle": "Before you turn this on",
+      "warning": "Recordings are private personal data (Quebec Law 25) and need the lecturer's permission. Each student must tick a consent checklist when uploading. Turning this on does not enable transcription: no provider exists.",
+      "enabled": "Allow students to upload recordings",
+      "maxFile": "Largest file (MB)",
+      "maxFileHint": "1 to 500.",
+      "quota": "Space per student (MB)",
+      "quotaHint": "Must be at least the largest file.",
+      "save": "Save",
+      "saved": "Saved.",
+      "outOfRange": "These values are out of range.",
+      "hosting": "Hosting: files use the Blob store (free tier about 1 GB in total) and, on Vercel, a request body is limited to 4.5 MB, so large uploads only work locally until direct-to-storage uploads are built. See docs/recordings.md."
     }
   }
 }

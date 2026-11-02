@@ -19,6 +19,7 @@ import {
   courseNotes,
   examQuestionImages,
   examQuestions,
+  recordings,
   resources,
   resourceVersions,
   session,
@@ -119,6 +120,9 @@ async function deleteAccountOnce(db: Database, storage: FileStorage, userId: str
       ? (await tx.select({ key: examQuestionImages.storageKey }).from(examQuestionImages).where(inArray(examQuestionImages.questionId, questionIds))).map((r) => r.key)
       : [];
 
+    // Recording files live in storage; the rows (and their notes) go with the account, so list the files first.
+    const recordingKeys = (await tx.select({ key: recordings.storageKey }).from(recordings).where(eq(recordings.ownerId, userId))).map((r) => r.key);
+
     const notes = await tx.select({ id: courseNotes.id }).from(courseNotes).where(eq(courseNotes.ownerId, userId));
     const noteIds = notes.map((n) => n.id);
 
@@ -158,7 +162,7 @@ async function deleteAccountOnce(db: Database, storage: FileStorage, userId: str
       },
     });
 
-    return { ok: true as const, keys: [...resourceKeys, ...imageKeys] };
+    return { ok: true as const, keys: [...resourceKeys, ...imageKeys, ...recordingKeys] };
   });
 
   if (!outcome.ok) return outcome;

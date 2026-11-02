@@ -394,6 +394,10 @@
       "done": "{courses} cours, {terms} sessions et {periods} congés ou périodes chargés.",
       "error": "Impossible de charger les données. Consultez le journal du serveur.",
       "sources": "Les sources et les dates de consultation sont listées dans docs/udem-research.md et enregistrées sur chaque cours et session."
+    },
+    "recordings": {
+      "title": "Enregistrements",
+      "adminHelp": "Activer ou désactiver les enregistrements et fixer les limites de taille."
     }
   },
   "resources": {
@@ -2193,6 +2197,96 @@
       "forbidden": "Votre compte doit d’abord être approuvé.",
       "endBeforeStart": "La fin doit être après le début.",
       "invalidTime": "Entrez une heure valide."
+    }
+  },
+  "recordings": {
+    "title": "Enregistrements",
+    "subtitle": "Vos propres enregistrements de cours, privés.",
+    "noAccess": "Votre compte doit être approuvé avant d'utiliser les enregistrements.",
+    "privacyTitle": "Privé par conception",
+    "privacy": "Vous seul·e pouvez voir, lire ou supprimer vos enregistrements, pas même l'administrateur. Ils ne sont jamais envoyés à un service de transcription ou d'IA.",
+    "offTitle": "Les envois sont désactivés",
+    "off": "L'administrateur n'a pas activé les enregistrements : vous ne pouvez pas en ajouter. Vos enregistrements existants restent disponibles.",
+    "transcriptionOff": "La transcription automatique n'est pas disponible.",
+    "helpLink": "Aide",
+    "list": {
+      "title": "Vos enregistrements",
+      "usage": "Espace utilisé : {used} Mo sur {quota} Mo.",
+      "emptyTitle": "Aucun enregistrement",
+      "emptyBody": "Ajoutez un cours que vous avez le droit d'enregistrer. Vous pouvez le réécouter à votre rythme et écrire des notes liées à des moments précis.",
+      "emptyOff": "Les enregistrements ne sont pas encore activés."
+    },
+    "form": {
+      "heading": "Ajouter un enregistrement",
+      "help": "Audio (mp3, m4a, wav, ogg, webm) ou vidéo (mp4, webm).",
+      "title": "Titre",
+      "course": "Cours",
+      "noCourse": "Aucun cours",
+      "optional": "Facultatif.",
+      "lecturer": "Enseignant·e qui l'a permis",
+      "file": "Fichier",
+      "fileHint": "Jusqu'à {max} Mo.",
+      "submit": "Ajouter l'enregistrement",
+      "uploading": "Envoi en cours…"
+    },
+    "consent": {
+      "title": "Avant de l'ajouter",
+      "intro": "Enregistrer un cours exige la permission de l'enseignant·e. Cochez chaque case pour continuer.",
+      "recordingAllowed": "J'ai le droit d'enregistrer ce cours.",
+      "lecturerPermission": "L'enseignant·e a accepté que je l'enregistre pour mes propres études.",
+      "privateUse": "Je le garderai privé et ne le partagerai pas."
+    },
+    "player": {
+      "speed": "Vitesse de lecture"
+    },
+    "notes": {
+      "title": "Vos notes",
+      "emptyTitle": "Aucune note",
+      "emptyBody": "Écrivez une note, et au besoin la seconde à laquelle elle se rapporte.",
+      "general": "Générale",
+      "body": "Note",
+      "at": "À la seconde",
+      "atHint": "Facultatif.",
+      "useCurrent": "Utiliser le temps actuel",
+      "add": "Ajouter la note",
+      "delete": "Supprimer",
+      "deleteLabel": "Supprimer cette note"
+    },
+    "delete": {
+      "title": "Supprimer cet enregistrement",
+      "help": "Supprime définitivement le fichier et vos notes. Consentement confirmé le {date}.",
+      "action": "Supprimer l'enregistrement"
+    },
+    "errors": {
+      "disabled": "Les enregistrements sont désactivés par l'administrateur.",
+      "forbidden": "Votre compte doit d'abord être approuvé.",
+      "consentRequired": "Cochez les trois cases pour confirmer que vous pouvez enregistrer et conserver ce cours.",
+      "titleRequired": "Donnez un titre à l'enregistrement.",
+      "fileMissing": "Choisissez un fichier.",
+      "fileTooLarge": "Ce fichier dépasse la limite.",
+      "fileType": "Ce fichier n'est pas un format audio ou vidéo accepté.",
+      "limitReached": "Vous avez atteint la limite.",
+      "quotaExceeded": "Cela dépasserait votre espace de stockage. Supprimez d'abord un enregistrement.",
+      "invalid": "Un champ du formulaire n'est pas valide.",
+      "notFound": "Cet enregistrement est introuvable.",
+      "noteRequired": "Écrivez quelque chose dans la note.",
+      "noteTooLong": "La note est trop longue."
+    },
+    "admin": {
+      "title": "Enregistrements",
+      "adminHelp": "Activer ou désactiver les enregistrements et fixer les limites de taille.",
+      "subtitle": "Les enregistrements de cours sont DÉSACTIVÉS par défaut.",
+      "warningTitle": "Avant de l'activer",
+      "warning": "Les enregistrements sont des données personnelles privées (Loi 25 du Québec) et exigent la permission de l'enseignant·e. Chaque étudiant·e doit cocher une liste de consentement à l'envoi. L'activer n'active pas la transcription : aucun fournisseur n'existe.",
+      "enabled": "Permettre aux étudiants d'envoyer des enregistrements",
+      "maxFile": "Fichier maximal (Mo)",
+      "maxFileHint": "De 1 à 500.",
+      "quota": "Espace par étudiant (Mo)",
+      "quotaHint": "Au moins la taille du plus gros fichier.",
+      "save": "Enregistrer",
+      "saved": "Enregistré.",
+      "outOfRange": "Ces valeurs sont hors limites.",
+      "hosting": "Hébergement : les fichiers utilisent le stockage Blob (environ 1 Go au total en gratuit) et, sur Vercel, le corps d'une requête est limité à 4,5 Mo : les gros envois ne fonctionnent donc qu'en local tant que l'envoi direct vers le stockage n'est pas construit. Voir docs/recordings.md."
     }
   }
 }
