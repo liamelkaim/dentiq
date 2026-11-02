@@ -251,7 +251,8 @@
     "emailVerified": "Email confirmed",
     "profileTitle": "Profile and data",
     "profileHelp": "Edit your display name, download a copy of your data or delete your account.",
-    "openProfile": "Open profile"
+    "openProfile": "Open profile",
+    "helpLink": "Help and program details"
   },
   "admin": {
     "title": "Admin",
@@ -630,8 +631,15 @@
       "apply": "Filter",
       "reset": "Reset"
     },
-    "queue": { "title": "Review queue", "reviewLater": "Questions marked for review", "flagged": "Flagged questions" },
-    "preview": { "hint": "Answers and explanations are on the question page.", "open": "Open question" },
+    "queue": {
+      "title": "Review queue",
+      "reviewLater": "Questions marked for review",
+      "flagged": "Flagged questions"
+    },
+    "preview": {
+      "hint": "Answers and explanations are on the question page.",
+      "open": "Open question"
+    },
     "browser": {
       "count": "{count, plural, =0 {No questions} one {# question} other {# questions}}",
       "noResults": "No questions match",
@@ -1986,5 +1994,56 @@
   "shell": {
     "searchLabel": "Search",
     "searchPlaceholder": "Search courses, notes, topics…"
+  },
+  "onboarding": {
+    "title": "Welcome to Dentiq",
+    "intro": "Three quick questions so the app fits your program. Everything is optional and you can change it later.",
+    "university": "University",
+    "universityHelp": "Presets only prefill suggestions. Check dates and courses with your faculty.",
+    "programYear": "Program year",
+    "semester": "Semester",
+    "semesterHelp": "1 is the first semester of your year, and so on.",
+    "choose": "Choose…",
+    "presets": {
+      "udem": "Université de Montréal",
+      "other": "Another university"
+    },
+    "yearOption": "Year {n}",
+    "semesterOption": "Semester {n}",
+    "save": "Save and continue",
+    "skip": "Skip for now",
+    "error": "We could not save your answers. Check the choices and try again."
+  },
+  "help": {
+    "title": "Help",
+    "intro": "Short answers about how Dentiq works.",
+    "redoOnboarding": "Change my program details",
+    "privacyLink": "Privacy policy",
+    "topics": {
+      "start": {
+        "title": "Getting started",
+        "body": "Pick your courses from the Courses page, then add notes or browse past exam questions (passes). Your answers to the first-run questions only personalize suggestions."
+      },
+      "notes": {
+        "title": "Notes",
+        "body": "Notes are private to you unless you choose to share a document. Each save keeps a version you can go back to."
+      },
+      "passes": {
+        "title": "Passes",
+        "body": "Passes are past exam questions. An answer is marked proposed until a moderator verifies it; always check with your course material."
+      },
+      "calendar": {
+        "title": "Calendar",
+        "body": "The calendar shows only entries you add. Dates from presets must be confirmed with your faculty."
+      },
+      "privacy": {
+        "title": "Privacy",
+        "body": "Your notes and study data are private and are not sent to any third party. You can export or delete your data from your profile."
+      },
+      "account": {
+        "title": "Account",
+        "body": "Change your name, download your data or delete your account from the Profile page."
+      }
+    }
   }
 }

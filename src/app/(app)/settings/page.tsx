@@ -59,6 +59,9 @@ export default async function SettingsPage() {
         <ButtonLink href="/profile" variant="secondary">
           {t("settings.openProfile")}
         </ButtonLink>
+        <ButtonLink href="/help" variant="ghost" className="ml-2">
+          {t("settings.helpLink")}
+        </ButtonLink>
       </Section>
     </>
   );

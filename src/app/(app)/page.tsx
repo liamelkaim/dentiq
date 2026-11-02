@@ -13,6 +13,8 @@ import { CALENDAR_TIME_ZONE } from "@/server/calendar/constants";
 import { isoDateIn } from "@/server/calendar/dates";
 import { upcomingEntries } from "@/server/calendar/service";
 import { requireUser } from "@/server/auth/session";
+import { getProfile } from "@/server/onboarding/service";
+import { redirect } from "next/navigation";
 import { canAccessLibrary, isModerator, listCourseSummaries, listModerationQueue, listResources } from "@/server/resources/service";
 import { listQuestionQueue } from "@/server/passes/service";
 import { listUsers } from "@/server/users/service";
@@ -78,6 +80,8 @@ function CardLink({ href, children }: { href: string; children: ReactNode }) {
 
 export default async function DashboardPage() {
   const user = await requireUser();
+  // First run: ask the program questions once (skippable).
+  if (!(await getProfile(getDb(), user.id))) redirect("/onboarding");
   const t = await getTranslations();
   const format = await getFormatter();
   const locale = (await getLocale()) as Locale;

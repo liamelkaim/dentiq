@@ -120,3 +120,7 @@ Keyboard: all PASS (0 stops without visible focus, 0 traps, skip link works, key
 Paths: pending user blocked server-side on question creation (replay of the server action); moderator reject/hide/publish/verify/report-resolve, author edit and history, image upload errors: PASS. Dismiss button on a report not clicked. Other server actions for a pending user not replayed.
 Production: manifest 200; service worker registers; cache holds only the 6 allowlisted public files after visiting authenticated pages and question images; with the server stopped, pages show only the offline page.
 Not tested: Safari, Firefox, real devices, screen readers, native select popup and validation bubbles, PWA install prompt, download dialogs.
+
+## finish/dentiq-polish, phase 1 (part)
+Added first-run onboarding (additive `user_profile` table, skippable, dashboard redirects once), a Help page and a Settings link. Check, tests (609) and build pass.
+Not done yet in phase 1: browser comparison of every screen at 390/768/1440 px in both themes and languages, loading and offline states review. Phases 2 to 9 not started.

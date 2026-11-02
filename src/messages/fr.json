@@ -251,7 +251,8 @@
     "emailVerified": "Courriel confirmé",
     "profileTitle": "Profil et données",
     "profileHelp": "Modifiez votre nom affiché, téléchargez une copie de vos données ou supprimez votre compte.",
-    "openProfile": "Ouvrir le profil"
+    "openProfile": "Ouvrir le profil",
+    "helpLink": "Aide et informations de programme"
   },
   "admin": {
     "title": "Administration",
@@ -630,8 +631,15 @@
       "apply": "Filtrer",
       "reset": "Réinitialiser"
     },
-    "queue": { "title": "File de révision", "reviewLater": "Questions à revoir", "flagged": "Questions signalées" },
-    "preview": { "hint": "Les réponses et explications sont sur la page de la question.", "open": "Ouvrir la question" },
+    "queue": {
+      "title": "File de révision",
+      "reviewLater": "Questions à revoir",
+      "flagged": "Questions signalées"
+    },
+    "preview": {
+      "hint": "Les réponses et explications sont sur la page de la question.",
+      "open": "Ouvrir la question"
+    },
     "browser": {
       "count": "{count, plural, =0 {Aucune question} one {# question} other {# questions}}",
       "noResults": "Aucune question ne correspond",
@@ -1986,5 +1994,56 @@
   "shell": {
     "searchLabel": "Rechercher",
     "searchPlaceholder": "Rechercher cours, notes, sujets…"
+  },
+  "onboarding": {
+    "title": "Bienvenue sur Dentiq",
+    "intro": "Trois questions rapides pour adapter l’application à votre programme. Tout est facultatif et modifiable plus tard.",
+    "university": "Université",
+    "universityHelp": "Les préréglages ne font que proposer des valeurs. Vérifiez les dates et les cours auprès de votre faculté.",
+    "programYear": "Année du programme",
+    "semester": "Session",
+    "semesterHelp": "1 est la première session de votre année, et ainsi de suite.",
+    "choose": "Choisir…",
+    "presets": {
+      "udem": "Université de Montréal",
+      "other": "Une autre université"
+    },
+    "yearOption": "Année {n}",
+    "semesterOption": "Session {n}",
+    "save": "Enregistrer et continuer",
+    "skip": "Passer pour l’instant",
+    "error": "Impossible d’enregistrer vos réponses. Vérifiez les choix et réessayez."
+  },
+  "help": {
+    "title": "Aide",
+    "intro": "Réponses courtes sur le fonctionnement de Dentiq.",
+    "redoOnboarding": "Modifier mes informations de programme",
+    "privacyLink": "Politique de confidentialité",
+    "topics": {
+      "start": {
+        "title": "Pour commencer",
+        "body": "Choisissez vos cours dans la page Cours, puis ajoutez des notes ou parcourez les anciens examens (passes). Vos réponses aux premières questions ne servent qu’à personnaliser les suggestions."
+      },
+      "notes": {
+        "title": "Notes",
+        "body": "Les notes sont privées, sauf si vous choisissez de partager un document. Chaque enregistrement garde une version à laquelle revenir."
+      },
+      "passes": {
+        "title": "Passes",
+        "body": "Les passes sont d’anciennes questions d’examen. Une réponse est dite proposée tant qu’un modérateur ne l’a pas vérifiée; comparez toujours avec votre matériel de cours."
+      },
+      "calendar": {
+        "title": "Calendrier",
+        "body": "Le calendrier n’affiche que les entrées que vous ajoutez. Les dates issues des préréglages doivent être confirmées auprès de votre faculté."
+      },
+      "privacy": {
+        "title": "Confidentialité",
+        "body": "Vos notes et vos données d’étude sont privées et ne sont envoyées à aucun tiers. Vous pouvez exporter ou supprimer vos données depuis votre profil."
+      },
+      "account": {
+        "title": "Compte",
+        "body": "Changez votre nom, téléchargez vos données ou supprimez votre compte depuis la page Profil."
+      }
+    }
   }
 }
