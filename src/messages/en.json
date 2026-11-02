@@ -610,7 +610,7 @@
     "back": "Back",
     "privacyLink": "Privacy",
     "termsLink": "Terms",
-    "updated": "Draft, last updated November 1, 2026. Not yet reviewed by a lawyer.",
+    "updated": "Draft, last updated November 2, 2026. Not yet reviewed by a lawyer.",
     "privacy": {
       "title": "Privacy",
       "intro": "This explains what Dentiq stores about you and why. It is a working draft written for the current version of the app.",
@@ -642,27 +642,51 @@
       "sections": [
         {
           "title": "Who can use Dentiq",
-          "body": "Dentiq is for dental students. Your account may need approval before you can see shared material."
+          "body": "Dentiq is for dental students. Sign-up needs a university email address and an administrator's approval. You must give true information and keep your password private."
         },
         {
-          "title": "Your uploads",
-          "body": "Only upload material you have the right to share. Having a file does not give you permission to redistribute it. This applies especially to past exams and course documents from professors."
+          "title": "Independent project",
+          "body": "Dentiq is an independent student project. It is not affiliated with, operated by or endorsed by any university or faculty. Dates, courses and other information taken from university pages may be out of date: always confirm them with your faculty."
         },
         {
-          "title": "Student content and official content",
-          "body": "Notes and resources written by students are not official course material. Always check them against your professors' sources."
+          "title": "Your content",
+          "body": "You keep the rights to what you write. You promise that you have the right to upload anything you add, and that it does not infringe anyone's copyright, privacy or other rights. Notes are private by default. If you share a document or exam question, you allow Dentiq to show it to other approved users and to moderators for review."
+        },
+        {
+          "title": "Exam questions and answers",
+          "body": "Answers are marked as proposed until a moderator verifies them. They can be wrong. Dentiq is a study aid, not an authoritative source: check your course material."
+        },
+        {
+          "title": "Acceptable use",
+          "body": "Do not upload recordings without the lecturer's permission, do not upload anything illegal, offensive or that identifies a patient, do not try to access other people's accounts or data, do not overload or attack the service, and do not copy shared material outside Dentiq against its owners' rights."
         },
         {
           "title": "Moderation",
-          "body": "Moderators may hold back, correct or remove content that breaks these rules or that you are not allowed to share."
+          "body": "Moderators and the administrator can review, hide or remove shared content and can suspend accounts that break these terms. Reports of copyright or other problems can be made from the content or through the Feedback button."
         },
         {
-          "title": "Study use only",
-          "body": "Dentiq is a study aid. It does not provide clinical or professional advice."
+          "title": "No clinical advice",
+          "body": "Nothing in Dentiq is medical or dental advice. Never use it to decide on the treatment of a real patient."
         },
         {
-          "title": "Changes",
-          "body": "These terms may change before and after launch. We will update the date at the top of this page."
+          "title": "Availability and changes",
+          "body": "Dentiq is provided as is, free of charge, and may change, be interrupted or end. We try to keep your data safe but you should keep your own copies of important work; you can download your data from your profile."
+        },
+        {
+          "title": "Liability",
+          "body": "To the extent the law allows, Dentiq and the people who run it are not liable for losses from using the service or relying on its content. Nothing here limits rights you have under Quebec consumer or privacy law that cannot be waived."
+        },
+        {
+          "title": "Ending your account",
+          "body": "You can delete your account at any time from your profile. We may suspend or remove accounts that break these terms."
+        },
+        {
+          "title": "Governing law",
+          "body": "These terms are governed by the laws of Quebec and the federal laws of Canada that apply there. Disputes go to the competent courts of Quebec."
+        },
+        {
+          "title": "Changes to these terms",
+          "body": "We will update this page when needed and show the date at the top. Continuing to use Dentiq after a change means you accept it."
         }
       ]
     },
@@ -677,7 +701,53 @@
         "Documents and exam questions you contributed that were already published or hidden by a moderator stay, detached from your account, because other students may use them. Audit records stay without your name.",
         "You can change your display name from your profile. Changing your email address is not available yet."
       ]
-    }
+    },
+    "privacyMore": [
+      {
+        "title": "Who is responsible",
+        "body": "Dentiq is an independent student project, not an organisation of a university. The person named under \"Contact for privacy requests\" below is responsible for the personal information described here and answers requests about it."
+      },
+      {
+        "title": "Cookies and similar storage",
+        "body": "Dentiq sets only what it needs to work: a sign-in session cookie (secure, not readable by scripts), a language cookie, and a theme choice kept in your browser's local storage. There are no advertising, analytics or tracking cookies, and no third-party scripts, so there is no cookie banner. The offline feature stores a few public files in your browser cache."
+      },
+      {
+        "title": "Who processes your data (service providers)",
+        "body": "To run the service we use: Vercel (hosting and file storage), Neon (database) and Resend (account emails: verification and password reset). They process data on our behalf. These providers may store data outside Quebec and outside Canada; the exact regions are to be confirmed before launch (UNVERIFIED). Your notes, recordings and calendar are not sent to any analytics or advertising service."
+      },
+      {
+        "title": "Recordings",
+        "body": "Recordings are off unless the administrator turns them on. You may add one only with the lecturer's permission, and you confirm that when you upload. Only you can play or delete a recording, and nobody else sees it, including administrators. Recordings are never sent to a transcription service."
+      },
+      {
+        "title": "AI tutor",
+        "body": "The AI tutor is built but switched off and no AI provider is connected. If it is ever switched on, nothing is sent until you accept a consent notice that explains what leaves Dentiq (your question and matching excerpts, possibly from your own notes), you can withdraw consent at any time, and your saved conversations can be downloaded or deleted. It never gives advice about real patients."
+      },
+      {
+        "title": "Health and patient information",
+        "body": "Do not enter information that identifies a patient or any health information about a real person in notes, questions, feedback or the tutor. Dentiq is not designed to hold it."
+      },
+      {
+        "title": "How long we keep it",
+        "body": "Your data is kept while your account exists. When you delete your account, your profile, notes, study data, calendar, recordings (and their files), tutor conversations, feedback and sign-in records are removed. Material you shared with others (approved documents and exam questions) may stay, without your name. Removed files are deleted from storage after a grace period of 30 days. Backups kept by our providers expire on their own schedule."
+      },
+      {
+        "title": "Security",
+        "body": "Passwords are stored as hashes, connections use HTTPS, access is checked on every request, and private material is filtered by owner. No system is perfectly secure. If an incident creates a risk of serious harm, we will notify the people affected and the Commission d'accès à l'information du Québec as the law requires."
+      },
+      {
+        "title": "Your rights",
+        "body": "You can ask to see the personal information we hold about you, have it corrected, download it, withdraw consent, or have it deleted. You can do most of this yourself from your profile and settings. For anything else, use the contact below. You may also complain to the Commission d'accès à l'information du Québec."
+      },
+      {
+        "title": "Age",
+        "body": "Dentiq is meant for university students. If you are under 14, do not create an account."
+      },
+      {
+        "title": "Changes to this policy",
+        "body": "We will update this page when the service changes and show the date at the top. Significant changes will be announced in the app."
+      }
+    ]
   },
   "passes": {
     "title": "Passes",

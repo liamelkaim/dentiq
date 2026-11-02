@@ -14,6 +14,19 @@ export async function LegalDraftBanner() {
 /** Marked clearly as "to fill in": no address has been invented. */
 export async function LegalContact() {
   const t = await getTranslations("legal");
+  const contact = process.env.CONTACT_EMAIL?.trim();
+  if (contact) {
+    return (
+      <section>
+        <h2 className="text-[18px] font-semibold">{t("contactTitle")}</h2>
+        <p className="mt-2">
+          <a href={`mailto:${contact}`} className="font-medium text-accent underline underline-offset-2">
+            {contact}
+          </a>
+        </p>
+      </section>
+    );
+  }
   return (
     <section>
       <h2 className="text-[18px] font-semibold">{t("contactTitle")}</h2>

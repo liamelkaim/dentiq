@@ -610,7 +610,7 @@
     "back": "Retour",
     "privacyLink": "Confidentialité",
     "termsLink": "Conditions",
-    "updated": "Version provisoire, mise à jour le 1er novembre 2026. Pas encore révisée par un juriste.",
+    "updated": "Version provisoire, mise à jour le 2 novembre 2026. Non révisée par un juriste.",
     "privacy": {
       "title": "Confidentialité",
       "intro": "Cette page explique ce que Dentiq conserve à votre sujet et pourquoi. C'est une version de travail rédigée pour l'état actuel de l'application.",
@@ -642,27 +642,51 @@
       "sections": [
         {
           "title": "Qui peut utiliser Dentiq",
-          "body": "Dentiq s'adresse aux étudiants en médecine dentaire. Votre compte peut devoir être approuvé avant que vous voyiez le matériel partagé."
+          "body": "Dentiq s'adresse aux étudiants en médecine dentaire. L'inscription exige une adresse courriel universitaire et l'approbation d'un administrateur. Vous devez fournir des renseignements exacts et garder votre mot de passe secret."
         },
         {
-          "title": "Vos téléversements",
-          "body": "Ne téléversez que du matériel que vous avez le droit de partager. Avoir un fichier ne donne pas le droit de le redistribuer. Cela vaut surtout pour les anciens examens et les documents de cours des professeurs."
+          "title": "Projet indépendant",
+          "body": "Dentiq est un projet étudiant indépendant. Il n'est ni affilié à une université ou à une faculté, ni exploité ni endossé par elles. Les dates, cours et autres renseignements tirés de pages universitaires peuvent être périmés : confirmez-les toujours auprès de votre faculté."
         },
         {
-          "title": "Contenu étudiant et contenu officiel",
-          "body": "Les notes et ressources écrites par des étudiants ne sont pas du matériel de cours officiel. Vérifiez-les toujours avec les sources de vos professeurs."
+          "title": "Votre contenu",
+          "body": "Vous gardez vos droits sur ce que vous écrivez. Vous promettez avoir le droit de téléverser tout ce que vous ajoutez, et que cela ne viole le droit d'auteur, la vie privée ou d'autres droits de personne. Les notes sont privées par défaut. Si vous partagez un document ou une question d'examen, vous autorisez Dentiq à les montrer aux autres utilisateurs approuvés et aux modérateurs pour examen."
+        },
+        {
+          "title": "Questions et réponses d'examen",
+          "body": "Les réponses sont marquées comme proposées tant qu'un modérateur ne les a pas vérifiées. Elles peuvent être erronées. Dentiq est un outil d'étude, non une source faisant autorité : vérifiez votre matériel de cours."
+        },
+        {
+          "title": "Utilisation acceptable",
+          "body": "N'ajoutez pas d'enregistrement sans la permission de l'enseignant·e, rien d'illégal, d'offensant ou qui identifie un patient; n'essayez pas d'accéder aux comptes ou aux données d'autrui; ne surchargez ni n'attaquez le service; ne copiez pas le matériel partagé hors de Dentiq au mépris des droits de ses propriétaires."
         },
         {
           "title": "Modération",
-          "body": "Les modérateurs peuvent retenir, corriger ou retirer le contenu qui enfreint ces règles ou que vous n'avez pas le droit de partager."
+          "body": "Les modérateurs et l'administrateur peuvent examiner, masquer ou retirer le contenu partagé et suspendre les comptes qui enfreignent ces conditions. Les signalements de droit d'auteur ou d'autres problèmes se font depuis le contenu ou par le bouton Commentaires."
         },
         {
-          "title": "Usage d'étude seulement",
-          "body": "Dentiq est un outil d'étude. Il ne donne aucun conseil clinique ou professionnel."
+          "title": "Aucun conseil clinique",
+          "body": "Rien dans Dentiq n'est un avis médical ou dentaire. Ne vous en servez jamais pour décider du traitement d'un vrai patient."
         },
         {
-          "title": "Changements",
-          "body": "Ces conditions peuvent changer avant et après le lancement. Nous mettrons à jour la date en haut de cette page."
+          "title": "Disponibilité et changements",
+          "body": "Dentiq est fourni tel quel, gratuitement, et peut changer, être interrompu ou prendre fin. Nous nous efforçons de protéger vos données, mais gardez vos propres copies des travaux importants; vous pouvez télécharger vos données depuis votre profil."
+        },
+        {
+          "title": "Responsabilité",
+          "body": "Dans la mesure permise par la loi, Dentiq et les personnes qui l'exploitent ne sont pas responsables des pertes liées à l'utilisation du service ou à la confiance accordée à son contenu. Rien ici ne limite les droits que vous avez en vertu du droit québécois de la consommation ou de la protection des renseignements personnels et auxquels on ne peut renoncer."
+        },
+        {
+          "title": "Fin de votre compte",
+          "body": "Vous pouvez supprimer votre compte en tout temps depuis votre profil. Nous pouvons suspendre ou retirer les comptes qui enfreignent ces conditions."
+        },
+        {
+          "title": "Droit applicable",
+          "body": "Ces conditions sont régies par les lois du Québec et les lois fédérales du Canada qui s'y appliquent. Les litiges relèvent des tribunaux compétents du Québec."
+        },
+        {
+          "title": "Modifications de ces conditions",
+          "body": "Nous mettrons cette page à jour au besoin et la date sera indiquée en haut. Continuer d'utiliser Dentiq après un changement signifie que vous l'acceptez."
         }
       ]
     },
@@ -677,7 +701,53 @@
         "Les documents et questions d'examen que vous avez proposés et qui ont déjà été publiés ou masqués par un modérateur restent, détachés de votre compte, parce que d'autres étudiants peuvent s'en servir. Les traces d'audit restent sans votre nom.",
         "Vous pouvez modifier votre nom affiché depuis votre profil. Le changement d'adresse courriel n'est pas encore disponible."
       ]
-    }
+    },
+    "privacyMore": [
+      {
+        "title": "Qui est responsable",
+        "body": "Dentiq est un projet étudiant indépendant, et non un organisme d'une université. La personne indiquée sous « Personne-ressource pour les demandes de confidentialité » ci-dessous est responsable des renseignements personnels décrits ici et répond aux demandes à ce sujet."
+      },
+      {
+        "title": "Témoins et stockage semblable",
+        "body": "Dentiq n'utilise que ce qui est nécessaire à son fonctionnement : un témoin de session de connexion (sécurisé, illisible par les scripts), un témoin de langue et le choix du thème gardé dans le stockage local de votre navigateur. Il n'y a aucun témoin publicitaire, d'analyse ou de suivi, ni script tiers : il n'y a donc pas de bandeau de témoins. La fonction hors ligne garde quelques fichiers publics dans la mémoire cache de votre navigateur."
+      },
+      {
+        "title": "Qui traite vos données (fournisseurs de services)",
+        "body": "Pour faire fonctionner le service, nous utilisons : Vercel (hébergement et stockage de fichiers), Neon (base de données) et Resend (courriels de compte : vérification et réinitialisation du mot de passe). Ils traitent les données en notre nom. Ces fournisseurs peuvent conserver des données hors du Québec et hors du Canada; les régions exactes seront confirmées avant le lancement (NON VÉRIFIÉ). Vos notes, enregistrements et calendrier ne sont envoyés à aucun service d'analyse ou de publicité."
+      },
+      {
+        "title": "Enregistrements",
+        "body": "Les enregistrements sont désactivés tant que l'administrateur ne les active pas. Vous ne pouvez en ajouter un qu'avec la permission de l'enseignant·e, ce que vous confirmez à l'envoi. Vous seul·e pouvez lire ou supprimer un enregistrement, et personne d'autre ne le voit, administrateur compris. Les enregistrements ne sont jamais envoyés à un service de transcription."
+      },
+      {
+        "title": "Tuteur IA",
+        "body": "Le tuteur IA est construit mais désactivé, et aucun fournisseur d'IA n'est connecté. S'il était activé un jour, rien ne serait envoyé avant que vous acceptiez un avis de consentement expliquant ce qui quitte Dentiq (votre question et des extraits correspondants, possiblement de vos propres notes). Vous pouvez retirer votre consentement en tout temps, et vos conversations enregistrées peuvent être téléchargées ou supprimées. Il ne donne jamais de conseils sur de vrais patients."
+      },
+      {
+        "title": "Renseignements sur la santé et les patients",
+        "body": "N'inscrivez aucun renseignement qui identifie un patient ni aucun renseignement de santé sur une personne réelle dans les notes, les questions, les commentaires ou le tuteur. Dentiq n'est pas conçu pour les conserver."
+      },
+      {
+        "title": "Durée de conservation",
+        "body": "Vos données sont conservées tant que votre compte existe. Quand vous supprimez votre compte, votre profil, vos notes, vos données d'étude, votre calendrier, vos enregistrements (et leurs fichiers), vos conversations avec le tuteur, vos commentaires et vos données de connexion sont supprimés. Le matériel que vous avez partagé (documents et questions d'examen approuvés) peut rester, sans votre nom. Les fichiers retirés sont supprimés du stockage après un délai de grâce de 30 jours. Les copies de sauvegarde de nos fournisseurs expirent selon leur propre calendrier."
+      },
+      {
+        "title": "Sécurité",
+        "body": "Les mots de passe sont conservés sous forme d'empreintes, les connexions utilisent HTTPS, l'accès est vérifié à chaque requête et le matériel privé est filtré selon son propriétaire. Aucun système n'est parfaitement sûr. Si un incident crée un risque de préjudice sérieux, nous aviserons les personnes touchées et la Commission d'accès à l'information du Québec comme la loi l'exige."
+      },
+      {
+        "title": "Vos droits",
+        "body": "Vous pouvez demander à voir les renseignements personnels que nous détenons sur vous, les faire corriger, les télécharger, retirer votre consentement ou les faire supprimer. Vous pouvez faire l'essentiel vous-même depuis votre profil et vos paramètres. Pour le reste, utilisez le contact ci-dessous. Vous pouvez aussi porter plainte à la Commission d'accès à l'information du Québec."
+      },
+      {
+        "title": "Âge",
+        "body": "Dentiq s'adresse aux étudiants universitaires. Si vous avez moins de 14 ans, ne créez pas de compte."
+      },
+      {
+        "title": "Modifications de cette politique",
+        "body": "Nous mettrons cette page à jour quand le service changera et la date sera indiquée en haut. Les changements importants seront annoncés dans l'application."
+      }
+    ]
   },
   "passes": {
     "title": "Passes",
