@@ -26,3 +26,6 @@ pnpm-debug.log*
 .vercel/
 .vercel
 .env*
+
+# Intake: your own files and reports. Never committed.
+intake/

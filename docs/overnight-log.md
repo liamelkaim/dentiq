@@ -132,3 +132,6 @@ Phase 2: admin email-domain settings with UdeM preset, bilingual HTML/text verif
 ## finish/dentiq-polish, phase 3
 Research (Opus subagent, official UdeM pages only): 167 verified courses, 5-year D.M.D., faculty calendar for 2026-2027; 3 unverified terms (2027-2028) left empty. See docs/udem-research.md.
 Built: terms/periods/class-block/followed-course tables (migration 0012), schedule expansion and markers, .ics export of classes and import, My schedule page, calendar shows classes, terms, breaks with a "verify with your faculty" note, admin loader. 653 tests pass, build passes, loaded and viewed in the browser.
+
+## finish/dentiq-polish, phase 4
+Intake CLI: detect (bytes over extension), extract (txt/md/csv/docx locally), question parser with proposed answers and review flags, dedupe, course inference, report without file text, local-only import. 16 synthetic-fixture tests; full suite green; dry run and import refusal verified from the command line.
