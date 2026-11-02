@@ -20,7 +20,13 @@ export function proxy(request: NextRequest) {
   requestHeaders.set("x-nonce", nonce);
   requestHeaders.set("Content-Security-Policy", policy);
 
-  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  // A visitor without a session cookie who opens the home address sees the public welcome page (the address stays "/").
+  // This is only a routing convenience: every private page still checks the session itself (requireUser).
+  const hasSessionCookie = request.cookies.getAll().some((c) => c.name.endsWith("session_token"));
+  const response =
+    request.nextUrl.pathname === "/" && !hasSessionCookie
+      ? NextResponse.rewrite(new URL("/welcome", request.url), { request: { headers: requestHeaders } })
+      : NextResponse.next({ request: { headers: requestHeaders } });
   response.headers.set("Content-Security-Policy", policy);
   return response;
 }

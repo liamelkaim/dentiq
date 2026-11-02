@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { BookIcon, FlagIcon, FolderIcon, PassesIcon, ShieldIcon, SparkleIcon } from "@/components/icons";
+import { BookIcon, FlagIcon, FolderIcon, MicIcon, PassesIcon, ShieldIcon, SparkleIcon } from "@/components/icons";
 import { List, ListLinkRow, PageHeader } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { requireRole } from "@/server/auth/session";
@@ -52,6 +52,30 @@ export default async function AdminPage() {
           leading={<span className={iconBox}><PassesIcon width={18} height={18} /></span>}
           title={t("passes.settings.title")}
           subtitle={t("passes.settings.adminHelp")}
+        />
+        <ListLinkRow
+          href="/admin/email"
+          leading={<span className={iconBox}><ShieldIcon width={18} height={18} /></span>}
+          title={t("admin.domains.title")}
+          subtitle={t("admin.domains.adminHelp")}
+        />
+        <ListLinkRow
+          href="/admin/program"
+          leading={<span className={iconBox}><BookIcon width={18} height={18} /></span>}
+          title={t("admin.program.title")}
+          subtitle={t("admin.program.adminHelp")}
+        />
+        <ListLinkRow
+          href="/admin/recordings"
+          leading={<span className={iconBox}><MicIcon width={18} height={18} /></span>}
+          title={t("admin.recordings.title")}
+          subtitle={t("admin.recordings.adminHelp")}
+        />
+        <ListLinkRow
+          href="/admin/feedback"
+          leading={<span className={iconBox}><FlagIcon width={18} height={18} /></span>}
+          title={t("admin.feedback.title")}
+          subtitle={t("admin.feedback.adminHelp")}
         />
         <ListLinkRow
           href="/admin/tutor"

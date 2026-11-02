@@ -69,6 +69,8 @@ export type CalendarEntry = {
   note: string | null;
   courseId: string | null;
   courseCode: string | null;
+  /** Set on rows that are not the student's own entries: a class from their schedule or a term/break marker. */
+  virtual?: { type: "class" | "marker"; markerKind?: string; verified?: boolean };
 };
 
 const columns = {

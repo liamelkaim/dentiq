@@ -78,6 +78,41 @@
       "when": 1793550129952,
       "tag": "0010_file_retention",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1793591839758,
+      "tag": "0011_giant_kabuki",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1793593331971,
+      "tag": "0012_right_white_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1793595524847,
+      "tag": "0013_omniscient_lord_hawal",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1793596523679,
+      "tag": "0014_spicy_betty_ross",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1793598443866,
+      "tag": "0015_huge_ricochet",
+      "breakpoints": true
     }
   ]
 }

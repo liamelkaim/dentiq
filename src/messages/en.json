@@ -14,7 +14,11 @@
     "none": "None",
     "saved": "Saved.",
     "planned": "Planned",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "footerNav": "Footer links",
+    "mainNavPublic": "Main navigation",
+    "help": "Help",
+    "contact": "Contact us"
   },
   "nav": {
     "main": "Main navigation",
@@ -36,7 +40,9 @@
     "calendar": "Calendar",
     "off": "Off",
     "profile": "Profile",
-    "notes": "Notes"
+    "notes": "Notes",
+    "menu": "Menu",
+    "closeMenu": "Close the menu"
   },
   "home": {
     "welcome": "Welcome back, {name}.",
@@ -133,7 +139,9 @@
       "subtitle": "Access your courses and study resources.",
       "submit": "Sign in",
       "noAccount": "No account yet?",
-      "createAccount": "Create an account"
+      "createAccount": "Create an account",
+      "forgot": "Forgot your password?",
+      "resetDone": "Password changed. Sign in with the new one."
     },
     "signUp": {
       "title": "Create an account",
@@ -161,7 +169,37 @@
       "domainNotAllowed": "This email address isn't accepted at the moment.",
       "weakPassword": "Password must be at least 10 characters.",
       "tooManyRequests": "Too many attempts. Try again in a minute.",
-      "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again.",
+      "passwordMismatch": "The two passwords do not match.",
+      "resetLinkInvalid": "This reset link is invalid or has expired. Ask for a new one."
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email address. If an account exists, we send a link valid for one hour.",
+      "submit": "Send the link",
+      "sent": "If an account exists for this address, a reset link is on its way. Check your inbox and spam folder.",
+      "back": "Back to sign in"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "subtitle": "At least 10 characters. You will be signed out on other devices.",
+      "newPassword": "New password",
+      "confirm": "Confirm the new password",
+      "submit": "Save the password",
+      "invalid": "This reset link is invalid or has expired. Ask for a new one.",
+      "requestNew": "Ask for a new link"
+    },
+    "resend": {
+      "submit": "Send a new confirmation link",
+      "sent": "If this address has an unconfirmed account, a new link is on its way."
+    },
+    "verifyResult": {
+      "title": "Email confirmation",
+      "doneTitle": "Email confirmed",
+      "doneBody": "Your address is confirmed. Sign in to continue.",
+      "signIn": "Sign in",
+      "expiredTitle": "This link no longer works",
+      "expiredBody": "The confirmation link has expired or was already used. Enter your address to receive a new one."
     }
   },
   "dashboard": {
@@ -251,7 +289,8 @@
     "emailVerified": "Email confirmed",
     "profileTitle": "Profile and data",
     "profileHelp": "Edit your display name, download a copy of your data or delete your account.",
-    "openProfile": "Open profile"
+    "openProfile": "Open profile",
+    "helpLink": "Help and program details"
   },
   "admin": {
     "title": "Admin",
@@ -335,7 +374,51 @@
     "tutor": "AI tutor settings",
     "tutorHelp": "Off. Needs a provider and a budget.",
     "retention": "File retention",
-    "retentionHelp": "Review and delete old removed files. Dry run first."
+    "retentionHelp": "Review and delete old removed files. Dry run first.",
+    "domains": {
+      "title": "Email domains",
+      "adminHelp": "Who may sign up: university presets and domains.",
+      "subtitle": "Only addresses on these domains can create a student account. A domain also allows its subdomains.",
+      "label": "Allowed domains",
+      "hint": "One per line or separated by commas, for example umontreal.ca.",
+      "presetUdem": "Use Université de Montréal (umontreal.ca)",
+      "save": "Save",
+      "saved": "Saved.",
+      "invalid": "One of the entries is not a valid domain (for example umontreal.ca).",
+      "forbidden": "Only the administrator can change this.",
+      "inForce": "In force: {domains}",
+      "openSignup": "No domain is set: any email address can sign up. Add a domain before opening the app to students.",
+      "unverified": "UNVERIFIED: confirm with the faculty which addresses its students use before relying on the preset. The administrator address is always allowed.",
+      "resendNote": "Sending email to real students needs a domain verified in Resend. Until then, messages are only printed in the server console."
+    },
+    "program": {
+      "title": "UdeM program data",
+      "adminHelp": "Load the D.M.D. courses and calendar from official pages.",
+      "subtitle": "Loads the Université de Montréal D.M.D. courses (by year and semester) and the faculty calendar into the catalog. Safe to run again.",
+      "verify": "The data was copied from official UdeM pages on 2026-11-01 and may change. Students are told to confirm dates and courses with the faculty. Terms for 2027-2028 are not published yet and are not loaded.",
+      "load": "Load the UdeM D.M.D. data",
+      "done": "Loaded {courses} courses, {terms} terms and {periods} breaks or periods.",
+      "error": "The data could not be loaded. Check the server log.",
+      "sources": "Sources and retrieval dates are listed in docs/udem-research.md and stored on every course and term."
+    },
+    "recordings": {
+      "title": "Recordings",
+      "adminHelp": "Switch recordings on or off and set size limits."
+    },
+    "feedback": {
+      "title": "Feedback",
+      "adminHelp": "Read what people sent and mark it done.",
+      "subtitle": "Messages from the Feedback button.",
+      "filter": "Filter",
+      "new": "New",
+      "all": "All",
+      "done": "Done",
+      "markDone": "Mark done",
+      "reopen": "Reopen",
+      "replyTo": "Reply to:",
+      "emptyTitle": "Nothing here",
+      "emptyBody": "No feedback in this view."
+    }
   },
   "resources": {
     "title": "Resources",
@@ -510,7 +593,8 @@
     "errorTitle": "Something didn't work",
     "errorBody": "Something went wrong on our side. You can try again.",
     "reference": "Reference: {code}",
-    "goHome": "Back to home"
+    "goHome": "Back to home",
+    "quotaExceeded": "You have used your upload space. Delete an older document or ask a moderator."
   },
   "apiErrors": {
     "tooManyExports": "Too many exports, try again later.",
@@ -630,8 +714,15 @@
       "apply": "Filter",
       "reset": "Reset"
     },
-    "queue": { "title": "Review queue", "reviewLater": "Questions marked for review", "flagged": "Flagged questions" },
-    "preview": { "hint": "Answers and explanations are on the question page.", "open": "Open question" },
+    "queue": {
+      "title": "Review queue",
+      "reviewLater": "Questions marked for review",
+      "flagged": "Flagged questions"
+    },
+    "preview": {
+      "hint": "Answers and explanations are on the question page.",
+      "open": "Open question"
+    },
     "browser": {
       "count": "{count, plural, =0 {No questions} one {# question} other {# questions}}",
       "noResults": "No questions match",
@@ -1562,7 +1653,7 @@
   },
   "calendar": {
     "title": "Calendar",
-    "subtitle": "Your own dates: exams, assignments and study sessions. Dentiq never adds dates for you.",
+    "subtitle": "Your exams, assignments and study sessions, your class times, and your university's terms and breaks. Dentiq never guesses your exam dates.",
     "privacy": "Your calendar is private. Only you can see these entries.",
     "noAccess": "The calendar is available to approved members.",
     "kinds": {
@@ -1604,7 +1695,7 @@
     },
     "empty": {
       "title": "Your calendar is empty",
-      "body": "Dentiq does not know your exam dates and will not guess them. Add the dates you know: exams, assignment deadlines, study sessions. Only you can see them.",
+      "body": "Dentiq does not know your exam dates and will not guess them. Add the dates you know, set up your weekly class times, or import a calendar file. Only you can see them.",
       "action": "Add your first entry"
     },
     "form": {
@@ -1644,6 +1735,20 @@
       "invalidDate": "This is not a real date.",
       "dateOutOfRange": "This date is outside the years the calendar accepts.",
       "invalidTime": "Enter a time like 14:30, or leave it empty."
+    },
+    "schedule": {
+      "link": "My schedule",
+      "verifyNote": "Terms, breaks and exam periods marked 'not confirmed' must be checked with your faculty."
+    },
+    "markers": {
+      "class": "Class",
+      "term_start": "Term starts",
+      "term_end": "Term ends",
+      "reading_week": "Reading week",
+      "break": "Break",
+      "holiday": "Holiday",
+      "exam_period": "Exam period",
+      "unverified": "Not confirmed"
     }
   },
   "analytics": {
@@ -1766,7 +1871,7 @@
       },
       "ready": {
         "title": "A provider is configured",
-        "body": "The tutor is switched on and a provider exists on the server. The question form for it has not been built or checked yet, so it is not offered here."
+        "body": "The tutor is switched on. You can ask a question below after accepting the consent notice."
       }
     },
     "search": {
@@ -1843,7 +1948,12 @@
       "badCitations": "The answer was refused because it cited a source that was not provided.",
       "outOfRange": "A value is out of range. Use whole numbers within the limits shown.",
       "forbidden": "Only administrators can change these settings.",
-      "invalid": "Something went wrong."
+      "invalid": "Something went wrong.",
+      "tokenLimit": "You reached today's daily allowance for the tutor. It resets tomorrow.",
+      "costLimit": "You reached today's daily allowance for the tutor. It resets tomorrow.",
+      "tooFast": "You are asking very fast. Wait a minute and try again.",
+      "consentRequired": "Please read and accept the consent notice before asking.",
+      "patientAdvice": "The tutor cannot give advice about a real patient. Please ask your clinical supervisor or follow your clinic's protocol."
     },
     "admin": {
       "title": "AI tutor settings",
@@ -1860,7 +1970,55 @@
       "maxContext": "Characters of sources per question",
       "maxContextHint": "Between {min} and {max}. The most source text that would be sent with one question.",
       "save": "Save settings",
-      "saved": "Settings saved."
+      "saved": "Settings saved.",
+      "dailyTokens": "Tokens per student per day",
+      "dailyTokensHint": "Input plus output. {min} to {max}.",
+      "dailyCost": "Cost cap per student per day (millionths of a currency unit)",
+      "dailyCostHint": "{min} to {max}. 100000 is 0.10 of the unit you pay in."
+    },
+    "ask": {
+      "title": "Ask the tutor",
+      "description": "Answers come only from your own notes and the course sources you may open, and always cite them.",
+      "notClinical": "The tutor is a study aid. It gives no advice about a real patient: ask your clinical supervisor.",
+      "question": "Your question",
+      "questionHint": "Up to {max} characters. Do not include names or details that identify a patient.",
+      "submit": "Ask",
+      "thinking": "Working…",
+      "generated": "Generated answer, may be wrong",
+      "sources": "Sources cited",
+      "noCitations": "This answer cites no source.",
+      "showPassages": "Show the {count, plural, one {# passage} other {# passages}} the answer was based on",
+      "usage": "Questions today: {used} of {limit}.",
+      "openConversation": "Open this conversation",
+      "noSourcesTitle": "No source for this",
+      "noSources": "Nothing in the sources you may open for this course matches your question, so the tutor will not guess. Try other words, or another course."
+    },
+    "consent": {
+      "title": "Before your first question",
+      "accept": "I understand and agree",
+      "withdraw": "Withdraw my consent",
+      "points": {
+        "what": "Asking sends your question and the matching excerpts to an AI service outside Dentiq to write the answer.",
+        "who": "Excerpts can come from your own private notes. They are sent only for the question you ask, with no name, email or account id.",
+        "own": "Only your own notes and sources you may already open are used, never another student's private material.",
+        "wrong": "Answers are generated and can be wrong. Check them against your course material.",
+        "noClinical": "The tutor does not give advice about real patients.",
+        "withdraw": "You can withdraw this consent at any time and delete your saved conversations."
+      }
+    },
+    "history": {
+      "link": "Saved conversations",
+      "title": "Saved conversations",
+      "subtitle": "Your questions and the tutor's answers, kept private.",
+      "privacy": "Only you can see these, not even the administrator.",
+      "listTitle": "Your conversations",
+      "emptyTitle": "No conversations yet",
+      "emptyBody": "They appear here after the tutor answers a question.",
+      "you": "You",
+      "delete": "Delete this conversation",
+      "deleteAll": "Delete all conversations",
+      "export": "Download my conversations (JSON)",
+      "manage": "Your data"
     }
   },
   "account": {
@@ -1986,5 +2144,328 @@
   "shell": {
     "searchLabel": "Search",
     "searchPlaceholder": "Search courses, notes, topics…"
+  },
+  "onboarding": {
+    "title": "Welcome to Dentiq",
+    "intro": "Three quick questions so the app fits your program. Everything is optional and you can change it later.",
+    "university": "University",
+    "universityHelp": "Presets only prefill suggestions. Check dates and courses with your faculty.",
+    "programYear": "Program year",
+    "semester": "Semester",
+    "semesterHelp": "1 is the first semester of your year, and so on.",
+    "choose": "Choose…",
+    "presets": {
+      "udem": "Université de Montréal",
+      "other": "Another university"
+    },
+    "yearOption": "Year {n}",
+    "semesterOption": "Semester {n}",
+    "save": "Save and continue",
+    "skip": "Skip for now",
+    "error": "We could not save your answers. Check the choices and try again."
+  },
+  "help": {
+    "title": "Help",
+    "intro": "Short answers about how Dentiq works.",
+    "redoOnboarding": "Change my program details",
+    "privacyLink": "Privacy policy",
+    "topics": {
+      "start": {
+        "title": "Getting started",
+        "body": "Pick your courses from the Courses page, then add notes or browse past exam questions (passes). Your answers to the first-run questions only personalize suggestions."
+      },
+      "notes": {
+        "title": "Notes",
+        "body": "Notes are private to you unless you choose to share a document. Each save keeps a version you can go back to."
+      },
+      "passes": {
+        "title": "Passes",
+        "body": "Passes are past exam questions. An answer is marked proposed until a moderator verifies it; always check with your course material."
+      },
+      "calendar": {
+        "title": "Calendar",
+        "body": "The calendar shows only entries you add. Dates from presets must be confirmed with your faculty."
+      },
+      "privacy": {
+        "title": "Privacy",
+        "body": "Your notes and study data are private and are not sent to any third party. You can export or delete your data from your profile."
+      },
+      "account": {
+        "title": "Account",
+        "body": "Change your name, download your data or delete your account from the Profile page."
+      }
+    }
+  },
+  "schedule": {
+    "title": "My schedule",
+    "subtitle": "Your class times, with the terms and breaks of your university.",
+    "saved": "Saved.",
+    "verifyTitle": "Verify with your faculty",
+    "verifyBody": "Term dates, breaks and exam periods come from public university pages and may change or be incomplete. Always confirm them with your faculty. You can add or change your own class times at any time.",
+    "terms": {
+      "title": "Current and next term",
+      "help": "From the university preset you chose.",
+      "noPreset": "Choose a university in Help > Change my program details to see its term dates.",
+      "none": "No term data is loaded yet for your university.",
+      "names": {
+        "fall": "Fall",
+        "winter": "Winter",
+        "summer": "Summer"
+      },
+      "verified": "Confirmed on an official page",
+      "unverified": "Not confirmed: check with your faculty",
+      "range": "{from} to {to}"
+    },
+    "blocks": {
+      "title": "Weekly class times",
+      "emptyTitle": "No class times yet",
+      "emptyBody": "Add each class below, or import a calendar file (.ics) from your university or another app.",
+      "delete": "Delete",
+      "deleteLabel": "Delete {title}"
+    },
+    "form": {
+      "heading": "Add a class time",
+      "title": "Title",
+      "course": "Course",
+      "courseHint": "Optional.",
+      "noCourse": "No course",
+      "weekday": "Day",
+      "start": "Starts",
+      "end": "Ends",
+      "from": "First day",
+      "to": "Last day",
+      "location": "Room or place (optional)",
+      "add": "Add class time"
+    },
+    "weekdays": {
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday",
+      "7": "Sunday"
+    },
+    "follow": {
+      "title": "Courses for your year and semester",
+      "help": "Courses listed for year {year} in the catalog. Following one is only for you.",
+      "noProfile": "Tell us your program year in Help > Change my program details to see suggestions.",
+      "empty": "No courses are listed in the catalog for your year and semester yet.",
+      "add": "Follow",
+      "remove": "Unfollow"
+    },
+    "import": {
+      "title": "Import or export",
+      "help": "Import an .ics file you chose. Nothing is fetched from the internet and no login is used.",
+      "file": "Calendar file (.ics)",
+      "hint": "Up to 512 KB. Weekly events become class times; other events become calendar entries.",
+      "submit": "Import",
+      "done": "Imported {entries} entries and {blocks} class times. Skipped: {skipped}.",
+      "exportClasses": "Download my class times (.ics)"
+    },
+    "errors": {
+      "nothingToImport": "No usable event was found in this file.",
+      "fileTooLarge": "This file is too large (512 KB maximum).",
+      "tooManyAttempts": "Too many imports. Try again in a minute.",
+      "limitReached": "You reached the limit of class times.",
+      "forbidden": "Your account must be approved first.",
+      "endBeforeStart": "The end must be after the start.",
+      "invalidTime": "Enter a valid time."
+    }
+  },
+  "recordings": {
+    "title": "Recordings",
+    "subtitle": "Your own lecture recordings, private to you.",
+    "noAccess": "Your account must be approved before you can use recordings.",
+    "privacyTitle": "Private by design",
+    "privacy": "Only you can see, play or delete your recordings, not even the administrator. They are never sent to a transcription or AI service.",
+    "offTitle": "Uploads are switched off",
+    "off": "The administrator has not turned recordings on, so you cannot add new ones. Existing recordings stay available to you.",
+    "transcriptionOff": "Automatic transcription is not available.",
+    "helpLink": "Help",
+    "list": {
+      "title": "Your recordings",
+      "usage": "Space used: {used} MB of {quota} MB.",
+      "emptyTitle": "No recordings yet",
+      "emptyBody": "Add a lecture you are allowed to record. You can play it back at your own speed and write notes against moments in it.",
+      "emptyOff": "Recordings are not turned on yet."
+    },
+    "form": {
+      "heading": "Add a recording",
+      "help": "Audio (mp3, m4a, wav, ogg, webm) or video (mp4, webm).",
+      "title": "Title",
+      "course": "Course",
+      "noCourse": "No course",
+      "optional": "Optional.",
+      "lecturer": "Lecturer who allowed it",
+      "file": "File",
+      "fileHint": "Up to {max} MB.",
+      "submit": "Add the recording",
+      "uploading": "Uploading…"
+    },
+    "consent": {
+      "title": "Before you add it",
+      "intro": "Recording a lecture needs the lecturer's permission. Tick each box to continue.",
+      "recordingAllowed": "I am allowed to record this lecture.",
+      "lecturerPermission": "The lecturer agreed that I may record it for my own study.",
+      "privateUse": "I will keep it private and will not share it."
+    },
+    "player": {
+      "speed": "Playback speed"
+    },
+    "notes": {
+      "title": "Your notes",
+      "emptyTitle": "No notes yet",
+      "emptyBody": "Write a note, and optionally the second it refers to.",
+      "general": "General",
+      "body": "Note",
+      "at": "At second",
+      "atHint": "Optional.",
+      "useCurrent": "Use the current time",
+      "add": "Add the note",
+      "delete": "Delete",
+      "deleteLabel": "Delete this note"
+    },
+    "delete": {
+      "title": "Delete this recording",
+      "help": "Removes the file and your notes for good. Consent was confirmed on {date}.",
+      "action": "Delete the recording"
+    },
+    "errors": {
+      "disabled": "Recordings are switched off by the administrator.",
+      "forbidden": "Your account must be approved first.",
+      "consentRequired": "Tick all three boxes to confirm you may record and keep this lecture.",
+      "titleRequired": "Give the recording a title.",
+      "fileMissing": "Choose a file.",
+      "fileTooLarge": "This file is larger than the limit.",
+      "fileType": "This file is not a supported audio or video format.",
+      "limitReached": "You reached the limit.",
+      "quotaExceeded": "This would go over your storage space. Delete a recording first.",
+      "invalid": "Something in the form is not valid.",
+      "notFound": "This recording was not found.",
+      "noteRequired": "Write something in the note.",
+      "noteTooLong": "The note is too long."
+    },
+    "admin": {
+      "title": "Recordings",
+      "adminHelp": "Switch recordings on or off and set size limits.",
+      "subtitle": "Lecture recordings are OFF by default.",
+      "warningTitle": "Before you turn this on",
+      "warning": "Recordings are private personal data (Quebec Law 25) and need the lecturer's permission. Each student must tick a consent checklist when uploading. Turning this on does not enable transcription: no provider exists.",
+      "enabled": "Allow students to upload recordings",
+      "maxFile": "Largest file (MB)",
+      "maxFileHint": "1 to 500.",
+      "quota": "Space per student (MB)",
+      "quotaHint": "Must be at least the largest file.",
+      "save": "Save",
+      "saved": "Saved.",
+      "outOfRange": "These values are out of range.",
+      "hosting": "Hosting: files use the Blob store (free tier about 1 GB in total) and, on Vercel, a request body is limited to 4.5 MB, so large uploads only work locally until direct-to-storage uploads are built. See docs/recordings.md."
+    }
+  },
+  "feedback": {
+    "button": "Feedback",
+    "title": "Send feedback",
+    "thanksTitle": "Thank you",
+    "thanksBody": "Your message was sent. We read every one.",
+    "warning": "Do not include passwords, health information or anything that identifies a patient.",
+    "type": "What is it about?",
+    "types": {
+      "bug": "Something is broken",
+      "idea": "An idea",
+      "question": "A question",
+      "other": "Something else"
+    },
+    "message": "Your message",
+    "messageHint": "At least 5 and at most {max} characters.",
+    "email": "Your email (optional)",
+    "emailHint": "Only if you want an answer.",
+    "pageNote": "We attach the page you are on ({path}), without anything after the address.",
+    "send": "Send",
+    "sending": "Sending…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "emailUs": "Or email us",
+    "errors": {
+      "invalidType": "Choose what the message is about.",
+      "messageTooShort": "Write at least a few words.",
+      "messageTooLong": "The message is too long.",
+      "invalidEmail": "That email address does not look right.",
+      "tooMany": "You sent several messages recently. Try again later.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "landing": {
+    "metaTitle": "Dentiq: a study space for dental students",
+    "metaDescription": "Private course notes, past exam questions with moderator-verified answers, a personal calendar and flashcards for dental students, in French and English.",
+    "heroTitle": "Study space for dental students",
+    "heroBody": "Keep your course notes, practise with past exam questions, plan your terms and review with flashcards. Everything is in French and English, and your notes stay private.",
+    "heroNote": "Independent student project, starting with the D.M.D. at Université de Montréal. Not affiliated with or endorsed by any university. Sign-up needs a university email address and an administrator's approval.",
+    "createAccount": "Create an account",
+    "signIn": "Sign in",
+    "whatTitle": "What you can do",
+    "features": {
+      "notes": {
+        "title": "Private notes",
+        "body": "Write notes per course. They are private to you, and every save keeps a version you can go back to."
+      },
+      "passes": {
+        "title": "Past exam questions",
+        "body": "Browse and practise questions by course and year. Answers are marked proposed until a moderator verifies them."
+      },
+      "calendar": {
+        "title": "A calendar that is yours",
+        "body": "Add your exams, class times and study sessions. Term dates and breaks from official university pages are shown with a reminder to confirm them with your faculty."
+      },
+      "practice": {
+        "title": "Flashcards and quizzes",
+        "body": "Turn questions and your own cards into short review sessions and see your own progress."
+      }
+    },
+    "howTitle": "How it works",
+    "steps": {
+      "one": {
+        "title": "Create your account",
+        "body": "Use your university email address, confirm it, then wait for an administrator to approve you."
+      },
+      "two": {
+        "title": "Tell us your program",
+        "body": "Pick your year and semester so Dentiq can suggest your courses. You can skip this."
+      },
+      "three": {
+        "title": "Study",
+        "body": "Add notes, practise questions and plan your weeks. Nothing you write is shared unless you choose to share it."
+      }
+    },
+    "faqTitle": "Questions and answers",
+    "faq": {
+      "who": {
+        "q": "Who can use Dentiq?",
+        "a": "Dental students with a university email address, after an administrator approves the account. It starts with the D.M.D. program at Université de Montréal."
+      },
+      "private": {
+        "q": "Are my notes private?",
+        "a": "Yes. Notes, calendar entries, flashcards and recordings belong to you and are not shown to other students. Nothing is sent to an analytics or advertising service."
+      },
+      "answers": {
+        "q": "Can I trust the exam answers?",
+        "a": "Not blindly. An answer stays marked as a proposal until a moderator verifies it and notes the basis. Always check against your course material."
+      },
+      "ai": {
+        "q": "Does Dentiq use artificial intelligence?",
+        "a": "Not today. An AI tutor is built but switched off, and no AI service is connected. If it is ever turned on, you will be asked for your explicit consent first."
+      },
+      "official": {
+        "q": "Is this an official university service?",
+        "a": "No. It is an independent student project and is not affiliated with or endorsed by any university. Confirm dates and course lists with your faculty."
+      }
+    }
+  },
+  "seo": {
+    "signIn": "Sign in to Dentiq to open your course notes, past exam questions, calendar and flashcards.",
+    "signUp": "Create a Dentiq account with your university email address. An administrator approves new accounts.",
+    "privacy": "How Dentiq handles your personal data: what is stored, who can see it and how to export or delete it. Draft, pending legal review.",
+    "terms": "The terms of using Dentiq, an independent student study project. Draft, pending legal review.",
+    "forgot": "Ask for a link to choose a new Dentiq password."
   }
 }

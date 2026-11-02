@@ -8,6 +8,8 @@ import { handleEditQuestion, handleSubmitQuestion } from "@/server/passes/upload
 import { getPassSettings } from "@/server/passes/settings";
 import { getMaxFileBytes } from "@/server/resources/files";
 import { handleAddVersion, handleUploadResource, type UploadOutcome } from "@/server/resources/upload-handlers";
+import { getRecordingSettings, recordingBodyLimit } from "@/server/recordings/settings";
+import { handleUploadRecording } from "@/server/recordings/upload-handler";
 import { FORM_OVERHEAD_BYTES } from "./read-body";
 
 export type UploadKind = {
@@ -36,7 +38,16 @@ const questionKind = (run: UploadKind["run"]): UploadKind => ({
   run,
 });
 
+const recordingKind: UploadKind = {
+  // While recordings are OFF no file is accepted, so no large body is read either.
+  maxBodyBytes: async () => recordingBodyLimit(await getRecordingSettings(getDb()), FORM_OVERHEAD_BYTES),
+  tooLarge: { status: "error", message: "recordings.errors.fileTooLarge" },
+  invalid: { status: "error", message: "errors.generic" },
+  run: handleUploadRecording,
+};
+
 export const uploadKinds: Record<string, UploadKind> = {
+  recording: recordingKind,
   resource: documentKind(handleUploadResource),
   "resource-version": documentKind(handleAddVersion),
   question: questionKind(handleSubmitQuestion),

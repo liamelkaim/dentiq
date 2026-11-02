@@ -3,7 +3,9 @@ import { getTranslations } from "next-intl/server";
 import { LegalContact, LegalDraftBanner } from "@/components/legal-ui";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: (await getTranslations("legal.privacy"))("title") };
+  const t = await getTranslations("legal.privacy");
+  const seo = await getTranslations("seo");
+  return { title: t("title"), description: seo("privacy"), alternates: { canonical: "/privacy" } };
 }
 
 export default async function PrivacyPage() {

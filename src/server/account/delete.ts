@@ -19,6 +19,8 @@ import {
   courseNotes,
   examQuestionImages,
   examQuestions,
+  feedback,
+  recordings,
   resources,
   resourceVersions,
   session,
@@ -28,6 +30,7 @@ import {
   studyQuestionMarks,
   studyQuizItems,
   studyQuizzes,
+  tutorConversations,
   user,
   verification,
 } from "@/db/schema";
@@ -119,6 +122,14 @@ async function deleteAccountOnce(db: Database, storage: FileStorage, userId: str
       ? (await tx.select({ key: examQuestionImages.storageKey }).from(examQuestionImages).where(inArray(examQuestionImages.questionId, questionIds))).map((r) => r.key)
       : [];
 
+    // Recording files live in storage; the rows (and their notes) go with the account, so list the files first.
+    const recordingKeys = (await tx.select({ key: recordings.storageKey }).from(recordings).where(eq(recordings.ownerId, userId))).map((r) => r.key);
+
+    // Recording and tutor conversation ids appear in audit rows; the rows themselves go with the account (cascade).
+    const recordingIds = (await tx.select({ id: recordings.id }).from(recordings).where(eq(recordings.ownerId, userId))).map((r) => r.id);
+    const conversationIds = (await tx.select({ id: tutorConversations.id }).from(tutorConversations).where(eq(tutorConversations.userId, userId))).map((r) => r.id);
+    const feedbackIds = (await tx.select({ id: feedback.id }).from(feedback).where(eq(feedback.userId, userId))).map((r) => r.id);
+
     const notes = await tx.select({ id: courseNotes.id }).from(courseNotes).where(eq(courseNotes.ownerId, userId));
     const noteIds = notes.map((n) => n.id);
 
@@ -128,7 +139,7 @@ async function deleteAccountOnce(db: Database, storage: FileStorage, userId: str
 
     // 3. Scrub audit rows that describe what is being deleted (they hold ids, and for uploads a file fingerprint).
     //    Ids are random UUIDs, so matching on the id alone is enough whatever the entity type was.
-    const deletedEntityIds = [...resourceIds, ...questionIds, ...noteIds];
+    const deletedEntityIds = [...resourceIds, ...questionIds, ...noteIds, ...recordingIds, ...conversationIds, ...feedbackIds];
     if (deletedEntityIds.length) {
       await tx.update(auditLog).set({ entityId: null, metadata: null }).where(inArray(auditLog.entityId, deletedEntityIds));
     }
@@ -137,6 +148,8 @@ async function deleteAccountOnce(db: Database, storage: FileStorage, userId: str
     // 4. Delete the rows. Dependent rows (versions, choices, images, revisions, links, reports) go with their parent.
     if (resourceIds.length) await tx.delete(resources).where(inArray(resources.id, resourceIds));
     if (questionIds.length) await tx.delete(examQuestions).where(inArray(examQuestions.id, questionIds));
+    // Feedback keeps no author link (ON DELETE SET NULL would leave the text and contact email behind): erase it.
+    await tx.delete(feedback).where(eq(feedback.userId, userId));
     await tx.delete(session).where(eq(session.userId, userId));
     // Pending sign-in or verification links are keyed by the email address.
     await tx.delete(verification).where(sql`lower(${verification.identifier}) = ${self.email.toLowerCase()}`);
@@ -158,7 +171,7 @@ async function deleteAccountOnce(db: Database, storage: FileStorage, userId: str
       },
     });
 
-    return { ok: true as const, keys: [...resourceKeys, ...imageKeys] };
+    return { ok: true as const, keys: [...resourceKeys, ...imageKeys, ...recordingKeys] };
   });
 
   if (!outcome.ok) return outcome;

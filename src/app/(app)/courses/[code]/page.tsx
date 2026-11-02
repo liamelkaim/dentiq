@@ -79,7 +79,7 @@ export default async function CourseOverviewPage({ params }: { params: Params })
     course.sourceName || course.sourceUrl ? (
       <span>
         {course.sourceUrl ? (
-          <a href={course.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover">
+          <a href={course.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2 hover:text-accent-hover">
             {course.sourceName ?? course.sourceUrl}
           </a>
         ) : (

@@ -1,4 +1,33 @@
-# Course-grounded AI tutor (Phase 5, grounding layer only)
+# Course-grounded AI tutor (built, OFF)
+
+## Status after the Phase 6 build (2026-11-02)
+
+The complete tutor flow is built and tested with a **fake provider**, and stays **OFF**: no vendor, no API key, no network call, no paid API anywhere in the code. It answers only if (1) an administrator switched it on in Admin > AI tutor AND (2) a provider is configured. Today no real provider exists, so it never answers in production. (`TUTOR_PROVIDER=fake` selects a network-free stand-in outside production only; in production it is inert.)
+
+What was added on top of the grounding layer below:
+
+- **Answer screen and question form** on `/tutor` (course, question, optional previous offerings), shown only when the tutor is ready. Answers carry a "generated, may be wrong" label, the cited sources with their origin labels, and the passages they were based on.
+- **Grounded and cited**: the provider only receives the student's authorized passages (own notes, sources they may open); it must cite passage ids and an answer citing anything else is refused. If nothing matches, the provider is not called ("no source for this").
+- **French and English**: the question language follows the interface; the provider is told which.
+- **Refuses real-patient clinical questions** (`safety.ts`): heuristic filter in FR and EN ("my patient", "mon patient", "should I prescribe", "quelle dose dois-je..."), applied before consent, retrieval, quota or any provider call; hypothetical and textbook cases pass. A real provider also needs a system prompt with the same rule.
+- **Per-student daily caps**: questions per day (existing), plus **tokens per day** and **cost per day**. Budget is reserved before the call from a cautious estimate (3 characters per token, plus the provider's maximum output) and replaced by the provider's real figures afterwards. Cost uses the provider's declared pricing; no pricing means cost 0 (only the token cap applies).
+- **Abuse limits**: 6 questions per minute per student (rate limiter), 500 characters per question, 200 messages per conversation, 100 conversations per student.
+- **Consent before anything leaves the app**: the student must accept the current consent text (6 bullet points, FR and EN) once; withdrawing is one click; changing the text means raising `TUTOR_CONSENT_VERSION`.
+- **Saved conversations** (only when a provider answered): list, open, continue, delete one, delete all, download as JSON, included in the account data export and removed with the account. Private to the student (not visible to moderators or the administrator).
+- Tables (additive migration 0014): `tutor_consents`, `tutor_conversations`, `tutor_messages`, and three count columns on `tutor_usage`.
+
+## What the owner must decide before turning it on
+
+1. **Provider and hosting location**: which AI vendor, which model, and whether processing outside Canada is acceptable under Law 25. Terms must exclude training on inputs and keep retention minimal.
+2. **Budget**: the monthly ceiling, then the per-student daily token and cost caps and the daily question limit (Admin > AI tutor). Enter the provider's per-million-token prices in its provider file so cost is computed.
+3. **Privacy wording**: the consent text in `tutor.consent.*` (FR and EN) reviewed by whoever handles legal; the privacy policy must name the provider. Raise `TUTOR_CONSENT_VERSION` after any substantive change.
+4. **Clinical scope**: confirm the refusal rule is acceptable, and review the filter's examples. The provider's system prompt must repeat it.
+5. **Student-contributed sources**: whether shared documents and exam questions may be forwarded to the provider (the upload rights checkbox does not cover that).
+6. **Evaluation**: a set of real course questions (including "no source" cases and prompt-injection notes) run against the chosen provider before the switch is flipped.
+
+---
+
+## Original grounding layer notes (Phase 5)
 
 Status: **the tutor is OFF and has no provider. It is planned, not available.** What exists today is the part that does not need an AI: retrieval over the sources a student may open, source citations, a provider interface with nothing behind it, usage limits, and an honest `/tutor` page. **No answer is generated anywhere. No AI provider, no API key, no AI SDK and no network call exist in this code.**
 Built and covered by automated tests (`tests/tutor.test.ts`, `tests/tutor-pure.test.ts`, `tests/tutor-messages.test.ts`); not browser-tested, not committed, not deployed.

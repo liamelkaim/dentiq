@@ -8,7 +8,11 @@ import { writeAudit } from "@/server/audit";
 import { hasRole } from "@/server/auth/roles";
 import type { Viewer } from "@/server/resources/service";
 import {
+  DAILY_COST_CAP_BOUNDS,
   DAILY_QUESTION_LIMIT_BOUNDS,
+  DAILY_TOKEN_LIMIT_BOUNDS,
+  DEFAULT_DAILY_COST_CAP_MICROS,
+  DEFAULT_DAILY_TOKEN_LIMIT,
   DEFAULT_DAILY_QUESTION_LIMIT,
   DEFAULT_MAX_CONTEXT_CHARS,
   DEFAULT_TUTOR_ENABLED,
@@ -21,12 +25,17 @@ export type TutorSettings = {
   enabled: boolean;
   dailyQuestionLimit: number;
   maxContextChars: number;
+  /** Per student per day: tokens (input + output) and cost in millionths of a currency unit. */
+  dailyTokenLimit: number;
+  dailyCostCapMicros: number;
 };
 
 export const DEFAULT_TUTOR_SETTINGS: TutorSettings = {
   enabled: DEFAULT_TUTOR_ENABLED,
   dailyQuestionLimit: DEFAULT_DAILY_QUESTION_LIMIT,
   maxContextChars: DEFAULT_MAX_CONTEXT_CHARS,
+  dailyTokenLimit: DEFAULT_DAILY_TOKEN_LIMIT,
+  dailyCostCapMicros: DEFAULT_DAILY_COST_CAP_MICROS,
 };
 
 const isInt = (v: unknown, [min, max]: readonly [number, number]): v is number =>
@@ -39,13 +48,15 @@ export function normalizeTutorSettings(raw: unknown): TutorSettings {
     enabled: r.enabled === true,
     dailyQuestionLimit: isInt(r.dailyQuestionLimit, DAILY_QUESTION_LIMIT_BOUNDS) ? r.dailyQuestionLimit : DEFAULT_TUTOR_SETTINGS.dailyQuestionLimit,
     maxContextChars: isInt(r.maxContextChars, MAX_CONTEXT_CHARS_BOUNDS) ? r.maxContextChars : DEFAULT_TUTOR_SETTINGS.maxContextChars,
+    dailyTokenLimit: isInt(r.dailyTokenLimit, DAILY_TOKEN_LIMIT_BOUNDS) ? r.dailyTokenLimit : DEFAULT_TUTOR_SETTINGS.dailyTokenLimit,
+    dailyCostCapMicros: isInt(r.dailyCostCapMicros, DAILY_COST_CAP_BOUNDS) ? r.dailyCostCapMicros : DEFAULT_TUTOR_SETTINGS.dailyCostCapMicros,
   };
 }
 
 export type TutorSettingsError = "outOfRange" | "forbidden";
 
 export function validateTutorSettings(s: TutorSettings): boolean {
-  return typeof s.enabled === "boolean" && isInt(s.dailyQuestionLimit, DAILY_QUESTION_LIMIT_BOUNDS) && isInt(s.maxContextChars, MAX_CONTEXT_CHARS_BOUNDS);
+  return typeof s.enabled === "boolean" && isInt(s.dailyQuestionLimit, DAILY_QUESTION_LIMIT_BOUNDS) && isInt(s.maxContextChars, MAX_CONTEXT_CHARS_BOUNDS) && isInt(s.dailyTokenLimit, DAILY_TOKEN_LIMIT_BOUNDS) && isInt(s.dailyCostCapMicros, DAILY_COST_CAP_BOUNDS);
 }
 
 export async function getTutorSettings(db: Database): Promise<TutorSettings> {

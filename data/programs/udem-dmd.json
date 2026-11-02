@@ -1,0 +1,3634 @@
+{
+  "program": {
+    "name_fr": "Doctorat de 1er cycle en médecine dentaire",
+    "name_en": null,
+    "short_name_fr": "Doctorat en médecine dentaire (D.M.D.)",
+    "degree": "D.M.D.",
+    "code": "1-300-1-0",
+    "university": "Université de Montréal",
+    "faculty": "Faculté de médecine dentaire",
+    "years": 5,
+    "termsPerYear": "2 (automne, hiver) for years 1, 2, 3 and 5; 3 (automne, hiver, été) for year 4",
+    "totalCredits": 219,
+    "regime": "Temps plein",
+    "promotion": "Programme à promotion par année",
+    "source": {
+      "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/",
+      "retrieved": "2026-11-01"
+    },
+    "additionalSources": [
+      {
+        "url": "https://medecinedentaire.umontreal.ca/etudes/premier-cycle/",
+        "retrieved": "2026-11-01"
+      },
+      {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      }
+    ],
+    "status": "VERIFIED",
+    "note": "Admission page: 'Temps plein - 5 ans', 219 crédits, code 1-300-1-0. Faculty page: 'Un programme d’une durée de 5 ans pour un total de 219 crédits' and 'La réussite du programme est par année, et non par « cours ».' name_en is null: no official English program name was found (the faculty's /en/ page shows the French title only). termsPerYear is derived from the faculty's per-year course lists (A/H for all years, plus E for year 4)."
+  },
+  "studentEmail": {
+    "domain": "umontreal.ca",
+    "format": "prenom.nom@umontreal.ca",
+    "source": {
+      "url": "https://wiki.umontreal.ca/spaces/SIE/pages/208240871/Comment+acc%C3%A9der+au+courriel",
+      "retrieved": "2026-11-01"
+    },
+    "status": "VERIFIED",
+    "note": "UdeM IT self-service wiki: 'L’adresse de courriel institutionnelle « prenom.nom@umontreal.ca » est réservée aux membres de la communauté universitaire'. Faculty staff addresses also use @medent.umontreal.ca; no page states that D.M.D. students receive a medent subdomain address."
+  },
+  "terms": [
+    {
+      "academicYear": "2026-2027",
+      "term": "fall",
+      "scope": "D.M.D. (faculty calendar)",
+      "start": "2026-08-17",
+      "end": "2026-12-23",
+      "readingWeek": null,
+      "breaks": [
+        {
+          "name_fr": "Congé férié : Fête du travail",
+          "start": "2026-09-07",
+          "end": "2026-09-07"
+        },
+        {
+          "name_fr": "Congé férié : Journée nationale de la vérité et de la réconciliation",
+          "start": "2026-09-30",
+          "end": "2026-09-30"
+        },
+        {
+          "name_fr": "Congé spécial élections 2026 : Suspension de toutes les activités d'enseignement (cours, cliniques, examens)",
+          "start": "2026-10-05",
+          "end": "2026-10-05"
+        },
+        {
+          "name_fr": "Congé férié : Action de grâces",
+          "start": "2026-10-12",
+          "end": "2026-10-12"
+        },
+        {
+          "name_fr": "Congé férié et début des congés d'hiver",
+          "start": "2026-12-24",
+          "end": null
+        }
+      ],
+      "examPeriods": [],
+      "keyDates": [
+        {
+          "label_fr": "D.M.D. : Début des cours et semaine d'intégration (« Semaine du 17 »)",
+          "start": "2026-08-17",
+          "end": "2026-08-17"
+        },
+        {
+          "label_fr": "D.M.D. : Début des activités cliniques",
+          "start": "2026-08-24",
+          "end": "2026-08-24"
+        },
+        {
+          "label_fr": "D.M.D. : Fin des activités cliniques régulières",
+          "start": "2026-12-04",
+          "end": "2026-12-04"
+        },
+        {
+          "label_fr": "Fin du trimestre",
+          "start": "2026-12-23",
+          "end": "2026-12-23"
+        }
+      ],
+      "source": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Calendrier_facultaire/Calendrier-facultaire-2026-2027-MAJ-26.08.06.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Faculty calendar 2026-2027 (update 26.08.06, no longer marked 'Provisoire'). Start is published as 'Semaine du 17' (Monday 2026-08-17). No fall reading week is listed for D.M.D. Exam periods are not published: 'Les horaires d'examens sont communiqués en début de trimestre par le Vice-décanat aux études et affaires étudiantes.' End of winter holidays not stated in the faculty calendar; D.M.D. resumes 2027-01-07."
+    },
+    {
+      "academicYear": "2026-2027",
+      "term": "winter",
+      "scope": "D.M.D. (faculty calendar)",
+      "start": "2027-01-07",
+      "end": "2027-04-30",
+      "readingWeek": {
+        "start": "2027-03-01",
+        "end": "2027-03-07"
+      },
+      "breaks": [
+        {
+          "name_fr": "Congé férié : Vendredi saint",
+          "start": "2027-03-26",
+          "end": "2027-03-26"
+        },
+        {
+          "name_fr": "Congé férié : Lundi de Pâques",
+          "start": "2027-03-29",
+          "end": "2027-03-29"
+        }
+      ],
+      "examPeriods": [],
+      "keyDates": [
+        {
+          "label_fr": "D.M.D. et cycles supérieurs : Jury d'évaluation",
+          "start": "2027-02-11",
+          "end": "2027-02-11"
+        },
+        {
+          "label_fr": "D.M.D. 5e année : Examens écrits du BNED",
+          "start": "2027-03-01",
+          "end": "2027-03-01",
+          "cohortYear": 5
+        },
+        {
+          "label_fr": "D.M.D. et cycles supérieurs : Reprise des cours et des activités cliniques",
+          "start": "2027-03-08",
+          "end": "2027-03-08"
+        },
+        {
+          "label_fr": "D.M.D. : Fin des activités cliniques régulières",
+          "start": "2027-04-14",
+          "end": "2027-04-14"
+        },
+        {
+          "label_fr": "D.M.D. 5e année : Jury d'évaluation",
+          "start": "2027-04-22",
+          "end": "2027-04-22",
+          "cohortYear": 5
+        },
+        {
+          "label_fr": "Fin du trimestre",
+          "start": "2027-04-30",
+          "end": "2027-04-30"
+        }
+      ],
+      "source": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Calendrier_facultaire/Calendrier-facultaire-2026-2027-MAJ-26.08.06.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Reading week published as 'Semaine du 1er [mars] — Semaine de lecture : Période d'activités libres ou de relâche', with D.M.D. resuming Monday 2027-03-08; the end date 2027-03-07 matches the general UdeM calendar ('Du lundi 1er au dimanche 7 mars 2027'). Exam periods not published."
+    },
+    {
+      "academicYear": "2026-2027",
+      "term": "summer",
+      "scope": "D.M.D. (faculty calendar; 4e année only)",
+      "start": "2027-05-03",
+      "end": "2027-08-13",
+      "readingWeek": null,
+      "breaks": [
+        {
+          "name_fr": "Congé férié : Journée nationale des Patriotes",
+          "start": "2027-05-24",
+          "end": "2027-05-24"
+        },
+        {
+          "name_fr": "Congé férié : Fête nationale du Québec",
+          "start": "2027-06-24",
+          "end": "2027-06-24"
+        },
+        {
+          "name_fr": "Congé férié : Fête du Canada",
+          "start": "2027-07-01",
+          "end": "2027-07-01"
+        }
+      ],
+      "examPeriods": [],
+      "keyDates": [
+        {
+          "label_fr": "D.M.D. 4e année : deux semaines de cours intensifs",
+          "start": "2027-05-03",
+          "end": "2027-05-14",
+          "cohortYear": 4
+        },
+        {
+          "label_fr": "D.M.D. 4e année : période de stage clinique et de recherche",
+          "start": "2027-05-17",
+          "end": "2027-08-13",
+          "cohortYear": 4
+        },
+        {
+          "label_fr": "D.M.D. et cycles supérieurs : Jury d'évaluation (published as 'Mercredi 6' mai)",
+          "start": "2027-05-06",
+          "end": "2027-05-06"
+        },
+        {
+          "label_fr": "D.M.D. : Jury d'évaluation (published as 'Jeudi 4' juin)",
+          "start": "2027-06-04",
+          "end": "2027-06-04"
+        },
+        {
+          "label_fr": "Journées dentaires internationales du Québec (JDIQ)",
+          "start": "2027-05-28",
+          "end": "2027-06-01"
+        }
+      ],
+      "source": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Calendrier_facultaire/Calendrier-facultaire-2026-2027-MAJ-26.08.06.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Only the 4th-year cohort has summer courses (per the year-4 course list: 8 courses in term E). Re-sit exams for fall 2026 and winter 2027 (1re-4e année) are listed as 'À confirmer'. Weekday labels on the faculty PDF do not match two dates: 2027-05-06 is a Thursday (labelled Mercredi) and 2027-06-04 is a Friday (labelled Jeudi); confirm with the faculty."
+    },
+    {
+      "academicYear": "2026-2027",
+      "term": "fall",
+      "scope": "UdeM general calendar (Bureau du registraire)",
+      "start": "2026-09-01",
+      "end": "2026-12-23",
+      "readingWeek": {
+        "start": "2026-10-19",
+        "end": "2026-10-25"
+      },
+      "breaks": [
+        {
+          "name_fr": "Congé universitaire – Fête du travail",
+          "start": "2026-09-07",
+          "end": "2026-09-07"
+        },
+        {
+          "name_fr": "Congé universitaire – Journée nationale de la vérité et de la réconciliation",
+          "start": "2026-09-30",
+          "end": "2026-09-30"
+        },
+        {
+          "name_fr": "Congé universitaire – Action de grâce",
+          "start": "2026-10-12",
+          "end": "2026-10-12"
+        },
+        {
+          "name_fr": "Congés universitaires – Fêtes de fin d’année",
+          "start": "2026-12-24",
+          "end": "2027-01-04"
+        }
+      ],
+      "examPeriods": [],
+      "deadlines": [
+        {
+          "label_fr": "Date limite pour la modification des choix de cours",
+          "start": "2026-09-16",
+          "end": "2026-09-16"
+        },
+        {
+          "label_fr": "Date limite pour l'abandon d'un cours",
+          "start": "2026-11-06",
+          "end": "2026-11-06"
+        }
+      ],
+      "source": {
+        "url": "https://registraire.umontreal.ca/fileadmin/registrariat/documents/calendriers/2026-2027_calendrier.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Reading week is published as 'Période d'activités libres dans certaines unités' (not universal). Deadlines carry the footnote 'À moins d’indication contraire inscrite à l’horaire du cours, dans le Centre étudiant.' The general calendar publishes no exam period. Does NOT describe D.M.D. dates (see faculty calendar)."
+    },
+    {
+      "academicYear": "2026-2027",
+      "term": "winter",
+      "scope": "UdeM general calendar (Bureau du registraire)",
+      "start": "2027-01-07",
+      "end": "2027-04-30",
+      "readingWeek": {
+        "start": "2027-03-01",
+        "end": "2027-03-07"
+      },
+      "breaks": [
+        {
+          "name_fr": "Congés de Pâques",
+          "start": "2027-03-26",
+          "end": "2027-03-29"
+        }
+      ],
+      "examPeriods": [],
+      "deadlines": [
+        {
+          "label_fr": "Date limite pour la modification des choix de cours",
+          "start": "2027-01-22",
+          "end": "2027-01-22"
+        },
+        {
+          "label_fr": "Date limite pour l'abandon d'un cours",
+          "start": "2027-03-12",
+          "end": "2027-03-12"
+        }
+      ],
+      "source": {
+        "url": "https://registraire.umontreal.ca/fileadmin/registrariat/documents/calendriers/2026-2027_calendrier.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Easter published as 'Vendredi 26 et lundi 29 mars 2027'. Reading week published as 'Période d'activités libres dans certaines unités'."
+    },
+    {
+      "academicYear": "2026-2027",
+      "term": "summer",
+      "scope": "UdeM general calendar (Bureau du registraire)",
+      "start": "2027-05-03",
+      "end": "2027-08-13",
+      "readingWeek": null,
+      "breaks": [
+        {
+          "name_fr": "Congé universitaire – Journée nationale des Patriotes",
+          "start": "2027-05-24",
+          "end": "2027-05-24"
+        },
+        {
+          "name_fr": "Congé universitaire – Fête nationale du Québec",
+          "start": "2027-06-24",
+          "end": "2027-06-24"
+        },
+        {
+          "name_fr": "Congé universitaire – Fête du Canada",
+          "start": "2027-07-01",
+          "end": "2027-07-01"
+        }
+      ],
+      "examPeriods": [],
+      "deadlines": [
+        {
+          "label_fr": "Date limite pour la modification des choix de cours, session intensive",
+          "start": "2027-05-11",
+          "end": "2027-05-11"
+        },
+        {
+          "label_fr": "Date limite pour la modification des choix de cours, session régulière",
+          "start": "2027-05-18",
+          "end": "2027-05-18"
+        },
+        {
+          "label_fr": "Date limite pour l'abandon d'un cours, session intensive",
+          "start": "2027-06-04",
+          "end": "2027-06-04"
+        },
+        {
+          "label_fr": "Fin du trimestre, session intensive",
+          "start": "2027-06-23",
+          "end": "2027-06-23"
+        },
+        {
+          "label_fr": "Date limite pour l'abandon d'un cours, session régulière",
+          "start": "2027-07-09",
+          "end": "2027-07-09"
+        }
+      ],
+      "source": {
+        "url": "https://registraire.umontreal.ca/fileadmin/registrariat/documents/calendriers/2026-2027_calendrier.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "End date is 'Fin du trimestre, session régulière'. The registrar states: 'L'horaire d'été peut différer d'une faculté à l'autre. Veuillez-vous référer aux calendriers facultaires.'"
+    },
+    {
+      "academicYear": "2027-2028",
+      "term": "fall",
+      "scope": "D.M.D. and UdeM general",
+      "start": null,
+      "end": null,
+      "readingWeek": null,
+      "breaks": [],
+      "examPeriods": [],
+      "source": {
+        "url": "https://registraire.umontreal.ca/dates-importantes/calendriers-universitaires/",
+        "retrieved": "2026-11-01"
+      },
+      "status": "UNVERIFIED",
+      "note": "Not published as of 2026-11-01: the registrar's calendar page lists 2026-2027 as the latest ('en vigueur'); the faculty's Infos académiques page links only the 2026-2027 faculty calendar. Do not fill until published."
+    },
+    {
+      "academicYear": "2027-2028",
+      "term": "winter",
+      "scope": "D.M.D. and UdeM general",
+      "start": null,
+      "end": null,
+      "readingWeek": null,
+      "breaks": [],
+      "examPeriods": [],
+      "source": {
+        "url": "https://registraire.umontreal.ca/dates-importantes/calendriers-universitaires/",
+        "retrieved": "2026-11-01"
+      },
+      "status": "UNVERIFIED",
+      "note": "Not published as of 2026-11-01: the registrar's calendar page lists 2026-2027 as the latest ('en vigueur'); the faculty's Infos académiques page links only the 2026-2027 faculty calendar. Do not fill until published."
+    },
+    {
+      "academicYear": "2027-2028",
+      "term": "summer",
+      "scope": "D.M.D. and UdeM general",
+      "start": null,
+      "end": null,
+      "readingWeek": null,
+      "breaks": [],
+      "examPeriods": [],
+      "source": {
+        "url": "https://registraire.umontreal.ca/dates-importantes/calendriers-universitaires/",
+        "retrieved": "2026-11-01"
+      },
+      "status": "UNVERIFIED",
+      "note": "Not published as of 2026-11-01: the registrar's calendar page lists 2026-2027 as the latest ('en vigueur'); the faculty's Infos académiques page links only the 2026-2027 faculty calendar. Do not fill until published."
+    }
+  ],
+  "courses": [
+    {
+      "code": "DEN 10021",
+      "title_fr": "Observation et assistance cliniques 1",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "DEN 1006",
+      "title_fr": "Introduction à la médecine dentaire",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 3,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "DEN 11001",
+      "title_fr": "Compétences en médecine dentaire 1.1",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "PBC 1050",
+      "title_fr": "Anatomie macroscopique humaine",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "PBC 1060",
+      "title_fr": "Embryologie et histologie humaine",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 3,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "PSL 1982",
+      "title_fr": "Les bases du système nerveux",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "PSY 1960",
+      "title_fr": "Psychologie et médecine dentaire 1",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "SAB 1040A",
+      "title_fr": "Thématiques cliniques en médecine dentaire 1",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 2.5,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "SAB 1040B",
+      "title_fr": "Thématiques cliniques en médecine dentaire 2",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 1.5,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "SAB 1040C",
+      "title_fr": "Thématiques cliniques en médecine dentaire 3",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "SAB 1040D",
+      "title_fr": "Thématiques cliniques en médecine dentaire 4",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 1,
+      "credits": 2.5,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term A (automne) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "DEN 10022",
+      "title_fr": "Observation et assistance cliniques 2",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "DEN 1007",
+      "title_fr": "Préparation à la clinique en médecine dentaire 1",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "DEN 11002",
+      "title_fr": "Compétences en médecine dentaire 1.2",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "DER 1012",
+      "title_fr": "Morphologie dentaire",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 2.5,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "MCB 1097",
+      "title_fr": "Microbiologie et immunologie générales",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "PSL 1993",
+      "title_fr": "Physiologie générale",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "SAB 1017",
+      "title_fr": "Dentisterie préventive préclinique",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "SAB 1040E",
+      "title_fr": "Thématiques cliniques en médecine dentaire 5",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "SAB 1040F",
+      "title_fr": "Thématiques cliniques en médecine dentaire 6",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "SAB 1051",
+      "title_fr": "Intro. à la pratique professionnelle en méd. dent.",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF. Year-1 list PDF writes 'Intro. à la pratique professionnelle en méd. dentaire'."
+    },
+    {
+      "code": "STO 1043",
+      "title_fr": "Odontopharmacothérapie clinique 1",
+      "title_en": null,
+      "programYear": 1,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70A",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_1re_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70A); year and term H (hiver) from the faculty's year-1 course list PDF."
+    },
+    {
+      "code": "DEN 21001",
+      "title_fr": "Compétences en médecine dentaire 2.1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 1010",
+      "title_fr": "Dentisterie opératoire théorique 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 1013",
+      "title_fr": "Dentisterie opératoire préclinique 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 1.5,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 1030",
+      "title_fr": "Matériaux dentaires 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "PBC 1020",
+      "title_fr": "Pathologie générale en dentisterie",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "SAB 20011",
+      "title_fr": "Dentisterie préventive et parodontie cliniques 1.1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "SAB 2051",
+      "title_fr": "Pratique professionnelle en médecine dentaire 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "SAB 2052",
+      "title_fr": "Médecine dentaire factuelle",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 3,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "SAB 2085",
+      "title_fr": "Parodontie théorique 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 3,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "SAB 3040",
+      "title_fr": "Approche populationnelle en médecine dentaire",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "STO 1062",
+      "title_fr": "Radiologie 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "STO 2020A",
+      "title_fr": "Thématiques cliniques en médecine dentaire 7",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 3,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "STO 2020B",
+      "title_fr": "Thématiques cliniques en médecine dentaire 8",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term A (automne) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "CSS 1900",
+      "title_fr": "Collaboration en sciences de la santé 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DEN 21002",
+      "title_fr": "Compétences en médecine dentaire 2.2",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 1001",
+      "title_fr": "Prothèse partielle fixe théorique 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 1004",
+      "title_fr": "Prothèse partielle fixe préclinique 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 1092",
+      "title_fr": "Prothèse complète préclinique 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 1096",
+      "title_fr": "Prothèse complète théorique 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 2003",
+      "title_fr": "Dentisterie opératoire préclinique 2",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DER 2052",
+      "title_fr": "Dentisterie opératoire théorique 2",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "PBC 2030",
+      "title_fr": "Pathologie spéciale en dentisterie",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 4,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "PSY 1979",
+      "title_fr": "Gestion du stress en médecine dentaire",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "SAB 1060",
+      "title_fr": "Croissance et physiologie en orthodontie",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "SAB 20012",
+      "title_fr": "Dentisterie préventive et parodontie cliniques 1.2",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "STO 2035",
+      "title_fr": "Pathologie buccale 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "STO 2061",
+      "title_fr": "Radiologie clinique 1",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 0.5,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "STO 2073",
+      "title_fr": "Interprétation radiologique",
+      "title_en": null,
+      "programYear": 2,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70B",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_2e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70B); year and term H (hiver) from the faculty's year-2 course list PDF."
+    },
+    {
+      "code": "DEN 31001",
+      "title_fr": "Compétences en médecine dentaire 3.1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 20011",
+      "title_fr": "Prothèse partielle fixe théorique 2.1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 20041",
+      "title_fr": "Prothèse partielle fixe préclinique 2.1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 2032",
+      "title_fr": "Matériaux dentaires 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 2092",
+      "title_fr": "Prothèse complète préclinique 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 1.5,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 2098",
+      "title_fr": "Prothèse complète théorique 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 3003",
+      "title_fr": "Dentisterie opératoire préclinique 3",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 1.5,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 3053",
+      "title_fr": "Dentisterie opératoire théorique 3",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 20411",
+      "title_fr": "Occlusion dentaire théorique 1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 20721",
+      "title_fr": "Dentisterie pédiatrique théorique 1.1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 2077",
+      "title_fr": "Dentisterie pédiatrique préclinique",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 1.5,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 30001",
+      "title_fr": "Dentisterie préventive et parodontie cliniques 2.1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 4080",
+      "title_fr": "Parodontie théorique 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 2050",
+      "title_fr": "Anesthésiologie régionale",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 20621",
+      "title_fr": "Radiologie 2.1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 3000",
+      "title_fr": "Raisonnement clinique en médecine dentaire",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 30351",
+      "title_fr": "Pathologie buccale 2.1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 3061",
+      "title_fr": "Radiologie clinique 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 1,
+      "credits": 0.5,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term A (automne) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "CSS 2900",
+      "title_fr": "Collaboration en sciences de la santé 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DEN 3007",
+      "title_fr": "Préparation à la clinique en médecine dentaire 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DEN 31002",
+      "title_fr": "Compétences en médecine dentaire 3.2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 20012",
+      "title_fr": "Prothèse partielle fixe théorique 2.2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 20042",
+      "title_fr": "Prothèse partielle fixe préclinique 2.2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 2022",
+      "title_fr": "Introduction à l'endodontie",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 2023",
+      "title_fr": "Endodontie préclinique",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 2095",
+      "title_fr": "Prothèse complète clinique 1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 2099",
+      "title_fr": "Prothèse complète théorique 3",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 3005",
+      "title_fr": "Dentisterie opératoire clinique 1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 3006",
+      "title_fr": "Prothèse partielle fixe théorique 3",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "DER 3054",
+      "title_fr": "Dentisterie opératoire théorique 4",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 20412",
+      "title_fr": "Occlusion dentaire théorique 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 2043",
+      "title_fr": "Occlusion dentaire préclinique",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 20722",
+      "title_fr": "Dentisterie pédiatrique théorique 1.2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 2079",
+      "title_fr": "Orthodontie préclinique",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 0.5,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "SAB 30002",
+      "title_fr": "Dentisterie préventive et parodontie cliniques 2.2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 20622",
+      "title_fr": "Radiologie 2.2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 30352",
+      "title_fr": "Pathologie buccale 2.2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 3043",
+      "title_fr": "Odontopharmacothérapie clinique 2",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "STO 3069",
+      "title_fr": "Chirurgie buccale et maxillofaciale 1",
+      "title_en": null,
+      "programYear": 3,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70C",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_3e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70C); year and term H (hiver) from the faculty's year-3 course list PDF."
+    },
+    {
+      "code": "CSS 3900",
+      "title_fr": "Collaboration en sciences de la santé 3",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DEN 41001",
+      "title_fr": "Compétences en médecine dentaire 4.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 30041",
+      "title_fr": "Prothèse partielle fixe clinique 1.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 3015",
+      "title_fr": "Prothèse partielle amovible préclinique",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 30221",
+      "title_fr": "Endodontie théorique 1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 3098",
+      "title_fr": "Prothèse partielle amovible théorique",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 4001",
+      "title_fr": "Prothèse partielle fixe théorique 4",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 40051",
+      "title_fr": "Dentisterie opératoire clinique 2.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 40211",
+      "title_fr": "Endodontie clinique 1.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 40951",
+      "title_fr": "Prothèse amovible clinique 1.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 30011",
+      "title_fr": "Dentisterie préventive et parodontie cliniques 3.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 3051",
+      "title_fr": "Pratique professionnelle en médecine dentaire 2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF. Year-4 list PDF writes 'Pratique professionnelle médecine dentaire 2'."
+    },
+    {
+      "code": "SAB 3057",
+      "title_fr": "Préparation à la pratique dentaire privée 1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 3060",
+      "title_fr": "Orthodontie théorique",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 3,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 30781",
+      "title_fr": "Dentisterie pédiatrique clinique 1.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 40731",
+      "title_fr": "Orthodontie clinique 1.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 40921",
+      "title_fr": "Dentisterie pédiatrique théorique 2.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "STO 3080A",
+      "title_fr": "Médecine buccale 1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 2.5,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "STO 30811",
+      "title_fr": "Diagnostic clinique 1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "STO 4069",
+      "title_fr": "Chirurgie buccale et maxillofaciale 2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF. Year-4 list PDF writes 'maxillo-faciale'."
+    },
+    {
+      "code": "STO 40721",
+      "title_fr": "Chirurgie clinique 1.1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term A (automne) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DEN 41002",
+      "title_fr": "Compétences en médecine dentaire 4.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 0,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 30042",
+      "title_fr": "Prothèse partielle fixe clinique 1.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 3017",
+      "title_fr": "Laboratoire d'implantologie",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 30222",
+      "title_fr": "Endodontie théorique 2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 3094",
+      "title_fr": "Réhabilitation implanto-portée 1",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 40052",
+      "title_fr": "Dentisterie opératoire clinique 2.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 40952",
+      "title_fr": "Prothèse amovible clinique 1.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 40212",
+      "title_fr": "Endodontie clinique 1.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DER 4097",
+      "title_fr": "Connaissances de pointe en médecine dentaire",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 30012",
+      "title_fr": "Dentisterie préventive et parodontie cliniques 3.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 30782",
+      "title_fr": "Dentisterie pédiatrique clinique 1.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 40732",
+      "title_fr": "Orthodontie clinique 1.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 40922",
+      "title_fr": "Dentisterie pédiatrique théorique 2.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "STO 3080B",
+      "title_fr": "Médecine buccale 2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 2.5,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "STO 30812",
+      "title_fr": "Diagnostic clinique 2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "STO 4070",
+      "title_fr": "Chirurgie buccale et maxillofaciale 3",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF. Year-4 list PDF writes 'maxillo-faciale'."
+    },
+    {
+      "code": "STO 40722",
+      "title_fr": "Chirurgie clinique 1.2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term H (hiver) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DEN 3051",
+      "title_fr": "Travaux dirigés en médecine dentaire",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 3,
+      "credits": 2,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term E (été) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DEN 3980",
+      "title_fr": "Clinique multidisciplinaire",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 3,
+      "credits": 7,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term E (été) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "DEN 41003",
+      "title_fr": "Compétences en médecine dentaire 4.3",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 3,
+      "credits": 1.5,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term E (été) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 4056",
+      "title_fr": "Préparation à la pratique dentaire privée 2",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 3,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term E (été) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 4076",
+      "title_fr": "Dysfonctions et douleurs buccofaciales",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 3,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term E (été) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "SAB 4087",
+      "title_fr": "Parodontie préclinique",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 3,
+      "credits": 0.5,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term E (été) from the faculty's year-4 course list PDF."
+    },
+    {
+      "code": "STO 4001",
+      "title_fr": "Imagerie maxillofaciale CBCT petit champ",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 3,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term E (été) from the faculty's year-4 course list PDF. Year-4 list PDF writes 'Imagerie buccale et maxillofaciale CBCT petit champ'."
+    },
+    {
+      "code": "STO 4002",
+      "title_fr": "Imagerie maxillofaciale CBCT grand champ",
+      "title_en": null,
+      "programYear": 4,
+      "semester": 3,
+      "credits": 1,
+      "bloc": "70D",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_4e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70D); year and term E (été) from the faculty's year-4 course list PDF. Year-4 list PDF writes 'Imagerie buccale et maxillofaciale CBCT grand champ'."
+    },
+    {
+      "code": "DEN 49951",
+      "title_fr": "Cliniques à options 1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DEN 4996",
+      "title_fr": "Évolution en médecine dentaire factuelle",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DEN 50101",
+      "title_fr": "Médecine dentaire clinique 1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DEN 51001",
+      "title_fr": "Compétences en médecine dentaire 5.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 4082",
+      "title_fr": "Conférences clinico-restauratrices",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 4094",
+      "title_fr": "Réhabilitation implanto-portée 2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 50041",
+      "title_fr": "Prothèse partielle fixe clinique 2.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 50051",
+      "title_fr": "Dentisterie opératoire clinique 3.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 50211",
+      "title_fr": "Endodontie clinique 2.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 50951",
+      "title_fr": "Prothèse amovible clinique 2.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "SAB 40011",
+      "title_fr": "Dentisterie préventive et parodontie cliniques 4.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "SAB 4070",
+      "title_fr": "Conférences clinico-orthodontiques",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "SAB 5040",
+      "title_fr": "Thématiques cliniques en médecine dentaire 9",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 1,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "SAB 50731",
+      "title_fr": "Orthodontie clinique 2.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "SAB 50781",
+      "title_fr": "Dentisterie pédiatrique clinique 2.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "STO 4080",
+      "title_fr": "Médecine buccale 3",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 2,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "STO 40841",
+      "title_fr": "Diagnostic et urgence cliniques 1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "STO 50721",
+      "title_fr": "Chirurgie clinique 2.1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "STO 50811",
+      "title_fr": "Conférences clinico-pathologiques 1",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 1,
+      "credits": 0,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term A (automne) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DEN 49952",
+      "title_fr": "Cliniques à options 2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DEN 50102",
+      "title_fr": "Médecine dentaire clinique 2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 6,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DEN 51002",
+      "title_fr": "Compétences en médecine dentaire 5.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 50042",
+      "title_fr": "Prothèse partielle fixe clinique 2.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 50052",
+      "title_fr": "Dentisterie opératoire clinique 3.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 3,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 50212",
+      "title_fr": "Endodontie clinique 2.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "DER 50952",
+      "title_fr": "Prothèse amovible clinique 2.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "SAB 40012",
+      "title_fr": "Dentisterie préventive et parodontie cliniques 4.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "SAB 50732",
+      "title_fr": "Orthodontie clinique 2.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 1,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "SAB 50782",
+      "title_fr": "Dentisterie pédiatrique clinique 2.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "STO 40842",
+      "title_fr": "Diagnostic et urgence cliniques 2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "STO 50722",
+      "title_fr": "Chirurgie clinique 2.2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 1.5,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    },
+    {
+      "code": "STO 50812",
+      "title_fr": "Conférences clinico-pathologiques 2",
+      "title_en": null,
+      "programYear": 5,
+      "semester": 2,
+      "credits": 2,
+      "bloc": "70E",
+      "source": {
+        "url": "https://admission.umontreal.ca/programmes/doctorat-de-1er-cycle-en-medecine-dentaire/structure-du-programme/",
+        "retrieved": "2026-11-01"
+      },
+      "placementSource": {
+        "url": "https://medecinedentaire.umontreal.ca/fileadmin/medent/documents/Infos_academiques/Liste_cours_DMD/Liste_des_cours_5e_anne%CC%81e_01.pdf",
+        "retrieved": "2026-11-01"
+      },
+      "status": "VERIFIED",
+      "note": "Title and academic credits from the program structure page (bloc 70E); year and term H (hiver) from the faculty's year-5 course list PDF."
+    }
+  ],
+  "notes": [
+    "All data retrieved 2026-11-01 from official Université de Montréal pages only. Students must confirm dates and course lists with the Faculté de médecine dentaire (StudiUM / Centre étudiant).",
+    "D.M.D. follows a faculty-specific calendar that differs from the general UdeM calendar: classes start the week of 2026-08-17 (general: 2026-09-01), there is no fall reading week for D.M.D. (general: 2026-10-19 to 2026-10-25 'dans certaines unités'), and 4th-year students have a summer term (intensive courses and clinical/research internship).",
+    "The registrar's calendars page does not list Médecine dentaire among faculties with their own calendar, but the faculty publishes one on its Infos académiques page.",
+    "Exam periods are not published for D.M.D.; exam schedules are communicated at the start of each term by the Vice-décanat aux études et affaires étudiantes.",
+    "credits = academic credits ('crédit académique', counted in the student record). The faculty course lists also show 'crédits progressifs' (billing/status), which differ for split courses (e.g. x.1 / x.2 pairs where the .1 part has 0 academic credits).",
+    "semester: 1 = automne (A), 2 = hiver (H), 3 = été (E). programYear 1-5 (the program is 5 years; the requested 1-4 range does not cover year 5).",
+    "Course lists by year PDFs are undated on their face; they were linked from the faculty Infos académiques page on 2026-11-01 alongside the 2026-2027 calendar.",
+    "English course titles: none are officially published on the pages consulted; title_en is null for every course."
+  ]
+}

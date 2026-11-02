@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
+import { AskForm } from "@/components/tutor-ask";
 import { PassageCard } from "@/components/tutor-ui";
 import { Badge, Button, EmptyState, Field, Input, Notice, PageHeader, Panel, Section, Select } from "@/components/ui";
 import { getDb } from "@/db/client";
@@ -10,6 +11,8 @@ import { checkRate } from "@/server/rate-limit/guard";
 import { RATE_TUTOR_SEARCH } from "@/server/rate-limit/limits";
 import { canAccessLibrary } from "@/server/resources/service";
 import { QUESTION_MAX_CHARS } from "@/server/tutor/constants";
+import { acceptConsentAction, withdrawConsentAction } from "@/server/tutor/actions";
+import { hasTutorConsent } from "@/server/tutor/consent";
 import { getTutorStatus, searchSources } from "@/server/tutor/service";
 import type { Passage } from "@/server/tutor/types";
 
@@ -43,7 +46,7 @@ export default async function TutorPage({ searchParams }: { searchParams: Promis
 
   const db = getDb();
   const params = await searchParams;
-  const [status, courses] = await Promise.all([getTutorStatus(db), listCourseChoices(db)]);
+  const [status, courses, consented] = await Promise.all([getTutorStatus(db), listCourseChoices(db), hasTutorConsent(db, viewer.id)]);
   const course = courses.find((c) => c.code === first(params.course));
   const q = (first(params.q) ?? "").trim().slice(0, QUESTION_MAX_CHARS);
   const includeHistorical = first(params.historical) === "1";
@@ -63,6 +66,38 @@ export default async function TutorPage({ searchParams }: { searchParams: Promis
       <Notice tone={status.state === "ready" ? "accent" : "warning"} title={t(`status.${status.state}.title`)} className="mb-8">
         {t(`status.${status.state}.body`)}
       </Notice>
+
+      {status.state === "ready" && (
+        <Section title={t("ask.title")} description={t("ask.description")}>
+          {consented ? (
+            <>
+              <AskForm courses={courses.map((c) => ({ id: c.id, label: `${c.code} · ${localized(locale, c.titleFr, c.titleEn)}` }))} />
+              <div className="mt-4 flex flex-wrap items-center gap-4">
+                <a href="/tutor/history" className="inline-flex min-h-11 items-center text-[14px] font-medium text-accent hover:text-accent-hover">
+                  {t("history.link")}
+                </a>
+                <form action={withdrawConsentAction}>
+                  <Button type="submit" variant="ghost" size="sm">
+                    {t("consent.withdraw")}
+                  </Button>
+                </form>
+              </div>
+            </>
+          ) : (
+            <Panel className="flex flex-col gap-3 p-4 sm:p-5">
+              <h3 className="text-[16px] font-semibold">{t("consent.title")}</h3>
+              <ul className="flex list-disc flex-col gap-2 pl-5 text-[14px] text-text-muted">
+                {(["what", "who", "own", "wrong", "noClinical", "withdraw"] as const).map((k) => (
+                  <li key={k}>{t(`consent.points.${k}`)}</li>
+                ))}
+              </ul>
+              <form action={acceptConsentAction}>
+                <Button type="submit">{t("consent.accept")}</Button>
+              </form>
+            </Panel>
+          )}
+        </Section>
+      )}
 
       <Section title={t("search.title")} description={t("search.description")}>
         {courses.length === 0 ? (

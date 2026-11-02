@@ -13,6 +13,10 @@ export type TutorSettingsFormProps = {
   enabled: boolean;
   dailyQuestionLimit: number;
   maxContextChars: number;
+  dailyTokenLimit: number;
+  dailyCostCapMicros: number;
+  tokenBounds: readonly [number, number];
+  costBounds: readonly [number, number];
   dailyBounds: readonly [number, number];
   contextBounds: readonly [number, number];
   providerId: string | null;
@@ -49,6 +53,12 @@ export function TutorSettingsForm(props: TutorSettingsFormProps) {
           </Field>
           <Field label={t("maxContext")} htmlFor={`${id}-ctx`} hint={t("maxContextHint", { min: props.contextBounds[0], max: props.contextBounds[1] })}>
             <Input id={`${id}-ctx`} name="maxContextChars" type="number" inputMode="numeric" min={props.contextBounds[0]} max={props.contextBounds[1]} defaultValue={props.maxContextChars} required aria-describedby={`${id}-ctx-hint`} />
+          </Field>
+          <Field label={t("dailyTokens")} htmlFor={`${id}-tok`} hint={t("dailyTokensHint", { min: props.tokenBounds[0], max: props.tokenBounds[1] })}>
+            <Input id={`${id}-tok`} name="dailyTokenLimit" type="number" inputMode="numeric" min={props.tokenBounds[0]} max={props.tokenBounds[1]} defaultValue={props.dailyTokenLimit} required aria-describedby={`${id}-tok-hint`} />
+          </Field>
+          <Field label={t("dailyCost")} htmlFor={`${id}-cost`} hint={t("dailyCostHint", { min: props.costBounds[0], max: props.costBounds[1] })}>
+            <Input id={`${id}-cost`} name="dailyCostCapMicros" type="number" inputMode="numeric" min={props.costBounds[0]} max={props.costBounds[1]} defaultValue={props.dailyCostCapMicros} required aria-describedby={`${id}-cost-hint`} />
           </Field>
         </fieldset>
       </Panel>

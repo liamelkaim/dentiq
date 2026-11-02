@@ -106,3 +106,7 @@ Code: `src/server/retention/` (`constants.ts`, `service.ts`, `actions.ts`, `cli.
 - Backups are not covered: a database or Blob backup keeps deleted data until it expires (see the legal questions above).
 
 **Scheduling later (not set up, no cron config in the repo):** on the host, run `pnpm retention --apply` (without `--delete-orphans`) from a scheduled job, for example weekly, with the same environment as the app (`DATABASE_URL`, and the Blob settings once the Blob backend supports it). On Vercel this would be a Cron Job calling a protected route or a separate worker; both need new code and a decision, so nothing is wired up. Run `pnpm retention` by hand first and read the report.
+
+## Added 2026-11-02
+
+The account export now also contains: program details (onboarding), class times, followed courses, recordings (details and notes, not the files), saved tutor conversations with consent, and feedback the student sent. Deleting the account removes all of these, deletes recording files from storage, erases feedback (text and contact email) and clears the matching audit ids.

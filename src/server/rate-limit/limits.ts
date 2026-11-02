@@ -24,3 +24,12 @@ export const RATE_CALENDAR_EXPORT: RateRule = { name: "calendar-export", limit: 
 export function rateKey(rule: RateRule, userId: string): string {
   return `${rule.name}:${userId}`;
 }
+
+/** Calendar (.ics) imports: each one parses a file and writes rows. */
+export const RATE_CALENDAR_IMPORT: RateRule = { name: "calendar-import", limit: 5, windowSeconds: 60 };
+
+/** Questions sent to the tutor: a few per minute per student (the daily question, token and cost caps are separate). */
+export const RATE_TUTOR_ASK: RateRule = { name: "tutor-ask", limit: 6, windowSeconds: 60 };
+
+/** Feedback form: a few messages per hour per signed-in user (or per client address when signed out). */
+export const RATE_FEEDBACK: RateRule = { name: "feedback", limit: 5, windowSeconds: 60 * 60 };

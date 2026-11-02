@@ -53,6 +53,19 @@ export function KindBadge({ kind }: { kind: CalendarEntryKind }) {
   return <Badge tone={kind === "exam" ? "danger" : kind === "assignment" ? "warning" : kind === "study_session" ? "accent" : "neutral"}>{t(kind)}</Badge>;
 }
 
+/** Label for rows that come from the schedule (a class) or from the university term data (term, reading week, exams). */
+export function VirtualBadge({ entry }: { entry: CalendarEntry }) {
+  const t = useTranslations("calendar.markers");
+  const v = entry.virtual!;
+  if (v.type === "class") return <Badge tone="accent">{t("class")}</Badge>;
+  return (
+    <>
+      <Badge tone={entry.virtual?.markerKind === "exam_period" ? "danger" : "neutral"}>{t(v.markerKind ?? "break")}</Badge>
+      {v.verified === false && <Badge tone="warning">{t("unverified")}</Badge>}
+    </>
+  );
+}
+
 /** "Today" / "In 3 days" for an entry that is today or later. Past entries get no text. */
 export function DaysUntil({ today, date }: { today: string; date: string }) {
   const t = useTranslations("calendar.agenda");
@@ -251,18 +264,20 @@ export function AgendaList({ entries, today }: { entries: CalendarEntry[]; today
                 <span className="min-w-0 flex-1">
                   <span className="block text-[15px] font-medium break-words">{e.title}</span>
                   <span className="mt-1 flex flex-wrap items-center gap-1.5">
-                    <KindBadge kind={e.kind} />
+                    {e.virtual ? <VirtualBadge entry={e} /> : <KindBadge kind={e.kind} />}
                     {e.courseCode && <span className="text-[13px] text-text-subtle">{e.courseCode}</span>}
                   </span>
                   {e.note && <span className="mt-1 block text-[13px] break-words whitespace-pre-line text-text-muted">{e.note}</span>}
                 </span>
-                <Link
-                  href={`/calendar/${e.id}`}
-                  aria-label={t("editLabel", { title: e.title })}
-                  className="inline-flex h-11 shrink-0 items-center rounded-[10px] px-3 text-[14px] font-medium text-accent hover:bg-surface-muted sm:h-10"
-                >
-                  {t("edit")}
-                </Link>
+                {!e.virtual && (
+                  <Link
+                    href={`/calendar/${e.id}`}
+                    aria-label={t("editLabel", { title: e.title })}
+                    className="inline-flex h-11 shrink-0 items-center rounded-[10px] px-3 text-[14px] font-medium text-accent hover:bg-surface-muted sm:h-10"
+                  >
+                    {t("edit")}
+                  </Link>
+                )}
               </li>
             ))}
           </List>

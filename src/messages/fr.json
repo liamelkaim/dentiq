@@ -14,7 +14,11 @@
     "none": "Aucun",
     "saved": "Enregistré.",
     "planned": "Prévu",
-    "skipToContent": "Aller au contenu"
+    "skipToContent": "Aller au contenu",
+    "footerNav": "Liens de bas de page",
+    "mainNavPublic": "Navigation principale",
+    "help": "Aide",
+    "contact": "Nous joindre"
   },
   "nav": {
     "main": "Navigation principale",
@@ -36,7 +40,9 @@
     "calendar": "Calendrier",
     "off": "Désactivé",
     "profile": "Profil",
-    "notes": "Notes"
+    "notes": "Notes",
+    "menu": "Menu",
+    "closeMenu": "Fermer le menu"
   },
   "home": {
     "welcome": "Bon retour, {name}.",
@@ -133,7 +139,9 @@
       "subtitle": "Accédez à vos cours et à vos ressources.",
       "submit": "Se connecter",
       "noAccount": "Pas encore de compte?",
-      "createAccount": "Créer un compte"
+      "createAccount": "Créer un compte",
+      "forgot": "Mot de passe oublié?",
+      "resetDone": "Mot de passe modifié. Connectez-vous avec le nouveau."
     },
     "signUp": {
       "title": "Créer un compte",
@@ -161,7 +169,37 @@
       "domainNotAllowed": "Cette adresse courriel n'est pas acceptée pour l'instant.",
       "weakPassword": "Le mot de passe doit contenir au moins 10 caractères.",
       "tooManyRequests": "Trop de tentatives. Réessayez dans une minute.",
-      "generic": "Une erreur est survenue. Réessayez."
+      "generic": "Une erreur est survenue. Réessayez.",
+      "passwordMismatch": "Les deux mots de passe ne correspondent pas.",
+      "resetLinkInvalid": "Ce lien de réinitialisation est invalide ou expiré. Demandez-en un nouveau."
+    },
+    "forgot": {
+      "title": "Réinitialiser votre mot de passe",
+      "subtitle": "Entrez votre adresse courriel. Si un compte existe, nous envoyons un lien valide une heure.",
+      "submit": "Envoyer le lien",
+      "sent": "Si un compte existe pour cette adresse, un lien de réinitialisation est en route. Vérifiez votre boîte de réception et vos indésirables.",
+      "back": "Retour à la connexion"
+    },
+    "reset": {
+      "title": "Choisir un nouveau mot de passe",
+      "subtitle": "Au moins 10 caractères. Vous serez déconnecté des autres appareils.",
+      "newPassword": "Nouveau mot de passe",
+      "confirm": "Confirmer le nouveau mot de passe",
+      "submit": "Enregistrer le mot de passe",
+      "invalid": "Ce lien de réinitialisation est invalide ou expiré. Demandez-en un nouveau.",
+      "requestNew": "Demander un nouveau lien"
+    },
+    "resend": {
+      "submit": "Envoyer un nouveau lien de confirmation",
+      "sent": "Si cette adresse a un compte non confirmé, un nouveau lien est en route."
+    },
+    "verifyResult": {
+      "title": "Confirmation du courriel",
+      "doneTitle": "Courriel confirmé",
+      "doneBody": "Votre adresse est confirmée. Connectez-vous pour continuer.",
+      "signIn": "Se connecter",
+      "expiredTitle": "Ce lien ne fonctionne plus",
+      "expiredBody": "Le lien de confirmation a expiré ou a déjà été utilisé. Entrez votre adresse pour en recevoir un nouveau."
     }
   },
   "dashboard": {
@@ -251,7 +289,8 @@
     "emailVerified": "Courriel confirmé",
     "profileTitle": "Profil et données",
     "profileHelp": "Modifiez votre nom affiché, téléchargez une copie de vos données ou supprimez votre compte.",
-    "openProfile": "Ouvrir le profil"
+    "openProfile": "Ouvrir le profil",
+    "helpLink": "Aide et informations de programme"
   },
   "admin": {
     "title": "Administration",
@@ -335,7 +374,51 @@
     "tutor": "Réglages du tuteur IA",
     "tutorHelp": "Désactivé. Il faut un fournisseur et un budget.",
     "retention": "Conservation des fichiers",
-    "retentionHelp": "Examiner et supprimer les anciens fichiers retirés. Simulation d'abord."
+    "retentionHelp": "Examiner et supprimer les anciens fichiers retirés. Simulation d'abord.",
+    "domains": {
+      "title": "Domaines courriel",
+      "adminHelp": "Qui peut s’inscrire : préréglages universitaires et domaines.",
+      "subtitle": "Seules les adresses de ces domaines peuvent créer un compte étudiant. Un domaine autorise aussi ses sous-domaines.",
+      "label": "Domaines autorisés",
+      "hint": "Un par ligne ou séparés par des virgules, par exemple umontreal.ca.",
+      "presetUdem": "Utiliser l’Université de Montréal (umontreal.ca)",
+      "save": "Enregistrer",
+      "saved": "Enregistré.",
+      "invalid": "Une des entrées n’est pas un domaine valide (par exemple umontreal.ca).",
+      "forbidden": "Seul l’administrateur peut modifier ceci.",
+      "inForce": "En vigueur : {domains}",
+      "openSignup": "Aucun domaine n’est défini : n’importe quelle adresse peut s’inscrire. Ajoutez un domaine avant d’ouvrir l’application aux étudiants.",
+      "unverified": "NON VÉRIFIÉ : confirmez auprès de la faculté les adresses utilisées par ses étudiants avant de vous fier au préréglage. L’adresse de l’administrateur est toujours acceptée.",
+      "resendNote": "L’envoi de courriels à de vrais étudiants exige un domaine vérifié dans Resend. D’ici là, les messages ne sont affichés que dans la console du serveur."
+    },
+    "program": {
+      "title": "Données du programme UdeM",
+      "adminHelp": "Charger les cours et le calendrier du D.M.D. depuis les pages officielles.",
+      "subtitle": "Charge dans le catalogue les cours du D.M.D. de l’Université de Montréal (par année et session) et le calendrier de la faculté. Peut être relancé sans risque.",
+      "verify": "Les données ont été copiées des pages officielles de l’UdeM le 2026-11-01 et peuvent changer. Les étudiants sont invités à confirmer les dates et les cours auprès de la faculté. Les sessions de 2027-2028 ne sont pas encore publiées et ne sont pas chargées.",
+      "load": "Charger les données D.M.D. de l’UdeM",
+      "done": "{courses} cours, {terms} sessions et {periods} congés ou périodes chargés.",
+      "error": "Impossible de charger les données. Consultez le journal du serveur.",
+      "sources": "Les sources et les dates de consultation sont listées dans docs/udem-research.md et enregistrées sur chaque cours et session."
+    },
+    "recordings": {
+      "title": "Enregistrements",
+      "adminHelp": "Activer ou désactiver les enregistrements et fixer les limites de taille."
+    },
+    "feedback": {
+      "title": "Commentaires",
+      "adminHelp": "Lire les messages reçus et les marquer comme traités.",
+      "subtitle": "Messages du bouton Commentaires.",
+      "filter": "Filtre",
+      "new": "Nouveaux",
+      "all": "Tous",
+      "done": "Traité",
+      "markDone": "Marquer comme traité",
+      "reopen": "Rouvrir",
+      "replyTo": "Répondre à :",
+      "emptyTitle": "Rien ici",
+      "emptyBody": "Aucun commentaire dans cette vue."
+    }
   },
   "resources": {
     "title": "Ressources",
@@ -510,7 +593,8 @@
     "errorTitle": "Quelque chose n'a pas fonctionné",
     "errorBody": "Un problème est survenu de notre côté. Vous pouvez réessayer.",
     "reference": "Référence : {code}",
-    "goHome": "Retour à l'accueil"
+    "goHome": "Retour à l'accueil",
+    "quotaExceeded": "Vous avez utilisé tout votre espace de téléversement. Supprimez un ancien document ou demandez à un modérateur."
   },
   "apiErrors": {
     "tooManyExports": "Trop d'exportations, réessayez plus tard.",
@@ -630,8 +714,15 @@
       "apply": "Filtrer",
       "reset": "Réinitialiser"
     },
-    "queue": { "title": "File de révision", "reviewLater": "Questions à revoir", "flagged": "Questions signalées" },
-    "preview": { "hint": "Les réponses et explications sont sur la page de la question.", "open": "Ouvrir la question" },
+    "queue": {
+      "title": "File de révision",
+      "reviewLater": "Questions à revoir",
+      "flagged": "Questions signalées"
+    },
+    "preview": {
+      "hint": "Les réponses et explications sont sur la page de la question.",
+      "open": "Ouvrir la question"
+    },
     "browser": {
       "count": "{count, plural, =0 {Aucune question} one {# question} other {# questions}}",
       "noResults": "Aucune question ne correspond",
@@ -1562,7 +1653,7 @@
   },
   "calendar": {
     "title": "Calendrier",
-    "subtitle": "Vos propres dates : examens, travaux et séances d'étude. Dentiq n'ajoute jamais de dates à votre place.",
+    "subtitle": "Vos examens, travaux et séances d'étude, vos heures de cours, ainsi que les sessions et congés de votre université. Dentiq ne devine jamais vos dates d'examen.",
     "privacy": "Votre calendrier est privé. Vous seul·e pouvez voir ces entrées.",
     "noAccess": "Le calendrier est réservé aux membres approuvés.",
     "kinds": {
@@ -1604,7 +1695,7 @@
     },
     "empty": {
       "title": "Votre calendrier est vide",
-      "body": "Dentiq ne connaît pas vos dates d'examen et ne les devine pas. Ajoutez les dates que vous connaissez : examens, échéances de travaux, séances d'étude. Vous seul·e les voyez.",
+      "body": "Dentiq ne connaît pas vos dates d'examen et ne les devine pas. Ajoutez les dates que vous connaissez, configurez vos heures de cours hebdomadaires ou importez un fichier de calendrier. Vous seul·e les voyez.",
       "action": "Ajouter votre première entrée"
     },
     "form": {
@@ -1644,6 +1735,20 @@
       "invalidDate": "Cette date n'existe pas.",
       "dateOutOfRange": "Cette date est hors des années acceptées par le calendrier.",
       "invalidTime": "Saisissez une heure comme 14:30, ou laissez vide."
+    },
+    "schedule": {
+      "link": "Mon horaire",
+      "verifyNote": "Les sessions, congés et périodes d’examens marqués « non confirmé » doivent être vérifiés auprès de votre faculté."
+    },
+    "markers": {
+      "class": "Cours",
+      "term_start": "Début de session",
+      "term_end": "Fin de session",
+      "reading_week": "Semaine de lecture",
+      "break": "Congé",
+      "holiday": "Jour férié",
+      "exam_period": "Période d’examens",
+      "unverified": "Non confirmé"
     }
   },
   "analytics": {
@@ -1766,7 +1871,7 @@
       },
       "ready": {
         "title": "Un fournisseur est configuré",
-        "body": "Le tuteur est activé et un fournisseur existe sur le serveur. Le formulaire de questions correspondant n'a pas encore été construit ni vérifié, il n'est donc pas proposé ici."
+        "body": "Le tuteur est activé. Vous pouvez poser une question ci-dessous après avoir accepté l'avis de consentement."
       }
     },
     "search": {
@@ -1843,7 +1948,12 @@
       "badCitations": "La réponse a été refusée parce qu'elle citait une source qui n'avait pas été fournie.",
       "outOfRange": "Une valeur est hors limites. Utilisez des nombres entiers dans les limites indiquées.",
       "forbidden": "Seuls les administrateurs peuvent modifier ces réglages.",
-      "invalid": "Une erreur est survenue."
+      "invalid": "Une erreur est survenue.",
+      "tokenLimit": "Vous avez atteint votre allocation quotidienne pour le tuteur. Elle se renouvelle demain.",
+      "costLimit": "Vous avez atteint votre allocation quotidienne pour le tuteur. Elle se renouvelle demain.",
+      "tooFast": "Vous posez des questions très vite. Attendez une minute et réessayez.",
+      "consentRequired": "Veuillez lire et accepter l'avis de consentement avant de poser une question.",
+      "patientAdvice": "Le tuteur ne peut pas donner de conseils sur un vrai patient. Veuillez consulter votre superviseur clinique ou suivre le protocole de votre clinique."
     },
     "admin": {
       "title": "Réglages du tuteur IA",
@@ -1860,7 +1970,55 @@
       "maxContext": "Caractères de sources par question",
       "maxContextHint": "Entre {min} et {max}. La plus grande quantité de texte de sources qui serait envoyée avec une question.",
       "save": "Enregistrer les réglages",
-      "saved": "Réglages enregistrés."
+      "saved": "Réglages enregistrés.",
+      "dailyTokens": "Jetons par étudiant par jour",
+      "dailyTokensHint": "Entrée plus sortie. De {min} à {max}.",
+      "dailyCost": "Plafond de coût par étudiant par jour (millionièmes d'unité monétaire)",
+      "dailyCostHint": "De {min} à {max}. 100000 correspond à 0,10 de l'unité dans laquelle vous payez."
+    },
+    "ask": {
+      "title": "Poser une question au tuteur",
+      "description": "Les réponses viennent uniquement de vos notes et des sources de cours que vous pouvez ouvrir, et les citent toujours.",
+      "notClinical": "Le tuteur est un outil d'étude. Il ne donne aucun conseil sur un vrai patient : demandez à votre superviseur clinique.",
+      "question": "Votre question",
+      "questionHint": "Jusqu'à {max} caractères. N'incluez aucun nom ni détail qui identifie un patient.",
+      "submit": "Demander",
+      "thinking": "En cours…",
+      "generated": "Réponse générée, peut être erronée",
+      "sources": "Sources citées",
+      "noCitations": "Cette réponse ne cite aucune source.",
+      "showPassages": "Voir {count, plural, one {le # passage} other {les # passages}} sur lesquels la réponse s'appuie",
+      "usage": "Questions aujourd'hui : {used} sur {limit}.",
+      "openConversation": "Ouvrir cette conversation",
+      "noSourcesTitle": "Aucune source pour cela",
+      "noSources": "Rien dans les sources que vous pouvez ouvrir pour ce cours ne correspond à votre question : le tuteur ne devine pas. Essayez d'autres mots, ou un autre cours."
+    },
+    "consent": {
+      "title": "Avant votre première question",
+      "accept": "Je comprends et j'accepte",
+      "withdraw": "Retirer mon consentement",
+      "points": {
+        "what": "Poser une question envoie votre question et les extraits correspondants à un service d'IA extérieur à Dentiq pour rédiger la réponse.",
+        "who": "Les extraits peuvent provenir de vos notes privées. Ils ne sont envoyés que pour la question posée, sans nom, courriel ni identifiant de compte.",
+        "own": "Seuls vos propres notes et les sources que vous pouvez déjà ouvrir sont utilisées, jamais le matériel privé d'un autre étudiant.",
+        "wrong": "Les réponses sont générées et peuvent être erronées. Vérifiez-les avec votre matériel de cours.",
+        "noClinical": "Le tuteur ne donne pas de conseils sur de vrais patients.",
+        "withdraw": "Vous pouvez retirer ce consentement en tout temps et supprimer vos conversations enregistrées."
+      }
+    },
+    "history": {
+      "link": "Conversations enregistrées",
+      "title": "Conversations enregistrées",
+      "subtitle": "Vos questions et les réponses du tuteur, gardées privées.",
+      "privacy": "Vous seul·e pouvez les voir, pas même l'administrateur.",
+      "listTitle": "Vos conversations",
+      "emptyTitle": "Aucune conversation",
+      "emptyBody": "Elles apparaissent ici après qu'une réponse a été donnée.",
+      "you": "Vous",
+      "delete": "Supprimer cette conversation",
+      "deleteAll": "Supprimer toutes les conversations",
+      "export": "Télécharger mes conversations (JSON)",
+      "manage": "Vos données"
     }
   },
   "account": {
@@ -1986,5 +2144,328 @@
   "shell": {
     "searchLabel": "Rechercher",
     "searchPlaceholder": "Rechercher cours, notes, sujets…"
+  },
+  "onboarding": {
+    "title": "Bienvenue sur Dentiq",
+    "intro": "Trois questions rapides pour adapter l’application à votre programme. Tout est facultatif et modifiable plus tard.",
+    "university": "Université",
+    "universityHelp": "Les préréglages ne font que proposer des valeurs. Vérifiez les dates et les cours auprès de votre faculté.",
+    "programYear": "Année du programme",
+    "semester": "Session",
+    "semesterHelp": "1 est la première session de votre année, et ainsi de suite.",
+    "choose": "Choisir…",
+    "presets": {
+      "udem": "Université de Montréal",
+      "other": "Une autre université"
+    },
+    "yearOption": "Année {n}",
+    "semesterOption": "Session {n}",
+    "save": "Enregistrer et continuer",
+    "skip": "Passer pour l’instant",
+    "error": "Impossible d’enregistrer vos réponses. Vérifiez les choix et réessayez."
+  },
+  "help": {
+    "title": "Aide",
+    "intro": "Réponses courtes sur le fonctionnement de Dentiq.",
+    "redoOnboarding": "Modifier mes informations de programme",
+    "privacyLink": "Politique de confidentialité",
+    "topics": {
+      "start": {
+        "title": "Pour commencer",
+        "body": "Choisissez vos cours dans la page Cours, puis ajoutez des notes ou parcourez les anciens examens (passes). Vos réponses aux premières questions ne servent qu’à personnaliser les suggestions."
+      },
+      "notes": {
+        "title": "Notes",
+        "body": "Les notes sont privées, sauf si vous choisissez de partager un document. Chaque enregistrement garde une version à laquelle revenir."
+      },
+      "passes": {
+        "title": "Passes",
+        "body": "Les passes sont d’anciennes questions d’examen. Une réponse est dite proposée tant qu’un modérateur ne l’a pas vérifiée; comparez toujours avec votre matériel de cours."
+      },
+      "calendar": {
+        "title": "Calendrier",
+        "body": "Le calendrier n’affiche que les entrées que vous ajoutez. Les dates issues des préréglages doivent être confirmées auprès de votre faculté."
+      },
+      "privacy": {
+        "title": "Confidentialité",
+        "body": "Vos notes et vos données d’étude sont privées et ne sont envoyées à aucun tiers. Vous pouvez exporter ou supprimer vos données depuis votre profil."
+      },
+      "account": {
+        "title": "Compte",
+        "body": "Changez votre nom, téléchargez vos données ou supprimez votre compte depuis la page Profil."
+      }
+    }
+  },
+  "schedule": {
+    "title": "Mon horaire",
+    "subtitle": "Vos heures de cours, avec les sessions et les congés de votre université.",
+    "saved": "Enregistré.",
+    "verifyTitle": "À vérifier auprès de votre faculté",
+    "verifyBody": "Les dates de session, les congés et les périodes d’examens proviennent de pages universitaires publiques et peuvent changer ou être incomplètes. Confirmez-les toujours auprès de votre faculté. Vous pouvez ajouter ou modifier vos propres heures de cours en tout temps.",
+    "terms": {
+      "title": "Session en cours et prochaine session",
+      "help": "D’après le préréglage d’université choisi.",
+      "noPreset": "Choisissez une université dans Aide > Modifier mes informations de programme pour voir ses dates de session.",
+      "none": "Aucune donnée de session n’est encore chargée pour votre université.",
+      "names": {
+        "fall": "Automne",
+        "winter": "Hiver",
+        "summer": "Été"
+      },
+      "verified": "Confirmé sur une page officielle",
+      "unverified": "Non confirmé : vérifiez auprès de votre faculté",
+      "range": "du {from} au {to}"
+    },
+    "blocks": {
+      "title": "Heures de cours hebdomadaires",
+      "emptyTitle": "Aucune heure de cours pour l’instant",
+      "emptyBody": "Ajoutez chaque cours ci-dessous, ou importez un fichier de calendrier (.ics) de votre université ou d’une autre application.",
+      "delete": "Supprimer",
+      "deleteLabel": "Supprimer {title}"
+    },
+    "form": {
+      "heading": "Ajouter une heure de cours",
+      "title": "Titre",
+      "course": "Cours",
+      "courseHint": "Facultatif.",
+      "noCourse": "Aucun cours",
+      "weekday": "Jour",
+      "start": "Début",
+      "end": "Fin",
+      "from": "Premier jour",
+      "to": "Dernier jour",
+      "location": "Local ou lieu (facultatif)",
+      "add": "Ajouter l’heure de cours"
+    },
+    "weekdays": {
+      "1": "Lundi",
+      "2": "Mardi",
+      "3": "Mercredi",
+      "4": "Jeudi",
+      "5": "Vendredi",
+      "6": "Samedi",
+      "7": "Dimanche"
+    },
+    "follow": {
+      "title": "Cours de votre année et de votre session",
+      "help": "Cours listés pour l’année {year} dans le catalogue. Suivre un cours ne concerne que vous.",
+      "noProfile": "Indiquez votre année de programme dans Aide > Modifier mes informations de programme pour voir des suggestions.",
+      "empty": "Aucun cours n’est encore listé dans le catalogue pour votre année et votre session.",
+      "add": "Suivre",
+      "remove": "Ne plus suivre"
+    },
+    "import": {
+      "title": "Importer ou exporter",
+      "help": "Importez un fichier .ics que vous avez choisi. Rien n’est récupéré sur Internet et aucune connexion n’est utilisée.",
+      "file": "Fichier de calendrier (.ics)",
+      "hint": "Jusqu’à 512 Ko. Les événements hebdomadaires deviennent des heures de cours; les autres deviennent des entrées de calendrier.",
+      "submit": "Importer",
+      "done": "{entries} entrées et {blocks} heures de cours importées. Ignorées : {skipped}.",
+      "exportClasses": "Télécharger mes heures de cours (.ics)"
+    },
+    "errors": {
+      "nothingToImport": "Aucun événement utilisable dans ce fichier.",
+      "fileTooLarge": "Ce fichier est trop volumineux (512 Ko maximum).",
+      "tooManyAttempts": "Trop d’importations. Réessayez dans une minute.",
+      "limitReached": "Vous avez atteint la limite d’heures de cours.",
+      "forbidden": "Votre compte doit d’abord être approuvé.",
+      "endBeforeStart": "La fin doit être après le début.",
+      "invalidTime": "Entrez une heure valide."
+    }
+  },
+  "recordings": {
+    "title": "Enregistrements",
+    "subtitle": "Vos propres enregistrements de cours, privés.",
+    "noAccess": "Votre compte doit être approuvé avant d'utiliser les enregistrements.",
+    "privacyTitle": "Privé par conception",
+    "privacy": "Vous seul·e pouvez voir, lire ou supprimer vos enregistrements, pas même l'administrateur. Ils ne sont jamais envoyés à un service de transcription ou d'IA.",
+    "offTitle": "Les envois sont désactivés",
+    "off": "L'administrateur n'a pas activé les enregistrements : vous ne pouvez pas en ajouter. Vos enregistrements existants restent disponibles.",
+    "transcriptionOff": "La transcription automatique n'est pas disponible.",
+    "helpLink": "Aide",
+    "list": {
+      "title": "Vos enregistrements",
+      "usage": "Espace utilisé : {used} Mo sur {quota} Mo.",
+      "emptyTitle": "Aucun enregistrement",
+      "emptyBody": "Ajoutez un cours que vous avez le droit d'enregistrer. Vous pouvez le réécouter à votre rythme et écrire des notes liées à des moments précis.",
+      "emptyOff": "Les enregistrements ne sont pas encore activés."
+    },
+    "form": {
+      "heading": "Ajouter un enregistrement",
+      "help": "Audio (mp3, m4a, wav, ogg, webm) ou vidéo (mp4, webm).",
+      "title": "Titre",
+      "course": "Cours",
+      "noCourse": "Aucun cours",
+      "optional": "Facultatif.",
+      "lecturer": "Enseignant·e qui l'a permis",
+      "file": "Fichier",
+      "fileHint": "Jusqu'à {max} Mo.",
+      "submit": "Ajouter l'enregistrement",
+      "uploading": "Envoi en cours…"
+    },
+    "consent": {
+      "title": "Avant de l'ajouter",
+      "intro": "Enregistrer un cours exige la permission de l'enseignant·e. Cochez chaque case pour continuer.",
+      "recordingAllowed": "J'ai le droit d'enregistrer ce cours.",
+      "lecturerPermission": "L'enseignant·e a accepté que je l'enregistre pour mes propres études.",
+      "privateUse": "Je le garderai privé et ne le partagerai pas."
+    },
+    "player": {
+      "speed": "Vitesse de lecture"
+    },
+    "notes": {
+      "title": "Vos notes",
+      "emptyTitle": "Aucune note",
+      "emptyBody": "Écrivez une note, et au besoin la seconde à laquelle elle se rapporte.",
+      "general": "Générale",
+      "body": "Note",
+      "at": "À la seconde",
+      "atHint": "Facultatif.",
+      "useCurrent": "Utiliser le temps actuel",
+      "add": "Ajouter la note",
+      "delete": "Supprimer",
+      "deleteLabel": "Supprimer cette note"
+    },
+    "delete": {
+      "title": "Supprimer cet enregistrement",
+      "help": "Supprime définitivement le fichier et vos notes. Consentement confirmé le {date}.",
+      "action": "Supprimer l'enregistrement"
+    },
+    "errors": {
+      "disabled": "Les enregistrements sont désactivés par l'administrateur.",
+      "forbidden": "Votre compte doit d'abord être approuvé.",
+      "consentRequired": "Cochez les trois cases pour confirmer que vous pouvez enregistrer et conserver ce cours.",
+      "titleRequired": "Donnez un titre à l'enregistrement.",
+      "fileMissing": "Choisissez un fichier.",
+      "fileTooLarge": "Ce fichier dépasse la limite.",
+      "fileType": "Ce fichier n'est pas un format audio ou vidéo accepté.",
+      "limitReached": "Vous avez atteint la limite.",
+      "quotaExceeded": "Cela dépasserait votre espace de stockage. Supprimez d'abord un enregistrement.",
+      "invalid": "Un champ du formulaire n'est pas valide.",
+      "notFound": "Cet enregistrement est introuvable.",
+      "noteRequired": "Écrivez quelque chose dans la note.",
+      "noteTooLong": "La note est trop longue."
+    },
+    "admin": {
+      "title": "Enregistrements",
+      "adminHelp": "Activer ou désactiver les enregistrements et fixer les limites de taille.",
+      "subtitle": "Les enregistrements de cours sont DÉSACTIVÉS par défaut.",
+      "warningTitle": "Avant de l'activer",
+      "warning": "Les enregistrements sont des données personnelles privées (Loi 25 du Québec) et exigent la permission de l'enseignant·e. Chaque étudiant·e doit cocher une liste de consentement à l'envoi. L'activer n'active pas la transcription : aucun fournisseur n'existe.",
+      "enabled": "Permettre aux étudiants d'envoyer des enregistrements",
+      "maxFile": "Fichier maximal (Mo)",
+      "maxFileHint": "De 1 à 500.",
+      "quota": "Espace par étudiant (Mo)",
+      "quotaHint": "Au moins la taille du plus gros fichier.",
+      "save": "Enregistrer",
+      "saved": "Enregistré.",
+      "outOfRange": "Ces valeurs sont hors limites.",
+      "hosting": "Hébergement : les fichiers utilisent le stockage Blob (environ 1 Go au total en gratuit) et, sur Vercel, le corps d'une requête est limité à 4,5 Mo : les gros envois ne fonctionnent donc qu'en local tant que l'envoi direct vers le stockage n'est pas construit. Voir docs/recordings.md."
+    }
+  },
+  "feedback": {
+    "button": "Commentaires",
+    "title": "Envoyer des commentaires",
+    "thanksTitle": "Merci",
+    "thanksBody": "Votre message a été envoyé. Nous les lisons tous.",
+    "warning": "N'incluez pas de mots de passe, de renseignements de santé ni rien qui identifie un patient.",
+    "type": "De quoi s'agit-il?",
+    "types": {
+      "bug": "Quelque chose ne fonctionne pas",
+      "idea": "Une idée",
+      "question": "Une question",
+      "other": "Autre chose"
+    },
+    "message": "Votre message",
+    "messageHint": "Au moins 5 et au plus {max} caractères.",
+    "email": "Votre courriel (facultatif)",
+    "emailHint": "Seulement si vous voulez une réponse.",
+    "pageNote": "Nous joignons la page où vous êtes ({path}), sans rien après l'adresse.",
+    "send": "Envoyer",
+    "sending": "Envoi…",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "emailUs": "Ou écrivez-nous",
+    "errors": {
+      "invalidType": "Choisissez le sujet du message.",
+      "messageTooShort": "Écrivez au moins quelques mots.",
+      "messageTooLong": "Le message est trop long.",
+      "invalidEmail": "Cette adresse courriel ne semble pas valide.",
+      "tooMany": "Vous avez envoyé plusieurs messages récemment. Réessayez plus tard.",
+      "generic": "Une erreur est survenue. Veuillez réessayer."
+    }
+  },
+  "landing": {
+    "metaTitle": "Dentiq : un espace d'étude pour les étudiants en médecine dentaire",
+    "metaDescription": "Notes de cours privées, anciens examens avec réponses vérifiées par des modérateurs, calendrier personnel et cartes mémoire pour les étudiants en médecine dentaire, en français et en anglais.",
+    "heroTitle": "Un espace d'étude pour les étudiants en médecine dentaire",
+    "heroBody": "Gardez vos notes de cours, exercez-vous avec d'anciennes questions d'examen, planifiez vos sessions et révisez avec des cartes mémoire. Tout est en français et en anglais, et vos notes restent privées.",
+    "heroNote": "Projet étudiant indépendant, qui commence avec le D.M.D. de l'Université de Montréal. Non affilié à une université et non endossé par elle. L'inscription exige une adresse courriel universitaire et l'approbation d'un administrateur.",
+    "createAccount": "Créer un compte",
+    "signIn": "Se connecter",
+    "whatTitle": "Ce que vous pouvez faire",
+    "features": {
+      "notes": {
+        "title": "Notes privées",
+        "body": "Écrivez vos notes par cours. Elles ne sont visibles que par vous, et chaque enregistrement garde une version à laquelle revenir."
+      },
+      "passes": {
+        "title": "Anciennes questions d'examen",
+        "body": "Parcourez et pratiquez des questions par cours et par année. Les réponses sont marquées comme proposées tant qu'un modérateur ne les a pas vérifiées."
+      },
+      "calendar": {
+        "title": "Un calendrier qui est le vôtre",
+        "body": "Ajoutez vos examens, vos heures de cours et vos séances d'étude. Les dates de session et les congés des pages universitaires officielles sont affichés avec un rappel de les confirmer auprès de votre faculté."
+      },
+      "practice": {
+        "title": "Cartes mémoire et quiz",
+        "body": "Transformez des questions et vos propres cartes en courtes séances de révision et suivez votre progression."
+      }
+    },
+    "howTitle": "Comment ça marche",
+    "steps": {
+      "one": {
+        "title": "Créez votre compte",
+        "body": "Utilisez votre adresse courriel universitaire, confirmez-la, puis attendez l'approbation d'un administrateur."
+      },
+      "two": {
+        "title": "Indiquez votre programme",
+        "body": "Choisissez votre année et votre session pour que Dentiq vous suggère vos cours. Vous pouvez passer cette étape."
+      },
+      "three": {
+        "title": "Étudiez",
+        "body": "Ajoutez des notes, pratiquez des questions et planifiez vos semaines. Rien de ce que vous écrivez n'est partagé sans que vous le choisissiez."
+      }
+    },
+    "faqTitle": "Questions et réponses",
+    "faq": {
+      "who": {
+        "q": "Qui peut utiliser Dentiq?",
+        "a": "Les étudiants en médecine dentaire qui ont une adresse courriel universitaire, une fois le compte approuvé par un administrateur. Le projet commence avec le programme D.M.D. de l'Université de Montréal."
+      },
+      "private": {
+        "q": "Mes notes sont-elles privées?",
+        "a": "Oui. Les notes, les entrées de calendrier, les cartes mémoire et les enregistrements vous appartiennent et ne sont pas montrés aux autres étudiants. Rien n'est envoyé à un service d'analyse ou de publicité."
+      },
+      "answers": {
+        "q": "Puis-je me fier aux réponses des examens?",
+        "a": "Pas aveuglément. Une réponse reste marquée comme proposition tant qu'un modérateur ne l'a pas vérifiée et n'en a pas noté la base. Comparez toujours avec votre matériel de cours."
+      },
+      "ai": {
+        "q": "Dentiq utilise-t-il l'intelligence artificielle?",
+        "a": "Pas aujourd'hui. Un tuteur IA est construit mais désactivé, et aucun service d'IA n'est connecté. S'il était activé un jour, votre consentement explicite serait demandé d'abord."
+      },
+      "official": {
+        "q": "Est-ce un service officiel de l'université?",
+        "a": "Non. C'est un projet étudiant indépendant, non affilié à une université et non endossé par elle. Confirmez les dates et les listes de cours auprès de votre faculté."
+      }
+    }
+  },
+  "seo": {
+    "signIn": "Connectez-vous à Dentiq pour ouvrir vos notes de cours, d'anciennes questions d'examen, votre calendrier et vos cartes mémoire.",
+    "signUp": "Créez un compte Dentiq avec votre adresse courriel universitaire. Un administrateur approuve les nouveaux comptes.",
+    "privacy": "Comment Dentiq traite vos renseignements personnels : ce qui est conservé, qui peut le voir et comment l'exporter ou le supprimer. Version provisoire, en attente d'une révision juridique.",
+    "terms": "Les conditions d'utilisation de Dentiq, un projet d'étude étudiant indépendant. Version provisoire, en attente d'une révision juridique.",
+    "forgot": "Demandez un lien pour choisir un nouveau mot de passe Dentiq."
   }
 }

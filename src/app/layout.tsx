@@ -2,16 +2,21 @@ import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { FeedbackWidget } from "@/components/feedback-widget";
 import { Providers } from "@/components/providers";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("common");
+  const locale = await getLocale();
   return {
     title: { default: "Dentiq", template: "%s · Dentiq" },
     description: t("tagline"),
+    metadataBase: new URL(process.env.BETTER_AUTH_URL || "http://localhost:3000"),
     applicationName: "Dentiq",
+    openGraph: { type: "website", siteName: "Dentiq", title: "Dentiq", description: t("tagline"), locale: locale === "en" ? "en_CA" : "fr_CA" },
+    twitter: { card: "summary_large_image", title: "Dentiq", description: t("tagline") },
     appleWebApp: { capable: true, title: "Dentiq", statusBarStyle: "default" },
   };
 }
@@ -35,6 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <NextIntlClientProvider>
           <Providers nonce={nonce}>{children}</Providers>
+          <FeedbackWidget contactEmail={process.env.CONTACT_EMAIL?.trim() || null} />
           <ServiceWorkerRegister />
         </NextIntlClientProvider>
       </body>

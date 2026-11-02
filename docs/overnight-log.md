@@ -120,3 +120,32 @@ Keyboard: all PASS (0 stops without visible focus, 0 traps, skip link works, key
 Paths: pending user blocked server-side on question creation (replay of the server action); moderator reject/hide/publish/verify/report-resolve, author edit and history, image upload errors: PASS. Dismiss button on a report not clicked. Other server actions for a pending user not replayed.
 Production: manifest 200; service worker registers; cache holds only the 6 allowlisted public files after visiting authenticated pages and question images; with the server stopped, pages show only the offline page.
 Not tested: Safari, Firefox, real devices, screen readers, native select popup and validation bubbles, PWA install prompt, download dialogs.
+
+## finish/dentiq-polish, phase 1 (part)
+Added first-run onboarding (additive `user_profile` table, skippable, dashboard redirects once), a Help page and a Settings link. Check, tests (609) and build pass.
+Not done yet in phase 1: browser comparison of every screen at 390/768/1440 px in both themes and languages, loading and offline states review. Phases 2 to 9 not started.
+
+## finish/dentiq-polish, phase 1 (rest) and phase 2
+Phase 1 browser QA: 12 pages x 390/768 px x light/dark x EN/FR on a scratch DB, no overflow, theme and language correct, targets 44 px (one inline text link exempt). Window resizing does not change the viewport in the Chrome tool; popups opened by script give real widths. Home compared to mockup 09 at 1440 px.
+Phase 2: admin email-domain settings with UdeM preset, bilingual HTML/text verification and reset emails, forgot/reset pages, expired-link page with resend, rate limits. 15 new tests; 624 pass; build passes; reset flow walked in the browser.
+
+## finish/dentiq-polish, phase 3
+Research (Opus subagent, official UdeM pages only): 167 verified courses, 5-year D.M.D., faculty calendar for 2026-2027; 3 unverified terms (2027-2028) left empty. See docs/udem-research.md.
+Built: terms/periods/class-block/followed-course tables (migration 0012), schedule expansion and markers, .ics export of classes and import, My schedule page, calendar shows classes, terms, breaks with a "verify with your faculty" note, admin loader. 653 tests pass, build passes, loaded and viewed in the browser.
+
+## finish/dentiq-polish, phase 4
+Intake CLI: detect (bytes over extension), extract (txt/md/csv/docx locally), question parser with proposed answers and review flags, dedupe, course inference, report without file text, local-only import. 16 synthetic-fixture tests; full suite green; dry run and import refusal verified from the command line.
+
+## finish/dentiq-polish, phase 5
+Recordings: tables (migration 0013), admin switch (default OFF), consent checklist, magic-byte type check, size and quota limits, owner-only playback with Range support and speed control, per-recording notes, delete. Account export/delete extended for all new tables. 19 tests; 688 total pass; build passes; walked in the browser (upload with and without consent, Range 206/416, speed control).
+
+## finish/dentiq-polish, phase 6
+Tutor: safety refusal, consent (versioned), token and cost caps, conversations (list/delete/export), fake provider, ask UI and history page, admin fields, account export/delete coverage; migration 0014 (additive). 18 new tests (49 in tutor.test.ts); 706+ total pass; build passes. The ask UI was not run live in a browser (production mode makes the fake provider inert); the off state is browser-checked below.
+
+## finish/dentiq-polish, phase 7 (part 1)
+Per-student upload quota (100 MB, moderators exempt) with test. Zod advisory: override written, tested and reverted (pnpm cannot install through the iCloud symlink); exact steps in docs/go-live-blockers.md. Browser walk on a scratch DB, real Chrome: student sign-up -> email link -> onboarding -> admin approval -> note -> exam question -> calendar/schedule/recordings/tutor/help pages. Static accessibility sweep of 28 pages in EN and FR (titles, one h1, lang, labels, link names, alt, duplicate ids): clean. Overflow/touch-target sweep at 390 and 768 px, dark and light, EN and FR: no overflow; only checkbox inputs measure 16 px inside 44 px labels.
+
+## finish/dentiq-polish, phase 7 part 2 and 7B
+Feedback button (dialog) with rate-limited form, admin inbox, admin email notice (stored path only, no query string); public welcome page at "/" for signed-out visitors (proxy rewrite, real content only), shared footer, FR/EN metadata and canonical per public page, robots.txt, sitemap.xml, share image from the logo and the mountain ridges, favicon.ico, phone menu drawer (native dialog), noindex for signed-in pages.
+Lighthouse (mobile, local production build): welcome page 100/100/100 (accessibility, best practices, SEO); sign-in 100/100/100; course page (signed in) accessibility 97 (fixed: external source link now underlined), best practices 100, SEO 66 by design (noindex).
+Browser checks: 7 public pages at 390 and 768 px, dark and light, FR and EN: no overflow, one h1 each, theme and language correct, targets 44 px; feedback dialog submitted for real, stored path "/sign-in" without the ?token query.
