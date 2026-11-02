@@ -55,3 +55,13 @@ export const BM25_B = 0.75;
 export const OFFICIAL_BOOST = 1.25;
 /** Query words shorter than this are ignored. */
 export const MIN_TOKEN_LENGTH = 2;
+
+/** Tokens (input + output) one student may spend per day, and the cost cap in millionths of a currency unit. */
+export const DEFAULT_DAILY_TOKEN_LIMIT = 30_000;
+export const DAILY_TOKEN_LIMIT_BOUNDS = [1_000, 1_000_000] as const;
+export const DEFAULT_DAILY_COST_CAP_MICROS = 100_000;
+export const DAILY_COST_CAP_BOUNDS = [1_000, 100_000_000] as const;
+/** Questions per minute per student (abuse limit, on top of the daily limits). */
+export const TUTOR_ASK_PER_MINUTE = 6;
+/** What a provider is assumed to write when it does not say (used to reserve budget before the call). */
+export const DEFAULT_MAX_OUTPUT_TOKENS = 800;

@@ -4,7 +4,7 @@ import { TutorSettingsForm } from "@/components/tutor-forms";
 import { PageHeader } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { requireRole } from "@/server/auth/session";
-import { DAILY_QUESTION_LIMIT_BOUNDS, MAX_CONTEXT_CHARS_BOUNDS } from "@/server/tutor/constants";
+import { DAILY_COST_CAP_BOUNDS, DAILY_QUESTION_LIMIT_BOUNDS, DAILY_TOKEN_LIMIT_BOUNDS, MAX_CONTEXT_CHARS_BOUNDS } from "@/server/tutor/constants";
 import { getTutorProvider } from "@/server/tutor/provider";
 import { getTutorSettings } from "@/server/tutor/settings";
 
@@ -24,6 +24,10 @@ export default async function TutorSettingsPage() {
         enabled={settings.enabled}
         dailyQuestionLimit={settings.dailyQuestionLimit}
         maxContextChars={settings.maxContextChars}
+        dailyTokenLimit={settings.dailyTokenLimit}
+        dailyCostCapMicros={settings.dailyCostCapMicros}
+        tokenBounds={DAILY_TOKEN_LIMIT_BOUNDS}
+        costBounds={DAILY_COST_CAP_BOUNDS}
         dailyBounds={DAILY_QUESTION_LIMIT_BOUNDS}
         contextBounds={MAX_CONTEXT_CHARS_BOUNDS}
         providerId={provider.isConfigured() ? provider.id : null}

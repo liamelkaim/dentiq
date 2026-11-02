@@ -138,3 +138,6 @@ Intake CLI: detect (bytes over extension), extract (txt/md/csv/docx locally), qu
 
 ## finish/dentiq-polish, phase 5
 Recordings: tables (migration 0013), admin switch (default OFF), consent checklist, magic-byte type check, size and quota limits, owner-only playback with Range support and speed control, per-recording notes, delete. Account export/delete extended for all new tables. 19 tests; 688 total pass; build passes; walked in the browser (upload with and without consent, Range 206/416, speed control).
+
+## finish/dentiq-polish, phase 6
+Tutor: safety refusal, consent (versioned), token and cost caps, conversations (list/delete/export), fake provider, ask UI and history page, admin fields, account export/delete coverage; migration 0014 (additive). 18 new tests (49 in tutor.test.ts); 706+ total pass; build passes. The ask UI was not run live in a browser (production mode makes the fake provider inert); the off state is browser-checked below.

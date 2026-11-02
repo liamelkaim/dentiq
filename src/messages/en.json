@@ -1850,7 +1850,7 @@
       },
       "ready": {
         "title": "A provider is configured",
-        "body": "The tutor is switched on and a provider exists on the server. The question form for it has not been built or checked yet, so it is not offered here."
+        "body": "The tutor is switched on. You can ask a question below after accepting the consent notice."
       }
     },
     "search": {
@@ -1927,7 +1927,12 @@
       "badCitations": "The answer was refused because it cited a source that was not provided.",
       "outOfRange": "A value is out of range. Use whole numbers within the limits shown.",
       "forbidden": "Only administrators can change these settings.",
-      "invalid": "Something went wrong."
+      "invalid": "Something went wrong.",
+      "tokenLimit": "You reached today's daily allowance for the tutor. It resets tomorrow.",
+      "costLimit": "You reached today's daily allowance for the tutor. It resets tomorrow.",
+      "tooFast": "You are asking very fast. Wait a minute and try again.",
+      "consentRequired": "Please read and accept the consent notice before asking.",
+      "patientAdvice": "The tutor cannot give advice about a real patient. Please ask your clinical supervisor or follow your clinic's protocol."
     },
     "admin": {
       "title": "AI tutor settings",
@@ -1944,7 +1949,55 @@
       "maxContext": "Characters of sources per question",
       "maxContextHint": "Between {min} and {max}. The most source text that would be sent with one question.",
       "save": "Save settings",
-      "saved": "Settings saved."
+      "saved": "Settings saved.",
+      "dailyTokens": "Tokens per student per day",
+      "dailyTokensHint": "Input plus output. {min} to {max}.",
+      "dailyCost": "Cost cap per student per day (millionths of a currency unit)",
+      "dailyCostHint": "{min} to {max}. 100000 is 0.10 of the unit you pay in."
+    },
+    "ask": {
+      "title": "Ask the tutor",
+      "description": "Answers come only from your own notes and the course sources you may open, and always cite them.",
+      "notClinical": "The tutor is a study aid. It gives no advice about a real patient: ask your clinical supervisor.",
+      "question": "Your question",
+      "questionHint": "Up to {max} characters. Do not include names or details that identify a patient.",
+      "submit": "Ask",
+      "thinking": "Working…",
+      "generated": "Generated answer, may be wrong",
+      "sources": "Sources cited",
+      "noCitations": "This answer cites no source.",
+      "showPassages": "Show the {count, plural, one {# passage} other {# passages}} the answer was based on",
+      "usage": "Questions today: {used} of {limit}.",
+      "openConversation": "Open this conversation",
+      "noSourcesTitle": "No source for this",
+      "noSources": "Nothing in the sources you may open for this course matches your question, so the tutor will not guess. Try other words, or another course."
+    },
+    "consent": {
+      "title": "Before your first question",
+      "accept": "I understand and agree",
+      "withdraw": "Withdraw my consent",
+      "points": {
+        "what": "Asking sends your question and the matching excerpts to an AI service outside Dentiq to write the answer.",
+        "who": "Excerpts can come from your own private notes. They are sent only for the question you ask, with no name, email or account id.",
+        "own": "Only your own notes and sources you may already open are used, never another student's private material.",
+        "wrong": "Answers are generated and can be wrong. Check them against your course material.",
+        "noClinical": "The tutor does not give advice about real patients.",
+        "withdraw": "You can withdraw this consent at any time and delete your saved conversations."
+      }
+    },
+    "history": {
+      "link": "Saved conversations",
+      "title": "Saved conversations",
+      "subtitle": "Your questions and the tutor's answers, kept private.",
+      "privacy": "Only you can see these, not even the administrator.",
+      "listTitle": "Your conversations",
+      "emptyTitle": "No conversations yet",
+      "emptyBody": "They appear here after the tutor answers a question.",
+      "you": "You",
+      "delete": "Delete this conversation",
+      "deleteAll": "Delete all conversations",
+      "export": "Download my conversations (JSON)",
+      "manage": "Your data"
     }
   },
   "account": {

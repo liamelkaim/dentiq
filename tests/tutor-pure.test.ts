@@ -330,9 +330,11 @@ describe("settings reader", () => {
   });
 
   it("validates strictly when saving", () => {
-    expect(validateTutorSettings({ enabled: true, dailyQuestionLimit: 5, maxContextChars: 2000 })).toBe(true);
-    expect(validateTutorSettings({ enabled: true, dailyQuestionLimit: 0, maxContextChars: 2000 })).toBe(false);
-    expect(validateTutorSettings({ enabled: true, dailyQuestionLimit: 5, maxContextChars: 10 })).toBe(false);
-    expect(validateTutorSettings({ enabled: true, dailyQuestionLimit: 5.5, maxContextChars: 2000 })).toBe(false);
+    expect(validateTutorSettings({ ...DEFAULT_TUTOR_SETTINGS, enabled: true, dailyQuestionLimit: 5, maxContextChars: 2000 })).toBe(true);
+    expect(validateTutorSettings({ ...DEFAULT_TUTOR_SETTINGS, enabled: true, dailyQuestionLimit: 0, maxContextChars: 2000 })).toBe(false);
+    expect(validateTutorSettings({ ...DEFAULT_TUTOR_SETTINGS, enabled: true, dailyQuestionLimit: 5, maxContextChars: 10 })).toBe(false);
+    expect(validateTutorSettings({ ...DEFAULT_TUTOR_SETTINGS, enabled: true, dailyQuestionLimit: 5.5, maxContextChars: 2000 })).toBe(false);
+    expect(validateTutorSettings({ ...DEFAULT_TUTOR_SETTINGS, dailyTokenLimit: 5 })).toBe(false);
+    expect(validateTutorSettings({ ...DEFAULT_TUTOR_SETTINGS, dailyCostCapMicros: -1 })).toBe(false);
   });
 });

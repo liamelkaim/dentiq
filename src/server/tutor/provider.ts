@@ -2,6 +2,7 @@
 // `NullProvider` says "not configured", and `getTutorProvider()` returns it unless a provider is registered AND named by
 // the TUTOR_PROVIDER environment variable. To add a provider, see docs/ai-tutor.md.
 import { TUTOR_PROVIDER_ENV } from "./constants";
+import { FakeTutorProvider } from "./providers/fake";
 import type { Passage } from "./types";
 
 export type TutorLocale = "fr" | "en";
@@ -21,8 +22,15 @@ export type TutorAnswer = {
   usage?: { inputTokens?: number; outputTokens?: number };
 };
 
+/** What a provider charges, in millionths of a currency unit per million tokens. Absent = free or unknown (cost 0). */
+export type ProviderPricing = { inputPerMillionMicros: number; outputPerMillionMicros: number };
+
 export interface TutorProvider {
   readonly id: string;
+  /** Used to reserve budget before the call and to compute cost after it. */
+  readonly pricing?: ProviderPricing;
+  /** Most tokens one answer can use; the budget reserves this much before the call. */
+  readonly maxOutputTokens?: number;
   /** True only when everything the provider needs (key, model, budget approval) is in place. Must not call the network. */
   isConfigured(): boolean;
   answer(request: TutorRequest): Promise<TutorAnswer>;
@@ -47,10 +55,13 @@ export class NullProvider implements TutorProvider {
 }
 
 /**
- * Registered providers, by the id used in TUTOR_PROVIDER. EMPTY on purpose: no provider has been approved, so none
- * exists. A provider is added here (one line) together with its file and its tests, after the owner approves a budget.
+ * Registered providers, by the id used in TUTOR_PROVIDER. No real provider has been approved, so none exists; only the
+ * network-free `fake` provider is registered (it is inert in production). A provider is added here (one line) together with its file and its tests, after the owner approves a budget.
  */
-export const PROVIDER_FACTORIES: Readonly<Record<string, () => TutorProvider>> = {};
+export const PROVIDER_FACTORIES: Readonly<Record<string, () => TutorProvider>> = {
+  // Local trials only: never answers in production. No vendor, no key, no network.
+  fake: () => (process.env.NODE_ENV === "production" ? new NullProvider() : new FakeTutorProvider()),
+};
 
 /** The provider the app uses: the one named by TUTOR_PROVIDER if it is registered, otherwise the NullProvider. */
 export function getTutorProvider(

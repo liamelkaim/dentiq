@@ -14,6 +14,12 @@ import { moderateQuestion, questionInputSchema, submitQuestion, verifyAnswer } f
 import { createResource, moderateResource, resourceInputSchema, setOfficial, type Viewer } from "@/server/resources/service";
 import { createMemoryStorage } from "@/server/storage";
 import { DEFAULT_MAX_CONTEXT_CHARS, QUESTION_MAX_CHARS } from "@/server/tutor/constants";
+import { acceptTutorConsent, hasTutorConsent, TUTOR_CONSENT_VERSION, withdrawTutorConsent } from "@/server/tutor/consent";
+import { deleteAllConversations, deleteConversation, exportConversations, getConversation, listConversations } from "@/server/tutor/conversations";
+import { isRealPatientAdviceRequest } from "@/server/tutor/safety";
+import { FakeTutorProvider } from "@/server/tutor/providers/fake";
+import { getTutorProvider } from "@/server/tutor/provider";
+import { tutorConsents } from "@/db/schema";
 import { NullProvider, type TutorAnswer, type TutorProvider, type TutorRequest } from "@/server/tutor/provider";
 import { retrieveSources } from "@/server/tutor/retrieval";
 import { askTutor, getTutorStatus, isTutorReady, questionsToday, reserveQuestion, searchSources, usageDay } from "@/server/tutor/service";
@@ -95,6 +101,8 @@ beforeEach(async () => {
   await db.insert(user).values(
     [alice, bob, mod, admin, waiting].map((v) => ({ id: v.id, name: v.id, email: `${v.id}@example.com`, emailVerified: true, role: v.role, approvalStatus: v.approvalStatus })),
   );
+  // The existing tests are about retrieval and limits; consent has its own tests below.
+  for (const v of [alice, bob, mod, admin]) await acceptTutorConsent(db, v.id);
   const [c1, c2] = await db
     .insert(courses)
     .values([
@@ -398,7 +406,7 @@ describe("usage limits", () => {
     // usage rows hold counts only
     const rows = await db.select().from(tutorUsage).where(eq(tutorUsage.userId, alice.id));
     expect(rows).toHaveLength(3);
-    expect(Object.keys(rows[0]!).sort()).toEqual(["contextChars", "courseId", "createdAt", "id", "passageCount", "usageDate", "userId"]);
+    expect(Object.keys(rows[0]!).sort()).toEqual(["contextChars", "costMicros", "courseId", "createdAt", "id", "inputTokens", "outputTokens", "passageCount", "usageDate", "userId"]);
     expect(rows[0]!.contextChars).toBeGreaterThan(0);
   });
 
@@ -453,7 +461,7 @@ describe("admin settings", () => {
     expect(await updateTutorSettings(db, admin, { dailyQuestionLimit: 0 })).toEqual({ ok: false, error: "outOfRange" });
     expect(await updateTutorSettings(db, admin, { maxContextChars: 5 })).toEqual({ ok: false, error: "outOfRange" });
     expect(await updateTutorSettings(db, admin, { enabled: true, dailyQuestionLimit: 5, maxContextChars: 3000 })).toMatchObject({ ok: true });
-    expect(await getTutorSettings(db)).toEqual({ enabled: true, dailyQuestionLimit: 5, maxContextChars: 3000 });
+    expect(await getTutorSettings(db)).toMatchObject({ enabled: true, dailyQuestionLimit: 5, maxContextChars: 3000 });
     const audit = (await db.select().from(auditLog)).filter((a) => a.action === "tutor.settings.update");
     expect(audit).toHaveLength(1);
     expect(audit[0]!.actorId).toBe("admin");
@@ -473,5 +481,164 @@ describe("plain search works without a provider", () => {
     const r = await searchSources(db, alice, { courseId, query: "rhodium", now: NOW });
     expect(r.passages).toHaveLength(1);
     expect(fetchSpy).not.toHaveBeenCalled();
+  });
+});
+
+
+// ---------- Phase 6: consent, safety, caps, conversations, fake provider ----------
+
+describe("consent before anything leaves the app", () => {
+  it("is required, per student, for the current text version, and can be withdrawn", async () => {
+    await setTutor({ enabled: true });
+    await note(alice, { body: "Le rhodium est un métal rare." });
+    const provider = new FakeProvider(true);
+    await withdrawTutorConsent(db, alice.id);
+    expect(await hasTutorConsent(db, alice.id)).toBe(false);
+    expect(await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, provider)).toEqual({ ok: false, error: "consentRequired" });
+    expect(provider.calls).toHaveLength(0); // nothing reached the provider
+    expect(await questionsToday(db, alice.id, NOW)).toBe(0);
+    await acceptTutorConsent(db, alice.id);
+    expect((await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, provider)).ok).toBe(true);
+    // a newer consent text asks again
+    await db.update(tutorConsents).set({ version: TUTOR_CONSENT_VERSION - 1 });
+    expect(await hasTutorConsent(db, alice.id)).toBe(false);
+  });
+});
+
+describe("real-patient questions are refused", () => {
+  it.each([
+    "My patient has a swollen cheek, what dose of amoxicillin should I give?",
+    "Should I prescribe an antibiotic for this patient?",
+    "Mon patient a une douleur aiguë, quelle dose dois-je prescrire?",
+    "Dois-je extraire la dent de ma patiente aujourd'hui?",
+    "I'm treating a patient in clinic today: how do I treat the abscess?",
+  ])("refuses: %s", (q) => expect(isRealPatientAdviceRequest(q)).toBe(true));
+
+  it.each([
+    "What are the signs of a periapical abscess?",
+    "A 58-year-old patient presents with a white lesion: what is the most likely diagnosis?",
+    "Quelle est la différence entre leucoplasie et lichen plan?",
+    "Explain the dosage forms of local anesthetics.",
+    "What is the mechanism of amoxicillin?",
+  ])("lets a study question through: %s", (q) => expect(isRealPatientAdviceRequest(q)).toBe(false));
+
+  it("stops before consent, retrieval, quota or the provider", async () => {
+    await setTutor({ enabled: true });
+    await withdrawTutorConsent(db, alice.id);
+    const provider = new FakeProvider(true);
+    expect(await askTutor(db, alice, { courseId, question: "Mon patient a mal, quelle dose dois-je prescrire?", now: NOW }, provider)).toEqual({ ok: false, error: "patientAdvice" });
+    expect(provider.calls).toHaveLength(0);
+    expect(await questionsToday(db, alice.id, NOW)).toBe(0);
+  });
+});
+
+describe("daily token and cost caps", () => {
+  const pricing = { inputPerMillionMicros: 3_000_000, outputPerMillionMicros: 15_000_000 };
+  it("refuses when the estimate would pass the token cap, without calling the provider", async () => {
+    await setTutor({ enabled: true, dailyTokenLimit: 1000 });
+    await note(alice, { body: "Le rhodium est un métal rare. ".repeat(30) });
+    const provider = new FakeProvider(true);
+    expect(await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, provider)).toEqual({ ok: false, error: "tokenLimit" });
+    expect(provider.calls).toHaveLength(0);
+  });
+  it("refuses when the estimate would pass the cost cap, and settles real usage after an answer", async () => {
+    await note(alice, { body: "Le rhodium est un métal rare." });
+    await setTutor({ enabled: true, dailyCostCapMicros: 1_000 });
+    const pricey = new FakeTutorProvider(pricing);
+    expect(await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, pricey)).toEqual({ ok: false, error: "costLimit" });
+    await setTutor({ dailyCostCapMicros: 5_000_000 });
+    const ok = await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, pricey);
+    expect(ok.ok).toBe(true);
+    const [row] = await db.select().from(tutorUsage).where(eq(tutorUsage.userId, alice.id));
+    // the real (reported) figures replaced the cautious estimate, and cost follows from the pricing
+    expect(row!.inputTokens).toBeGreaterThan(0);
+    expect(row!.costMicros).toBe(Math.ceil((row!.inputTokens * pricing.inputPerMillionMicros + row!.outputTokens * pricing.outputPerMillionMicros) / 1_000_000));
+  });
+  it("sums across the day and is per student", async () => {
+    await note(alice, { body: "Le rhodium est un métal rare." });
+    await setTutor({ enabled: true, dailyTokenLimit: 1000 });
+    // A provider that reports no usage keeps the cautious estimate (800 output tokens by default), so the cap bites on the 2nd question.
+    const silent = new FakeProvider(true);
+    expect((await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, silent)).ok).toBe(true);
+    expect(await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, silent)).toEqual({ ok: false, error: "tokenLimit" });
+    await note(bob, { body: "Le rhodium est un métal rare." });
+    expect((await askTutor(db, bob, { courseId, question: "rhodium ?", now: NOW }, silent)).ok).toBe(true); // per student
+  });
+});
+
+describe("saved conversations", () => {
+  it("are written only on an answer, cite their sources, and belong to the student", async () => {
+    await setTutor({ enabled: true });
+    await note(alice, { title: "Note rhodium", body: "Le rhodium est un métal rare." });
+    const fake = new FakeTutorProvider();
+    expect(await listConversations(db, alice.id)).toHaveLength(0);
+    await askTutor(db, alice, { courseId, question: "Parle-moi du zirconium ?", now: NOW }, fake); // no source: nothing saved
+    expect(await listConversations(db, alice.id)).toHaveLength(0);
+    const a = await askTutor(db, alice, { courseId, question: "rhodium ?", locale: "en", now: NOW }, fake);
+    if (!a.ok || a.kind !== "answer") throw new Error("expected an answer");
+    expect(a.conversationId).toBeTruthy();
+    const conv = await getConversation(db, alice.id, a.conversationId!);
+    expect(conv!.messages.map((m) => m.role)).toEqual(["user", "assistant"]);
+    expect(conv!.messages[1]!.body).toContain("According to your sources");
+    expect(conv!.messages[1]!.citations[0]).toMatchObject({ title: "Note rhodium", origin: "own" });
+    // a follow-up joins the same conversation
+    const b = await askTutor(db, alice, { courseId, question: "rhodium ?", conversationId: a.conversationId, now: NOW }, fake);
+    expect(b.ok && b.kind === "answer" && b.conversationId).toBe(a.conversationId);
+    expect((await getConversation(db, alice.id, a.conversationId!))!.messages).toHaveLength(4);
+    // another student (or an administrator) cannot read, continue, export or delete it
+    for (const other of [bob.id, admin.id, mod.id]) {
+      expect(await getConversation(db, other, a.conversationId!)).toBeNull();
+      expect(await listConversations(db, other)).toEqual([]);
+      expect(await deleteConversation(db, other, a.conversationId!)).toBe(false);
+      expect(JSON.parse((await exportConversations(db, other)).json).conversations).toEqual([]);
+    }
+  });
+  it("can be exported and deleted by the student", async () => {
+    await setTutor({ enabled: true });
+    await note(alice, { body: "Le rhodium est un métal rare." });
+    const fake = new FakeTutorProvider();
+    for (let i = 0; i < 2; i++) await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, fake);
+    const exported = await exportConversations(db, alice.id, NOW);
+    expect(exported.filename).toBe("dentiq-tutor-2026-11-01.json");
+    const parsed = JSON.parse(exported.json);
+    expect(parsed.conversations).toHaveLength(2);
+    expect(parsed.note).toMatch(/may be wrong/);
+    const [first] = await listConversations(db, alice.id);
+    expect(await deleteConversation(db, alice.id, first!.id)).toBe(true);
+    expect(await listConversations(db, alice.id)).toHaveLength(1);
+    expect(await deleteAllConversations(db, alice.id)).toBe(1);
+    expect(await listConversations(db, alice.id)).toEqual([]);
+  });
+});
+
+describe("fake provider registration", () => {
+  it("is selectable outside production, makes no network call, and is inert in production", async () => {
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
+    expect(getTutorProvider({ TUTOR_PROVIDER: "fake" }).id).toBe("fake");
+    const answer = await new FakeTutorProvider().answer({ question: "q", passages: [], locale: "en" });
+    expect(answer.citedPassageIds).toEqual([]);
+    expect(fetchSpy).not.toHaveBeenCalled();
+    vi.stubEnv("NODE_ENV", "production");
+    expect(getTutorProvider({ TUTOR_PROVIDER: "fake" }).id).toBe("none");
+    vi.unstubAllEnvs();
+  });
+});
+
+describe("account export and deletion cover tutor conversations", () => {
+  it("export includes consent and conversations; deleting the account removes them", async () => {
+    const { buildAccountExport } = await import("@/server/account/export");
+    const { deleteAccount } = await import("@/server/account/delete");
+    const { tutorConversations: convs, tutorMessages: msgs } = await import("@/db/schema");
+    await setTutor({ enabled: true });
+    await note(alice, { body: "Le rhodium est un métal rare." });
+    await askTutor(db, alice, { courseId, question: "rhodium ?", now: NOW }, new FakeTutorProvider());
+    const exported = await buildAccountExport(db, alice.id);
+    expect(exported.ok && exported.value.json).toContain("rhodium ?");
+    expect((exported.ok && exported.value.json) || "").toContain("tutorConversations");
+    const del = await deleteAccount(db, createMemoryStorage(), alice.id, "alice@example.com");
+    expect(del.ok).toBe(true);
+    expect(await db.select().from(convs)).toHaveLength(0);
+    expect(await db.select().from(msgs)).toHaveLength(0);
+    expect(await db.select().from(tutorConsents).where(eq(tutorConsents.userId, alice.id))).toHaveLength(0);
   });
 });

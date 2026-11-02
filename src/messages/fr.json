@@ -1850,7 +1850,7 @@
       },
       "ready": {
         "title": "Un fournisseur est configuré",
-        "body": "Le tuteur est activé et un fournisseur existe sur le serveur. Le formulaire de questions correspondant n'a pas encore été construit ni vérifié, il n'est donc pas proposé ici."
+        "body": "Le tuteur est activé. Vous pouvez poser une question ci-dessous après avoir accepté l'avis de consentement."
       }
     },
     "search": {
@@ -1927,7 +1927,12 @@
       "badCitations": "La réponse a été refusée parce qu'elle citait une source qui n'avait pas été fournie.",
       "outOfRange": "Une valeur est hors limites. Utilisez des nombres entiers dans les limites indiquées.",
       "forbidden": "Seuls les administrateurs peuvent modifier ces réglages.",
-      "invalid": "Une erreur est survenue."
+      "invalid": "Une erreur est survenue.",
+      "tokenLimit": "Vous avez atteint votre allocation quotidienne pour le tuteur. Elle se renouvelle demain.",
+      "costLimit": "Vous avez atteint votre allocation quotidienne pour le tuteur. Elle se renouvelle demain.",
+      "tooFast": "Vous posez des questions très vite. Attendez une minute et réessayez.",
+      "consentRequired": "Veuillez lire et accepter l'avis de consentement avant de poser une question.",
+      "patientAdvice": "Le tuteur ne peut pas donner de conseils sur un vrai patient. Veuillez consulter votre superviseur clinique ou suivre le protocole de votre clinique."
     },
     "admin": {
       "title": "Réglages du tuteur IA",
@@ -1944,7 +1949,55 @@
       "maxContext": "Caractères de sources par question",
       "maxContextHint": "Entre {min} et {max}. La plus grande quantité de texte de sources qui serait envoyée avec une question.",
       "save": "Enregistrer les réglages",
-      "saved": "Réglages enregistrés."
+      "saved": "Réglages enregistrés.",
+      "dailyTokens": "Jetons par étudiant par jour",
+      "dailyTokensHint": "Entrée plus sortie. De {min} à {max}.",
+      "dailyCost": "Plafond de coût par étudiant par jour (millionièmes d'unité monétaire)",
+      "dailyCostHint": "De {min} à {max}. 100000 correspond à 0,10 de l'unité dans laquelle vous payez."
+    },
+    "ask": {
+      "title": "Poser une question au tuteur",
+      "description": "Les réponses viennent uniquement de vos notes et des sources de cours que vous pouvez ouvrir, et les citent toujours.",
+      "notClinical": "Le tuteur est un outil d'étude. Il ne donne aucun conseil sur un vrai patient : demandez à votre superviseur clinique.",
+      "question": "Votre question",
+      "questionHint": "Jusqu'à {max} caractères. N'incluez aucun nom ni détail qui identifie un patient.",
+      "submit": "Demander",
+      "thinking": "En cours…",
+      "generated": "Réponse générée, peut être erronée",
+      "sources": "Sources citées",
+      "noCitations": "Cette réponse ne cite aucune source.",
+      "showPassages": "Voir {count, plural, one {le # passage} other {les # passages}} sur lesquels la réponse s'appuie",
+      "usage": "Questions aujourd'hui : {used} sur {limit}.",
+      "openConversation": "Ouvrir cette conversation",
+      "noSourcesTitle": "Aucune source pour cela",
+      "noSources": "Rien dans les sources que vous pouvez ouvrir pour ce cours ne correspond à votre question : le tuteur ne devine pas. Essayez d'autres mots, ou un autre cours."
+    },
+    "consent": {
+      "title": "Avant votre première question",
+      "accept": "Je comprends et j'accepte",
+      "withdraw": "Retirer mon consentement",
+      "points": {
+        "what": "Poser une question envoie votre question et les extraits correspondants à un service d'IA extérieur à Dentiq pour rédiger la réponse.",
+        "who": "Les extraits peuvent provenir de vos notes privées. Ils ne sont envoyés que pour la question posée, sans nom, courriel ni identifiant de compte.",
+        "own": "Seuls vos propres notes et les sources que vous pouvez déjà ouvrir sont utilisées, jamais le matériel privé d'un autre étudiant.",
+        "wrong": "Les réponses sont générées et peuvent être erronées. Vérifiez-les avec votre matériel de cours.",
+        "noClinical": "Le tuteur ne donne pas de conseils sur de vrais patients.",
+        "withdraw": "Vous pouvez retirer ce consentement en tout temps et supprimer vos conversations enregistrées."
+      }
+    },
+    "history": {
+      "link": "Conversations enregistrées",
+      "title": "Conversations enregistrées",
+      "subtitle": "Vos questions et les réponses du tuteur, gardées privées.",
+      "privacy": "Vous seul·e pouvez les voir, pas même l'administrateur.",
+      "listTitle": "Vos conversations",
+      "emptyTitle": "Aucune conversation",
+      "emptyBody": "Elles apparaissent ici après qu'une réponse a été donnée.",
+      "you": "Vous",
+      "delete": "Supprimer cette conversation",
+      "deleteAll": "Supprimer toutes les conversations",
+      "export": "Télécharger mes conversations (JSON)",
+      "manage": "Vos données"
     }
   },
   "account": {

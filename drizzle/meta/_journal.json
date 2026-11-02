@@ -99,6 +99,13 @@
       "when": 1793595524847,
       "tag": "0013_omniscient_lord_hawal",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1793596523679,
+      "tag": "0014_spicy_betty_ross",
+      "breakpoints": true
     }
   ]
 }

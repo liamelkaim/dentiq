@@ -27,3 +27,6 @@ export function rateKey(rule: RateRule, userId: string): string {
 
 /** Calendar (.ics) imports: each one parses a file and writes rows. */
 export const RATE_CALENDAR_IMPORT: RateRule = { name: "calendar-import", limit: 5, windowSeconds: 60 };
+
+/** Questions sent to the tutor: a few per minute per student (the daily question, token and cost caps are separate). */
+export const RATE_TUTOR_ASK: RateRule = { name: "tutor-ask", limit: 6, windowSeconds: 60 };
