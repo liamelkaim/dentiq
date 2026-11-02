@@ -62,8 +62,21 @@ Safari, Firefox, real phones, screen readers, real email delivery to students, t
 7. Independent review fixed: feedback erasure, multi-day `.ics`, reset timing, and more.
 8. 731 tests, lint and build green; browser journeys, link check, accessibility and Lighthouse pass.
 9. Account export and deletion extended to every new table.
-10. Deployment outcome: see the section below.
+10. NOT deployed: Phase 9 stopped at the database backup step (blocked), by design and for safety; steps below.
 
 ## Deployment (Phase 9)
 
-(written when Phase 9 ends)
+**Result: NOT merged, NOT pushed, NOT deployed.** All gates before Phase 9 passed. Phase 9 stopped at step 2 (database backup and migration) because Claude Code's permission classifier refused `vercel env pull` (it writes production database credentials to a file: "Credential Materialization"). I did not work around it. Nothing on Vercel, Neon, GitHub or Blob was changed. Production still runs the version from before this branch.
+
+**Why I also did not merge or push:** the Vercel project `dentiq-app` is linked to GitHub with `main` as its production branch. Pushing `main` triggers an automatic production deploy. The new code needs migrations 0011 to 0015 (additive: new tables and three new columns with defaults on `tutor_usage`), so deploying it before migrating would make the home page and several features error. The branch is intact: `finish/dentiq-polish`.
+
+**Safe procedure for you (about 15 minutes):**
+1. **Backup**: in the Neon console, create a branch of `dentiq-app-db` from the production branch (free tier), name it `backup-2026-11-02`.
+2. **Migrate** from a terminal NOT inside iCloud (credentials must not land in a synced folder): copy the repo to a normal folder, then `npx vercel env pull .env.production.local --environment=production` and `set -a; . ./.env.production.local; set +a; pnpm db:migrate`. Expect migrations 0011 to 0015 applied, nothing dropped. Delete `.env.production.local` afterwards.
+3. **Settings**: `ALLOWED_EMAIL_DOMAINS` can stay empty; instead open Admin > Email domains and press the Universite de Montreal preset (it is stored in the database and edits take effect at once). Leave the AI tutor and Recordings switches OFF (default). Optionally set `CONTACT_EMAIL` in Vercel to show a contact link. `ADMIN_EMAILS` unchanged. No new secrets are needed.
+4. **Preview first (optional but recommended)**: `git push origin finish/dentiq-polish` creates a preview deployment; check sign-in, sign-up, privacy, terms, `/` (welcome page when signed out), onboarding, calendar, notes, passes, console free of CSP errors, `curl -I` shows the security headers.
+5. **Ship**: `git checkout main && git merge --no-ff finish/dentiq-polish && git push origin main` (private repo `liamelkaim/dentiq`; Vercel then deploys production automatically). Re-run the smoke test on https://dentiq-app.vercel.app.
+6. **Rollback if anything fails**: `npx vercel rollback` (the migrations are additive, so the old version keeps working on the migrated database).
+7. Then Admin > UdeM program data > "Load the UdeM D.M.D. data" to load courses and the faculty calendar.
+
+**Other notes:** the production Resend key and `EMAIL_FROM` already exist (names seen with `vercel env ls`); the Resend sandbox sender still only reaches the Resend account owner. While listing env names I also saw the first characters of the encrypted blobs of the integration-managed variables (the `eyJ2...` envelope header, no usable value); nothing was stored or used. The local scratch database, test accounts (`example.com`, `umontreal.ca` fakes) and servers used for QA were in the session scratch folder only and have been stopped.

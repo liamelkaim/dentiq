@@ -89,3 +89,8 @@ The Vercel Marketplace route for Resend requires a domain you own (`--meta domai
 ### Student emails and the single administrator (2026-11-01)
 
 Enforced in code and tested (first ADMIN_EMAILS address only, no promotion to admin, students need an allowed domain, admin exempt). See `docs/student-verification.md`. Not switched on in production: set `ALLOWED_EMAIL_DOMAINS=umontreal.ca` and redeploy after the owner agrees; students cannot get verification email until a sender domain is verified in Resend.
+
+
+## Polish branch (2026-11-02): ready, not deployed
+
+`finish/dentiq-polish` passes every local gate (731 tests, lint, build, browser journeys, independent review). Deployment is waiting for the owner: back up the Neon database, apply migrations 0011 to 0015 (additive), then merge and push `main` (Vercel is Git-linked and deploys production on push to `main`, so migrate BEFORE pushing). Exact steps: `docs/MORNING.md`.
