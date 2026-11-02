@@ -28,4 +28,4 @@ pnpm-debug.log*
 .env*
 
 # Intake: your own files and reports. Never committed.
-intake/
+/intake/
