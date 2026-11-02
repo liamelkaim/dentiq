@@ -4,7 +4,9 @@ import { getTranslations } from "next-intl/server";
 import { ForgotPasswordForm } from "@/components/auth-forms";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: (await getTranslations("auth.forgot"))("title") };
+  const t = await getTranslations("auth.forgot");
+  const seo = await getTranslations("seo");
+  return { title: t("title"), description: seo("forgot"), alternates: { canonical: "/forgot-password" } };
 }
 
 export default async function ForgotPasswordPage() {

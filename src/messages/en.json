@@ -40,7 +40,9 @@
     "calendar": "Calendar",
     "off": "Off",
     "profile": "Profile",
-    "notes": "Notes"
+    "notes": "Notes",
+    "menu": "Menu",
+    "closeMenu": "Close the menu"
   },
   "home": {
     "welcome": "Welcome back, {name}.",
@@ -2458,5 +2460,12 @@
         "a": "No. It is an independent student project and is not affiliated with or endorsed by any university. Confirm dates and course lists with your faculty."
       }
     }
+  },
+  "seo": {
+    "signIn": "Sign in to Dentiq to open your course notes, past exam questions, calendar and flashcards.",
+    "signUp": "Create a Dentiq account with your university email address. An administrator approves new accounts.",
+    "privacy": "How Dentiq handles your personal data: what is stored, who can see it and how to export or delete it. Draft, pending legal review.",
+    "terms": "The terms of using Dentiq, an independent student study project. Draft, pending legal review.",
+    "forgot": "Ask for a link to choose a new Dentiq password."
   }
 }

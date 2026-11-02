@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useTransition, type ComponentType, type SVGProps } from "react";
+import { useEffect, useRef, useState, useTransition, type ComponentType, type SVGProps } from "react";
 import { authClient } from "@/lib/auth-client";
 import {
   BookIcon,
@@ -104,6 +104,82 @@ function TopSearch({ library }: { library: boolean }) {
         ⌘ K
       </kbd>
     </form>
+  );
+}
+
+/**
+ * Phone menu: every destination in one accessible drawer. A native <dialog> traps focus, closes on Escape and returns
+ * focus to the button; choosing a link or the backdrop closes it. The tab bar below keeps the five main places.
+ */
+function MobileMenu({ items, pathname }: { items: NavItem[]; pathname: string }) {
+  const t = useTranslations();
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button
+        type="button"
+        aria-label={t("nav.menu")}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => {
+          setOpen(true);
+          dialog.current?.showModal();
+        }}
+        className="grid size-11 place-items-center rounded-[10px] text-text-muted transition-colors hover:bg-surface-muted"
+      >
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+          <path d="M3 6h16M3 11h16M3 16h16" />
+        </svg>
+      </button>
+      <dialog
+        ref={dialog}
+        aria-label={t("nav.menu")}
+        onClose={() => setOpen(false)}
+        onClick={(e) => {
+          if (e.target === dialog.current) dialog.current?.close();
+        }}
+        className="m-0 mr-auto h-dvh max-h-dvh w-[min(20rem,85vw)] border-r border-border bg-sidebar p-0 text-text shadow-card backdrop:bg-black/50"
+      >
+        {open && (
+          <div className="flex h-full flex-col overflow-y-auto p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+            <div className="mb-2 flex items-center justify-between">
+              <Wordmark />
+              <button type="button" aria-label={t("nav.closeMenu")} onClick={() => dialog.current?.close()} className="grid size-11 place-items-center rounded-[10px] text-text-muted hover:bg-surface-muted">
+                <span aria-hidden="true" className="text-[24px] leading-none">
+                  &times;
+                </span>
+              </button>
+            </div>
+            <nav aria-label={t("nav.main")} className="flex flex-col gap-1">
+              {items.map(({ href, key, icon: Icon, badge }) => {
+                const active = isActive(pathname, href);
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => dialog.current?.close()}
+                    aria-current={active ? "page" : undefined}
+                    className={cx("flex min-h-11 items-center gap-3.5 rounded-[10px] border px-3.5 text-[16px]", active ? "border-accent/40 bg-accent-soft font-medium" : "border-transparent text-text-muted hover:bg-surface-muted")}
+                  >
+                    <Icon width={22} height={22} className={active ? "text-accent" : undefined} />
+                    <span className="flex-1">{t(`nav.${key}`)}</span>
+                    {badge && <span className="rounded-full bg-surface-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wide text-text-subtle uppercase">{badge}</span>}
+                  </Link>
+                );
+              })}
+            </nav>
+            <div className="mt-auto flex flex-col gap-3 border-t border-border pt-4">
+              <div className="flex items-center justify-between gap-2">
+                <ThemeSwitcher compact />
+                <LanguageSwitcher compact />
+              </div>
+              <SignOutButton className="justify-start" />
+            </div>
+          </div>
+        )}
+      </dialog>
+    </>
   );
 }
 
@@ -216,9 +292,12 @@ export function AppShell({
 
       {/* Mobile top bar */}
       <header className="sticky top-0 z-30 flex h-[calc(3.5rem+env(safe-area-inset-top))] items-center justify-between border-b border-border bg-sidebar/90 pt-[env(safe-area-inset-top)] pr-[max(1rem,env(safe-area-inset-right))] pl-[max(1rem,env(safe-area-inset-left))] backdrop-blur-xl lg:hidden">
-        <Link href="/" className="inline-flex min-h-11 items-center rounded-md" aria-label={`Dentiq · ${t("nav.dashboard")}`}>
-          <Wordmark />
-        </Link>
+        <div className="flex items-center gap-1">
+          <MobileMenu items={items} pathname={pathname} />
+          <Link href="/" className="inline-flex min-h-11 items-center rounded-md" aria-label={`Dentiq · ${t("nav.dashboard")}`}>
+            <Wordmark />
+          </Link>
+        </div>
         <div className="flex items-center gap-2">
           {/* The theme switcher lives in Settings on phones; the header keeps the language toggle and a gear. */}
           <LanguageSwitcher compact />

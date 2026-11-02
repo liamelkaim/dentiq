@@ -4,7 +4,9 @@ import { SignInForm } from "@/components/auth-forms";
 import { Notice } from "@/components/ui";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: (await getTranslations("auth.signIn"))("title") };
+  const t = await getTranslations("auth.signIn");
+  const seo = await getTranslations("seo");
+  return { title: t("title"), description: seo("signIn"), alternates: { canonical: "/sign-in" } };
 }
 
 export default async function SignInPage({ searchParams }: { searchParams: Promise<{ reset?: string }> }) {

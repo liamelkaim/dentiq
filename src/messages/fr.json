@@ -40,7 +40,9 @@
     "calendar": "Calendrier",
     "off": "Désactivé",
     "profile": "Profil",
-    "notes": "Notes"
+    "notes": "Notes",
+    "menu": "Menu",
+    "closeMenu": "Fermer le menu"
   },
   "home": {
     "welcome": "Bon retour, {name}.",
@@ -2458,5 +2460,12 @@
         "a": "Non. C'est un projet étudiant indépendant, non affilié à une université et non endossé par elle. Confirmez les dates et les listes de cours auprès de votre faculté."
       }
     }
+  },
+  "seo": {
+    "signIn": "Connectez-vous à Dentiq pour ouvrir vos notes de cours, d'anciennes questions d'examen, votre calendrier et vos cartes mémoire.",
+    "signUp": "Créez un compte Dentiq avec votre adresse courriel universitaire. Un administrateur approuve les nouveaux comptes.",
+    "privacy": "Comment Dentiq traite vos renseignements personnels : ce qui est conservé, qui peut le voir et comment l'exporter ou le supprimer. Version provisoire, en attente d'une révision juridique.",
+    "terms": "Les conditions d'utilisation de Dentiq, un projet d'étude étudiant indépendant. Version provisoire, en attente d'une révision juridique.",
+    "forgot": "Demandez un lien pour choisir un nouveau mot de passe Dentiq."
   }
 }

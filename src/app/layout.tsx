@@ -9,10 +9,14 @@ import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("common");
+  const locale = await getLocale();
   return {
     title: { default: "Dentiq", template: "%s · Dentiq" },
     description: t("tagline"),
+    metadataBase: new URL(process.env.BETTER_AUTH_URL || "http://localhost:3000"),
     applicationName: "Dentiq",
+    openGraph: { type: "website", siteName: "Dentiq", title: "Dentiq", description: t("tagline"), locale: locale === "en" ? "en_CA" : "fr_CA" },
+    twitter: { card: "summary_large_image", title: "Dentiq", description: t("tagline") },
     appleWebApp: { capable: true, title: "Dentiq", statusBarStyle: "default" },
   };
 }

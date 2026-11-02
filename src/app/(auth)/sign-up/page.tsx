@@ -3,7 +3,9 @@ import { getTranslations } from "next-intl/server";
 import { SignUpForm } from "@/components/auth-forms";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return { title: (await getTranslations("auth.signUp"))("title") };
+  const t = await getTranslations("auth.signUp");
+  const seo = await getTranslations("seo");
+  return { title: t("title"), description: seo("signUp"), alternates: { canonical: "/sign-up" } };
 }
 
 export default async function SignUpPage() {

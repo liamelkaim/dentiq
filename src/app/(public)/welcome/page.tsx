@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { LanguageSwitcher, ThemeSwitcher } from "@/components/preferences";
 import { SiteFooter } from "@/components/site-footer";
 import { ButtonLink, SkipLink, Wordmark } from "@/components/ui";
@@ -18,6 +19,8 @@ const FAQ = ["who", "private", "answers", "ai", "official"] as const;
 
 /** The public welcome page for visitors who are not signed in. Real content only: no reviews, counters or photos. */
 export default async function WelcomePage() {
+  // Rendered per request (it depends on the session), never at build time.
+  await connection();
   // A signed-in visitor who types /welcome goes to their home.
   if (await getCurrentUser()) redirect("/");
   const t = await getTranslations("landing");
