@@ -14,7 +14,11 @@
     "none": "None",
     "saved": "Saved.",
     "planned": "Planned",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "footerNav": "Footer links",
+    "mainNavPublic": "Main navigation",
+    "help": "Help",
+    "contact": "Contact us"
   },
   "nav": {
     "main": "Main navigation",
@@ -398,6 +402,20 @@
     "recordings": {
       "title": "Recordings",
       "adminHelp": "Switch recordings on or off and set size limits."
+    },
+    "feedback": {
+      "title": "Feedback",
+      "adminHelp": "Read what people sent and mark it done.",
+      "subtitle": "Messages from the Feedback button.",
+      "filter": "Filter",
+      "new": "New",
+      "all": "All",
+      "done": "Done",
+      "markDone": "Mark done",
+      "reopen": "Reopen",
+      "replyTo": "Reply to:",
+      "emptyTitle": "Nothing here",
+      "emptyBody": "No feedback in this view."
     }
   },
   "resources": {
@@ -2341,6 +2359,104 @@
       "saved": "Saved.",
       "outOfRange": "These values are out of range.",
       "hosting": "Hosting: files use the Blob store (free tier about 1 GB in total) and, on Vercel, a request body is limited to 4.5 MB, so large uploads only work locally until direct-to-storage uploads are built. See docs/recordings.md."
+    }
+  },
+  "feedback": {
+    "button": "Feedback",
+    "title": "Send feedback",
+    "thanksTitle": "Thank you",
+    "thanksBody": "Your message was sent. We read every one.",
+    "warning": "Do not include passwords, health information or anything that identifies a patient.",
+    "type": "What is it about?",
+    "types": {
+      "bug": "Something is broken",
+      "idea": "An idea",
+      "question": "A question",
+      "other": "Something else"
+    },
+    "message": "Your message",
+    "messageHint": "At least 5 and at most {max} characters.",
+    "email": "Your email (optional)",
+    "emailHint": "Only if you want an answer.",
+    "pageNote": "We attach the page you are on ({path}), without anything after the address.",
+    "send": "Send",
+    "sending": "Sending…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "emailUs": "Or email us",
+    "errors": {
+      "invalidType": "Choose what the message is about.",
+      "messageTooShort": "Write at least a few words.",
+      "messageTooLong": "The message is too long.",
+      "invalidEmail": "That email address does not look right.",
+      "tooMany": "You sent several messages recently. Try again later.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "landing": {
+    "metaTitle": "Dentiq: a study space for dental students",
+    "metaDescription": "Private course notes, past exam questions with moderator-verified answers, a personal calendar and flashcards for dental students, in French and English.",
+    "heroTitle": "Study space for dental students",
+    "heroBody": "Keep your course notes, practise with past exam questions, plan your terms and review with flashcards. Everything is in French and English, and your notes stay private.",
+    "heroNote": "Independent student project, starting with the D.M.D. at Université de Montréal. Not affiliated with or endorsed by any university. Sign-up needs a university email address and an administrator's approval.",
+    "createAccount": "Create an account",
+    "signIn": "Sign in",
+    "whatTitle": "What you can do",
+    "features": {
+      "notes": {
+        "title": "Private notes",
+        "body": "Write notes per course. They are private to you, and every save keeps a version you can go back to."
+      },
+      "passes": {
+        "title": "Past exam questions",
+        "body": "Browse and practise questions by course and year. Answers are marked proposed until a moderator verifies them."
+      },
+      "calendar": {
+        "title": "A calendar that is yours",
+        "body": "Add your exams, class times and study sessions. Term dates and breaks from official university pages are shown with a reminder to confirm them with your faculty."
+      },
+      "practice": {
+        "title": "Flashcards and quizzes",
+        "body": "Turn questions and your own cards into short review sessions and see your own progress."
+      }
+    },
+    "howTitle": "How it works",
+    "steps": {
+      "one": {
+        "title": "Create your account",
+        "body": "Use your university email address, confirm it, then wait for an administrator to approve you."
+      },
+      "two": {
+        "title": "Tell us your program",
+        "body": "Pick your year and semester so Dentiq can suggest your courses. You can skip this."
+      },
+      "three": {
+        "title": "Study",
+        "body": "Add notes, practise questions and plan your weeks. Nothing you write is shared unless you choose to share it."
+      }
+    },
+    "faqTitle": "Questions and answers",
+    "faq": {
+      "who": {
+        "q": "Who can use Dentiq?",
+        "a": "Dental students with a university email address, after an administrator approves the account. It starts with the D.M.D. program at Université de Montréal."
+      },
+      "private": {
+        "q": "Are my notes private?",
+        "a": "Yes. Notes, calendar entries, flashcards and recordings belong to you and are not shown to other students. Nothing is sent to an analytics or advertising service."
+      },
+      "answers": {
+        "q": "Can I trust the exam answers?",
+        "a": "Not blindly. An answer stays marked as a proposal until a moderator verifies it and notes the basis. Always check against your course material."
+      },
+      "ai": {
+        "q": "Does Dentiq use artificial intelligence?",
+        "a": "Not today. An AI tutor is built but switched off, and no AI service is connected. If it is ever turned on, you will be asked for your explicit consent first."
+      },
+      "official": {
+        "q": "Is this an official university service?",
+        "a": "No. It is an independent student project and is not affiliated with or endorsed by any university. Confirm dates and course lists with your faculty."
+      }
     }
   }
 }

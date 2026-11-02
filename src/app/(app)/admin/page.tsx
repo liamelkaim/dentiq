@@ -72,6 +72,12 @@ export default async function AdminPage() {
           subtitle={t("admin.recordings.adminHelp")}
         />
         <ListLinkRow
+          href="/admin/feedback"
+          leading={<span className={iconBox}><FlagIcon width={18} height={18} /></span>}
+          title={t("admin.feedback.title")}
+          subtitle={t("admin.feedback.adminHelp")}
+        />
+        <ListLinkRow
           href="/admin/tutor"
           leading={<span className={iconBox}><SparkleIcon width={18} height={18} /></span>}
           title={t("admin.tutor")}

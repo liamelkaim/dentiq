@@ -14,7 +14,11 @@
     "none": "Aucun",
     "saved": "Enregistré.",
     "planned": "Prévu",
-    "skipToContent": "Aller au contenu"
+    "skipToContent": "Aller au contenu",
+    "footerNav": "Liens de bas de page",
+    "mainNavPublic": "Navigation principale",
+    "help": "Aide",
+    "contact": "Nous joindre"
   },
   "nav": {
     "main": "Navigation principale",
@@ -398,6 +402,20 @@
     "recordings": {
       "title": "Enregistrements",
       "adminHelp": "Activer ou désactiver les enregistrements et fixer les limites de taille."
+    },
+    "feedback": {
+      "title": "Commentaires",
+      "adminHelp": "Lire les messages reçus et les marquer comme traités.",
+      "subtitle": "Messages du bouton Commentaires.",
+      "filter": "Filtre",
+      "new": "Nouveaux",
+      "all": "Tous",
+      "done": "Traité",
+      "markDone": "Marquer comme traité",
+      "reopen": "Rouvrir",
+      "replyTo": "Répondre à :",
+      "emptyTitle": "Rien ici",
+      "emptyBody": "Aucun commentaire dans cette vue."
     }
   },
   "resources": {
@@ -2341,6 +2359,104 @@
       "saved": "Enregistré.",
       "outOfRange": "Ces valeurs sont hors limites.",
       "hosting": "Hébergement : les fichiers utilisent le stockage Blob (environ 1 Go au total en gratuit) et, sur Vercel, le corps d'une requête est limité à 4,5 Mo : les gros envois ne fonctionnent donc qu'en local tant que l'envoi direct vers le stockage n'est pas construit. Voir docs/recordings.md."
+    }
+  },
+  "feedback": {
+    "button": "Commentaires",
+    "title": "Envoyer des commentaires",
+    "thanksTitle": "Merci",
+    "thanksBody": "Votre message a été envoyé. Nous les lisons tous.",
+    "warning": "N'incluez pas de mots de passe, de renseignements de santé ni rien qui identifie un patient.",
+    "type": "De quoi s'agit-il?",
+    "types": {
+      "bug": "Quelque chose ne fonctionne pas",
+      "idea": "Une idée",
+      "question": "Une question",
+      "other": "Autre chose"
+    },
+    "message": "Votre message",
+    "messageHint": "Au moins 5 et au plus {max} caractères.",
+    "email": "Votre courriel (facultatif)",
+    "emailHint": "Seulement si vous voulez une réponse.",
+    "pageNote": "Nous joignons la page où vous êtes ({path}), sans rien après l'adresse.",
+    "send": "Envoyer",
+    "sending": "Envoi…",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "emailUs": "Ou écrivez-nous",
+    "errors": {
+      "invalidType": "Choisissez le sujet du message.",
+      "messageTooShort": "Écrivez au moins quelques mots.",
+      "messageTooLong": "Le message est trop long.",
+      "invalidEmail": "Cette adresse courriel ne semble pas valide.",
+      "tooMany": "Vous avez envoyé plusieurs messages récemment. Réessayez plus tard.",
+      "generic": "Une erreur est survenue. Veuillez réessayer."
+    }
+  },
+  "landing": {
+    "metaTitle": "Dentiq : un espace d'étude pour les étudiants en médecine dentaire",
+    "metaDescription": "Notes de cours privées, anciens examens avec réponses vérifiées par des modérateurs, calendrier personnel et cartes mémoire pour les étudiants en médecine dentaire, en français et en anglais.",
+    "heroTitle": "Un espace d'étude pour les étudiants en médecine dentaire",
+    "heroBody": "Gardez vos notes de cours, exercez-vous avec d'anciennes questions d'examen, planifiez vos sessions et révisez avec des cartes mémoire. Tout est en français et en anglais, et vos notes restent privées.",
+    "heroNote": "Projet étudiant indépendant, qui commence avec le D.M.D. de l'Université de Montréal. Non affilié à une université et non endossé par elle. L'inscription exige une adresse courriel universitaire et l'approbation d'un administrateur.",
+    "createAccount": "Créer un compte",
+    "signIn": "Se connecter",
+    "whatTitle": "Ce que vous pouvez faire",
+    "features": {
+      "notes": {
+        "title": "Notes privées",
+        "body": "Écrivez vos notes par cours. Elles ne sont visibles que par vous, et chaque enregistrement garde une version à laquelle revenir."
+      },
+      "passes": {
+        "title": "Anciennes questions d'examen",
+        "body": "Parcourez et pratiquez des questions par cours et par année. Les réponses sont marquées comme proposées tant qu'un modérateur ne les a pas vérifiées."
+      },
+      "calendar": {
+        "title": "Un calendrier qui est le vôtre",
+        "body": "Ajoutez vos examens, vos heures de cours et vos séances d'étude. Les dates de session et les congés des pages universitaires officielles sont affichés avec un rappel de les confirmer auprès de votre faculté."
+      },
+      "practice": {
+        "title": "Cartes mémoire et quiz",
+        "body": "Transformez des questions et vos propres cartes en courtes séances de révision et suivez votre progression."
+      }
+    },
+    "howTitle": "Comment ça marche",
+    "steps": {
+      "one": {
+        "title": "Créez votre compte",
+        "body": "Utilisez votre adresse courriel universitaire, confirmez-la, puis attendez l'approbation d'un administrateur."
+      },
+      "two": {
+        "title": "Indiquez votre programme",
+        "body": "Choisissez votre année et votre session pour que Dentiq vous suggère vos cours. Vous pouvez passer cette étape."
+      },
+      "three": {
+        "title": "Étudiez",
+        "body": "Ajoutez des notes, pratiquez des questions et planifiez vos semaines. Rien de ce que vous écrivez n'est partagé sans que vous le choisissiez."
+      }
+    },
+    "faqTitle": "Questions et réponses",
+    "faq": {
+      "who": {
+        "q": "Qui peut utiliser Dentiq?",
+        "a": "Les étudiants en médecine dentaire qui ont une adresse courriel universitaire, une fois le compte approuvé par un administrateur. Le projet commence avec le programme D.M.D. de l'Université de Montréal."
+      },
+      "private": {
+        "q": "Mes notes sont-elles privées?",
+        "a": "Oui. Les notes, les entrées de calendrier, les cartes mémoire et les enregistrements vous appartiennent et ne sont pas montrés aux autres étudiants. Rien n'est envoyé à un service d'analyse ou de publicité."
+      },
+      "answers": {
+        "q": "Puis-je me fier aux réponses des examens?",
+        "a": "Pas aveuglément. Une réponse reste marquée comme proposition tant qu'un modérateur ne l'a pas vérifiée et n'en a pas noté la base. Comparez toujours avec votre matériel de cours."
+      },
+      "ai": {
+        "q": "Dentiq utilise-t-il l'intelligence artificielle?",
+        "a": "Pas aujourd'hui. Un tuteur IA est construit mais désactivé, et aucun service d'IA n'est connecté. S'il était activé un jour, votre consentement explicite serait demandé d'abord."
+      },
+      "official": {
+        "q": "Est-ce un service officiel de l'université?",
+        "a": "Non. C'est un projet étudiant indépendant, non affilié à une université et non endossé par elle. Confirmez les dates et les listes de cours auprès de votre faculté."
+      }
     }
   }
 }

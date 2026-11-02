@@ -30,3 +30,6 @@ export const RATE_CALENDAR_IMPORT: RateRule = { name: "calendar-import", limit: 
 
 /** Questions sent to the tutor: a few per minute per student (the daily question, token and cost caps are separate). */
 export const RATE_TUTOR_ASK: RateRule = { name: "tutor-ask", limit: 6, windowSeconds: 60 };
+
+/** Feedback form: a few messages per hour per signed-in user (or per client address when signed out). */
+export const RATE_FEEDBACK: RateRule = { name: "feedback", limit: 5, windowSeconds: 60 * 60 };

@@ -8,3 +8,6 @@
 - Whether the general UdeM calendar (add/drop deadlines, 2026-10-19 reading week "in some units") applies to D.M.D. students: not stated officially. Not loaded.
 - Two weekday labels in the faculty PDF disagree with their dates (2027-05-06 and 2027-06-04): dates were kept as published, verify with the faculty.
 - Onboarding allows program years 1 to 6 and semesters 1 to 3; UdeM D.M.D. is 5 years (year 4 has a summer term). Tighten per preset later.
+- CONTACT_EMAIL (owner decision): no contact address was given. The footer and the Feedback form hide the "Contact us" mailto link until `CONTACT_EMAIL` is set in the environment.
+- Public welcome page, content slots left empty ON PURPOSE (nothing fake is shown): testimonials or reviews, user or course counters, case studies, team or founder photos, a student count. Add real ones only with the owner's permission; the page currently has what Dentiq is, who it is for, how it works and five truthful FAQ answers.
+- Feedback notices go to the first address in ADMIN_EMAILS through the mailer; real delivery needs a verified Resend domain (see the email item above).

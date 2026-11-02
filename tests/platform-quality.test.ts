@@ -547,7 +547,7 @@ describe("browser test findings", () => {
   });
 
   it("keeps footer and switcher links at least 44 px wide on phones", () => {
-    for (const file of [["app", "(auth)", "layout.tsx"], ["app", "(legal)", "layout.tsx"], ["components", "app-shell.tsx"]]) {
+    for (const file of [["components", "site-footer.tsx"], ["components", "app-shell.tsx"]]) {
       expect(read("src", ...file), file.join("/")).toContain("min-w-11");
     }
     expect(read("src", "components", "preferences.tsx")).toContain("min-w-11");

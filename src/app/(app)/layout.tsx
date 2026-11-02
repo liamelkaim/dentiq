@@ -21,6 +21,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       library={canAccessLibrary(user)}
       tutorReady={tutorReady}
       recordingsOn={recordingsOn}
+      contactEmail={process.env.CONTACT_EMAIL?.trim() || null}
     >
       {children}
     </AppShell>

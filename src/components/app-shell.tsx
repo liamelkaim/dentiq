@@ -125,6 +125,7 @@ export function AppShell({
   library = false,
   tutorReady = false,
   recordingsOn = false,
+  contactEmail = null,
   children,
 }: {
   user: { name: string; email: string; role: "student" | "moderator" | "admin" };
@@ -136,6 +137,8 @@ export function AppShell({
   tutorReady?: boolean;
   /** Recordings are listed in the menu only while the administrator has switched them on. */
   recordingsOn?: boolean;
+  /** Shown in the footer as a mailto link when the owner has set one. */
+  contactEmail?: string | null;
   children: React.ReactNode;
 }) {
   const t = useTranslations();
@@ -278,6 +281,12 @@ export function AppShell({
           <p className="mx-auto mt-1 flex max-w-[1400px] flex-wrap gap-x-4 text-[12px] text-text-subtle">
             <Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center justify-center underline-offset-2 hover:underline">{t("legal.privacyLink")}</Link>
             <Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center justify-center underline-offset-2 hover:underline">{t("legal.termsLink")}</Link>
+            <Link href="/help" className="inline-flex min-h-11 min-w-11 items-center justify-center underline-offset-2 hover:underline">{t("common.help")}</Link>
+            {contactEmail && (
+              <a href={`mailto:${contactEmail}`} className="inline-flex min-h-11 min-w-11 items-center justify-center underline-offset-2 hover:underline">
+                {t("common.contact")}
+              </a>
+            )}
           </p>
         </main>
       </div>

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { LanguageSwitcher, ThemeSwitcher } from "@/components/preferences";
+import { SiteFooter } from "@/components/site-footer";
 import { SkipLink, Wordmark } from "@/components/ui";
 
 export default async function LegalLayout({ children }: { children: React.ReactNode }) {
-  const t = await getTranslations("legal");
   const common = await getTranslations("common");
   return (
     <div className="flex min-h-dvh flex-col px-4 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
@@ -17,10 +17,7 @@ export default async function LegalLayout({ children }: { children: React.ReactN
         </div>
       </header>
       <main id="main" tabIndex={-1} className="mx-auto w-full max-w-3xl flex-1 py-8 outline-none">{children}</main>
-      <footer className="mx-auto flex w-full max-w-3xl flex-wrap items-center gap-x-5 gap-y-2 py-6 text-[13px] text-text-muted">
-        <Link href="/privacy" className="inline-flex min-h-11 min-w-11 items-center justify-center hover:text-text">{t("privacyLink")}</Link>
-        <Link href="/terms" className="inline-flex min-h-11 min-w-11 items-center justify-center hover:text-text">{t("termsLink")}</Link>
-      </footer>
+      <SiteFooter className="mx-auto w-full max-w-3xl py-6" />
     </div>
   );
 }

@@ -58,7 +58,7 @@ describe("account messages", () => {
   });
 
   it("links to privacy and terms from the auth pages layout, the app footer and the profile page", () => {
-    for (const file of ["src/app/(auth)/layout.tsx", "src/components/app-shell.tsx", "src/app/(app)/profile/page.tsx"]) {
+    for (const file of ["src/components/site-footer.tsx", "src/components/app-shell.tsx", "src/app/(app)/profile/page.tsx"]) {
       const text = readFileSync(file, "utf8");
       expect(text, file).toContain('href="/privacy"');
       expect(text, file).toContain('href="/terms"');
