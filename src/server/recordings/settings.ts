@@ -38,3 +38,6 @@ export async function updateRecordingSettings(db: Database, viewer: Viewer, patc
   });
   return { ok: true, value: after };
 }
+
+/** Largest request body the upload route reads: nothing but form fields while recordings are OFF. */
+export const recordingBodyLimit = (settings: RecordingSettings, formOverheadBytes: number) => (settings.enabled ? settings.maxFileBytes + formOverheadBytes : formOverheadBytes);

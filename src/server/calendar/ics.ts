@@ -133,7 +133,7 @@ export type ParsedEvent = {
   description: string | null;
   location: string | null;
   /** Present only for FREQ=WEEKLY rules: the last date (or null when unbounded or COUNT-limited, see `count`). */
-  weekly: { until: string | null; count: number | null } | null;
+  weekly: { until: string | null; count: number | null; /** Monday = 1 ... Sunday = 7; null when the rule names no day (the start date's weekday is used). */ days: number[] | null } | null;
 };
 
 export type ParseResult = { events: ParsedEvent[]; skipped: number };
@@ -153,6 +153,7 @@ function unescapeIcsText(value: string): string {
 function parseDateTime(value: string, params: string): { date: string; time: string | null } | null {
   const m = /^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?(Z)?)?$/.exec(value.trim());
   if (!m) return null;
+  if (m[4] !== undefined && (Number(m[4]) > 23 || Number(m[5]) > 59)) return null;
   const date = `${m[1]}-${m[2]}-${m[3]}`;
   if (!parseIsoDate(date)) return null;
   if (m[4] === undefined || /VALUE=DATE(?!-)/i.test(params)) return { date, time: null };
@@ -187,7 +188,14 @@ export function parseIcs(text: string): ParseResult {
         const rule = Object.fromEntries(done.RRULE.value.split(";").map((p) => p.split("=") as [string, string]));
         if (rule.FREQ === "WEEKLY" && (!rule.INTERVAL || rule.INTERVAL === "1")) {
           const until = rule.UNTIL ? parseDateTime(rule.UNTIL, "") : null;
-          weekly = { until: until?.date ?? null, count: rule.COUNT && /^\d+$/.test(rule.COUNT) ? Number(rule.COUNT) : null };
+          const names = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
+          const days = rule.BYDAY ? rule.BYDAY.split(",").map((d) => names.indexOf(d) + 1) : null;
+          // Ordinals ("1MO") and unknown day names are not guessed: the event is skipped and counted.
+          if (days && (days.length === 0 || days.some((d) => d === 0))) {
+            skipped++;
+            continue;
+          }
+          weekly = { until: until?.date ?? null, count: rule.COUNT && /^\d{1,3}$/.test(rule.COUNT) ? Number(rule.COUNT) : null, days };
         } else {
           skipped++; // a rule we do not understand: do not guess
           continue;

@@ -79,7 +79,8 @@ export async function seedProgram(db: Database, actorId: string, raw: unknown, o
         sourceName: "Official university pages",
         ...src(c.source),
       };
-      await tx.insert(courses).values(values).onConflictDoUpdate({ target: courses.code, set: values });
+      // An existing course keeps whatever an administrator edited (title, credits); only placement and source are refreshed.
+      await tx.insert(courses).values(values).onConflictDoUpdate({ target: courses.code, set: { programId: values.programId, yearOfStudy: values.yearOfStudy, typicalTerm: values.typicalTerm, sourceName: values.sourceName, sourceUrl: values.sourceUrl, sourceRetrievedOn: values.sourceRetrievedOn } });
       summary.courses++;
     }
 

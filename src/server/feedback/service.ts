@@ -65,6 +65,7 @@ export async function listFeedback(db: Database, viewer: Viewer, filter: "new" |
 
 export async function setFeedbackDone(db: Database, viewer: Viewer, id: string, done: boolean): Promise<boolean> {
   if (!hasRole(viewer, "admin")) return false;
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return false;
   const rows = await db.update(feedback).set({ status: done ? "done" : "new", doneAt: done ? new Date() : null, doneBy: done ? viewer.id : null }).where(eq(feedback.id, id)).returning({ id: feedback.id });
   if (rows.length) await writeAudit(db, { actorId: viewer.id, action: done ? "feedback.done" : "feedback.reopen", entityType: "feedback", entityId: id });
   return rows.length > 0;

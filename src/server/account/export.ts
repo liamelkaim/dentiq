@@ -38,6 +38,7 @@ import {
   tutorConsents,
   tutorConversations,
   tutorMessages,
+  feedback,
   tutorUsage,
   user,
   userClassBlocks,
@@ -426,6 +427,7 @@ export async function buildAccountExport(db: Database, userId: string, options: 
     const tutorConsentRows = await db.select({ version: tutorConsents.version, acceptedAt: tutorConsents.acceptedAt }).from(tutorConsents).where(eq(tutorConsents.userId, userId));
     const tutorConversationRows = capped(await db.select({ id: tutorConversations.id, title: tutorConversations.title, courseId: tutorConversations.courseId, createdAt: tutorConversations.createdAt, updatedAt: tutorConversations.updatedAt }).from(tutorConversations).where(eq(tutorConversations.userId, userId)).limit(LIMIT));
     const tutorMessageRows = capped(await db.select({ conversationId: tutorMessages.conversationId, role: tutorMessages.role, body: tutorMessages.body, citations: tutorMessages.citations, createdAt: tutorMessages.createdAt }).from(tutorMessages).innerJoin(tutorConversations, eq(tutorMessages.conversationId, tutorConversations.id)).where(eq(tutorConversations.userId, userId)).limit(LIMIT));
+    const feedbackRows = capped(await db.select({ type: feedback.type, message: feedback.message, contactEmail: feedback.contactEmail, pagePath: feedback.pagePath, status: feedback.status, createdAt: feedback.createdAt }).from(feedback).where(eq(feedback.userId, userId)).limit(LIMIT));
     const tutor = capped(
       await db
         .select({
@@ -501,6 +503,7 @@ export async function buildAccountExport(db: Database, userId: string, options: 
       study: { attempts, marks, personalCards, questionCards, cardReviews, quizzes, quizItems },
       calendar: { entries: calendar, classBlocks, followedCourses },
       program: programProfile[0] ?? null,
+      feedback: { items: feedbackRows },
       recordings: { items: recordingRows, notes: recordingNoteRows },
       tutorUsage: { entries: tutor },
       tutorConversations: { consent: tutorConsentRows[0] ?? null, conversations: tutorConversationRows, messages: tutorMessageRows },

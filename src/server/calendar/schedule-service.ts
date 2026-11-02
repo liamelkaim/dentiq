@@ -133,16 +133,25 @@ export async function importIcs(db: Database, viewer: Viewer, text: string): Pro
     let entryRoom = CALENDAR_ENTRIES_PER_USER_MAX - (e?.n ?? 0);
     let blockRoom = CLASS_BLOCKS_PER_USER_MAX - (b?.n ?? 0);
     for (const ev of events) {
-      if (ev.weekly && ev.time && ev.endTime && ev.endTime > ev.time) {
+      // One bad event is skipped and counted; it never fails the whole import (the database also refuses bad rows).
+      const okDate = checkDate(ev.date) === "ok";
+      const okTimes = ev.time === null || (isValidTime(ev.time) && (ev.endTime === null || (isValidTime(ev.endTime) && ev.endTime > ev.time)));
+      if (!okDate || !okTimes) {
+        summary.skipped++;
+        continue;
+      }
+      if (ev.weekly && ev.time && ev.endTime) {
         const validTo = ev.weekly.until ?? (ev.weekly.count ? addWeeks(ev.date, ev.weekly.count - 1) : null);
-        if (!validTo || validTo < ev.date || blockRoom <= 0) {
+        const days = ev.weekly.days ?? [((new Date(`${ev.date}T12:00:00Z`).getUTCDay() + 6) % 7) + 1];
+        if (!validTo || validTo < ev.date || checkDate(validTo) !== "ok" || blockRoom < days.length) {
           summary.skipped++;
           continue;
         }
-        const weekday = ((new Date(`${ev.date}T12:00:00Z`).getUTCDay() + 6) % 7) + 1;
-        await tx.insert(userClassBlocks).values({ userId: viewer.id, title: ev.title, weekday, startTime: ev.time, endTime: ev.endTime, location: ev.location, validFrom: ev.date, validTo });
-        summary.classBlocks++;
-        blockRoom--;
+        for (const weekday of days) {
+          await tx.insert(userClassBlocks).values({ userId: viewer.id, title: ev.title, weekday, startTime: ev.time, endTime: ev.endTime, location: ev.location, validFrom: ev.date, validTo });
+          summary.classBlocks++;
+          blockRoom--;
+        }
       } else if (!ev.weekly) {
         if (entryRoom <= 0) {
           summary.skipped++;

@@ -2,6 +2,7 @@ import { betterAuth, type BetterAuthPlugin } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { APIError } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
+import { after } from "next/server";
 import type { Database } from "@/db/client";
 import { account, authRateLimit, session, user, verification } from "@/db/schema";
 import { trustedIpHeaders } from "@/server/rate-limit/client-ip";
@@ -46,7 +47,18 @@ export function createAuth(db: Database, { mailer, nextjs = true, rateLimitEnabl
       // Better Auth answers the same way whether or not the address has an account, so this form cannot be used to
       // find out who is registered. The email is only sent when the account exists.
       async sendResetPassword({ user, url }) {
-        await (mailer ?? getMailer()).send(passwordResetEmail(user.email, url, RESET_HOURS));
+        // Not awaited: a registered address must not take longer (or fail differently) than an unknown one, because the
+        // delay or an error from the mail service would reveal that the account exists. Failures are only logged.
+        const send = () =>
+          (mailer ?? getMailer())
+            .send(passwordResetEmail(user.email, url, RESET_HOURS))
+            .catch(() => console.error("[Dentiq] Password reset email could not be sent"));
+        try {
+          // In a request, after() keeps the work alive after the response is sent (serverless hosts).
+          after(send);
+        } catch {
+          void send();
+        }
       },
     },
     emailVerification: {
