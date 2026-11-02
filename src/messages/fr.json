@@ -384,6 +384,16 @@
       "openSignup": "Aucun domaine n’est défini : n’importe quelle adresse peut s’inscrire. Ajoutez un domaine avant d’ouvrir l’application aux étudiants.",
       "unverified": "NON VÉRIFIÉ : confirmez auprès de la faculté les adresses utilisées par ses étudiants avant de vous fier au préréglage. L’adresse de l’administrateur est toujours acceptée.",
       "resendNote": "L’envoi de courriels à de vrais étudiants exige un domaine vérifié dans Resend. D’ici là, les messages ne sont affichés que dans la console du serveur."
+    },
+    "program": {
+      "title": "Données du programme UdeM",
+      "adminHelp": "Charger les cours et le calendrier du D.M.D. depuis les pages officielles.",
+      "subtitle": "Charge dans le catalogue les cours du D.M.D. de l’Université de Montréal (par année et session) et le calendrier de la faculté. Peut être relancé sans risque.",
+      "verify": "Les données ont été copiées des pages officielles de l’UdeM le 2026-11-01 et peuvent changer. Les étudiants sont invités à confirmer les dates et les cours auprès de la faculté. Les sessions de 2027-2028 ne sont pas encore publiées et ne sont pas chargées.",
+      "load": "Charger les données D.M.D. de l’UdeM",
+      "done": "{courses} cours, {terms} sessions et {periods} congés ou périodes chargés.",
+      "error": "Impossible de charger les données. Consultez le journal du serveur.",
+      "sources": "Les sources et les dates de consultation sont listées dans docs/udem-research.md et enregistrées sur chaque cours et session."
     }
   },
   "resources": {
@@ -1618,7 +1628,7 @@
   },
   "calendar": {
     "title": "Calendrier",
-    "subtitle": "Vos propres dates : examens, travaux et séances d'étude. Dentiq n'ajoute jamais de dates à votre place.",
+    "subtitle": "Vos examens, travaux et séances d'étude, vos heures de cours, ainsi que les sessions et congés de votre université. Dentiq ne devine jamais vos dates d'examen.",
     "privacy": "Votre calendrier est privé. Vous seul·e pouvez voir ces entrées.",
     "noAccess": "Le calendrier est réservé aux membres approuvés.",
     "kinds": {
@@ -1660,7 +1670,7 @@
     },
     "empty": {
       "title": "Votre calendrier est vide",
-      "body": "Dentiq ne connaît pas vos dates d'examen et ne les devine pas. Ajoutez les dates que vous connaissez : examens, échéances de travaux, séances d'étude. Vous seul·e les voyez.",
+      "body": "Dentiq ne connaît pas vos dates d'examen et ne les devine pas. Ajoutez les dates que vous connaissez, configurez vos heures de cours hebdomadaires ou importez un fichier de calendrier. Vous seul·e les voyez.",
       "action": "Ajouter votre première entrée"
     },
     "form": {
@@ -1700,6 +1710,20 @@
       "invalidDate": "Cette date n'existe pas.",
       "dateOutOfRange": "Cette date est hors des années acceptées par le calendrier.",
       "invalidTime": "Saisissez une heure comme 14:30, ou laissez vide."
+    },
+    "schedule": {
+      "link": "Mon horaire",
+      "verifyNote": "Les sessions, congés et périodes d’examens marqués « non confirmé » doivent être vérifiés auprès de votre faculté."
+    },
+    "markers": {
+      "class": "Cours",
+      "term_start": "Début de session",
+      "term_end": "Fin de session",
+      "reading_week": "Semaine de lecture",
+      "break": "Congé",
+      "holiday": "Jour férié",
+      "exam_period": "Période d’examens",
+      "unverified": "Non confirmé"
     }
   },
   "analytics": {
@@ -2092,6 +2116,83 @@
         "title": "Compte",
         "body": "Changez votre nom, téléchargez vos données ou supprimez votre compte depuis la page Profil."
       }
+    }
+  },
+  "schedule": {
+    "title": "Mon horaire",
+    "subtitle": "Vos heures de cours, avec les sessions et les congés de votre université.",
+    "saved": "Enregistré.",
+    "verifyTitle": "À vérifier auprès de votre faculté",
+    "verifyBody": "Les dates de session, les congés et les périodes d’examens proviennent de pages universitaires publiques et peuvent changer ou être incomplètes. Confirmez-les toujours auprès de votre faculté. Vous pouvez ajouter ou modifier vos propres heures de cours en tout temps.",
+    "terms": {
+      "title": "Session en cours et prochaine session",
+      "help": "D’après le préréglage d’université choisi.",
+      "noPreset": "Choisissez une université dans Aide > Modifier mes informations de programme pour voir ses dates de session.",
+      "none": "Aucune donnée de session n’est encore chargée pour votre université.",
+      "names": {
+        "fall": "Automne",
+        "winter": "Hiver",
+        "summer": "Été"
+      },
+      "verified": "Confirmé sur une page officielle",
+      "unverified": "Non confirmé : vérifiez auprès de votre faculté",
+      "range": "du {from} au {to}"
+    },
+    "blocks": {
+      "title": "Heures de cours hebdomadaires",
+      "emptyTitle": "Aucune heure de cours pour l’instant",
+      "emptyBody": "Ajoutez chaque cours ci-dessous, ou importez un fichier de calendrier (.ics) de votre université ou d’une autre application.",
+      "delete": "Supprimer",
+      "deleteLabel": "Supprimer {title}"
+    },
+    "form": {
+      "heading": "Ajouter une heure de cours",
+      "title": "Titre",
+      "course": "Cours",
+      "courseHint": "Facultatif.",
+      "noCourse": "Aucun cours",
+      "weekday": "Jour",
+      "start": "Début",
+      "end": "Fin",
+      "from": "Premier jour",
+      "to": "Dernier jour",
+      "location": "Local ou lieu (facultatif)",
+      "add": "Ajouter l’heure de cours"
+    },
+    "weekdays": {
+      "1": "Lundi",
+      "2": "Mardi",
+      "3": "Mercredi",
+      "4": "Jeudi",
+      "5": "Vendredi",
+      "6": "Samedi",
+      "7": "Dimanche"
+    },
+    "follow": {
+      "title": "Cours de votre année et de votre session",
+      "help": "Cours listés pour l’année {year} dans le catalogue. Suivre un cours ne concerne que vous.",
+      "noProfile": "Indiquez votre année de programme dans Aide > Modifier mes informations de programme pour voir des suggestions.",
+      "empty": "Aucun cours n’est encore listé dans le catalogue pour votre année et votre session.",
+      "add": "Suivre",
+      "remove": "Ne plus suivre"
+    },
+    "import": {
+      "title": "Importer ou exporter",
+      "help": "Importez un fichier .ics que vous avez choisi. Rien n’est récupéré sur Internet et aucune connexion n’est utilisée.",
+      "file": "Fichier de calendrier (.ics)",
+      "hint": "Jusqu’à 512 Ko. Les événements hebdomadaires deviennent des heures de cours; les autres deviennent des entrées de calendrier.",
+      "submit": "Importer",
+      "done": "{entries} entrées et {blocks} heures de cours importées. Ignorées : {skipped}.",
+      "exportClasses": "Télécharger mes heures de cours (.ics)"
+    },
+    "errors": {
+      "nothingToImport": "Aucun événement utilisable dans ce fichier.",
+      "fileTooLarge": "Ce fichier est trop volumineux (512 Ko maximum).",
+      "tooManyAttempts": "Trop d’importations. Réessayez dans une minute.",
+      "limitReached": "Vous avez atteint la limite d’heures de cours.",
+      "forbidden": "Votre compte doit d’abord être approuvé.",
+      "endBeforeStart": "La fin doit être après le début.",
+      "invalidTime": "Entrez une heure valide."
     }
   }
 }

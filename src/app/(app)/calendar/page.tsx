@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getFormatter, getTranslations } from "next-intl/server";
+import { getFormatter, getLocale, getTranslations } from "next-intl/server";
 import { AgendaList, calendarHref, MonthGridView, MonthNav, type CalendarView } from "@/components/calendar-ui";
 import { PrivacyNote } from "@/components/study-ui";
 import { buttonClass, ButtonLink, EmptyState, Notice, PageHeader, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
 import { requireUser } from "@/server/auth/session";
 import { daysInMonth, checkDate, formatIso, isoDateIn, parseIsoDate, parseMonthParam } from "@/server/calendar/dates";
-import { countEntries, listEntries } from "@/server/calendar/service";
+import { countEntries, listEntries, type CalendarEntry } from "@/server/calendar/service";
+import { listClassBlocks, loadScheduleWindow } from "@/server/calendar/schedule-service";
+import { localized, type Locale } from "@/i18n/config";
 import { canAccessLibrary } from "@/server/resources/service";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -47,14 +49,31 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
   const day = parsedDay && parsedDay.year === month.year && parsedDay.month === month.month ? dayParam! : null;
 
   const db = getDb();
-  const total = await countEntries(db, viewer);
+  const [total, blocks] = await Promise.all([countEntries(db, viewer), listClassBlocks(db, viewer)]);
+  const scheduleLink = (
+    <ButtonLink href="/calendar/schedule" variant="secondary">
+      {t("schedule.link")}
+    </ButtonLink>
+  );
   const addHref = `/calendar/new${day ? `?date=${day}` : ""}`;
 
-  if (total === 0) {
+  const monthFrom = formatIso(month.year, month.month, 1);
+  const monthTo = formatIso(month.year, month.month, daysInMonth(month.year, month.month));
+  const window = await loadScheduleWindow(db, viewer, monthFrom, monthTo);
+  if (total === 0 && blocks.length === 0 && !window.hasTermData) {
     return (
       <>
-        <PageHeader title={t("title")} subtitle={t("subtitle")} />
-        <EmptyState title={t("empty.title")} body={t("empty.body")} action={<ButtonLink href="/calendar/new">{t("empty.action")}</ButtonLink>} />
+        <PageHeader title={t("title")} subtitle={t("subtitle")} actions={scheduleLink} />
+        <EmptyState
+          title={t("empty.title")}
+          body={t("empty.body")}
+          action={
+            <span className="flex flex-wrap gap-2">
+              <ButtonLink href="/calendar/new">{t("empty.action")}</ButtonLink>
+              {scheduleLink}
+            </span>
+          }
+        />
         <div className="mt-4">
           <PrivacyNote>{t("privacy")}</PrivacyNote>
         </div>
@@ -62,10 +81,15 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
     );
   }
 
-  const entries = await listEntries(db, viewer, {
-    from: formatIso(month.year, month.month, 1),
-    to: formatIso(month.year, month.month, daysInMonth(month.year, month.month)),
-  });
+  const locale = (await getLocale()) as Locale;
+  const own = await listEntries(db, viewer, { from: monthFrom, to: monthTo });
+  const classes: CalendarEntry[] = window.occurrences.map((o) => ({
+    id: `class-${o.id}-${o.date}`, title: o.title, date: o.date, time: o.startTime, kind: "other", note: o.location, courseId: null, courseCode: o.courseCode, virtual: { type: "class" },
+  }));
+  const markers: CalendarEntry[] = window.markers.map((m) => ({
+    id: `marker-${m.kind}-${m.date}`, title: localized(locale, m.nameFr, m.nameEn), date: m.date, time: null, kind: "other", note: null, courseId: null, courseCode: null, virtual: { type: "marker", markerKind: m.kind, verified: m.verified },
+  }));
+  const entries = [...own, ...classes, ...markers].sort((a, b) => a.date.localeCompare(b.date) || (a.time ?? "").localeCompare(b.time ?? ""));
   // The right panel shows the chosen day, or today when the month on screen is the current one.
   const panelDay = day ?? (month.year === todayParts.year && month.month === todayParts.month ? today : null);
   const shown = panelDay ? entries.filter((e) => e.date === panelDay) : entries;
@@ -76,7 +100,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
 
   return (
     <>
-      <PageHeader title={t("title")} subtitle={t("subtitle")} actions={<ButtonLink href={addHref}>{t("nav.add")}</ButtonLink>} />
+      <PageHeader title={t("title")} subtitle={t("subtitle")} actions={<>{scheduleLink}<ButtonLink href={addHref}>{t("nav.add")}</ButtonLink></>} />
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <div className="min-w-0 rounded-[var(--radius-card)] border border-border bg-surface p-4 shadow-card">
@@ -115,6 +139,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
           </a>
         </Panel>
       </Section>
+      {window.hasTermData && <Notice tone="warning" className="mt-4">{t("schedule.verifyNote")}</Notice>}
       <PrivacyNote>{t("privacy")}</PrivacyNote>
     </>
   );

@@ -10,3 +10,4 @@ export * from "./calendar";
 export * from "./tutor";
 export * from "./rate-limit";
 export * from "./profile";
+export * from "./schedule";

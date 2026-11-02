@@ -24,3 +24,6 @@ export const RATE_CALENDAR_EXPORT: RateRule = { name: "calendar-export", limit: 
 export function rateKey(rule: RateRule, userId: string): string {
   return `${rule.name}:${userId}`;
 }
+
+/** Calendar (.ics) imports: each one parses a file and writes rows. */
+export const RATE_CALENDAR_IMPORT: RateRule = { name: "calendar-import", limit: 5, windowSeconds: 60 };

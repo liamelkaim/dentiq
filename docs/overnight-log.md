@@ -128,3 +128,7 @@ Not done yet in phase 1: browser comparison of every screen at 390/768/1440 px i
 ## finish/dentiq-polish, phase 1 (rest) and phase 2
 Phase 1 browser QA: 12 pages x 390/768 px x light/dark x EN/FR on a scratch DB, no overflow, theme and language correct, targets 44 px (one inline text link exempt). Window resizing does not change the viewport in the Chrome tool; popups opened by script give real widths. Home compared to mockup 09 at 1440 px.
 Phase 2: admin email-domain settings with UdeM preset, bilingual HTML/text verification and reset emails, forgot/reset pages, expired-link page with resend, rate limits. 15 new tests; 624 pass; build passes; reset flow walked in the browser.
+
+## finish/dentiq-polish, phase 3
+Research (Opus subagent, official UdeM pages only): 167 verified courses, 5-year D.M.D., faculty calendar for 2026-2027; 3 unverified terms (2027-2028) left empty. See docs/udem-research.md.
+Built: terms/periods/class-block/followed-course tables (migration 0012), schedule expansion and markers, .ics export of classes and import, My schedule page, calendar shows classes, terms, breaks with a "verify with your faculty" note, admin loader. 653 tests pass, build passes, loaded and viewed in the browser.

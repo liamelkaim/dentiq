@@ -87,3 +87,128 @@ export function buildIcs(entries: readonly IcsEntry[], options: { now?: Date; ki
   lines.push("END:VCALENDAR");
   return lines.map(foldIcsLine).join("\r\n") + "\r\n";
 }
+
+// ---------------------------------------------------------------------------------------------------------------
+// Class blocks (weekly) and import. Export writes one recurring VEVENT per block (RRULE with UNTIL, EXDATE for class-free
+// days). Import reads a file the student chose: one-off events become calendar entries, WEEKLY rules become class
+// blocks. Nothing is fetched from a URL; unknown properties are ignored; oversized files are refused by the caller.
+import { CALENDAR_TIME_ZONE } from "./constants";
+import { addDays as addIsoDays, weekdayIndex } from "./dates";
+import type { ClassBlock, PeriodInfo } from "./schedule";
+import { CLASS_FREE_KINDS } from "./schedule";
+
+/** First date on or after `from` that falls on `weekday` (Monday = 1). */
+function firstWeekdayOnOrAfter(from: string, weekday: number): string {
+  return addIsoDays(from, (weekday - 1 - weekdayIndex(from) + 7) % 7);
+}
+
+export function buildClassBlocksIcs(blocks: readonly ClassBlock[], periods: readonly PeriodInfo[], options: { now?: Date } = {}): string {
+  const stamp = utcStamp(options.now ?? new Date());
+  const lines: string[] = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Dentiq//Class schedule//EN", "CALSCALE:GREGORIAN", "X-WR-CALNAME:Dentiq classes"];
+  const free = periods.filter((p) => CLASS_FREE_KINDS.includes(p.kind));
+  for (const b of blocks) {
+    const first = firstWeekdayOnOrAfter(b.validFrom, b.weekday);
+    if (first > b.validTo) continue;
+    lines.push("BEGIN:VEVENT", `UID:${b.id.replace(/[^A-Za-z0-9-]/g, "")}@dentiq.local`, `DTSTAMP:${stamp}`);
+    lines.push(`DTSTART:${compactDate(first)}T${compactTime(b.startTime)}`, `DTEND:${compactDate(first)}T${compactTime(b.endTime)}`);
+    lines.push(`RRULE:FREQ=WEEKLY;UNTIL=${compactDate(b.validTo)}T235959`);
+    const skipped: string[] = [];
+    for (let d = first; d <= b.validTo; d = addIsoDays(d, 7)) if (free.some((p) => d >= p.start && d <= p.end)) skipped.push(`${compactDate(d)}T${compactTime(b.startTime)}`);
+    if (skipped.length) lines.push(`EXDATE:${skipped.join(",")}`);
+    lines.push(`SUMMARY:${escapeIcsText(b.title)}`);
+    if (b.location) lines.push(`LOCATION:${escapeIcsText(b.location)}`);
+    if (b.courseCode) lines.push(`DESCRIPTION:${escapeIcsText(b.courseCode)}`);
+    lines.push("END:VEVENT");
+  }
+  lines.push("END:VCALENDAR");
+  return lines.map(foldIcsLine).join("\r\n") + "\r\n";
+}
+
+export type ParsedEvent = {
+  title: string;
+  date: string;
+  /** "HH:MM" or null for all-day events */
+  time: string | null;
+  endTime: string | null;
+  description: string | null;
+  location: string | null;
+  /** Present only for FREQ=WEEKLY rules: the last date (or null when unbounded or COUNT-limited, see `count`). */
+  weekly: { until: string | null; count: number | null } | null;
+};
+
+export type ParseResult = { events: ParsedEvent[]; skipped: number };
+
+export const ICS_MAX_BYTES = 512 * 1024;
+export const ICS_MAX_EVENTS = 500;
+
+function unfold(text: string): string[] {
+  return text.replace(/\r\n|\r/g, "\n").replace(/\n[ \t]/g, "").split("\n");
+}
+
+function unescapeIcsText(value: string): string {
+  return value.replace(/\\([nN,;\\])/g, (_m, c: string) => (c === "n" || c === "N" ? "\n" : c)).replace(CONTROL, "");
+}
+
+/** "20261102" or "20261102T093000(Z)" to date and time. Z (UTC) values are converted to the calendar's zone. */
+function parseDateTime(value: string, params: string): { date: string; time: string | null } | null {
+  const m = /^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?(Z)?)?$/.exec(value.trim());
+  if (!m) return null;
+  const date = `${m[1]}-${m[2]}-${m[3]}`;
+  if (!parseIsoDate(date)) return null;
+  if (m[4] === undefined || /VALUE=DATE(?!-)/i.test(params)) return { date, time: null };
+  if (m[7]) {
+    const utc = new Date(Date.UTC(+m[1]!, +m[2]! - 1, +m[3]!, +m[4]!, +m[5]!));
+    const parts = new Intl.DateTimeFormat("en-CA", { timeZone: CALENDAR_TIME_ZONE, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(utc);
+    const get = (t: string) => parts.find((p) => p.type === t)!.value;
+    return { date: `${get("year")}-${get("month")}-${get("day")}`, time: `${get("hour")}:${get("minute")}` };
+  }
+  return { date, time: `${m[4]}:${m[5]}` };
+}
+
+export function parseIcs(text: string): ParseResult {
+  const events: ParsedEvent[] = [];
+  let skipped = 0;
+  let current: Record<string, { value: string; params: string }> | null = null;
+  for (const raw of unfold(text)) {
+    const line = raw.trimEnd();
+    if (line === "BEGIN:VEVENT") current = {};
+    else if (line === "END:VEVENT" && current) {
+      const done = current;
+      current = null;
+      const start = done.DTSTART && parseDateTime(done.DTSTART.value, done.DTSTART.params);
+      const title = done.SUMMARY ? unescapeIcsText(done.SUMMARY.value).replace(/\s+/g, " ").trim() : "";
+      if (!start || !title || events.length >= ICS_MAX_EVENTS) {
+        skipped++;
+        continue;
+      }
+      const end = done.DTEND ? parseDateTime(done.DTEND.value, done.DTEND.params) : null;
+      let weekly: ParsedEvent["weekly"] = null;
+      if (done.RRULE) {
+        const rule = Object.fromEntries(done.RRULE.value.split(";").map((p) => p.split("=") as [string, string]));
+        if (rule.FREQ === "WEEKLY" && (!rule.INTERVAL || rule.INTERVAL === "1")) {
+          const until = rule.UNTIL ? parseDateTime(rule.UNTIL, "") : null;
+          weekly = { until: until?.date ?? null, count: rule.COUNT && /^\d+$/.test(rule.COUNT) ? Number(rule.COUNT) : null };
+        } else {
+          skipped++; // a rule we do not understand: do not guess
+          continue;
+        }
+      }
+      events.push({
+        title: title.slice(0, 120),
+        date: start.date,
+        time: start.time,
+        endTime: end && end.date === start.date ? end.time : null,
+        description: done.DESCRIPTION ? unescapeIcsText(done.DESCRIPTION.value).trim().slice(0, 1000) || null : null,
+        location: done.LOCATION ? unescapeIcsText(done.LOCATION.value).replace(/\s+/g, " ").trim().slice(0, 120) || null : null,
+        weekly,
+      });
+    } else if (current) {
+      const colon = line.indexOf(":");
+      if (colon < 1) continue;
+      const [name, ...params] = line.slice(0, colon).split(";");
+      const key = name!.toUpperCase();
+      if (!(key in current)) current[key] = { value: line.slice(colon + 1), params: params.join(";") };
+    }
+  }
+  return { events, skipped };
+}

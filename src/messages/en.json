@@ -384,6 +384,16 @@
       "openSignup": "No domain is set: any email address can sign up. Add a domain before opening the app to students.",
       "unverified": "UNVERIFIED: confirm with the faculty which addresses its students use before relying on the preset. The administrator address is always allowed.",
       "resendNote": "Sending email to real students needs a domain verified in Resend. Until then, messages are only printed in the server console."
+    },
+    "program": {
+      "title": "UdeM program data",
+      "adminHelp": "Load the D.M.D. courses and calendar from official pages.",
+      "subtitle": "Loads the Université de Montréal D.M.D. courses (by year and semester) and the faculty calendar into the catalog. Safe to run again.",
+      "verify": "The data was copied from official UdeM pages on 2026-11-01 and may change. Students are told to confirm dates and courses with the faculty. Terms for 2027-2028 are not published yet and are not loaded.",
+      "load": "Load the UdeM D.M.D. data",
+      "done": "Loaded {courses} courses, {terms} terms and {periods} breaks or periods.",
+      "error": "The data could not be loaded. Check the server log.",
+      "sources": "Sources and retrieval dates are listed in docs/udem-research.md and stored on every course and term."
     }
   },
   "resources": {
@@ -1618,7 +1628,7 @@
   },
   "calendar": {
     "title": "Calendar",
-    "subtitle": "Your own dates: exams, assignments and study sessions. Dentiq never adds dates for you.",
+    "subtitle": "Your exams, assignments and study sessions, your class times, and your university's terms and breaks. Dentiq never guesses your exam dates.",
     "privacy": "Your calendar is private. Only you can see these entries.",
     "noAccess": "The calendar is available to approved members.",
     "kinds": {
@@ -1660,7 +1670,7 @@
     },
     "empty": {
       "title": "Your calendar is empty",
-      "body": "Dentiq does not know your exam dates and will not guess them. Add the dates you know: exams, assignment deadlines, study sessions. Only you can see them.",
+      "body": "Dentiq does not know your exam dates and will not guess them. Add the dates you know, set up your weekly class times, or import a calendar file. Only you can see them.",
       "action": "Add your first entry"
     },
     "form": {
@@ -1700,6 +1710,20 @@
       "invalidDate": "This is not a real date.",
       "dateOutOfRange": "This date is outside the years the calendar accepts.",
       "invalidTime": "Enter a time like 14:30, or leave it empty."
+    },
+    "schedule": {
+      "link": "My schedule",
+      "verifyNote": "Terms, breaks and exam periods marked 'not confirmed' must be checked with your faculty."
+    },
+    "markers": {
+      "class": "Class",
+      "term_start": "Term starts",
+      "term_end": "Term ends",
+      "reading_week": "Reading week",
+      "break": "Break",
+      "holiday": "Holiday",
+      "exam_period": "Exam period",
+      "unverified": "Not confirmed"
     }
   },
   "analytics": {
@@ -2092,6 +2116,83 @@
         "title": "Account",
         "body": "Change your name, download your data or delete your account from the Profile page."
       }
+    }
+  },
+  "schedule": {
+    "title": "My schedule",
+    "subtitle": "Your class times, with the terms and breaks of your university.",
+    "saved": "Saved.",
+    "verifyTitle": "Verify with your faculty",
+    "verifyBody": "Term dates, breaks and exam periods come from public university pages and may change or be incomplete. Always confirm them with your faculty. You can add or change your own class times at any time.",
+    "terms": {
+      "title": "Current and next term",
+      "help": "From the university preset you chose.",
+      "noPreset": "Choose a university in Help > Change my program details to see its term dates.",
+      "none": "No term data is loaded yet for your university.",
+      "names": {
+        "fall": "Fall",
+        "winter": "Winter",
+        "summer": "Summer"
+      },
+      "verified": "Confirmed on an official page",
+      "unverified": "Not confirmed: check with your faculty",
+      "range": "{from} to {to}"
+    },
+    "blocks": {
+      "title": "Weekly class times",
+      "emptyTitle": "No class times yet",
+      "emptyBody": "Add each class below, or import a calendar file (.ics) from your university or another app.",
+      "delete": "Delete",
+      "deleteLabel": "Delete {title}"
+    },
+    "form": {
+      "heading": "Add a class time",
+      "title": "Title",
+      "course": "Course",
+      "courseHint": "Optional.",
+      "noCourse": "No course",
+      "weekday": "Day",
+      "start": "Starts",
+      "end": "Ends",
+      "from": "First day",
+      "to": "Last day",
+      "location": "Room or place (optional)",
+      "add": "Add class time"
+    },
+    "weekdays": {
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday",
+      "7": "Sunday"
+    },
+    "follow": {
+      "title": "Courses for your year and semester",
+      "help": "Courses listed for year {year} in the catalog. Following one is only for you.",
+      "noProfile": "Tell us your program year in Help > Change my program details to see suggestions.",
+      "empty": "No courses are listed in the catalog for your year and semester yet.",
+      "add": "Follow",
+      "remove": "Unfollow"
+    },
+    "import": {
+      "title": "Import or export",
+      "help": "Import an .ics file you chose. Nothing is fetched from the internet and no login is used.",
+      "file": "Calendar file (.ics)",
+      "hint": "Up to 512 KB. Weekly events become class times; other events become calendar entries.",
+      "submit": "Import",
+      "done": "Imported {entries} entries and {blocks} class times. Skipped: {skipped}.",
+      "exportClasses": "Download my class times (.ics)"
+    },
+    "errors": {
+      "nothingToImport": "No usable event was found in this file.",
+      "fileTooLarge": "This file is too large (512 KB maximum).",
+      "tooManyAttempts": "Too many imports. Try again in a minute.",
+      "limitReached": "You reached the limit of class times.",
+      "forbidden": "Your account must be approved first.",
+      "endBeforeStart": "The end must be after the start.",
+      "invalidTime": "Enter a valid time."
     }
   }
 }
