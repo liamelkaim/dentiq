@@ -3,10 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { CourseHeader, loadCourseByCode, loadCourseSummary } from "@/components/course-layout";
-import { DownloadIcon, FileIcon, FocusIcon } from "@/components/icons";
+import { DownloadIcon, FileIcon, FocusIcon, SearchIcon } from "@/components/icons";
 import { formatBytes, ResourceStatusBadges } from "@/components/resource-list";
 import { Badge, ButtonLink, buttonClass, cx, EmptyState, Notice, Panel } from "@/components/ui";
 import { getDb } from "@/db/client";
+import { SEARCH_QUERY_MAX } from "@/server/library/constants";
 import { requireUser } from "@/server/auth/session";
 import { previewKind } from "@/server/resources/files";
 import { canAccessLibrary, getResource, listResources } from "@/server/resources/service";
@@ -25,7 +26,7 @@ export default async function CourseNotesPage({
   searchParams,
 }: {
   params: Params;
-  searchParams: Promise<{ period?: string; doc?: string }>;
+  searchParams: Promise<{ period?: string; doc?: string; q?: string }>;
 }) {
   const user = await requireUser();
   const course = await loadCourseByCode((await params).code);
@@ -36,6 +37,8 @@ export default async function CourseNotesPage({
   const query = await searchParams;
   const period = periods.find((p) => p === query.period) ?? "current";
   const base = `/courses/${encodeURIComponent(course.code)}/notes`;
+  const q = (typeof query.q === "string" ? query.q.trim() : "").slice(0, SEARCH_QUERY_MAX);
+  const qParam = q ? `&q=${encodeURIComponent(q)}` : "";
   const summary = await loadCourseSummary(user, course);
   const libraryAccess = canAccessLibrary(user);
 
@@ -61,7 +64,7 @@ export default async function CourseNotesPage({
     );
   }
 
-  const items = await listResources(getDb(), user, { courseId: course.id, period });
+  const items = await listResources(getDb(), user, { courseId: course.id, period, q: q || undefined });
   const selectedId = items.find((r) => r.id === query.doc)?.id ?? items[0]?.id;
   const selected = selectedId ? await getResource(getDb(), user, selectedId) : null;
   const latest = selected?.versions[0];
@@ -74,11 +77,27 @@ export default async function CourseNotesPage({
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[320px_minmax(0,1fr)]">
         {/* Document list */}
         <Panel className="flex min-w-0 flex-col self-start overflow-hidden">
+          <form method="get" role="search" aria-label={t("library.notes.filterLabel")} className="relative border-b border-border p-2">
+            <input type="hidden" name="period" value={period} />
+            <label htmlFor="course-notes-q" className="sr-only">
+              {t("library.notes.search")}
+            </label>
+            <SearchIcon className="pointer-events-none absolute top-1/2 left-5 -translate-y-1/2 text-text-muted" width={16} height={16} />
+            <input
+              id="course-notes-q"
+              name="q"
+              type="search"
+              defaultValue={q}
+              maxLength={SEARCH_QUERY_MAX}
+              placeholder={t("library.notes.searchPlaceholder")}
+              className="h-11 w-full rounded-[8px] border border-border bg-surface-muted pr-3 pl-9 text-[14px] sm:h-9"
+            />
+          </form>
           <nav aria-label={t("resources.period.label")} className="flex gap-1 border-b border-border p-2">
             {periods.map((p) => (
               <Link
                 key={p}
-                href={`${base}?period=${p}`}
+                href={`${base}?period=${p}${qParam}`}
                 scroll={false}
                 aria-current={period === p ? "page" : undefined}
                 className={cx(
@@ -99,7 +118,7 @@ export default async function CourseNotesPage({
                 return (
                   <li key={r.id}>
                     <Link
-                      href={`${base}?period=${period}&doc=${r.id}`}
+                      href={`${base}?period=${period}&doc=${r.id}${qParam}`}
                       scroll={false}
                       aria-current={current ? "true" : undefined}
                       className={cx(

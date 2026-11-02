@@ -13,8 +13,8 @@ import { listCourseChoices, passFilterOptions } from "@/server/passes/queries";
 import { getQuestion, listQuestions } from "@/server/passes/service";
 import { getAnalytics } from "@/server/analytics/service";
 import { canAccessLibrary, isModerator } from "@/server/resources/service";
-import { AnswerBadge, CategoryBadge, ChoiceList, excerpt, hrefWith, PassRow } from "./pass-ui";
-import { Badge, Button, buttonClass, ButtonLink, cx, EmptyState, Field, Input, List, Notice, Panel, Select } from "./ui";
+import { AnswerBadge, CategoryBadge, ChoiceList, excerpt, hrefWith } from "./pass-ui";
+import { Badge, Button, buttonClass, ButtonLink, cx, EmptyState, Field, Input, Notice, Panel, Select } from "./ui";
 
 type Props = {
   viewer: CurrentUser;
@@ -62,9 +62,9 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
   if (params.page > lastPage) redirect(hrefWith(basePath, query, { page: lastPage > 1 ? String(lastPage) : undefined }));
   const typeName = (key: string) => t(`types.${key}.name`);
 
-  // Global view only: the selected question is previewed on the right (choices without answer marks; the full page reveals answers).
+  // The selected question is previewed on the right (choices without answer marks; the full page reveals answers).
   const selectedParam = typeof search.sel === "string" ? search.sel : undefined;
-  const selectedItem = !course ? (result.items.find((i) => i.id === selectedParam) ?? result.items[0]) : undefined;
+  const selectedItem = result.items.find((i) => i.id === selectedParam) ?? result.items[0];
   const [detail, analytics] = await Promise.all([
     selectedItem ? getQuestion(db, viewer, selectedItem.id) : Promise.resolve(null),
     !course ? getAnalytics(db, viewer, locale) : Promise.resolve(null),
@@ -236,13 +236,7 @@ export async function PassBrowser({ viewer, basePath, search, course, offerings 
           />
         )
       ) : (
-        course ? (
-          <List>
-            {result.items.map((item) => (
-              <PassRow key={item.id} item={item} courseLabel={undefined} />
-            ))}
-          </List>
-        ) : (
+        (
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,8fr)]">
             <div className="flex min-w-0 flex-col gap-4">
               {analytics && (

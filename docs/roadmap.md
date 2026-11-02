@@ -177,3 +177,9 @@ Real data or empty states only; no stock photos, no unbuilt features. Commits in
 
 - ✅ `/passes` (all courses) now shows a review-queue card (your own marked-for-review and flagged counts), the question list, and a preview of the selected question (text, images, choices with no answer marks; the full page reveals answers). Course Passes tabs keep the plain list. Typecheck, lint and tests pass; not yet looked at in a browser with real questions.
 - ❌ Still not built: exam-set list by year with completion, timer/flag/exam-mode bar, and the rich-text note toolbar with autosave (notes stay plain text with version history; a rich editor would change how notes are stored).
+
+### Course tabs: notes and passes (2026-11-01)
+
+- ✅ Course Passes tab now uses the same two-panel layout as `/passes` (question list plus preview of the selected question); the review-queue card stays global-only.
+- ✅ Course Notes tab: search box above the document list (filters the course's documents; kept across period tabs and selection).
+- ❌ Not matched: chapter thumbnails and "Chapitre N" labels (no chapter or image data), inline answer-checking with explanation on the course Passes tab, rich-text note body. Not yet looked at in a browser.
