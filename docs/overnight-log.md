@@ -144,3 +144,8 @@ Tutor: safety refusal, consent (versioned), token and cost caps, conversations (
 
 ## finish/dentiq-polish, phase 7 (part 1)
 Per-student upload quota (100 MB, moderators exempt) with test. Zod advisory: override written, tested and reverted (pnpm cannot install through the iCloud symlink); exact steps in docs/go-live-blockers.md. Browser walk on a scratch DB, real Chrome: student sign-up -> email link -> onboarding -> admin approval -> note -> exam question -> calendar/schedule/recordings/tutor/help pages. Static accessibility sweep of 28 pages in EN and FR (titles, one h1, lang, labels, link names, alt, duplicate ids): clean. Overflow/touch-target sweep at 390 and 768 px, dark and light, EN and FR: no overflow; only checkbox inputs measure 16 px inside 44 px labels.
+
+## finish/dentiq-polish, phase 7 part 2 and 7B
+Feedback button (dialog) with rate-limited form, admin inbox, admin email notice (stored path only, no query string); public welcome page at "/" for signed-out visitors (proxy rewrite, real content only), shared footer, FR/EN metadata and canonical per public page, robots.txt, sitemap.xml, share image from the logo and the mountain ridges, favicon.ico, phone menu drawer (native dialog), noindex for signed-in pages.
+Lighthouse (mobile, local production build): welcome page 100/100/100 (accessibility, best practices, SEO); sign-in 100/100/100; course page (signed in) accessibility 97 (fixed: external source link now underlined), best practices 100, SEO 66 by design (noindex).
+Browser checks: 7 public pages at 390 and 768 px, dark and light, FR and EN: no overflow, one h1 each, theme and language correct, targets 44 px; feedback dialog submitted for real, stored path "/sign-in" without the ?token query.
