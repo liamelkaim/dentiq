@@ -3,6 +3,8 @@
 // the session and before the body is read. Answers JSON: { state, redirectTo? } for the form to show or follow.
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/server/auth/session";
+import { checkRate } from "@/server/rate-limit/guard";
+import { RATE_UPLOAD } from "@/server/rate-limit/limits";
 import { uploadKinds } from "@/server/uploads/kinds";
 import { readLimitedFormData } from "@/server/uploads/read-body";
 
@@ -23,6 +25,10 @@ export async function POST(request: Request, { params }: { params: Promise<{ kin
   const origin = request.headers.get("origin");
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
   if (origin !== null && (!host || new URL(origin).host !== host)) return json({ state: kind.invalid }, 403);
+
+  // Too many uploads in a short time: refused before any byte of the body is read.
+  const rate = await checkRate(RATE_UPLOAD, viewer.id);
+  if (!rate.allowed) return json({ state: { status: "error", message: "errors.tooManyAttempts" } }, 429);
 
   const body = await readLimitedFormData(request, await kind.maxBodyBytes());
   if (!body.ok) return body.reason === "tooLarge" ? json({ state: kind.tooLarge }, 413) : json({ state: kind.invalid }, 400);

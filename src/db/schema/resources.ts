@@ -16,7 +16,7 @@ export type ResourceKind = (typeof resourceKinds)[number];
 export const resourceStatuses = ["pending", "published", "hidden", "removed"] as const;
 export type ResourceStatus = (typeof resourceStatuses)[number];
 
-export const reportReasons = ["incorrect", "inappropriate", "copyright", "duplicate", "other"] as const;
+export const reportReasons = ["incorrect", "inappropriate", "copyright", "duplicate", "patient_info", "takedown", "other"] as const;
 export type ReportReason = (typeof reportReasons)[number];
 
 export const reportStatuses = ["open", "resolved", "dismissed"] as const;

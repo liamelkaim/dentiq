@@ -47,7 +47,7 @@ export type Provenance = (typeof provenances)[number];
 export const confidences = ["sure", "unsure"] as const;
 export type Confidence = (typeof confidences)[number];
 
-export const questionReportReasons = ["wrong_answer", "duplicate", "inappropriate", "leaked_or_copyrighted", "other"] as const;
+export const questionReportReasons = ["wrong_answer", "duplicate", "inappropriate", "leaked_or_copyrighted", "patient_info", "takedown", "other"] as const;
 export type QuestionReportReason = (typeof questionReportReasons)[number];
 
 export const examQuestions = pgTable(

@@ -7,6 +7,8 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getDb } from "@/db/client";
 import { requireRole, requireUser } from "@/server/auth/session";
+import { checkRate } from "@/server/rate-limit/guard";
+import { RATE_REPORT } from "@/server/rate-limit/limits";
 import { parseSettingsForm, parseVerifiedAnswer } from "./form";
 import { failure, refresh, text, zodFailure, type PassFormState } from "./form-state";
 import {
@@ -32,6 +34,7 @@ export async function reportQuestionAction(_prev: PassFormState, form: FormData)
     details: text(form, "details"),
   });
   if (!parsed.success) return zodFailure(parsed.error);
+  if (!(await checkRate(RATE_REPORT, viewer.id)).allowed) return { status: "error", message: "errors.tooManyAttempts" };
   const result = await reportQuestion(getDb(), viewer, parsed.data);
   if (!result.ok) return failure(result.error);
   revalidatePath("/moderation");

@@ -42,7 +42,8 @@ export async function createRecording(db: Database, storage: FileStorage, viewer
   if (file.bytes.byteLength === 0) return fail("fileMissing");
   if (file.bytes.byteLength > settings.maxFileBytes) return fail("fileTooLarge");
   const type = detectRecordingType(file.name, file.bytes);
-  if (!type) return fail("fileType");
+  // Audio only for now: video files are refused (no transcription or video player yet).
+  if (!type || type.kind !== "audio") return fail("fileType");
   const [count] = await db.select({ n: sql<number>`count(*)::int` }).from(recordings).where(eq(recordings.ownerId, viewer.id));
   if ((count?.n ?? 0) >= RECORDINGS_PER_USER_MAX) return fail("limitReached");
   if ((await usedBytes(db, viewer.id)) + file.bytes.byteLength > settings.quotaBytes) return fail("quotaExceeded");

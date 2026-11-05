@@ -292,7 +292,25 @@
     "profileTitle": "Profil et données",
     "profileHelp": "Modifiez votre nom affiché, téléchargez une copie de vos données ou supprimez votre compte.",
     "openProfile": "Ouvrir le profil",
-    "helpLink": "Aide et informations de programme"
+    "helpLink": "Aide et informations de programme",
+    "privacy": {
+      "title": "Vie privée et données",
+      "help": "Vos consentements et vos données. Tout ce qui est ici concerne votre propre compte.",
+      "consentsTitle": "Consentements",
+      "tutorLabel": "Tuteur IA",
+      "tutorNone": "Non donné. Le tuteur est désactivé et rien n'est envoyé.",
+      "tutorGiven": "Donné le {date}, en {language}, version du texte {version}.",
+      "tutorOutdated": "Donné le {date} pour un ancien texte (version {version}). On vous le redemandera avant tout usage.",
+      "tutorOpen": "Ouvrir la page du tuteur IA",
+      "langFr": "français",
+      "langEn": "anglais",
+      "dataTitle": "Vos données",
+      "export": "Télécharger mes données",
+      "correct": "Corriger mon nom",
+      "delete": "Supprimer mon compte",
+      "contactTitle": "Contact vie privée",
+      "readPolicy": "Lire la politique de confidentialité"
+    }
   },
   "admin": {
     "title": "Administration",
@@ -534,7 +552,9 @@
         "inappropriate": "Contenu inapproprié",
         "copyright": "Droits d'auteur",
         "duplicate": "Doublon",
-        "other": "Autre"
+        "other": "Autre",
+        "patient_info": "Information sur un patient",
+        "takedown": "Demande de retrait (droits ou vie privée)"
       }
     },
     "moderate": {
@@ -564,7 +584,8 @@
     "pendingEmpty": "Aucun document en attente.",
     "reports": "Signalements ouverts",
     "reportsEmpty": "Aucun signalement ouvert.",
-    "by": "par {name}"
+    "by": "par {name}",
+    "urgent": "Prioritaire"
   },
   "errors": {
     "uploadTooLarge": "Ce fichier dépasse la limite indiquée dans le formulaire.",
@@ -596,7 +617,8 @@
     "errorBody": "Un problème est survenu de notre côté. Vous pouvez réessayer.",
     "reference": "Référence : {code}",
     "goHome": "Retour à l'accueil",
-    "quotaExceeded": "Vous avez utilisé tout votre espace de téléversement. Supprimez un ancien document ou demandez à un modérateur."
+    "quotaExceeded": "Vous avez utilisé tout votre espace de téléversement. Supprimez un ancien document ou demandez à un modérateur.",
+    "tooManyAttempts": "Trop de tentatives. Patientez quelques minutes puis réessayez."
   },
   "apiErrors": {
     "tooManyExports": "Trop d'exportations, réessayez plus tard.",
@@ -747,7 +769,75 @@
         "title": "Modifications de cette politique",
         "body": "Nous mettrons cette page à jour quand le service changera et la date sera indiquée en haut. Les changements importants seront annoncés dans l'application."
       }
-    ]
+    ],
+    "uploadNotice": {
+      "title": "Avant de téléverser",
+      "noPatient": "Ne téléversez rien qui permette d'identifier un patient : ni noms, ni visages, ni photos cliniques, radiographies ou dossiers de cas aux détails identifiables, ni numéros de dossier ou dates de naissance. Retirez-les ou floutez-les d'abord. Dans le doute, abstenez-vous.",
+      "permission": "Ne partagez que ce que vous avez le droit de partager. En continuant, vous confirmez que c'est le cas.",
+      "report": "Tout le monde peut signaler un élément, et les modérateurs peuvent le retirer. Si le vôtre est retiré par erreur, vous pouvez faire appel."
+    },
+    "cookies": {
+      "title": "Témoins (cookies) et suivi",
+      "intro": "Dentiq n'utilise que ce qui est nécessaire au fonctionnement du site. Il n'y a ni publicité, ni analyse d'audience, ni script de suivi, et rien n'est chargé depuis les serveurs d'autres entreprises.",
+      "tableTitle": "Ce qui s'exécute dans votre navigateur",
+      "items": [
+        {
+          "name": "Témoin de connexion (session)",
+          "body": "Créé à l'ouverture de votre session pour que vous restiez connecté. Il est supprimé quand vous vous déconnectez ou supprimez votre compte, et il expire de lui-même. Dentiq ne peut pas fonctionner sans lui lorsque vous êtes connecté."
+        },
+        {
+          "name": "Témoin de langue (DENTOS_LOCALE)",
+          "body": "Mémorise le français ou l'anglais pendant un an. Il est créé lorsque vous choisissez une langue."
+        },
+        {
+          "name": "Réglage du thème (stockage du navigateur, dentos-theme)",
+          "body": "Mémorise clair, sombre ou système. Il reste sur votre appareil et n'est jamais envoyé au serveur."
+        },
+        {
+          "name": "Cache hors ligne (service worker)",
+          "body": "Garde une courte liste de fichiers publics (icônes et page hors ligne) pour pouvoir afficher la page hors ligne. Il ne stocke jamais de pages, de documents, d'images ni rien qui soit lié à votre compte."
+        }
+      ],
+      "noneTitle": "Ce qui ne s'exécute pas",
+      "none": [
+        "Aucun témoin publicitaire ou de marketing.",
+        "Aucune analyse d'audience ni compteur de visites.",
+        "Aucun bouton de réseau social ni contenu tiers intégré."
+      ],
+      "choice": "Comme seuls les éléments ci-dessus sont utilisés, il n'y a pas de bandeau de témoins. Vous pouvez les effacer en tout temps dans les réglages de votre navigateur; vous devrez alors vous reconnecter.",
+      "update": "Si cela change un jour, cette page et la politique de confidentialité seront mises à jour d'abord."
+    },
+    "accessibility": {
+      "title": "Accessibilité et commentaires",
+      "intro": "Nous voulons que chaque étudiant puisse utiliser Dentiq. Cette page dit ce qui a été vérifié et ce qui ne l'a pas été. Ce n'est pas une certification et elle ne prétend à la conformité avec aucune norme.",
+      "checkedTitle": "Ce qui a été vérifié",
+      "checked": [
+        "L'utilisation au clavier, avec un contour de focus visible et un lien d'évitement vers le contenu.",
+        "Les titres de page, un seul titre principal par page, les étiquettes de formulaire et les noms de liens, en français et en anglais.",
+        "Le contraste du texte en thèmes clair et sombre, et les mises en page dès 320 px de largeur.",
+        "La préférence de mouvement réduit."
+      ],
+      "gapsTitle": "Lacunes connues",
+      "gaps": [
+        "Non testé avec des lecteurs d'écran, ni dans Safari, Firefox ou sur de vrais téléphones.",
+        "À très fort grossissement sur téléphone (environ 195 px de largeur effective), certaines listes déroulantes sont coupées.",
+        "Aucun audit d'accessibilité indépendant n'a été réalisé."
+      ],
+      "feedbackTitle": "Signaler un problème",
+      "feedback": "Si quelque chose est difficile à utiliser, envoyez un commentaire avec le bouton Commentaires de n'importe quelle page, ou utilisez la page Contact. Précisez la page et l'appareil ou l'outil d'assistance que vous utilisez."
+    },
+    "contactPage": {
+      "title": "Contact",
+      "intro": "Dentiq est un projet étudiant indépendant.",
+      "feedback": "Pour les bogues, les idées et les problèmes d'accessibilité, utilisez le bouton Commentaires de n'importe quelle page.",
+      "privacyTitle": "Demandes liées à la vie privée",
+      "privacy": "Vous pouvez déjà exporter vos données, corriger votre nom et supprimer votre compte depuis les Réglages. Pour tout autre sujet concernant vos données, écrivez au contact vie privée ci-dessous.",
+      "reportTitle": "Signaler un contenu",
+      "report": "Pour signaler un document ou une question d'examen, utilisez le bouton Signaler sur sa page. Un modérateur l'examine et l'auteur peut faire appel."
+    },
+    "cookiesLink": "Témoins",
+    "accessibilityLink": "Accessibilité",
+    "contactLink": "Contact"
   },
   "passes": {
     "title": "Passes",
@@ -891,7 +981,9 @@
         "duplicate": "Doublon",
         "inappropriate": "Contenu inapproprié",
         "leaked_or_copyrighted": "Examen divulgué ou protégé",
-        "other": "Autre"
+        "other": "Autre",
+        "patient_info": "Information sur un patient",
+        "takedown": "Demande de retrait (droits ou vie privée)"
       }
     },
     "moderator": {
@@ -1821,6 +1913,18 @@
       "holiday": "Jour férié",
       "exam_period": "Période d’examens",
       "unverified": "Non confirmé"
+    },
+    "feed": {
+      "title": "S'abonner dans Calendrier Apple",
+      "body": "Un lien privé qui affiche vos entrées de calendrier Dentiq dans Calendrier Apple, en lecture seule. Toute personne qui a le lien peut voir vos entrées : gardez-le pour vous. Vous pouvez le révoquer en tout temps.",
+      "create": "Créer un lien privé",
+      "regenerate": "Créer un nouveau lien (l'ancien cesse de fonctionner)",
+      "revoke": "Révoquer le lien",
+      "shownOnce": "Copiez ce lien maintenant",
+      "shownOnceBody": "Il n'est affiché qu'une seule fois. Si vous le perdez, créez-en un nouveau.",
+      "applePath": "Dans Calendrier Apple : Fichier, Nouvel abonnement à un calendrier, collez le lien.",
+      "active": "Un lien est actif (créé le {date}). Il ne peut pas être affiché de nouveau.",
+      "error": "Le lien n'a pas pu être créé."
     }
   },
   "analytics": {
@@ -2070,12 +2174,13 @@
       "accept": "Je comprends et j'accepte",
       "withdraw": "Retirer mon consentement",
       "points": {
-        "what": "Poser une question envoie votre question et les extraits correspondants à un service d'IA extérieur à Dentiq pour rédiger la réponse.",
-        "who": "Les extraits peuvent provenir de vos notes privées. Ils ne sont envoyés que pour la question posée, sans nom, courriel ni identifiant de compte.",
+        "what": "Poser une question envoie votre question et les extraits correspondants (possiblement tirés de vos notes privées) à un service d'IA extérieur à Dentiq, qui rédige la réponse.",
+        "who": "Rien d'autre n'est envoyé : ni nom, ni courriel, ni identifiant de compte. Le fournisseur d'IA n'est pas encore choisi. Avant l'activation du tuteur, cet avis nommera le fournisseur et le lieu où il traite les données. D'ici là, rien n'est envoyé.",
         "own": "Seuls vos propres notes et les sources que vous pouvez déjà ouvrir sont utilisées, jamais le matériel privé d'un autre étudiant.",
         "wrong": "Les réponses sont générées et peuvent être erronées. Vérifiez-les avec votre matériel de cours.",
-        "noClinical": "Le tuteur ne donne pas de conseils sur de vrais patients.",
-        "withdraw": "Vous pouvez retirer ce consentement en tout temps et supprimer vos conversations enregistrées."
+        "noClinical": "Pas pour les soins aux patients : le tuteur ne donne aucun conseil sur de vrais patients. N'entrez jamais d'information sur un patient.",
+        "deleteHistory": "Les conversations enregistrées peuvent être supprimées une à une depuis Conversations enregistrées, et toutes sont supprimées avec votre compte. Retirer votre consentement arrête tout envoi, mais ne les supprime pas à lui seul.",
+        "withdraw": "Vous pouvez retirer ce consentement en tout temps. Votre choix est enregistré avec la date, la langue et la version de ce texte."
       }
     },
     "history": {
@@ -2371,9 +2476,10 @@
       "optional": "Facultatif.",
       "lecturer": "Enseignant·e qui l'a permis",
       "file": "Fichier",
-      "fileHint": "Jusqu'à {max} Mo.",
+      "fileHint": "Fichiers audio seulement (MP3, M4A, WAV, OGG). Jusqu'à {max} Mo. Privé, visible par vous seul.",
       "submit": "Ajouter l'enregistrement",
-      "uploading": "Envoi en cours…"
+      "uploading": "Envoi en cours…",
+      "drop": "Glissez un fichier audio ici, ou choisissez-en un."
     },
     "consent": {
       "title": "Avant de l'ajouter",
@@ -2539,5 +2645,31 @@
     "privacy": "Comment Dentiq traite vos renseignements personnels : ce qui est conservé, qui peut le voir et comment l'exporter ou le supprimer. Version provisoire, en attente d'une révision juridique.",
     "terms": "Les conditions d'utilisation de Dentiq, un projet d'étude étudiant indépendant. Version provisoire, en attente d'une révision juridique.",
     "forgot": "Demandez un lien pour choisir un nouveau mot de passe Dentiq."
+  },
+  "appeals": {
+    "title": "Contester cette décision",
+    "help": "Un modérateur a masqué ou refusé cet élément. Expliquez pourquoi vous pensez que c'est une erreur. Un administrateur l'examinera.",
+    "message": "Votre explication",
+    "submit": "Envoyer l'appel",
+    "sent": "Appel envoyé. Un administrateur l'examinera.",
+    "errors": {
+      "invalid": "Cet appel n'a pas pu être envoyé.",
+      "notFound": "Cet élément est introuvable.",
+      "notAllowed": "Cet élément ne peut pas faire l'objet d'un appel.",
+      "tooShort": "Veuillez écrire au moins 10 caractères.",
+      "tooLong": "Veuillez rester sous 1000 caractères.",
+      "alreadyOpen": "Vous avez déjà un appel ouvert pour cet élément.",
+      "forbidden": "Vous ne pouvez pas faire cela."
+    },
+    "queue": "Appels",
+    "queueHelp": "Décisions de modérateurs que l'auteur conteste. Accueillir un appel republie l'élément.",
+    "queueEmpty": "Aucun appel ouvert.",
+    "types": {
+      "resource": "Document",
+      "question": "Question d'examen"
+    },
+    "note": "Note",
+    "uphold": "Accueillir (republier)",
+    "deny": "Refuser"
   }
 }

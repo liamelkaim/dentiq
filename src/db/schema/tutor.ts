@@ -40,6 +40,8 @@ export const tutorConsents = pgTable("tutor_consents", {
     .references(() => user.id, { onDelete: "cascade" }),
   version: integer().notNull(),
   acceptedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  // Language of the wording the student actually saw ("fr" or "en"), so the proof of consent is complete.
+  locale: text().notNull().default("fr"),
 });
 
 // Conversations are written only when a provider actually answered. They are the student's own and private: listed,

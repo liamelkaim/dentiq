@@ -4,6 +4,7 @@ import { SignOutButton } from "@/components/app-shell";
 import { LanguageSwitcher, ThemeSwitcher } from "@/components/preferences";
 import { Badge, ButtonLink, DescriptionList, PageHeader, Panel, Section } from "@/components/ui";
 import { requireUser } from "@/server/auth/session";
+import { PrivacySection } from "./privacy-section";
 
 export async function generateMetadata(): Promise<Metadata> {
   return { title: (await getTranslations("settings"))("title") };
@@ -54,6 +55,8 @@ export default async function SettingsPage() {
           <SignOutButton className="border border-border-strong bg-surface" />
         </div>
       </Section>
+
+      <PrivacySection userId={user.id} />
 
       <Section title={t("settings.profileTitle")} description={t("settings.profileHelp")}>
         <ButtonLink href="/profile" variant="secondary">

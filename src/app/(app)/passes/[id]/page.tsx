@@ -6,6 +6,8 @@ import { z } from "zod";
 import { TopicPickerForm } from "@/components/library-forms";
 import { RelatedPanel } from "@/components/library-ui";
 import { AnswerBadge, AnswerPanel, CategoryBadge, ChoiceList, excerpt, ReviewStatusBadge } from "@/components/pass-ui";
+import { AppealForm } from "@/components/appeal-forms";
+import { canAppeal } from "@/server/appeals/service";
 import { GroupButton, ReportQuestionForm, ReviewForm, UnverifyForm, VerifyForm } from "@/components/pass-forms";
 import { Badge, Button, ButtonLink, Notice, PageHeader, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
@@ -101,6 +103,7 @@ export default async function QuestionPage({ params, searchParams }: { params: P
           </Notice>
         )}
         {q.status === "hidden" && <Notice>{t("question.hiddenNotice")}</Notice>}
+        {q.status === "rejected" && (await canAppeal(db, viewer, "question", q.id)) && <AppealForm entityType="question" entityId={q.id} />}
         {q.duplicateOfId && (
           <Notice tone="accent">
             {t("question.duplicateOf")}{" "}

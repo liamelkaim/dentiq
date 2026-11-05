@@ -5,7 +5,9 @@ import { AgendaList, calendarHref, MonthGridView, MonthNav, type CalendarView } 
 import { PrivacyNote } from "@/components/study-ui";
 import { buttonClass, ButtonLink, EmptyState, Notice, PageHeader, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
+import { CalendarFeedPanel } from "@/components/calendar-feed-panel";
 import { requireUser } from "@/server/auth/session";
+import { activeFeedInfo } from "@/server/calendar/feed";
 import { daysInMonth, checkDate, formatIso, isoDateIn, parseIsoDate, parseMonthParam } from "@/server/calendar/dates";
 import { countEntries, listEntries, type CalendarEntry } from "@/server/calendar/service";
 import { listClassBlocks, loadScheduleWindow } from "@/server/calendar/schedule-service";
@@ -49,7 +51,7 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
   const day = parsedDay && parsedDay.year === month.year && parsedDay.month === month.month ? dayParam! : null;
 
   const db = getDb();
-  const [total, blocks] = await Promise.all([countEntries(db, viewer), listClassBlocks(db, viewer)]);
+  const [total, blocks, feed] = await Promise.all([countEntries(db, viewer), listClassBlocks(db, viewer), activeFeedInfo(db, viewer.id)]);
   const scheduleLink = (
     <ButtonLink href="/calendar/schedule" variant="secondary">
       {t("schedule.link")}
@@ -138,6 +140,9 @@ export default async function CalendarPage({ searchParams }: { searchParams: Pro
             {t("export.action")}
           </a>
         </Panel>
+        <div className="mt-4">
+          <CalendarFeedPanel active={feed !== null} createdOn={feed ? format.dateTime(feed.createdAt, { dateStyle: "medium" }) : null} />
+        </div>
       </Section>
       {window.hasTermData && <Notice tone="warning" className="mt-4">{t("schedule.verifyNote")}</Notice>}
       <PrivacyNote>{t("privacy")}</PrivacyNote>

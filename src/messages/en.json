@@ -292,7 +292,25 @@
     "profileTitle": "Profile and data",
     "profileHelp": "Edit your display name, download a copy of your data or delete your account.",
     "openProfile": "Open profile",
-    "helpLink": "Help and program details"
+    "helpLink": "Help and program details",
+    "privacy": {
+      "title": "Privacy and data",
+      "help": "Your consents and your data. Everything here applies to your own account.",
+      "consentsTitle": "Consents",
+      "tutorLabel": "AI tutor",
+      "tutorNone": "Not given. The tutor is switched off and nothing is sent.",
+      "tutorGiven": "Given on {date}, in {language}, wording version {version}.",
+      "tutorOutdated": "Given on {date} for an older wording (version {version}). You will be asked again before any use.",
+      "tutorOpen": "Open the AI tutor page",
+      "langFr": "French",
+      "langEn": "English",
+      "dataTitle": "Your data",
+      "export": "Download my data",
+      "correct": "Correct my name",
+      "delete": "Delete my account",
+      "contactTitle": "Privacy contact",
+      "readPolicy": "Read the privacy policy"
+    }
   },
   "admin": {
     "title": "Admin",
@@ -534,7 +552,9 @@
         "inappropriate": "Inappropriate content",
         "copyright": "Copyright",
         "duplicate": "Duplicate",
-        "other": "Other"
+        "other": "Other",
+        "patient_info": "Patient information",
+        "takedown": "Takedown request (rights or privacy)"
       }
     },
     "moderate": {
@@ -564,7 +584,8 @@
     "pendingEmpty": "No documents awaiting review.",
     "reports": "Open reports",
     "reportsEmpty": "No open reports.",
-    "by": "by {name}"
+    "by": "by {name}",
+    "urgent": "Priority"
   },
   "errors": {
     "uploadTooLarge": "This file exceeds the upload limit shown in the form.",
@@ -596,7 +617,8 @@
     "errorBody": "Something went wrong on our side. You can try again.",
     "reference": "Reference: {code}",
     "goHome": "Back to home",
-    "quotaExceeded": "You have used your upload space. Delete an older document or ask a moderator."
+    "quotaExceeded": "You have used your upload space. Delete an older document or ask a moderator.",
+    "tooManyAttempts": "Too many attempts. Wait a few minutes and try again."
   },
   "apiErrors": {
     "tooManyExports": "Too many exports, try again later.",
@@ -747,7 +769,75 @@
         "title": "Changes to this policy",
         "body": "We will update this page when the service changes and show the date at the top. Significant changes will be announced in the app."
       }
-    ]
+    ],
+    "uploadNotice": {
+      "title": "Before you upload",
+      "noPatient": "Do not upload anything that identifies a patient: no names, faces, clinical photos, radiographs or case files with identifiable details, chart numbers or dates of birth. Remove or blur them first. When in doubt, leave it out.",
+      "permission": "Only share what you have permission to share. By continuing you confirm that you do.",
+      "report": "Anyone can report an item, and moderators can take it down. If yours is taken down by mistake, you can appeal."
+    },
+    "cookies": {
+      "title": "Cookies and tracking",
+      "intro": "Dentiq uses only what is needed to run the site. It has no advertising, no analytics and no tracking scripts, and it loads nothing from other companies' servers.",
+      "tableTitle": "What runs in your browser",
+      "items": [
+        {
+          "name": "Sign-in cookie (session)",
+          "body": "Created when you sign in, so you stay signed in. It is removed when you sign out or delete your account, and it expires on its own. Dentiq cannot work without it while you are signed in."
+        },
+        {
+          "name": "Language cookie (DENTOS_LOCALE)",
+          "body": "Remembers French or English for one year. It is created when you choose a language."
+        },
+        {
+          "name": "Theme setting (browser storage, dentos-theme)",
+          "body": "Remembers light, dark or system. It stays on your device and is never sent to the server."
+        },
+        {
+          "name": "Offline cache (service worker)",
+          "body": "Keeps a short list of public files (icons and the offline page) so the offline page can show. It never stores pages, documents, images or anything tied to your account."
+        }
+      ],
+      "noneTitle": "What does not run",
+      "none": [
+        "No advertising or marketing cookies.",
+        "No analytics or visit counters.",
+        "No social network buttons or embedded third-party content."
+      ],
+      "choice": "Because only the items above are used, there is no cookie banner. You can clear them at any time in your browser settings; you will have to sign in again.",
+      "update": "If this ever changes, this page and the privacy policy will be updated first."
+    },
+    "accessibility": {
+      "title": "Accessibility and feedback",
+      "intro": "We want every student to be able to use Dentiq. This page says what has been checked and what has not. It is not a certification and does not claim compliance with any standard.",
+      "checkedTitle": "What was checked",
+      "checked": [
+        "Keyboard use, with a visible focus outline and a skip-to-content link.",
+        "Page titles, one main heading per page, form labels and link names, in French and English.",
+        "Text contrast in light and dark themes, and layouts from 320 px wide.",
+        "Reduced-motion preference."
+      ],
+      "gapsTitle": "Known gaps",
+      "gaps": [
+        "Not tested with screen readers, or in Safari, Firefox or on real phones.",
+        "At very high zoom on a phone (about 195 px effective width) some selects are clipped.",
+        "No independent accessibility audit has been done."
+      ],
+      "feedbackTitle": "Tell us about a problem",
+      "feedback": "If something is hard to use, send feedback with the Feedback button on any page, or use the contact page. Say which page and what device or assistive tool you use."
+    },
+    "contactPage": {
+      "title": "Contact",
+      "intro": "Dentiq is an independent student project.",
+      "feedback": "For bugs, ideas and accessibility problems, use the Feedback button on any page.",
+      "privacyTitle": "Privacy requests",
+      "privacy": "You can already export your data, correct your name and delete your account from Settings. For anything else about your data, write to the privacy contact below.",
+      "reportTitle": "Reporting content",
+      "report": "To report a document or exam question, use the Report button on its page. A moderator reviews it, and the author can appeal."
+    },
+    "cookiesLink": "Cookies",
+    "accessibilityLink": "Accessibility",
+    "contactLink": "Contact"
   },
   "passes": {
     "title": "Passes",
@@ -891,7 +981,9 @@
         "duplicate": "Duplicate",
         "inappropriate": "Inappropriate content",
         "leaked_or_copyrighted": "Leaked or copyrighted exam",
-        "other": "Other"
+        "other": "Other",
+        "patient_info": "Patient information",
+        "takedown": "Takedown request (rights or privacy)"
       }
     },
     "moderator": {
@@ -1821,6 +1913,18 @@
       "holiday": "Holiday",
       "exam_period": "Exam period",
       "unverified": "Not confirmed"
+    },
+    "feed": {
+      "title": "Subscribe in Apple Calendar",
+      "body": "A private link that shows your Dentiq calendar entries in Apple Calendar, read-only. Anyone who has the link can see your entries, so keep it to yourself. You can revoke it at any time.",
+      "create": "Create a private link",
+      "regenerate": "Make a new link (the old one stops working)",
+      "revoke": "Revoke the link",
+      "shownOnce": "Copy this link now",
+      "shownOnceBody": "It is shown only once. If you lose it, make a new one.",
+      "applePath": "In Apple Calendar: File, New Calendar Subscription, paste the link.",
+      "active": "A link is active (created {date}). It cannot be shown again.",
+      "error": "The link could not be created."
     }
   },
   "analytics": {
@@ -2070,12 +2174,13 @@
       "accept": "I understand and agree",
       "withdraw": "Withdraw my consent",
       "points": {
-        "what": "Asking sends your question and the matching excerpts to an AI service outside Dentiq to write the answer.",
-        "who": "Excerpts can come from your own private notes. They are sent only for the question you ask, with no name, email or account id.",
+        "what": "Asking sends your question and the matching excerpts (possibly from your own private notes) to an AI service outside Dentiq, which writes the answer.",
+        "who": "Nothing else is sent: no name, email or account id. The AI provider is not chosen yet. Before the tutor is switched on, this notice will name the provider and where it processes data. Until then, nothing is sent.",
         "own": "Only your own notes and sources you may already open are used, never another student's private material.",
         "wrong": "Answers are generated and can be wrong. Check them against your course material.",
-        "noClinical": "The tutor does not give advice about real patients.",
-        "withdraw": "You can withdraw this consent at any time and delete your saved conversations."
+        "noClinical": "Not for patient care: the tutor gives no advice about real patients. Never enter patient information.",
+        "deleteHistory": "Saved conversations can be deleted one by one from Saved conversations, and all are deleted with your account. Withdrawing consent stops anything being sent but does not delete them by itself.",
+        "withdraw": "You can withdraw this consent at any time. Your choice is recorded with the date, the language and the version of this wording."
       }
     },
     "history": {
@@ -2371,9 +2476,10 @@
       "optional": "Optional.",
       "lecturer": "Lecturer who allowed it",
       "file": "File",
-      "fileHint": "Up to {max} MB.",
+      "fileHint": "Audio files only (MP3, M4A, WAV, OGG). Up to {max} MB. Private to you.",
       "submit": "Add the recording",
-      "uploading": "Uploading…"
+      "uploading": "Uploading…",
+      "drop": "Drag an audio file here, or choose one."
     },
     "consent": {
       "title": "Before you add it",
@@ -2539,5 +2645,31 @@
     "privacy": "How Dentiq handles your personal data: what is stored, who can see it and how to export or delete it. Draft, pending legal review.",
     "terms": "The terms of using Dentiq, an independent student study project. Draft, pending legal review.",
     "forgot": "Ask for a link to choose a new Dentiq password."
+  },
+  "appeals": {
+    "title": "Contest this decision",
+    "help": "A moderator hid or rejected this item. Explain why you think that was a mistake. An administrator will review it.",
+    "message": "Your explanation",
+    "submit": "Send appeal",
+    "sent": "Appeal sent. An administrator will review it.",
+    "errors": {
+      "invalid": "This appeal could not be sent.",
+      "notFound": "This item was not found.",
+      "notAllowed": "This item cannot be appealed.",
+      "tooShort": "Please write at least 10 characters.",
+      "tooLong": "Please keep it under 1000 characters.",
+      "alreadyOpen": "You already have an open appeal for this item.",
+      "forbidden": "You cannot do this."
+    },
+    "queue": "Appeals",
+    "queueHelp": "Decisions by moderators that the author contests. Upholding an appeal republishes the item.",
+    "queueEmpty": "No open appeals.",
+    "types": {
+      "resource": "Document",
+      "question": "Exam question"
+    },
+    "note": "Note",
+    "uphold": "Uphold (republish)",
+    "deny": "Deny"
   }
 }

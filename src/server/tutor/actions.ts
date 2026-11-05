@@ -92,7 +92,7 @@ export async function askTutorAction(_prev: AskState, form: FormData): Promise<A
 
 export async function acceptConsentAction(): Promise<void> {
   const viewer = await requireUser();
-  await acceptTutorConsent(getDb(), viewer.id);
+  await acceptTutorConsent(getDb(), viewer.id, await getLocale());
   revalidatePath("/tutor", "layout");
 }
 

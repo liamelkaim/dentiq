@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { FileIcon, FlagIcon, PassesIcon } from "@/components/icons";
 import { excerpt } from "@/components/pass-ui";
-import { Badge, List, ListLinkRow, PageHeader, Panel, Section } from "@/components/ui";
+import { Badge, Button, Field, Input, List, ListLinkRow, PageHeader, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
+import { decideAppealAction } from "@/server/appeals/actions";
+import { listOpenAppeals } from "@/server/appeals/service";
+import { hasRole } from "@/server/auth/roles";
 import { requireRole } from "@/server/auth/session";
 import { listQuestionQueue } from "@/server/passes/service";
 import { listModerationQueue } from "@/server/resources/service";
@@ -20,6 +23,10 @@ export default async function ModerationPage() {
   const format = await getFormatter();
   const { pending, reports } = await listModerationQueue(getDb(), viewer);
   const exam = await listQuestionQueue(getDb(), viewer);
+  const appeals = await listOpenAppeals(getDb(), viewer);
+  // Patient-information reports and takedown requests come first.
+  const urgent = (reason: string) => reason === "patient_info" || reason === "takedown";
+  const byUrgency = <T extends { reason: string }>(rows: T[]) => [...rows.filter((r) => urgent(r.reason)), ...rows.filter((r) => !urgent(r.reason))];
   const date = (d: Date) => format.dateTime(d, { dateStyle: "medium" });
   const unknown = t("resources.detail.unknownUser");
 
@@ -51,7 +58,7 @@ export default async function ModerationPage() {
           <Panel className="px-4 py-5 text-[14px] text-text-muted">{t("moderation.reportsEmpty")}</Panel>
         ) : (
           <List>
-            {reports.map((r) => (
+            {byUrgency(reports).map((r) => (
               <ListLinkRow
                 key={r.id}
                 href={`/resources/${r.resourceId}`}
@@ -65,6 +72,7 @@ export default async function ModerationPage() {
                 ]
                   .filter(Boolean)
                   .join(" · ")}
+                trailing={urgent(r.reason) ? <Badge tone="danger">{t("moderation.urgent")}</Badge> : undefined}
               />
             ))}
           </List>
@@ -95,18 +103,49 @@ export default async function ModerationPage() {
           <Panel className="px-4 py-5 text-[14px] text-text-muted">{t("passes.moderation.reportsEmpty")}</Panel>
         ) : (
           <List>
-            {exam.reports.map((r) => (
+            {byUrgency(exam.reports).map((r) => (
               <ListLinkRow
                 key={r.id}
                 href={`/passes/${r.questionId}`}
                 leading={<span className={iconBox}><FlagIcon width={18} height={18} /></span>}
                 title={excerpt(r.excerpt)}
                 subtitle={[t(`passes.report.reasons.${r.reason}`), date(r.createdAt), r.details].filter(Boolean).join(" · ")}
+                trailing={urgent(r.reason) ? <Badge tone="danger">{t("moderation.urgent")}</Badge> : undefined}
               />
             ))}
           </List>
         )}
       </Section>
+
+      {hasRole(viewer, "admin") && (
+        <Section title={`${t("appeals.queue")} (${appeals.length})`} description={t("appeals.queueHelp")}>
+          {appeals.length === 0 ? (
+            <Panel className="px-4 py-5 text-[14px] text-text-muted">{t("appeals.queueEmpty")}</Panel>
+          ) : (
+            <List>
+              {appeals.map((a) => (
+                <li key={a.id} className="flex flex-col gap-3 px-4 py-4">
+                  <p className="text-[14px]">
+                    <a href={a.entityType === "resource" ? `/resources/${a.entityId}` : `/passes/${a.entityId}`} className="font-medium text-accent underline underline-offset-2">
+                      {t(`appeals.types.${a.entityType}`)}
+                    </a>{" "}
+                    · {t("moderation.by", { name: a.appellantName ?? unknown })} · {date(a.createdAt)}
+                  </p>
+                  <p className="text-[14px] text-text-muted">{a.message}</p>
+                  <form className="flex flex-wrap items-end gap-2">
+                    <input type="hidden" name="appealId" value={a.id} />
+                    <Field label={t("appeals.note")} htmlFor={`n-${a.id}`} optional={t("common.optional")}>
+                      <Input id={`n-${a.id}`} name="note" maxLength={500} />
+                    </Field>
+                    <Button type="submit" formAction={decideAppealAction} name="outcome" value="upheld" variant="secondary">{t("appeals.uphold")}</Button>
+                    <Button type="submit" formAction={decideAppealAction} name="outcome" value="denied" variant="secondary">{t("appeals.deny")}</Button>
+                  </form>
+                </li>
+              ))}
+            </List>
+          )}
+        </Section>
+      )}
     </>
   );
 }

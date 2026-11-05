@@ -8,6 +8,7 @@ import { reportResourceAction } from "@/server/resources/actions";
 import type { ResourceFormState } from "@/server/resources/form-helpers";
 import { NoTopicsHint, TopicCheckboxes, type TopicOption } from "./library-forms";
 import { Button, Field, Input, Notice, Panel, Select, Textarea } from "./ui";
+import { UploadNotice } from "./upload-notice";
 import { useKeepingForm } from "./use-keeping-form";
 
 const initial: ResourceFormState = { status: "idle" };
@@ -22,7 +23,7 @@ const addVersionAction = makeUploadAction<ResourceFormState>("resource-version",
 
 // Mirrors constants in src/db/schema/resources.ts (kept out of the browser bundle).
 const kinds = ["outline", "notes", "study_guide", "other"] as const;
-const reasons = ["incorrect", "inappropriate", "copyright", "duplicate", "other"] as const;
+const reasons = ["incorrect", "inappropriate", "copyright", "duplicate", "patient_info", "takedown", "other"] as const;
 const ACCEPT = ".pdf,.png,.jpg,.jpeg,.docx,.pptx";
 
 function useMessage() {
@@ -53,7 +54,8 @@ function RightsCheckbox({ id, error, privateDocument = false }: { id: string; er
   const t = useTranslations("resources.form");
   const msg = useMessage();
   return (
-    <div>
+    <div className="flex flex-col gap-3">
+      <UploadNotice />
       <label htmlFor={id} className="flex min-h-11 items-start gap-3 text-[14px] text-text-muted">
         <input
           id={id}

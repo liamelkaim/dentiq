@@ -29,6 +29,26 @@ Legend: **Verified** = exercised in a real browser on a scratch database with fa
 
 Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · 🔐 requires approval
 
+## Legal and trust wiring (2026-11-02, branch `legal/trust-wiring`)
+
+Implemented and tested (`tests/trust-wiring.test.ts`, `tests/appeals.test.ts`, `tests/asvs-fixes.test.ts`, `tests/backup-restore.test.ts`); **not browser-checked, not deployed, no lawyer review**. Nothing here claims compliance or university approval.
+
+| Item | State | Notes |
+|---|---|---|
+| Upload notice (no identifiable patient information, clinical photos or case files; permission to share) on document, version, exam-question, question-image and recording forms | Implemented | Reuses the existing "right to share" confirmation. FR/EN |
+| Report buttons with reasons "patient information" and "takedown request"; priority badge in the moderation queue | Implemented | Documents and exam questions. Notes are private only, so there is nothing to report there; images are reported through their question |
+| Appeal path: author of a hidden/removed document or a rejected question can contest; administrators decide; audited | Implemented | Hidden questions are invisible to their author, so only rejected questions can be appealed from their page |
+| AI notice before first tutor use (what is sent, to whom, may be wrong, not for patient care, deleting history); consent stored with time, language, version 2 | Implemented | Tutor stays OFF. Provider is not named because none exists |
+| Settings: consents, language, export, correct name, delete, privacy contact only when `CONTACT_EMAIL` is set | Implemented | |
+| Footer pages: Privacy, Terms, Cookies and tracking, Accessibility and feedback, Contact | Implemented | Cookies page lists only what runs; test checks it |
+| `docs/legal/` (data map, retention, incident register, PIA template, vendors, launch gates, ASVS review, backup/restore and rollback) | Drafted | Unknowns marked OWNER TO CONFIRM |
+| ASVS review: 2 findings fixed (rate limits on uploads, reports, appeals; appeals follow the approval rule); 3 gaps left for owner decision | Done | `docs/legal/asvs-review.md` |
+| Restore test | Local rehearsal automated; host restore test NOT run | `docs/legal/backup-restore-and-rollback.md` |
+| Recordings: audio-only (video refused), drag-and-drop or file picker, private; no transcription | Implemented | `tests/recordings.test.ts`; feature still OFF by default |
+| Calendar: `.ics` download (existing) and private, revocable, read-only subscription link; only a token hash is stored; migration `0017` (additive) | Implemented | `tests/calendar-feed.test.ts`. Not browser-tested; no Apple Calendar test; no Google sync |
+| AI provider comparison (no prices, nothing contacted); tutor stays OFF | Drafted | `docs/ai-provider-comparison.md` |
+
+
 ## Phase 1 — Foundation ✅ (2026-10-28)
 
 | Feature | Status | Notes |
