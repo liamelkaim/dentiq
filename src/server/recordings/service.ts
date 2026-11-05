@@ -86,7 +86,7 @@ export async function getRecording(db: Database, viewer: Viewer, id: string) {
 
 /** What the file route needs. Null for another student's recording, exactly like "not found". */
 export async function getRecordingFile(db: Database, viewer: Viewer, id: string) {
-  if (!UUID.test(id)) return null;
+  if (!UUID.test(id) || !canAccessLibrary(viewer)) return null;
   const [row] = await db.select({ storageKey: recordings.storageKey, mimeType: recordings.mimeType, sizeBytes: recordings.sizeBytes, fileName: recordings.fileName }).from(recordings).where(and(eq(recordings.id, id), eq(recordings.ownerId, viewer.id)));
   return row ?? null;
 }

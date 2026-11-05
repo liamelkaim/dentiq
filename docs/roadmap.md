@@ -29,6 +29,14 @@ Legend: **Verified** = exercised in a real browser on a scratch database with fa
 
 Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · 🔐 requires approval
 
+## Checkpoint 2026-11-05 (authorization audit)
+
+- **Confirmed and fixed:** `hasRole()` ignored email verification and approval, so a rejected, pending or unverified moderator/admin kept role access (`requireRole`, `canAccessLibrary`, `isModerator`). `hasRole` now requires `emailVerified` and `approvalStatus === "approved"`; sessions are read from the database on every request (no cookie cache), so revocation is immediate. `getRecordingFile` now also checks library eligibility. Tests: `tests/eligibility.test.ts` (3 roles x 4 ineligible states).
+- **Registration:** an empty allowed-domain list now refuses everyone in production (the first `ADMIN_EMAILS` address can still sign up). Outside production it still allows any domain. Live check needed: Admin > Email domains must hold the UdeM preset or signup is closed.
+- Checks on this tree: typecheck, lint, 787 tests, production build pass. Not deployed, not pushed.
+- **Next:** stage provisional UdeM 2026-2027 data from the 17 PDFs now in `Claude code projects/Dentiq/` (all 17 present; PyMuPDF `fitz` is the only PDF tool installed; no pdftotext). Compare with `data/programs/udem-dmd.json`; never publish without admin review. Resend: verify the sender domain before any student mail.
+- Housekeeping: about 15 Finder duplicates named "* 2.*" (some tracked in git). Left in place, owner to approve deletion.
+
 ## Legal and trust wiring (2026-11-02, branch `legal/trust-wiring`)
 
 Implemented and tested (`tests/trust-wiring.test.ts`, `tests/appeals.test.ts`, `tests/asvs-fixes.test.ts`, `tests/backup-restore.test.ts`); **not browser-checked, not deployed, no lawyer review**. Nothing here claims compliance or university approval.

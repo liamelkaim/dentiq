@@ -23,7 +23,7 @@ afterEach(() => vi.unstubAllEnvs());
 
 const signUp = (email: string) => auth.api.signUpEmail({ body: { name: "TEST", email, password } });
 const tokenOf = (m: EmailMessage | undefined) => new URL(m!.text.match(/https?:\/\/\S+/)![0]).searchParams.get("token")!;
-const admin = { id: "admin-1", role: "admin" as const };
+const admin = { id: "admin-1", role: "admin" as const, emailVerified: true, approvalStatus: "approved" as const };
 
 describe("domain list", () => {
   it("normalizes and validates", () => {
@@ -36,7 +36,7 @@ describe("domain list", () => {
   });
   it("only an administrator can change it, and it is audited", async () => {
     await db.insert(user).values({ id: "admin-1", name: "A", email: "a@example.com", role: "admin" });
-    expect(await updateAllowedDomains(db, { id: "s", role: "student" }, "umontreal.ca")).toEqual({ ok: false, error: "forbidden" });
+    expect(await updateAllowedDomains(db, { id: "s", role: "student", emailVerified: true, approvalStatus: "approved" as const }, "umontreal.ca")).toEqual({ ok: false, error: "forbidden" });
     expect(await updateAllowedDomains(db, admin, "bad domain")).toEqual({ ok: false, error: "invalid" });
     expect(await updateAllowedDomains(db, admin, DOMAIN_PRESETS.udem.join("\n"))).toEqual({ ok: true, value: ["umontreal.ca"] });
     expect(await getAllowedDomains(db)).toEqual(["umontreal.ca"]);

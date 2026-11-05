@@ -330,9 +330,9 @@ describe("access", () => {
   it("refuses students and moderators, deleting and writing nothing", async () => {
     const img = await addImage(daysAgo(RETENTION_GRACE_DAYS + 1));
     for (const role of ["student", "moderator"] as const) {
-      const run = await runRetentionAsAdmin(db, storage, { id: "x", role }, { apply: true });
+      const run = await runRetentionAsAdmin(db, storage, { id: "x", role, emailVerified: true, approvalStatus: "approved" as const }, { apply: true });
       expect(run).toEqual({ ok: false, error: "forbidden" });
-      expect(await previewRetentionAsAdmin(db, storage, { role })).toEqual({ ok: false, error: "forbidden" });
+      expect(await previewRetentionAsAdmin(db, storage, { id: "x", role, emailVerified: true, approvalStatus: "approved" as const })).toEqual({ ok: false, error: "forbidden" });
     }
     expect(await exists(img.key)).toBe(true);
     expect(await db.$count(auditLog)).toBe(0);
@@ -340,7 +340,7 @@ describe("access", () => {
 
   it("lets an administrator run it, recording who ran it", async () => {
     const img = await addImage(daysAgo(RETENTION_GRACE_DAYS + 1));
-    const run = await runRetentionAsAdmin(db, storage, { id: "admin-1", role: "admin" }, { apply: true, now: NOW });
+    const run = await runRetentionAsAdmin(db, storage, { id: "admin-1", role: "admin", emailVerified: true, approvalStatus: "approved" as const }, { apply: true, now: NOW });
     expect(run.ok).toBe(true);
     expect(await exists(img.key)).toBe(false);
     expect((await db.select().from(auditLog))[0]!.actorId).toBe("admin-1");

@@ -8,8 +8,12 @@ export type AccessUser = {
   approvalStatus: ApprovalStatus;
 };
 
-export function hasRole(user: Pick<AccessUser, "role">, minimum: Role): boolean {
-  return rank[user.role] >= rank[minimum];
+/**
+ * Role check that also requires current eligibility: a verified email AND approved status. A rejected, pending or
+ * unverified account never holds a role, whatever its stored role is (revocation takes effect on the next request).
+ */
+export function hasRole(user: AccessUser, minimum: Role): boolean {
+  return user.emailVerified && user.approvalStatus === "approved" && rank[user.role] >= rank[minimum];
 }
 
 /** May submit notes, passes, ratings, etc. (used from Phase 2 onward). */
@@ -24,10 +28,13 @@ function splitList(value: string | undefined): string[] {
     .filter(Boolean);
 }
 
-/** Empty list means every domain is allowed (enrollment policy not finalized yet). */
+/**
+ * Empty list: every domain is allowed outside production (local development and tests); in production nobody is
+ * allowed until an administrator configures domains (the bootstrap administrator is checked before this).
+ */
 export function isEmailDomainAllowed(email: string, allowedDomains = process.env.ALLOWED_EMAIL_DOMAINS): boolean {
   const domains = splitList(allowedDomains);
-  if (domains.length === 0) return true;
+  if (domains.length === 0) return process.env.NODE_ENV !== "production";
   const domain = email.split("@").pop()?.toLowerCase() ?? "";
   return domains.some((d) => domain === d || domain.endsWith(`.${d}`));
 }

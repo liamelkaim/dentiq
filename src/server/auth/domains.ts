@@ -1,3 +1,4 @@
+import type { AccessUser } from "./roles";
 // Which email domains may sign up. An administrator edits the list in Admin > Email domains (stored in app_settings);
 // when nothing is stored, the ALLOWED_EMAIL_DOMAINS environment variable applies, and when that is empty every domain
 // is allowed. A listed domain also allows its subdomains (umontreal.ca allows med.umontreal.ca). The single
@@ -52,7 +53,7 @@ export type DomainsError = "forbidden" | "invalid";
 
 export async function updateAllowedDomains(
   db: Database,
-  viewer: { id: string; role: "student" | "moderator" | "admin" },
+  viewer: AccessUser & { id: string },
   raw: string,
 ): Promise<{ ok: true; value: string[] } | { ok: false; error: DomainsError }> {
   if (!hasRole(viewer, "admin")) return { ok: false, error: "forbidden" };
