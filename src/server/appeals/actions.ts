@@ -19,9 +19,10 @@ export async function submitAppealAction(_prev: AppealFormState, form: FormData)
   return { status: "success", message: "appeals.sent" };
 }
 
-export async function decideAppealAction(form: FormData): Promise<void> {
+/** The outcome is bound on the button (`decideAppealAction.bind(null, "upheld")`): React drops `name`/`value` on a button that has a server `formAction`, so the outcome cannot travel in the form data. */
+export async function decideAppealAction(outcome: "upheld" | "denied", form: FormData): Promise<void> {
   const viewer = await requireRole("admin");
-  const input = z.object({ appealId: z.uuid(), outcome: z.enum(["upheld", "denied"]), note: z.string().trim().max(500).optional() }).parse(Object.fromEntries([...form.entries()].filter(([, v]) => typeof v === "string")));
+  const input = z.object({ appealId: z.uuid(), outcome: z.enum(["upheld", "denied"]), note: z.string().trim().max(500).optional() }).parse({ ...Object.fromEntries([...form.entries()].filter(([, v]) => typeof v === "string")), outcome });
   await decideAppeal(getDb(), viewer, input.appealId, input.outcome, input.note || null);
   revalidatePath("/moderation");
   revalidatePath("/", "layout");

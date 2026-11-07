@@ -137,8 +137,8 @@ export default async function ModerationPage() {
                     <Field label={t("appeals.note")} htmlFor={`n-${a.id}`} optional={t("common.optional")}>
                       <Input id={`n-${a.id}`} name="note" maxLength={500} />
                     </Field>
-                    <Button type="submit" formAction={decideAppealAction} name="outcome" value="upheld" variant="secondary">{t("appeals.uphold")}</Button>
-                    <Button type="submit" formAction={decideAppealAction} name="outcome" value="denied" variant="secondary">{t("appeals.deny")}</Button>
+                    <Button type="submit" formAction={decideAppealAction.bind(null, "upheld")} variant="secondary">{t("appeals.uphold")}</Button>
+                    <Button type="submit" formAction={decideAppealAction.bind(null, "denied")} variant="secondary">{t("appeals.deny")}</Button>
                   </form>
                 </li>
               ))}
