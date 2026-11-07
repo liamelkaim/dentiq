@@ -2469,7 +2469,7 @@
     },
     "form": {
       "heading": "Ajouter un enregistrement",
-      "help": "Audio (mp3, m4a, wav, ogg, webm) ou vidéo (mp4, webm).",
+      "help": "Audio seulement (mp3, m4a, wav, ogg, webm). Les fichiers vidéo ne sont pas acceptés.",
       "title": "Titre",
       "course": "Cours",
       "noCourse": "Aucun cours",
@@ -2516,7 +2516,7 @@
       "titleRequired": "Donnez un titre à l'enregistrement.",
       "fileMissing": "Choisissez un fichier.",
       "fileTooLarge": "Ce fichier dépasse la limite.",
-      "fileType": "Ce fichier n'est pas un format audio ou vidéo accepté.",
+      "fileType": "Ce fichier n'est pas un format audio accepté (les fichiers vidéo ne sont pas acceptés).",
       "limitReached": "Vous avez atteint la limite.",
       "quotaExceeded": "Cela dépasserait votre espace de stockage. Supprimez d'abord un enregistrement.",
       "invalid": "Un champ du formulaire n'est pas valide.",

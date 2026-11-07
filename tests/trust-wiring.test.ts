@@ -23,7 +23,7 @@ const get = (obj: unknown, path: string) => path.split(".").reduce<unknown>((o, 
 
 describe("upload notice", () => {
   it.each(["resource-forms.tsx", "pass-forms.tsx", "recording-forms.tsx"])("%s shows it", (file) => {
-    expect(read("src", "components", file)).toContain("<UploadNotice />");
+    expect(read("src", "components", file)).toMatch(/<UploadNotice( reportable=\{false\})? \/>/);
   });
   it("says no patient information, permission to share and how to report, in both languages", () => {
     for (const m of [en, fr]) {

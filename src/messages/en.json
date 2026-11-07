@@ -2469,7 +2469,7 @@
     },
     "form": {
       "heading": "Add a recording",
-      "help": "Audio (mp3, m4a, wav, ogg, webm) or video (mp4, webm).",
+      "help": "Audio only (mp3, m4a, wav, ogg, webm). Video files are not accepted.",
       "title": "Title",
       "course": "Course",
       "noCourse": "No course",
@@ -2516,7 +2516,7 @@
       "titleRequired": "Give the recording a title.",
       "fileMissing": "Choose a file.",
       "fileTooLarge": "This file is larger than the limit.",
-      "fileType": "This file is not a supported audio or video format.",
+      "fileType": "This file is not a supported audio format (video files are not accepted).",
       "limitReached": "You reached the limit.",
       "quotaExceeded": "This would go over your storage space. Delete a recording first.",
       "invalid": "Something in the form is not valid.",

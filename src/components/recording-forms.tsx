@@ -48,7 +48,7 @@ export function RecordingUploadForm({ courses, maxMb }: { courses: { id: string;
     <Panel className="p-4 sm:p-5">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         {error && <Notice tone="danger">{error}</Notice>}
-        <UploadNotice />
+        <UploadNotice reportable={false} />
         <Field label={t("form.title")} htmlFor="rec-title">
           <Input id="rec-title" name="title" required maxLength={200} />
         </Field>
