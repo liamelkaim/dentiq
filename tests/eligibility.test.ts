@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { hasRole, isBootstrapAdmin, isEmailDomainAllowed } from "@/server/auth/roles";
+import { DEFAULT_PASS_SETTINGS, canVerifyAnswers } from "@/server/passes/settings";
 import { canAccessLibrary, isModerator, type Viewer } from "@/server/resources/service";
 
 const roles = ["student", "moderator", "admin"] as const;
@@ -44,5 +45,17 @@ describe("registration is closed by default in production", () => {
   });
   it("still lets the bootstrap administrator sign up", () => {
     expect(isBootstrapAdmin("Boss@Example.com", "boss@example.com")).toBe(true);
+  });
+});
+
+describe("answer verification requires an eligible account", () => {
+  const settings = DEFAULT_PASS_SETTINGS;
+  for (const s of states) {
+    it(`moderator, verified=${s.emailVerified}, ${s.approvalStatus} cannot verify`, () => {
+      expect(canVerifyAnswers({ id: "u", role: "moderator", ...s }, settings)).toBe(false);
+    });
+  }
+  it("an approved moderator can", () => {
+    expect(canVerifyAnswers({ id: "u", role: "moderator", emailVerified: true, approvalStatus: "approved" }, settings)).toBe(true);
   });
 });
