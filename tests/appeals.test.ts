@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vitest";
 import { createTestDatabase, type Database } from "@/db/client";
 import { auditLog, resources, user } from "@/db/schema";
-import { canAppeal, decideAppeal, listOpenAppeals, submitAppeal } from "@/server/appeals/service";
+import { canAppeal, decideAppeal, hasOpenAppeal, listOpenAppeals, submitAppeal } from "@/server/appeals/service";
 import { addOffering, createCourse } from "@/server/catalog/service";
 import { courseInputSchema } from "@/server/catalog/validation";
 import { createResource, moderateResource, reportInputSchema, reportResource, resourceInputSchema, type Viewer } from "@/server/resources/service";
@@ -52,6 +52,8 @@ describe("appeal", () => {
     expect(await canAppeal(db, alice, "resource", rid)).toBe(true);
     expect(await submitAppeal(db, alice, { entityType: "resource", entityId: rid, message: msg })).toEqual({ ok: true });
     expect(await canAppeal(db, alice, "resource", rid)).toBe(false);
+    expect(await hasOpenAppeal(db, alice, "resource", rid)).toBe(true); // the page shows "appeal sent" instead of the form
+    expect(await hasOpenAppeal(db, bob, "resource", rid)).toBe(false);
     expect(await submitAppeal(db, alice, { entityType: "resource", entityId: rid, message: msg })).toEqual({ ok: false, error: "alreadyOpen" });
     expect(await listOpenAppeals(db, moderator)).toEqual([]);
     expect(await listOpenAppeals(db, alice)).toEqual([]);

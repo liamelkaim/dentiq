@@ -8,7 +8,7 @@ import { RelatedPanel } from "@/components/library-ui";
 import { excerpt } from "@/components/pass-ui";
 import { AppealForm } from "@/components/appeal-forms";
 import { NewVersionForm, ReportForm } from "@/components/resource-forms";
-import { canAppeal } from "@/server/appeals/service";
+import { canAppeal, hasOpenAppeal } from "@/server/appeals/service";
 import { formatBytes, ResourceStatusBadges } from "@/components/resource-list";
 import { Badge, Button, buttonClass, DescriptionList, Input, List, ListRow, Notice, PageHeader, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
@@ -218,6 +218,11 @@ export default async function ResourcePage({ params }: { params: Params }) {
       {(await canAppeal(db, viewer, "resource", resource.id)) && (
         <div className="mb-8">
           <AppealForm entityType="resource" entityId={resource.id} />
+        </div>
+      )}
+      {(await hasOpenAppeal(db, viewer, "resource", resource.id)) && (
+        <div className="mb-8">
+          <Notice tone="success">{t("appeals.sent")}</Notice>
         </div>
       )}
 

@@ -32,7 +32,7 @@ describe("staged UdeM schedule facts (provisional)", () => {
     expect(s.facultyCalendar.events.find((e) => e.date === "2026-10-12")?.description_fr).toMatch(/Action de gr/);
   });
   it("the checked cohort 1 timetable has the 22 slots seen on the rendered page", () => {
-    const c1 = s.weeklyTimetables.cohort1;
+    const c1 = s.weeklyTimetables.cohort1!;
     expect(c1.visuallyChecked).toBe(true);
     expect(c1.slots).toHaveLength(22);
     expect(c1.slots[0]).toMatchObject({ weekday: "Lundi", start: "08:30", end: "11:30", code: "DEN 1006" });

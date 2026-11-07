@@ -24,13 +24,19 @@ async function target(db: Database, type: AppealEntityType, id: string) {
   return q ? { owner: q.owner, appealable: q.status === "rejected" } : null;
 }
 
+/** Does the viewer already have an open appeal for this item? (Shown instead of the form, so a sent appeal stays visible.) */
+export async function hasOpenAppeal(db: Database, viewer: Viewer, type: AppealEntityType, id: string): Promise<boolean> {
+  if (!canAccessLibrary(viewer)) return false;
+  const open = await db.select({ id: contentAppeals.id }).from(contentAppeals).where(and(eq(contentAppeals.entityType, type), eq(contentAppeals.entityId, id), eq(contentAppeals.appellantId, viewer.id), eq(contentAppeals.status, "open")));
+  return open.length > 0;
+}
+
 /** Can this viewer appeal this item right now? Used to show the button (the service re-checks on submit). */
 export async function canAppeal(db: Database, viewer: Viewer, type: AppealEntityType, id: string): Promise<boolean> {
   if (!canAccessLibrary(viewer)) return false;
   const t = await target(db, type, id);
   if (!t || t.owner !== viewer.id || !t.appealable) return false;
-  const open = await db.select({ id: contentAppeals.id }).from(contentAppeals).where(and(eq(contentAppeals.entityType, type), eq(contentAppeals.entityId, id), eq(contentAppeals.appellantId, viewer.id), eq(contentAppeals.status, "open")));
-  return open.length === 0;
+  return !(await hasOpenAppeal(db, viewer, type, id));
 }
 
 export async function submitAppeal(db: Database, viewer: Viewer, input: { entityType: unknown; entityId: unknown; message: unknown }): Promise<AppealResult> {
