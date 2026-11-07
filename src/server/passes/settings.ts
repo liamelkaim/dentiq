@@ -14,7 +14,7 @@ import { eq } from "drizzle-orm";
 import type { Database } from "@/db/client";
 import { appSettings, roles, type Role } from "@/db/schema";
 import { writeAudit } from "@/server/audit";
-import { hasRole } from "@/server/auth/roles";
+import { canContribute, hasRole } from "@/server/auth/roles";
 import type { Viewer } from "@/server/resources/service";
 import { getQuestionType, knownQuestionTypes } from "./question-types";
 
@@ -158,8 +158,9 @@ export async function updatePassSettings(
 }
 
 /** May this person verify answers under the current policy? */
-export function canVerifyAnswers(viewer: Pick<Viewer, "role">, settings: PassSettings): boolean {
-  return settings.verification.allowedRoles.includes(viewer.role);
+export function canVerifyAnswers(viewer: Viewer, settings: PassSettings): boolean {
+  // Eligibility first: a rejected, pending or unverified account holds no role, whatever its stored role is.
+  return canContribute(viewer) && settings.verification.allowedRoles.includes(viewer.role);
 }
 
 /** Is this type accepted for NEW questions right now? (Existing questions of any type stay usable.) */

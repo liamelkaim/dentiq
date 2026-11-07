@@ -33,3 +33,15 @@ export const RATE_TUTOR_ASK: RateRule = { name: "tutor-ask", limit: 6, windowSec
 
 /** Feedback form: a few messages per hour per signed-in user (or per client address when signed out). */
 export const RATE_FEEDBACK: RateRule = { name: "feedback", limit: 5, windowSeconds: 60 * 60 };
+
+/** File uploads (documents, versions, question images, recordings): each one reads a large body and writes rows and files. */
+export const RATE_UPLOAD: RateRule = { name: "upload", limit: 20, windowSeconds: 10 * 60 };
+
+/** Reports on documents and exam questions: stops one account from flooding the moderators' queue. */
+export const RATE_REPORT: RateRule = { name: "report", limit: 20, windowSeconds: 60 * 60 };
+
+/** Appeals against a takedown: a few per hour per member. */
+export const RATE_APPEAL: RateRule = { name: "appeal", limit: 5, windowSeconds: 60 * 60 };
+
+/** Calendar subscription feed: calendar apps refresh every few minutes to hours; this is a ceiling, not a target. */
+export const RATE_CALENDAR_FEED: RateRule = { name: "calendar-feed", limit: 120, windowSeconds: 60 * 60 };

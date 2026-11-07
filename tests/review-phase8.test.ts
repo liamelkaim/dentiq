@@ -91,7 +91,7 @@ describe("6. account deletion scrubs recording audit ids", () => {
   it("leaves no recording id in the audit trail", async () => {
     await updateRecordingSettings(db, admin, { enabled: true });
     const mp4 = new Uint8Array(64);
-    mp4.set([0, 0, 0, 0x18, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6f, 0x6d]);
+    mp4.set([0, 0, 0, 0x18, 0x66, 0x74, 0x79, 0x70, 0x4d, 0x34, 0x41, 0x20]); // M4A audio brand
     const r = await createRecording(db, createMemoryStorage(), student, { title: "TEST", consent: { recordingAllowed: true, lecturerPermission: true, privateUse: true } }, { name: "a.mp4", bytes: mp4 });
     if (!r.ok) throw new Error(r.error);
     await deleteAccount(db, createMemoryStorage(), "u1", "u1@example.com");

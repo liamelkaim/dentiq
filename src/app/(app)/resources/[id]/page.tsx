@@ -6,7 +6,9 @@ import { DownloadIcon } from "@/components/icons";
 import { QuestionLinkForm, TopicPickerForm } from "@/components/library-forms";
 import { RelatedPanel } from "@/components/library-ui";
 import { excerpt } from "@/components/pass-ui";
+import { AppealForm } from "@/components/appeal-forms";
 import { NewVersionForm, ReportForm } from "@/components/resource-forms";
+import { canAppeal, hasOpenAppeal } from "@/server/appeals/service";
 import { formatBytes, ResourceStatusBadges } from "@/components/resource-list";
 import { Badge, Button, buttonClass, DescriptionList, Input, List, ListRow, Notice, PageHeader, Panel, Section } from "@/components/ui";
 import { getDb } from "@/db/client";
@@ -212,6 +214,17 @@ export default async function ResourcePage({ params }: { params: Params }) {
           ))}
         </List>
       </Section>
+
+      {(await canAppeal(db, viewer, "resource", resource.id)) && (
+        <div className="mb-8">
+          <AppealForm entityType="resource" entityId={resource.id} />
+        </div>
+      )}
+      {(await hasOpenAppeal(db, viewer, "resource", resource.id)) && (
+        <div className="mb-8">
+          <Notice tone="success">{t("appeals.sent")}</Notice>
+        </div>
+      )}
 
       {(resource.canEdit || resource.canReport) && (
         <div className="mb-8 flex flex-col gap-4">

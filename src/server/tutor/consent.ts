@@ -7,19 +7,26 @@ import { tutorConsents } from "@/db/schema";
 import { writeAudit } from "@/server/audit";
 
 /** Raise when the consent text (tutor.consent.* in the message files) changes in substance. */
-export const TUTOR_CONSENT_VERSION = 1;
+export const TUTOR_CONSENT_VERSION = 2;
 
 export async function hasTutorConsent(db: Database, userId: string): Promise<boolean> {
   const [row] = await db.select({ v: tutorConsents.version }).from(tutorConsents).where(eq(tutorConsents.userId, userId));
   return row?.v === TUTOR_CONSENT_VERSION;
 }
 
-export async function acceptTutorConsent(db: Database, userId: string): Promise<void> {
+/** Stores the proof of consent: who, when, the version of the wording and the language the student actually saw. */
+export async function acceptTutorConsent(db: Database, userId: string, locale: string = "fr"): Promise<void> {
+  const lang = locale === "en" ? "en" : "fr";
   await db
     .insert(tutorConsents)
-    .values({ userId, version: TUTOR_CONSENT_VERSION })
-    .onConflictDoUpdate({ target: tutorConsents.userId, set: { version: TUTOR_CONSENT_VERSION, acceptedAt: new Date() } });
-  await writeAudit(db, { actorId: userId, action: "tutor_consent.accept", entityType: "user", entityId: userId, metadata: { version: TUTOR_CONSENT_VERSION } });
+    .values({ userId, version: TUTOR_CONSENT_VERSION, locale: lang })
+    .onConflictDoUpdate({ target: tutorConsents.userId, set: { version: TUTOR_CONSENT_VERSION, acceptedAt: new Date(), locale: lang } });
+  await writeAudit(db, { actorId: userId, action: "tutor_consent.accept", entityType: "user", entityId: userId, metadata: { version: TUTOR_CONSENT_VERSION, locale: lang } });
+}
+
+export async function getTutorConsent(db: Database, userId: string) {
+  const [row] = await db.select({ version: tutorConsents.version, acceptedAt: tutorConsents.acceptedAt, locale: tutorConsents.locale }).from(tutorConsents).where(eq(tutorConsents.userId, userId));
+  return row ?? null;
 }
 
 export async function withdrawTutorConsent(db: Database, userId: string): Promise<void> {

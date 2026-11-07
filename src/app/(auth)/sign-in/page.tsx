@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { getDb } from "@/db/client";
+import { getAllowedDomains } from "@/server/auth/domains";
 import { SignInForm } from "@/components/auth-forms";
 import { Notice } from "@/components/ui";
 
@@ -11,6 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SignInPage({ searchParams }: { searchParams: Promise<{ reset?: string }> }) {
   const { reset } = await searchParams;
+  const domain = (await getAllowedDomains(getDb()))[0] ?? null;
   const t = await getTranslations("auth.signIn");
   return (
     <>
@@ -21,7 +24,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
           {t("resetDone")}
         </Notice>
       )}
-      <SignInForm />
+      <SignInForm domain={domain} />
     </>
   );
 }

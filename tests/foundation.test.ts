@@ -40,9 +40,18 @@ describe("language selection", () => {
 
 describe("permissions", () => {
   it("ranks roles student < moderator < admin", () => {
-    expect(hasRole({ role: "admin" }, "moderator")).toBe(true);
-    expect(hasRole({ role: "moderator" }, "admin")).toBe(false);
-    expect(hasRole({ role: "student" }, "student")).toBe(true);
+    const ok = { emailVerified: true, approvalStatus: "approved" as const };
+    expect(hasRole({ role: "admin", ...ok }, "moderator")).toBe(true);
+    expect(hasRole({ role: "moderator", ...ok }, "admin")).toBe(false);
+    expect(hasRole({ role: "student", ...ok }, "student")).toBe(true);
+  });
+
+  it("gives no role to rejected, pending or unverified accounts", () => {
+    for (const role of ["student", "moderator", "admin"] as const) {
+      for (const [emailVerified, approvalStatus] of [[true, "rejected"], [true, "pending"], [false, "approved"], [false, "pending"]] as const) {
+        expect(hasRole({ role, emailVerified, approvalStatus }, "student")).toBe(false);
+      }
+    }
   });
 
   it("only lets verified, approved accounts contribute", () => {

@@ -37,3 +37,21 @@ export const studyCalendarEntries = pgTable(
     check("study_calendar_entries_time_format", sql`${t.entryTime} is null or ${t.entryTime} ~ '^([01][0-9]|2[0-3]):[0-5][0-9]$'`),
   ],
 );
+
+// A private, read-only subscription link to the student's OWN calendar (for Apple Calendar and others). Only the SHA-256
+// of the secret token is stored, so a database leak does not expose working links. The student can revoke it at any
+// time; one active link per student (creating a new one revokes the old one).
+export const calendarFeeds = pgTable(
+  "calendar_feeds",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    userId: text()
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    tokenHash: text().notNull().unique(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    lastUsedAt: timestamp({ withTimezone: true }),
+    revokedAt: timestamp({ withTimezone: true }),
+  },
+  (t) => [index().on(t.userId)],
+);

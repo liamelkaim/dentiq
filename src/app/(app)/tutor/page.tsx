@@ -87,7 +87,7 @@ export default async function TutorPage({ searchParams }: { searchParams: Promis
             <Panel className="flex flex-col gap-3 p-4 sm:p-5">
               <h3 className="text-[16px] font-semibold">{t("consent.title")}</h3>
               <ul className="flex list-disc flex-col gap-2 pl-5 text-[14px] text-text-muted">
-                {(["what", "who", "own", "wrong", "noClinical", "withdraw"] as const).map((k) => (
+                {(["what", "who", "own", "wrong", "noClinical", "deleteHistory", "withdraw"] as const).map((k) => (
                   <li key={k}>{t(`consent.points.${k}`)}</li>
                 ))}
               </ul>

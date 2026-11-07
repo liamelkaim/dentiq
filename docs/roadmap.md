@@ -29,6 +29,43 @@ Legend: **Verified** = exercised in a real browser on a scratch database with fa
 
 Legend: ✅ implemented · 🔄 in progress · 📋 planned · ⛔ blocked · 🔐 requires approval
 
+## Checkpoint 2026-11-07 (scheduled run: authorization re-check, schedule staging, browser pass)
+
+- **Authorization:** the `hasRole` fix holds. Scan of server actions, pages and API routes found one remaining role-only check: `canVerifyAnswers` (answer verification) ignored eligibility. It now requires a verified, approved account (defense in depth: the page path was already blocked). Regression tests added in `tests/eligibility.test.ts`. Left as is on purpose: a signed-in but unapproved account can still read, export or delete its OWN personal data (own flashcards, own tutor history export); nothing shared is reachable.
+- **Schedule staging (provisional, not published):** `scripts/stage-udem-schedule.py` (PyMuPDF only) wrote `data/staging/udem-2026-2027.schedule.staged.json`. Source-verified against the rendered pages: grading scale (1er cycle and grades supérieurs kept separate, both 14 rows; the PDF states NO 1er-cycle pass mark and none is staged) and faculty calendar page 1 (dates agree with their printed weekdays). Cohort 1 weekly timetable matches the rendered page row by row (22 slots). Everything else is flagged `needsReview`: all timetable slots, cohorts 2-5, all integration weeks, calendar page 2 (summer 2027). Not staged on purpose: clinic placements ("Selon assignations"), "Voir Synchro", "À déterminer", groups, and every instructor name. Cut-off room text is flagged. Test: `tests/udem-schedule-staging.test.ts`.
+- **Browser pass (scratch database, synthetic `example.com` accounts, Chrome pane at 375 px, dark then FR/light, no horizontal overflow):** legal pages (title, h1, contact), pending-account notice, upload notice on document and recording forms, appeal sent and decided, recordings (consent gate, upload, Range 206/416, other account 404, anonymous 401, delete), `.ics` download, private subscription feed (works without cookies, `no-store`, 404 after revoke). Not covered: EN light desktop for every page, Apple Calendar import, real email delivery, the exam-question upload form in the browser, the retention job.
+- **Defects found and fixed:** (1) appeal decision buttons lost their value (React drops `name`/`value` on a server `formAction` button) so Uphold/Deny crashed the page; outcome is now bound; guard test `tests/form-action-buttons.test.ts`. (2) After sending an appeal the form vanished with no confirmation; an "appeal sent" notice now stays. (3) Recordings form advertised video although video is refused, and showed the report/appeal line although recordings are private; wording fixed in FR and EN.
+- Checks on this tree: typecheck, lint, 800 tests, production build pass. Pushed to branch `legal/trust-wiring` only (PR #2). Not merged, not deployed.
+- **Owner actions before merge:** verify the Resend sender domain; Neon backup, then migrations 0016-0017; load the UdeM email-domain preset in Admin (signup is closed in production without it); legal review of the drafts; 1024 px logo; decide whether the public repository should be private; approve deletion of the Finder duplicates named "* 2.*" (one tracked file, `src/server/auth/domains 2.ts`, has uncommitted edits and was left alone).
+
+## Checkpoint 2026-11-05 (authorization audit)
+
+- **Confirmed and fixed:** `hasRole()` ignored email verification and approval, so a rejected, pending or unverified moderator/admin kept role access (`requireRole`, `canAccessLibrary`, `isModerator`). `hasRole` now requires `emailVerified` and `approvalStatus === "approved"`; sessions are read from the database on every request (no cookie cache), so revocation is immediate. `getRecordingFile` now also checks library eligibility. Tests: `tests/eligibility.test.ts` (3 roles x 4 ineligible states).
+- **Registration:** an empty allowed-domain list now refuses everyone in production (the first `ADMIN_EMAILS` address can still sign up). Outside production it still allows any domain. Live check needed: Admin > Email domains must hold the UdeM preset or signup is closed.
+- Checks on this tree: typecheck, lint, 787 tests, production build pass. Not deployed, not pushed.
+- **Staged (provisional):** `scripts/stage-udem-pdfs.py <pdf-dir>` (PyMuPDF) wrote `data/staging/udem-2026-2027.staged.json`: inventory of all 17 PDFs with SHA-256 (all present), 167 candidate course rows that match `udem-dmd.json` exactly and reconcile with the printed per-term course counts and year academic-credit totals (40, 41.5, 41, 60.5, 36). Timetables, integration weeks, faculty calendar and the grading scale are inventoried only, NOT interpreted (weekday/time grids need visual review). Not loaded into the database; publishing stays with the admin review flow. Test: `tests/udem-staging.test.ts`. Resend: verify the sender domain before any student mail.
+- Housekeeping: about 15 Finder duplicates named "* 2.*" (some tracked in git). Left in place, owner to approve deletion.
+
+## Legal and trust wiring (2026-11-02, branch `legal/trust-wiring`)
+
+Implemented and tested (`tests/trust-wiring.test.ts`, `tests/appeals.test.ts`, `tests/asvs-fixes.test.ts`, `tests/backup-restore.test.ts`); **not browser-checked, not deployed, no lawyer review**. Nothing here claims compliance or university approval.
+
+| Item | State | Notes |
+|---|---|---|
+| Upload notice (no identifiable patient information, clinical photos or case files; permission to share) on document, version, exam-question, question-image and recording forms | Implemented | Reuses the existing "right to share" confirmation. FR/EN |
+| Report buttons with reasons "patient information" and "takedown request"; priority badge in the moderation queue | Implemented | Documents and exam questions. Notes are private only, so there is nothing to report there; images are reported through their question |
+| Appeal path: author of a hidden/removed document or a rejected question can contest; administrators decide; audited | Implemented | Hidden questions are invisible to their author, so only rejected questions can be appealed from their page |
+| AI notice before first tutor use (what is sent, to whom, may be wrong, not for patient care, deleting history); consent stored with time, language, version 2 | Implemented | Tutor stays OFF. Provider is not named because none exists |
+| Settings: consents, language, export, correct name, delete, privacy contact only when `CONTACT_EMAIL` is set | Implemented | |
+| Footer pages: Privacy, Terms, Cookies and tracking, Accessibility and feedback, Contact | Implemented | Cookies page lists only what runs; test checks it |
+| `docs/legal/` (data map, retention, incident register, PIA template, vendors, launch gates, ASVS review, backup/restore and rollback) | Drafted | Unknowns marked OWNER TO CONFIRM |
+| ASVS review: 2 findings fixed (rate limits on uploads, reports, appeals; appeals follow the approval rule); 3 gaps left for owner decision | Done | `docs/legal/asvs-review.md` |
+| Restore test | Local rehearsal automated; host restore test NOT run | `docs/legal/backup-restore-and-rollback.md` |
+| Recordings: audio-only (video refused), drag-and-drop or file picker, private; no transcription | Implemented | `tests/recordings.test.ts`; feature still OFF by default |
+| Calendar: `.ics` download (existing) and private, revocable, read-only subscription link; only a token hash is stored; migration `0017` (additive) | Implemented | `tests/calendar-feed.test.ts`. Not browser-tested; no Apple Calendar test; no Google sync |
+| AI provider comparison (no prices, nothing contacted); tutor stays OFF | Drafted | `docs/ai-provider-comparison.md` |
+
+
 ## Phase 1 — Foundation ✅ (2026-10-28)
 
 | Feature | Status | Notes |

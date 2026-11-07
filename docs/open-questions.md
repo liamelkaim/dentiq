@@ -11,3 +11,10 @@
 - CONTACT_EMAIL (owner decision): no contact address was given. The footer and the Feedback form hide the "Contact us" mailto link until `CONTACT_EMAIL` is set in the environment.
 - Public welcome page, content slots left empty ON PURPOSE (nothing fake is shown): testimonials or reviews, user or course counters, case studies, team or founder photos, a student count. Add real ones only with the owner's permission; the page currently has what Dentiq is, who it is for, how it works and five truthful FAQ answers.
 - Feedback notices go to the first address in ADMIN_EMAILS through the mailer; real delivery needs a verified Resend domain (see the email item above).
+- Legal pack (docs/law25-pack.md): person in charge, provider regions, impact assessment and lawyer review all still need the owner. The privacy page and terms are complete drafts (cookies, processors, recordings, tutor, retention, rights, governing law Quebec) and keep the DRAFT banner.
+- Privacy contact and person in charge (2026-11-02): Settings shows the privacy contact only when `CONTACT_EMAIL` is set; until then it is missing from Settings and shows the dashed placeholder on /contact, /privacy and /terms. Owner to provide it.
+- AI notice (2026-11-02): the consent text says the provider is not chosen yet. When a provider is chosen, name it and its processing region in `tutor.consent.points.who` (FR and EN) and raise `TUTOR_CONSENT_VERSION`.
+- Appeals (2026-11-02): who decides (today: administrators only) and the target response time are product decisions. Hidden exam questions are invisible to their authors, so they cannot appeal them; decide whether authors should be told.
+- Sign-in lockout per account, a second factor and an absolute session lifetime: open decisions in `docs/legal/asvs-review.md`.
+- Withdrawn AI consent is deleted (only the audit entry remains). Decide whether proof of withdrawn consents must be archived (`docs/legal/retention-schedule.md`).
+

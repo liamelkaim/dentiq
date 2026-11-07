@@ -317,7 +317,7 @@ export type RetentionAccess = { ok: true; value: RetentionReport } | { ok: false
 export async function runRetentionAsAdmin(
   db: Database,
   storage: FileStorage,
-  viewer: Pick<Viewer, "id" | "role">,
+  viewer: Viewer,
   options: RetentionOptions = {},
 ): Promise<RetentionAccess> {
   if (!hasRole(viewer, "admin")) return { ok: false, error: "forbidden" };
@@ -325,7 +325,7 @@ export async function runRetentionAsAdmin(
 }
 
 /** Administrators only. Read-only report for the admin page. */
-export async function previewRetentionAsAdmin(db: Database, storage: FileStorage, viewer: Pick<Viewer, "role">): Promise<RetentionAccess> {
+export async function previewRetentionAsAdmin(db: Database, storage: FileStorage, viewer: Viewer): Promise<RetentionAccess> {
   if (!hasRole(viewer, "admin")) return { ok: false, error: "forbidden" };
   return { ok: true, value: await previewRetention(db, storage) };
 }

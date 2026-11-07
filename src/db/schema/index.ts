@@ -13,3 +13,4 @@ export * from "./profile";
 export * from "./schedule";
 export * from "./recordings";
 export * from "./feedback";
+export * from "./appeals";

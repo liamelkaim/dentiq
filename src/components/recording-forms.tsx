@@ -6,6 +6,7 @@ import { makeUploadAction } from "@/lib/upload-client";
 import { addNoteAction, updateRecordingSettingsAction, type RecordingActionState } from "@/server/recordings/actions";
 import type { RecordingFormState } from "@/server/recordings/upload-handler";
 import { Button, Field, Input, Notice, Panel, Select, Textarea } from "./ui";
+import { UploadNotice } from "./upload-notice";
 import { useKeepingForm } from "./use-keeping-form";
 
 const uploadRecording = makeUploadAction<RecordingFormState>("recording", {
@@ -13,6 +14,30 @@ const uploadRecording = makeUploadAction<RecordingFormState>("recording", {
   failed: { status: "error", message: "errors.generic" },
 });
 const idle: RecordingFormState = { status: "idle" };
+
+/** File picker that also accepts a dragged audio file. Still a normal required file input, so keyboard use is unchanged. */
+function AudioDropZone({ dropLabel }: { dropLabel: string }) {
+  const input = useRef<HTMLInputElement>(null);
+  const [over, setOver] = useState(false);
+  return (
+    <div
+      onDragOver={(e) => {
+        e.preventDefault();
+        setOver(true);
+      }}
+      onDragLeave={() => setOver(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setOver(false);
+        if (input.current && e.dataTransfer.files.length > 0) input.current.files = e.dataTransfer.files;
+      }}
+      className={`rounded-[10px] border border-dashed p-3 ${over ? "border-accent bg-surface-muted" : "border-border-strong"}`}
+    >
+      <p className="mb-2 text-[13px] text-text-muted">{dropLabel}</p>
+      <Input ref={input} id="rec-file" name="file" type="file" required accept="audio/*,.mp3,.m4a,.wav,.ogg,.weba,.opus" />
+    </div>
+  );
+}
 
 export function RecordingUploadForm({ courses, maxMb }: { courses: { id: string; label: string }[]; maxMb: number }) {
   const t = useTranslations("recordings");
@@ -23,6 +48,7 @@ export function RecordingUploadForm({ courses, maxMb }: { courses: { id: string;
     <Panel className="p-4 sm:p-5">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         {error && <Notice tone="danger">{error}</Notice>}
+        <UploadNotice reportable={false} />
         <Field label={t("form.title")} htmlFor="rec-title">
           <Input id="rec-title" name="title" required maxLength={200} />
         </Field>
@@ -42,7 +68,7 @@ export function RecordingUploadForm({ courses, maxMb }: { courses: { id: string;
           </Field>
         </div>
         <Field label={t("form.file")} htmlFor="rec-file" hint={t("form.fileHint", { max: maxMb })}>
-          <Input id="rec-file" name="file" type="file" required accept="audio/*,video/mp4,video/webm,.mp3,.m4a,.mp4,.wav,.ogg,.webm" />
+          <AudioDropZone dropLabel={t("form.drop")} />
         </Field>
         <fieldset className="rounded-[10px] border border-border p-4">
           <legend className="px-1 text-[14px] font-semibold">{t("consent.title")}</legend>

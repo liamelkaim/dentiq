@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getDb } from "@/db/client";
 import { requireUser } from "@/server/auth/session";
+import { checkRate } from "@/server/rate-limit/guard";
+import { RATE_REPORT } from "@/server/rate-limit/limits";
 import { errorMessage, formObject, revalidateResources, toFieldErrors, type ResourceFormState } from "./form-helpers";
 import {
   moderateResource,
@@ -20,6 +22,7 @@ export async function reportResourceAction(_prev: ResourceFormState, form: FormD
   const viewer = await requireUser();
   const parsed = reportInputSchema.safeParse(formObject(form));
   if (!parsed.success) return { status: "error", message: "errors.invalid", fieldErrors: toFieldErrors(parsed.error) };
+  if (!(await checkRate(RATE_REPORT, viewer.id)).allowed) return { status: "error", message: "errors.tooManyAttempts" };
   const result = await reportResource(getDb(), viewer, parsed.data);
   if (!result.ok) return { status: "error", message: errorMessage(result.error) };
   revalidatePath("/moderation");

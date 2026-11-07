@@ -39,6 +39,12 @@ export default async function PrivacyPage() {
         <h2 className="text-[18px] font-semibold">{t("privacy.rightsTitle")}</h2>
         <p className="mt-2">{t("privacy.rights")}</p>
       </section>
+      {(t.raw("privacyMore") as { title: string; body: string }[]).map((section) => (
+        <section key={section.title}>
+          <h2 className="text-[18px] font-semibold">{section.title}</h2>
+          <p className="mt-2">{section.body}</p>
+        </section>
+      ))}
       <LegalContact />
       <section>
         <h2 className="text-[18px] font-semibold">{t("privacy.reviewTitle")}</h2>

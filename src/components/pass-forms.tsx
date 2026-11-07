@@ -18,6 +18,7 @@ import {
 import type { PassFormState } from "@/server/passes/form-state";
 import { QUESTION_TYPES, type AnswerRule } from "@/server/passes/question-types";
 import { Button, Field, Input, Notice, Panel, Select, Textarea, cx } from "./ui";
+import { UploadNotice } from "./upload-notice";
 import { useKeepingForm as useKeepingFormBase } from "./use-keeping-form";
 
 const initial: PassFormState = { status: "idle" };
@@ -32,7 +33,7 @@ const editQuestionAction = makeUploadAction<PassFormState>("question-edit", uplo
 
 // Mirror constants in src/db/schema (kept out of the browser bundle).
 const terms = ["fall", "winter", "summer"] as const;
-const reportReasons = ["wrong_answer", "duplicate", "inappropriate", "leaked_or_copyrighted", "other"] as const;
+const reportReasons = ["wrong_answer", "duplicate", "inappropriate", "leaked_or_copyrighted", "patient_info", "takedown", "other"] as const;
 
 function useMessage() {
   const t = useTranslations();
@@ -289,6 +290,7 @@ export function QuestionForm(props: QuestionFormProps) {
         <fieldset className="flex flex-col gap-3">
           <legend className="mb-1 text-[15px] font-semibold">{t("form.imagesTitle")}</legend>
           <p className="text-[13px] text-text-subtle">{t("form.imagesHint", { max: props.maxImages, mb: props.maxImageMB })}</p>
+          {props.mode !== "new" && <div className="mt-2"><UploadNotice /></div>}
           <FieldError id={`${p}-images`} error={err("images")} />
           {activeImages.length > 0 && (
             <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -474,7 +476,8 @@ export function QuestionForm(props: QuestionFormProps) {
       </Panel>
 
       {props.mode === "new" && (
-        <div>
+        <div className="flex flex-col gap-3">
+          <UploadNotice />
           <label htmlFor={`${p}-rights`} className="flex min-h-11 items-start gap-3 text-[14px] text-text-muted">
             <input
               id={`${p}-rights`}

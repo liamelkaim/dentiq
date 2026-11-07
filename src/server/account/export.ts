@@ -36,6 +36,7 @@ import {
   studyQuizItems,
   studyQuizzes,
   tutorConsents,
+  contentAppeals,
   tutorConversations,
   tutorMessages,
   feedback,
@@ -424,10 +425,11 @@ export async function buildAccountExport(db: Database, userId: string, options: 
     // Recordings: the file itself is not in this JSON (it can be large); its details and the student's notes on it are.
     const recordingRows = capped(await db.select({ id: recordings.id, title: recordings.title, courseId: recordings.courseId, fileName: recordings.fileName, mimeType: recordings.mimeType, sizeBytes: recordings.sizeBytes, lecturerName: recordings.lecturerName, consentConfirmedAt: recordings.consentConfirmedAt, createdAt: recordings.createdAt }).from(recordings).where(eq(recordings.ownerId, userId)).limit(LIMIT));
     const recordingNoteRows = capped(await db.select({ id: recordingNotes.id, recordingId: recordingNotes.recordingId, atSeconds: recordingNotes.atSeconds, body: recordingNotes.body, createdAt: recordingNotes.createdAt }).from(recordingNotes).where(eq(recordingNotes.ownerId, userId)).limit(LIMIT));
-    const tutorConsentRows = await db.select({ version: tutorConsents.version, acceptedAt: tutorConsents.acceptedAt }).from(tutorConsents).where(eq(tutorConsents.userId, userId));
+    const tutorConsentRows = await db.select({ version: tutorConsents.version, acceptedAt: tutorConsents.acceptedAt, locale: tutorConsents.locale }).from(tutorConsents).where(eq(tutorConsents.userId, userId));
     const tutorConversationRows = capped(await db.select({ id: tutorConversations.id, title: tutorConversations.title, courseId: tutorConversations.courseId, createdAt: tutorConversations.createdAt, updatedAt: tutorConversations.updatedAt }).from(tutorConversations).where(eq(tutorConversations.userId, userId)).limit(LIMIT));
     const tutorMessageRows = capped(await db.select({ conversationId: tutorMessages.conversationId, role: tutorMessages.role, body: tutorMessages.body, citations: tutorMessages.citations, createdAt: tutorMessages.createdAt }).from(tutorMessages).innerJoin(tutorConversations, eq(tutorMessages.conversationId, tutorConversations.id)).where(eq(tutorConversations.userId, userId)).limit(LIMIT));
     const feedbackRows = capped(await db.select({ type: feedback.type, message: feedback.message, contactEmail: feedback.contactEmail, pagePath: feedback.pagePath, status: feedback.status, createdAt: feedback.createdAt }).from(feedback).where(eq(feedback.userId, userId)).limit(LIMIT));
+    const appealRows = capped(await db.select({ entityType: contentAppeals.entityType, message: contentAppeals.message, status: contentAppeals.status, decisionNote: contentAppeals.decisionNote, createdAt: contentAppeals.createdAt, decidedAt: contentAppeals.decidedAt }).from(contentAppeals).where(eq(contentAppeals.appellantId, userId)).limit(LIMIT));
     const tutor = capped(
       await db
         .select({
@@ -504,6 +506,7 @@ export async function buildAccountExport(db: Database, userId: string, options: 
       calendar: { entries: calendar, classBlocks, followedCourses },
       program: programProfile[0] ?? null,
       feedback: { items: feedbackRows },
+      appeals: { items: appealRows },
       recordings: { items: recordingRows, notes: recordingNoteRows },
       tutorUsage: { entries: tutor },
       tutorConversations: { consent: tutorConsentRows[0] ?? null, conversations: tutorConversationRows, messages: tutorMessageRows },

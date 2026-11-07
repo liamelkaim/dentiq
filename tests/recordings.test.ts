@@ -11,8 +11,14 @@ import { detectRecordingType } from "@/server/recordings/types";
 import { createMemoryStorage, type FileStorage } from "@/server/storage";
 
 const MB = 1024 * 1024;
+// Audio (M4A brand): the only kind accepted. `videoMp4` is a video brand, refused.
 const mp4 = (size = 64) => {
   const b = new Uint8Array(size);
+  b.set([0, 0, 0, 0x18, 0x66, 0x74, 0x79, 0x70, 0x4d, 0x34, 0x41, 0x20]); // ....ftypM4A
+  return b;
+};
+const videoMp4 = () => {
+  const b = new Uint8Array(64);
   b.set([0, 0, 0, 0x18, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6f, 0x6d]); // ....ftypisom
   return b;
 };
@@ -53,7 +59,8 @@ describe("settings", () => {
 
 describe("file types", () => {
   it("decides from the first bytes", () => {
-    expect(detectRecordingType("x.mp4", mp4())?.mime).toBe("video/mp4");
+    expect(detectRecordingType("x.mp4", videoMp4())?.mime).toBe("video/mp4");
+    expect(detectRecordingType("x.m4a", mp4())?.mime).toBe("audio/mp4");
     expect(detectRecordingType("x.mp3", new Uint8Array([0x49, 0x44, 0x33, 3, 0, 0, 0, 0, 0, 0, 0, 0]))?.mime).toBe("audio/mpeg");
     expect(detectRecordingType("x.webm", new Uint8Array([0x1a, 0x45, 0xdf, 0xa3, 0, 0, 0, 0, 0, 0, 0, 0]))?.mime).toBe("video/webm");
     expect(detectRecordingType("x.exe", new Uint8Array([0x4d, 0x5a, 0x90, 0, 3, 0, 0, 0, 4, 0, 0, 0]))).toBeNull();
@@ -81,8 +88,13 @@ describe("upload rules", () => {
     expect(r.ok).toBe(true);
     expect(storage.size()).toBe(1);
     const [row] = await db.select().from(recordings);
-    expect(row).toMatchObject({ ownerId: "a", mimeType: "video/mp4", lecturerName: "TEST Lecturer" });
+    expect(row).toMatchObject({ ownerId: "a", mimeType: "audio/mp4", lecturerName: "TEST Lecturer" });
     expect(row!.consentConfirmedAt).toBeInstanceOf(Date);
+  });
+  it("refuses video files (audio only)", async () => {
+    await enable();
+    expect(await createRecording(db, storage, A, input(), { name: "a.mp4", bytes: videoMp4() })).toMatchObject({ ok: false, error: "fileType" });
+    expect(storage.size()).toBe(0);
   });
   it.each([
     ["a blank title", { title: " " }, { name: "a.mp4", bytes: mp4() }, "titleRequired"],

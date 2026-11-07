@@ -34,7 +34,7 @@ function useAuthForm() {
   return { error, setError, submitting, setSubmitting };
 }
 
-export function SignInForm() {
+export function SignInForm({ domain }: { domain?: string | null }) {
   const t = useTranslations("auth");
   const router = useRouter();
   const { error, setError, submitting, setSubmitting } = useAuthForm();
@@ -58,8 +58,8 @@ export function SignInForm() {
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate={false}>
       {error && <Notice tone={error === "emailNotVerified" ? "warning" : "danger"}>{t(`errors.${error}`)}</Notice>}
-      <Field label={t("fields.email")} htmlFor="email">
-        <Input id="email" name="email" type="email" autoComplete="email" required inputMode="email" />
+      <Field label={t("fields.email")} htmlFor="email" hint={domain ? t("fields.emailDomainHint", { domain }) : undefined}>
+        <Input id="email" name="email" type="email" autoComplete="email" required inputMode="email" placeholder={domain ? t("fields.emailPlaceholder", { domain }) : undefined} aria-describedby={domain ? "email-hint" : undefined} />
       </Field>
       <Field label={t("fields.password")} htmlFor="password">
         <Input id="password" name="password" type="password" autoComplete="current-password" required />
@@ -82,7 +82,7 @@ export function SignInForm() {
   );
 }
 
-export function SignUpForm() {
+export function SignUpForm({ domain }: { domain?: string | null }) {
   const t = useTranslations("auth");
   const router = useRouter();
   const { error, setError, submitting, setSubmitting } = useAuthForm();
@@ -111,8 +111,8 @@ export function SignUpForm() {
       <Field label={t("fields.name")} htmlFor="name">
         <Input id="name" name="name" autoComplete="name" required maxLength={120} />
       </Field>
-      <Field label={t("fields.email")} htmlFor="email">
-        <Input id="email" name="email" type="email" autoComplete="email" required inputMode="email" />
+      <Field label={t("fields.email")} htmlFor="email" hint={domain ? t("fields.emailDomainHint", { domain }) : undefined}>
+        <Input id="email" name="email" type="email" autoComplete="email" required inputMode="email" placeholder={domain ? t("fields.emailPlaceholder", { domain }) : undefined} aria-describedby={domain ? "email-hint" : undefined} />
       </Field>
       <Field label={t("fields.password")} htmlFor="password" hint={t("fields.passwordHint")}>
         <Input

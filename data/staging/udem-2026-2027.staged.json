@@ -1,0 +1,2412 @@
+{
+ "status": "PROVISIONAL - requires admin review and visual verification before any publication",
+ "generatedAt": "2026-11-05T15:03:59+00:00",
+ "inventory": [
+  {
+   "filename": "Calendrier-facultaire-2026-2027-MAJ-26.08.06.pdf",
+   "sha256": "df285bbd395407f9bbc436a2bbc6a5d0faf8a8cd2cb699f8b559716fb14ce097",
+   "pages": 2,
+   "textChars": 5067,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_Semaine_integration-Cohorte1.pdf",
+   "sha256": "e265771f5f4a544b867183d7e62f25f59c10fbd0d9abd7700b28ae6f22de5c45",
+   "pages": 1,
+   "textChars": 714,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_Semaine_integration-Cohorte2.pdf",
+   "sha256": "07257ace50efea8c5cb93c55d496a8951d825f9d409152826248d9dbeda60c1c",
+   "pages": 1,
+   "textChars": 2614,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_Semaine_integration-Cohorte3.pdf",
+   "sha256": "6d726e7b8dbe757a24438c42dc0c4b0c2ea0c7e4e23e9ad603cba61773011066",
+   "pages": 1,
+   "textChars": 2488,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_Semaine_integration-Cohorte4.pdf",
+   "sha256": "bdbb7d250882313c11be47060e09315b22cd35c5f3d700638af13adb691f2a4f",
+   "pages": 1,
+   "textChars": 3027,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_Semaine_integration-Cohorte5.pdf",
+   "sha256": "70b0b43fb233e44557bf87271e9e3adeb887a923eefe6384087cffd51a5f3661",
+   "pages": 1,
+   "textChars": 3285,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_type-Cohorte1.pdf",
+   "sha256": "84e5cf8ba4946f6186ba5460263b6d160557938d975185957ea87ff59d98d9a2",
+   "pages": 1,
+   "textChars": 1998,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_type-Cohorte2.pdf",
+   "sha256": "71f04967b8492bda1d89d6dfc72b2a26415879d2bd73886c00a0732d01258bce",
+   "pages": 1,
+   "textChars": 1544,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_type-Cohorte3.pdf",
+   "sha256": "80e59f3e74049250be89460bb338f64511d26e7972ef72d55acaff7858b6bcb6",
+   "pages": 1,
+   "textChars": 1964,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_type-Cohorte4.pdf",
+   "sha256": "683d846f45814c3a7fe4f76f93eb034cb4dc1d14585dfad84a791291e47781eb",
+   "pages": 1,
+   "textChars": 2373,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "DMD-2026A-Horaire_type-Cohorte5.pdf",
+   "sha256": "4554685bea52d2160e5a96ea6c1efbf5ec5eaa368c070f4de44d1407e2d6c3e4",
+   "pages": 1,
+   "textChars": 2015,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "Échelle_conversion_2_evaluation__1er_2e_cycle_FMD_a_partir_automne_2011.pdf",
+   "sha256": "488e910169050200dea126bcaf016b34a5cc5ea15051a64def37b96bcd78422e",
+   "pages": 1,
+   "textChars": 1144,
+   "state": "parsed-needs-review",
+   "note": "Timetable/calendar/grading grid: not interpreted (weekday/time geometry needs visual review)."
+  },
+  {
+   "filename": "Liste_des_cours_1re_année_01.pdf",
+   "sha256": "e141f4b7e3c1c311aa79c948bb69416679968317e7035dcf497dc38957d07453",
+   "pages": 1,
+   "textChars": 2270,
+   "state": "parsed-needs-review",
+   "candidateCourses": 22,
+   "reportedTotals": [
+    [
+     "11",
+     "automne",
+     "20,5",
+     "21,5"
+    ],
+    [
+     "11",
+     "hiver",
+     "19,5",
+     "18,5"
+    ]
+   ]
+  },
+  {
+   "filename": "Liste_des_cours_2e_année_01.pdf",
+   "sha256": "fd73dd6da5011c6fc15fe1cce45e1312daed5202d7f6d1563508bb6232a6ef55",
+   "pages": 1,
+   "textChars": 2581,
+   "state": "parsed-needs-review",
+   "candidateCourses": 28,
+   "reportedTotals": [
+    [
+     "13",
+     "automne",
+     "21,5",
+     "22,5"
+    ],
+    [
+     "15",
+     "hiver",
+     "20",
+     "19"
+    ]
+   ]
+  },
+  {
+   "filename": "Liste_des_cours_3e_année_01.pdf",
+   "sha256": "35e15f891e33c8abf638dc32945907b6d8e3c3034da56ce7a031002422d42fe6",
+   "pages": 1,
+   "textChars": 3132,
+   "state": "parsed-needs-review",
+   "candidateCourses": 39,
+   "reportedTotals": [
+    [
+     "18",
+     "automne",
+     "12",
+     "20"
+    ],
+    [
+     "21",
+     "hiver",
+     "29",
+     "21"
+    ]
+   ]
+  },
+  {
+   "filename": "Liste_des_cours_4e_année_01.pdf",
+   "sha256": "c5baaf3b4ba8264efb705c16fe77b5a85bae8d6b88e7a4bdb1b2afc9d7d094d6",
+   "pages": 1,
+   "textChars": 3722,
+   "state": "parsed-needs-review",
+   "candidateCourses": 46,
+   "reportedTotals": [
+    [
+     "21",
+     "automne",
+     "14,5",
+     "25,5"
+    ],
+    [
+     "17",
+     "hiver",
+     "31",
+     "21"
+    ],
+    [
+     "8",
+     "été",
+     "15",
+     "14"
+    ]
+   ]
+  },
+  {
+   "filename": "Liste_des_cours_5e_année_01.pdf",
+   "sha256": "2adb041921a7aa7c2b82666b913352d0ec608f7d6923ed28019ac0960b1276b1",
+   "pages": 1,
+   "textChars": 2651,
+   "state": "parsed-needs-review",
+   "candidateCourses": 32,
+   "reportedTotals": [
+    [
+     "18",
+     "automne",
+     "8",
+     "21,5"
+    ],
+    [
+     "13",
+     "hiver",
+     "28",
+     "14,5"
+    ]
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "code": "DEN 10021",
+   "section": null,
+   "title_fr": "Observation et assistance cliniques 1",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "DEN 1006",
+   "section": null,
+   "title_fr": "Introduction à la médecine dentaire",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 3.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "DEN 11001",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 1.1",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "PBC 1050",
+   "section": "D",
+   "title_fr": "Anatomie macroscopique humaine",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "PBC 1060",
+   "section": "A",
+   "title_fr": "Embryologie et histologie humaine",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 3.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "PSL 1982",
+   "section": "D",
+   "title_fr": "Les bases du système nerveux",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "PSY 1960",
+   "section": "A",
+   "title_fr": "Psychologie et médecine dentaire 1",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "SAB 1040A",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 1",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 2.5,
+   "progressiveCredits": 2.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "SAB 1040B",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 2",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "SAB 1040C",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 3",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "SAB 1040D",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 4",
+   "term": "A",
+   "programYear": 1,
+   "academicCredits": 2.5,
+   "progressiveCredits": 2.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "DEN 10022",
+   "section": null,
+   "title_fr": "Observation et assistance cliniques 2",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "DEN 1007",
+   "section": null,
+   "title_fr": "Préparation à la clinique en médecine dentaire 1",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "DEN 11002",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 1.2",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "DER 1012",
+   "section": null,
+   "title_fr": "Morphologie dentaire",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 2.5,
+   "progressiveCredits": 2.5,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "MCB 1097",
+   "section": "A",
+   "title_fr": "Microbiologie et immunologie générales",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "PSL 1993",
+   "section": "D",
+   "title_fr": "Physiologie générale",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 3.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "SAB 1017",
+   "section": null,
+   "title_fr": "Dentisterie préventive préclinique",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "SAB 1040E",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 5",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "SAB 1040F",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 6",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "SAB 1051",
+   "section": null,
+   "title_fr": "Intro. à la pratique professionnelle en méd. dentaire",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "STO 1043",
+   "section": null,
+   "title_fr": "Odontopharmacothérapie  clinique 1",
+   "term": "H",
+   "programYear": 1,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_1re_année_01.pdf"
+  },
+  {
+   "code": "DEN 21001",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 2.1",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 1010",
+   "section": null,
+   "title_fr": "Dentisterie opératoire théorique 1",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 1013",
+   "section": null,
+   "title_fr": "Dentisterie opératoire préclinique 1",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 1030",
+   "section": null,
+   "title_fr": "Matériaux dentaires 1",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "PBC 1020",
+   "section": "A Pathologie générale en dentisterie",
+   "title_fr": "",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "SAB 20011",
+   "section": null,
+   "title_fr": "Dentisterie préventive et parodontie cliniques 1.1",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "SAB 2051",
+   "section": null,
+   "title_fr": "Pratique professionnelle en médecine dentaire 1",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "SAB 2052",
+   "section": null,
+   "title_fr": "Médecine dentaire factuelle",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 3.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "SAB 2085",
+   "section": null,
+   "title_fr": "Parodontie théorique 1",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 3.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "SAB 3040",
+   "section": null,
+   "title_fr": "Approche populationnelle en médecine dentaire",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "STO 1062",
+   "section": null,
+   "title_fr": "Radiologie 1",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "STO 2020A",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 7",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 3.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "STO 2020B",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 8",
+   "term": "A",
+   "programYear": 2,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "CSS 1900",
+   "section": "F",
+   "title_fr": "Collaboration en sciences de la santé 1",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DEN 21002",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 2.2",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 1001",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe théorique 1",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 1004",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe préclinique 1",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 1092",
+   "section": null,
+   "title_fr": "Prothèse complète préclinique 1",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 1096",
+   "section": null,
+   "title_fr": "Prothèse complète théorique 1",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 2003",
+   "section": null,
+   "title_fr": "Dentisterie opératoire préclinique 2",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DER 2052",
+   "section": null,
+   "title_fr": "Dentisterie opératoire théorique 2",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "PBC 2030",
+   "section": "A Pathologie spéciale en dentisterie",
+   "title_fr": "",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 4.0,
+   "progressiveCredits": 4.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "PSY 1979",
+   "section": "H Gestion du stress en médecine dentaire",
+   "title_fr": "",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "SAB 1060",
+   "section": null,
+   "title_fr": "Croissance et physiologie en orthodontie",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "SAB 20012",
+   "section": null,
+   "title_fr": "Dentisterie préventive et parodontie cliniques 1.2",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "STO 2035",
+   "section": null,
+   "title_fr": "Pathologie buccale 1",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "STO 2061",
+   "section": null,
+   "title_fr": "Radiologie clinique 1",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 0.5,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "STO 2073",
+   "section": null,
+   "title_fr": "Interprétation radiologique",
+   "term": "H",
+   "programYear": 2,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique",
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_2e_année_01.pdf"
+  },
+  {
+   "code": "DEN 31001",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 3.1",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 20011",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe théorique 2.1",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 20041",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe préclinique 2.1",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 2032",
+   "section": null,
+   "title_fr": "Matériaux dentaires 2",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 2092",
+   "section": null,
+   "title_fr": "Prothèse complète préclinique 2",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 2098",
+   "section": null,
+   "title_fr": "Prothèse complète théorique 2",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 3003",
+   "section": null,
+   "title_fr": "Dentisterie opératoire préclinique 3",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 3053",
+   "section": null,
+   "title_fr": "Dentisterie opératoire théorique 3",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 20411",
+   "section": null,
+   "title_fr": "Occlusion dentaire théorique 1",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 20721",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique théorique 1.1",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 2077",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique préclinique",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 30001",
+   "section": null,
+   "title_fr": "Dentisterie préventive et parodontie cliniques 2.1",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 4080",
+   "section": null,
+   "title_fr": "Parodontie théorique 2",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 2050",
+   "section": null,
+   "title_fr": "Anesthésiologie régionale",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 20621",
+   "section": null,
+   "title_fr": "Radiologie 2.1",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 3000",
+   "section": null,
+   "title_fr": "Raisonnement clinique en médecine dentaire",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 30351",
+   "section": null,
+   "title_fr": "Pathologie buccale 2.1",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 3061",
+   "section": null,
+   "title_fr": "Radiologie clinique 2",
+   "term": "A",
+   "programYear": 3,
+   "academicCredits": 0.5,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "CSS 2900",
+   "section": "F",
+   "title_fr": "Collaboration en sciences de la santé 2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DEN 3007",
+   "section": null,
+   "title_fr": "Préparation à la clinique en médecine dentaire 2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DEN 31002",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 3.2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 20012",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe théorique 2.2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 20042",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe préclinique 2.2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 3.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 2022",
+   "section": null,
+   "title_fr": "Introduction à l'endodontie",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 2023",
+   "section": null,
+   "title_fr": "Endodontie préclinique",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 2095",
+   "section": null,
+   "title_fr": "Prothèse complète clinique 1",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 2099",
+   "section": null,
+   "title_fr": "Prothèse complète théorique 3",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 3005",
+   "section": null,
+   "title_fr": "Dentisterie opératoire clinique 1",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 3006",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe théorique 3",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "DER 3054",
+   "section": null,
+   "title_fr": "Dentisterie opératoire théorique 4",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 20412",
+   "section": null,
+   "title_fr": "Occlusion dentaire théorique 2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 2043",
+   "section": null,
+   "title_fr": "Occlusion dentaire préclinique",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 20722",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique théorique 1.2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 2079",
+   "section": null,
+   "title_fr": "Orthodontie préclinique",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 0.5,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "SAB 30002",
+   "section": null,
+   "title_fr": "Dentisterie préventive et parodontie cliniques 2.2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 20622",
+   "section": null,
+   "title_fr": "Radiologie 2.2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 30352",
+   "section": null,
+   "title_fr": "Pathologie buccale 2.2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 3.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 3043",
+   "section": null,
+   "title_fr": "Odontopharmacothérapie clinique 2",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "STO 3069",
+   "section": null,
+   "title_fr": "Chirurgie buccale et maxillofaciale 1",
+   "term": "H",
+   "programYear": 3,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_3e_année_01.pdf"
+  },
+  {
+   "code": "CSS 3900",
+   "section": "F",
+   "title_fr": "Collaboration en sciences de la santé 3",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DEN 41001",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 4.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 30041",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe clinique 1.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 3015",
+   "section": null,
+   "title_fr": "Prothèse partielle amovible préclinique",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 30221",
+   "section": null,
+   "title_fr": "Endodontie théorique 1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 3098",
+   "section": null,
+   "title_fr": "Prothèse partielle amovible théorique",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 4001",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe théorique 4",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 40051",
+   "section": null,
+   "title_fr": "Dentisterie opératoire clinique 2.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 40211",
+   "section": null,
+   "title_fr": "Endodontie clinique 1.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 40951",
+   "section": null,
+   "title_fr": "Prothèse amovible clinique 1.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 30011",
+   "section": null,
+   "title_fr": "Dentisterie préventive et parodontie cliniques 3.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 3051",
+   "section": null,
+   "title_fr": "Pratique professionnelle médecine dentaire 2",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 3057",
+   "section": null,
+   "title_fr": "Préparation à la pratique dentaire privée 1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 3060",
+   "section": null,
+   "title_fr": "Orthodontie théorique",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 3.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 30781",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique clinique 1.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 40731",
+   "section": null,
+   "title_fr": "Orthodontie clinique 1.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 40921",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique théorique 2.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 3080A",
+   "section": null,
+   "title_fr": "Médecine buccale 1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 2.5,
+   "progressiveCredits": 2.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 30811",
+   "section": null,
+   "title_fr": "Diagnostic clinique 1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 4069",
+   "section": null,
+   "title_fr": "Chirurgie buccale et maxillo-faciale 2",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 40721",
+   "section": null,
+   "title_fr": "Chirurgie clinique 1.1",
+   "term": "A",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DEN 41002",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 4.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 30042",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe clinique 1.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 3.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 3017",
+   "section": null,
+   "title_fr": "Laboratoire d'implantologie",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 30222",
+   "section": null,
+   "title_fr": "Endodontie théorique 2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 3094",
+   "section": null,
+   "title_fr": "Réhabilitation implanto-portée 1",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 40052",
+   "section": null,
+   "title_fr": "Dentisterie opératoire clinique 2.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 3.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 40952",
+   "section": null,
+   "title_fr": "Prothèse amovible clinique 1.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 40212",
+   "section": null,
+   "title_fr": "Endodontie clinique 1.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DER 4097",
+   "section": null,
+   "title_fr": "Connaissances de pointe en médecine dentaire",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 30012",
+   "section": null,
+   "title_fr": "Dentisterie préventive et parodontie cliniques 3.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 3.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 30782",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique clinique 1.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 40732",
+   "section": null,
+   "title_fr": "Orthodontie clinique 1.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 40922",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique théorique 2.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 3.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 3080B",
+   "section": null,
+   "title_fr": "Médecine buccale 2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 2.5,
+   "progressiveCredits": 2.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 30812",
+   "section": null,
+   "title_fr": "Diagnostic clinique 2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 4070",
+   "section": null,
+   "title_fr": "Chirurgie buccale et maxillo-faciale 3",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 40722",
+   "section": null,
+   "title_fr": "Chirurgie clinique 1.2",
+   "term": "H",
+   "programYear": 4,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DEN 3051",
+   "section": null,
+   "title_fr": "Travaux dirigés en médecine dentaire",
+   "term": "E",
+   "programYear": 4,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DEN 3980",
+   "section": null,
+   "title_fr": "Clinique multidisciplinaire",
+   "term": "E",
+   "programYear": 4,
+   "academicCredits": 7.0,
+   "progressiveCredits": 7.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DEN 41003",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 4.3",
+   "term": "E",
+   "programYear": 4,
+   "academicCredits": 1.5,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 4056",
+   "section": null,
+   "title_fr": "Préparation à la pratique dentaire privée 2",
+   "term": "E",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 4076",
+   "section": null,
+   "title_fr": "Dysfonctions et douleurs buccofaciales",
+   "term": "E",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "SAB 4087",
+   "section": null,
+   "title_fr": "Parodontie préclinique",
+   "term": "E",
+   "programYear": 4,
+   "academicCredits": 0.5,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Pratique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 4001",
+   "section": null,
+   "title_fr": "Imagerie buccale et maxillofaciale CBCT petit champ",
+   "term": "E",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "STO 4002",
+   "section": null,
+   "title_fr": "Imagerie buccale et maxillofaciale CBCT grand champ",
+   "term": "E",
+   "programYear": 4,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_4e_année_01.pdf"
+  },
+  {
+   "code": "DEN 49951",
+   "section": null,
+   "title_fr": "Cliniques à options 1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DEN 4996",
+   "section": null,
+   "title_fr": "Évolution en médecine dentaire factuelle",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DEN 50101",
+   "section": null,
+   "title_fr": "Médecine dentaire clinique 1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DEN 51001",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 5.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 4082",
+   "section": null,
+   "title_fr": "Conférences clinico-restauratrices",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 4094",
+   "section": null,
+   "title_fr": "Réhabilitation implanto-portée 2",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 50041",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe clinique 2.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 50051",
+   "section": null,
+   "title_fr": "Dentisterie opératoire clinique 3.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 50211",
+   "section": null,
+   "title_fr": "Endodontie clinique 2.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 50951",
+   "section": null,
+   "title_fr": "Prothèse amovible clinique 2.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "SAB 40011",
+   "section": null,
+   "title_fr": "Dentisterie préventive et parodontie cliniques 4.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "SAB 4070",
+   "section": null,
+   "title_fr": "Conférences clinico-orthodontiques",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "SAB 5040",
+   "section": null,
+   "title_fr": "Thématiques cliniques en médecine dentaire 9",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 1.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "SAB 50731",
+   "section": null,
+   "title_fr": "Orthodontie clinique 2.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "SAB 50781",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique clinique 2.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "STO 4080",
+   "section": null,
+   "title_fr": "Médecine buccale 3",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 2.0,
+   "progressiveCredits": 2.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "STO 40841",
+   "section": null,
+   "title_fr": "Diagnostic et urgence cliniques 1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "STO 50721",
+   "section": null,
+   "title_fr": "Chirurgie clinique 2.1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "STO 50811",
+   "section": null,
+   "title_fr": "Conférences clinico-pathologiques 1",
+   "term": "A",
+   "programYear": 5,
+   "academicCredits": 0.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DEN 49952",
+   "section": null,
+   "title_fr": "Cliniques à options 2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DEN 50102",
+   "section": null,
+   "title_fr": "Médecine dentaire clinique 2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 6.0,
+   "progressiveCredits": 3.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DEN 51002",
+   "section": null,
+   "title_fr": "Compétences en médecine dentaire 5.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Théorique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 50042",
+   "section": null,
+   "title_fr": "Prothèse partielle fixe clinique 2.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 3.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 50052",
+   "section": null,
+   "title_fr": "Dentisterie opératoire clinique 3.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 3.0,
+   "progressiveCredits": 1.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 50212",
+   "section": null,
+   "title_fr": "Endodontie clinique 2.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "DER 50952",
+   "section": null,
+   "title_fr": "Prothèse amovible clinique 2.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "SAB 40012",
+   "section": null,
+   "title_fr": "Dentisterie préventive et parodontie cliniques 4.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "SAB 50732",
+   "section": null,
+   "title_fr": "Orthodontie clinique 2.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 1.0,
+   "progressiveCredits": 0.5,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "SAB 50782",
+   "section": null,
+   "title_fr": "Dentisterie pédiatrique clinique 2.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "STO 40842",
+   "section": null,
+   "title_fr": "Diagnostic et urgence cliniques 2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "STO 50722",
+   "section": null,
+   "title_fr": "Chirurgie clinique 2.2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 1.5,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  },
+  {
+   "code": "STO 50812",
+   "section": null,
+   "title_fr": "Conférences clinico-pathologiques 2",
+   "term": "H",
+   "programYear": 5,
+   "academicCredits": 2.0,
+   "progressiveCredits": 1.0,
+   "types": [
+    "Clinique"
+   ],
+   "sourceFile": "Liste_des_cours_5e_année_01.pdf"
+  }
+ ],
+ "diff": {
+  "inPdfsNotInSeed": [],
+  "inSeedNotInPdfs": [],
+  "candidateCount": 167,
+  "seedCount": 167
+ }
+}
